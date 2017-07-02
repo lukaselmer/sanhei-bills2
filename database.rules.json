@@ -1,8 +1,12 @@
 {
   "rules": {
-    "$uid": {
-      ".read": "$uid === auth.uid",
-      ".write": "$uid === auth.uid"
+    "admins": {
+      ".read": false,
+      ".write": false
+    },
+    "billing": {
+      ".read": "root.child('admins/'+auth.uid).exists()",
+      ".write": "root.child('admins/'+auth.uid).exists()"
     }
   }
 }

@@ -28,6 +28,7 @@
   <div>
     <span id="user_info">Hello, you are not logged in.</span>
     <a href="#" id="sign_out" style="display: none;">Sign out</a>
+    <a href="#" id="sign_in">Sign in</a>
   </div>
   <h2>Welcome</h2>
   <h1>Firebase Hosting Setup Complete</h1>
@@ -38,35 +39,33 @@
   document.addEventListener('DOMContentLoaded', function () {
     function updateUserInfo(user) {
       if (user) {
+        document.getElementById('sign_in').style.display = 'none';
         document.getElementById('sign_out').style.display = 'inline';
         document.getElementById('user_info').innerText =
             `Hello ${user.displayName}, you are logged in with ${user.email}`;
       } else {
+        document.getElementById('sign_in').style.display = 'inline';
         document.getElementById('sign_out').style.display = 'none';
         document.getElementById('user_info').innerText = `Hello, you are not logged in.`;
         document.getElementById('load').innerHTML = '';
       }
     }
 
-    function displayBills(user) {
-      firebase.database().ref(`${user.uid}/bills`).limitToLast(5).on('value', snapshot => {
+    function displayBills() {
+      firebase.database().ref(`billing/bills`).limitToLast(5).on('value', snapshot => {
         const data = snapshot.val();
         console.log(data);
         const titlesHtml = Object.keys(data).map(id => `<p>${data[id].title1}</p>`).join('');
-        document.getElementById('load').innerHTML += titlesHtml;
+        document.getElementById('load').innerHTML = titlesHtml;
       });
     }
 
     document.getElementById('sign_out').onclick = () => firebase.auth().signOut();
+    document.getElementById('sign_in').onclick = () =>
+        firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
 
-    firebase.auth().onAuthStateChanged(user => {
-      updateUserInfo(user);
-      if (user) {
-        displayBills(user);
-      } else {
-        firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
-      }
-    });
+    firebase.auth().onAuthStateChanged(updateUserInfo);
+    displayBills();
   });
 </script>
 </body>
