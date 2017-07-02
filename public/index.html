@@ -36,25 +36,28 @@
     // // The Firebase SDK is initialized and available here!
     //
     function updateUserInfo(user) {
-      document.getElementById('load').innerHTML =
-          `Hello ${user.displayName}, you are logged in with ${user.email}`;
+      if (user)
+        document.getElementById('load').innerHTML =
+            `<p>Hello ${user.displayName}, you are logged in with ${user.email}</p>`;
     }
 
     firebase.auth().onAuthStateChanged(user => {
       console.log(`User ${user} is logged in`);
-      updateUserInfo(user);
+      if (user) {
+        updateUserInfo(user);
 
-      console.log(user);
+        console.log(user);
 
-      firebase.database().ref(`${user.uid}/bills`).limitToLast(100).once('value', snapshot => {
-        const data = snapshot.val();
-        console.log(data);
-        const titlesHtml = Object.keys(data).map(id => `<p>${data[id].title1}</p>`).join('');
-        document.getElementById('load').innerHTML += titlesHtml;
-      });
-      //      firebase.database().ref(user.uid).set({
-      //        hello: 'world'
-      //      });
+        firebase.database().ref(`${user.uid}/bills`).limitToLast(100).once('value', snapshot => {
+          const data = snapshot.val();
+          console.log(data);
+          const titlesHtml = Object.keys(data).map(id => `<p>${data[id].title1}</p>`).join('');
+          document.getElementById('load').innerHTML += titlesHtml;
+        });
+        //      firebase.database().ref(user.uid).set({
+        //        hello: 'world'
+        //      });
+      }
     });
 
     const provider = new firebase.auth.GoogleAuthProvider();
