@@ -46,3 +46,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# SSL
+ssl/*.key
+ssl/*.crt
+ssl/*.pem
+ssl/*.srl
+ssl/*.csr

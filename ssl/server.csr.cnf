@@ -1,0 +1,14 @@
+[req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+
+[dn]
+C=CH
+ST=Zurich
+L=Zurich
+O=Sanhei Bills Development
+OU=Development Domain
+emailAddress=lukas.elmer@gmail.com
+CN = sanhei-bills.dev
