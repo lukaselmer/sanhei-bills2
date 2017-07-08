@@ -7,6 +7,10 @@ openssl req -new -sha256 -nodes -out server.csr -newkey rsa:2048 -keyout server.
 chmod 600 server.key
 openssl x509 -req -in server.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out server.crt -days 500 -sha256 -extfile v3.ext
 
+rm rootCA.key
+rm rootCA.srl
+rm server.csr
+
 echo 'Checking if sanhei-bills.dev is in /etc/hosts'
 grep 'sanhei-bills.dev' /etc/hosts || echo '127.0.0.1 sanhei-bills.dev' | sudo tee -a /etc/hosts
 
