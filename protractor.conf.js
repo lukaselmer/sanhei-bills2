@@ -3,6 +3,11 @@
 
 const { SpecReporter } = require('jasmine-spec-reporter');
 
+// Waiting for the following issues to fix e2e tests using firebase
+// - https://github.com/angular/protractor/issues/4300
+// - https://github.com/angular/angularfire2/issues/19
+// - https://github.com/angular/angularfire2/issues/779
+
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
@@ -17,7 +22,7 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function() {}
+    print: function () { }
   },
   onPrepare() {
     require('ts-node').register({

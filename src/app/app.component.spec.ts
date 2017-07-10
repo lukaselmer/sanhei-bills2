@@ -1,3 +1,5 @@
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
@@ -5,6 +7,10 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        { provide: AngularFireDatabase, useValue: { list: () => { } } },
+        { provide: AngularFireAuth, useValue: {} },
+      ],
       declarations: [
         AppComponent
       ],
