@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'sb-root',
@@ -13,8 +13,7 @@ export class AppComponent implements OnInit {
   title = 'sb';
   bills: FirebaseListObservable<any>;
   user: Observable<firebase.User>;
-  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {
-  }
+  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) { }
 
   ngOnInit() {
     this.bills = this.db.list('billing/bills', {

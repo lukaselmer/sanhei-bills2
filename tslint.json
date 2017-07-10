@@ -1,8 +1,18 @@
 {
+  "extends": "tslint:latest",
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
   "rules": {
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never",
+        "functions": "never",
+        "typeLiterals": "never"
+      }
+    ],
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
@@ -28,7 +38,10 @@
       true,
       140
     ],
-    "member-access": false,
+    "member-access": [
+      true,
+      "no-public"
+    ],
     "member-ordering": [
       true,
       "static-before-instance",
@@ -63,7 +76,8 @@
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
+    // "no-unused-variable": true, rule requires type checking
+    // "no-use-before-declare": true, rule requires type checking
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
@@ -98,7 +112,7 @@
     ],
     "typeof-compare": true,
     "unified-signatures": true,
-    "variable-name": false,
+    "variable-name": true,
     "whitespace": [
       true,
       "check-branch",
@@ -107,6 +121,7 @@
       "check-separator",
       "check-type"
     ],
+    "no-irregular-whitespace": true,
     "directive-selector": [
       true,
       "attribute",
