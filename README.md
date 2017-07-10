@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lukaselmer/sanhei-bills2.svg?branch=master)](https://travis-ci.org/lukaselmer/sanhei-bills2)
+
 # SanheiBills2
 
 The new Sanhei Bills Tool
