@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/lukaselmer/sanhei-bills2.svg?branch=master)](https://travis-ci.org/lukaselmer/sanhei-bills2)
 [![Code Climate](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/gpa.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cc92ebe2a13244738fc76d55482fe9b6)](https://www.codacy.com/app/renuo/sanhei-bills2)
 
 # SanheiBills2
 
