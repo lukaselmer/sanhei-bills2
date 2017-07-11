@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+npm run ci
+
+if [[ $TRAVIS_BRANCH == 'master' ]]
+  # prepare for deployment
+  bin/production-build
+fi

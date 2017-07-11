@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
-[ ! -f src/environments/environment.ts ] && cp src/environments/environment.example.ts src/environments/environment.ts
-[ ! -f src/environments/environment.prod.ts ] && cp src/environments/environment.prod.example.ts src/environments/environment.prod.ts
+npm i
+
+echo 'Checking if sanhei-bills.dev is in /etc/hosts'
+grep 'sanhei-bills.dev' /etc/hosts || echo '127.0.0.1 sanhei-bills.dev' | sudo tee -a /etc/hosts
