@@ -10,7 +10,7 @@ cache:
   directories:
   - node_modules
 script: npm run ci
-before_deploy: npm run build --prod
+before_deploy: npm run build --prod --progress false
 deploy:
   skip_cleanup: true
   on:
