@@ -1,9 +1,13 @@
-<sb-auth-widget></sb-auth-widget>
+<header>
+  <sb-auth-widget></sb-auth-widget>
+</header>
 
-<h1> Welcome to {{title}}!! </h1>
+<main>
+  <h1> Welcome to {{title}}!! </h1>
 
-<ul>
-  <li *ngFor="let bill of bills | async">
-    {{bill.address1}}
-  </li>
-</ul>
+  <ul>
+    <li *ngFor="let bill of bills | async">
+      {{bill.address1}}
+    </li>
+  </ul>
+</main>

@@ -1,8 +1,11 @@
+@import '../../../scss/sb-theme';
+
 section {
   padding: 8px;
   height: 40px;
-  background: #ccc;
+  background: mat-color($sb-app-primary);
   text-align: right;
+  @include mat-elevation(2);
 }
 
 md-spinner {
