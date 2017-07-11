@@ -19,7 +19,7 @@ after_success:
 - CODECLIMATE_REPO_TOKEN=55944955a9f4d206eb7530d523e0abf2956fe916ebcad96c6d11aa751731e3f7 codeclimate-test-reporter < coverage/lcov.info
 - npm install -g codacy-coverage
 - cat coverage/lcov.info | codacy-coverage
-before_deploy: npm run build --prod --progress false
+before_deploy: npm run build-prod
 deploy:
   skip_cleanup: true
   on:

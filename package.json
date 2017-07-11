@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve --host sanhei-bills.dev --open",
     "build": "ng build",
+    "build-prod": "ng build --prod --progress false",
     "test": "ng test",
     "lint": "ng lint",
     "csscomb": "csscomb src/app",
