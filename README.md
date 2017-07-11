@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/lukaselmer/sanhei-bills2.svg?branch=master)](https://travis-ci.org/lukaselmer/sanhei-bills2)
+[![Code Climate](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/gpa.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2)
 
 # SanheiBills2
 
