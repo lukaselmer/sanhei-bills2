@@ -2,6 +2,7 @@
 
 <div>
   <div> {{ (user | async)?.uid }} </div>
+  <div><img [src]="(user | async)?.photoURL"></div>
   <button (click)="login()">Login</button>
   <button (click)="logout()">Logout</button>
 </div>
