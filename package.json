@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ci": "ng lint && ng test --single-run"
+    "ci": "ng lint && ng test --single-run --progress false"
   },
   "private": false,
   "dependencies": {
