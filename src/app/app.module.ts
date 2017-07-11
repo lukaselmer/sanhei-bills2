@@ -7,10 +7,12 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import 'hammerjs';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+import { BillsListComponent } from './bills/bills-list/bills-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BillsListComponent
   ],
   imports: [
     BrowserModule,
