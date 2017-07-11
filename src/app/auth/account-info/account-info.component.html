@@ -1,0 +1,14 @@
+<md-card *ngIf="showDetails">
+  <md-card-header>
+    <img md-card-avatar (click)="toggle()" [src]="user.photoURL" alt="Profile Image">
+    <md-card-title>{{ user.displayName }}</md-card-title>
+    <md-card-subtitle>{{ user.email }}</md-card-subtitle>
+  </md-card-header>
+  <md-card-actions layout="row" layout-align="end center">
+    <button md-button (click)="logout()">Sign out</button>
+  </md-card-actions>
+</md-card>
+
+<div class="preview">
+  <img (click)='toggle()' [src]="user.photoURL" class="md-card-image" alt="Profile Image">
+</div>

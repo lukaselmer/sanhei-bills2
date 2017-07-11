@@ -1,0 +1,12 @@
+<section [ngSwitch]="loginStatus">
+  <ng-container *ngSwitchCase="'unknown'">
+    <md-spinner></md-spinner>
+    <div style="clear: both"></div>
+  </ng-container>
+  <div *ngSwitchCase="'signedOut'">
+    <button md-raised-button (click)="login()">Sign in</button>
+  </div>
+  <div *ngSwitchCase="'signedIn'">
+    <sb-account-info [user]='user'></sb-account-info>
+  </div>
+</section>
