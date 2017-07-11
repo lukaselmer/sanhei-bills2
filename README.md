@@ -1,6 +1,12 @@
 [![Build Status](https://travis-ci.org/lukaselmer/sanhei-bills2.svg?branch=master)](https://travis-ci.org/lukaselmer/sanhei-bills2)
 [![Code Climate](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/gpa.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cc92ebe2a13244738fc76d55482fe9b6)](https://www.codacy.com/app/renuo/sanhei-bills2)
+[![Code Climate Test Coverage](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/coverage.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2/coverage)
+[![Code Climate Issue Count](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/issue_count.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2)
+[![Codacy](https://api.codacy.com/project/badge/Grade/cc92ebe2a13244738fc76d55482fe9b6)](https://www.codacy.com/app/renuo/sanhei-bills2)
+[![Codacy Test Coverage](https://api.codacy.com/project/badge/Coverage/cc92ebe2a13244738fc76d55482fe9b6)](https://www.codacy.com/app/renuo/sanhei-bills2?utm_source=github.com&utm_medium=referral&utm_content=lukaselmer/sanhei-bills2&utm_campaign=Badge_Coverage)
+[![dependencies Status](https://david-dm.org/lukaselmer/sanhei-bills2/status.svg)](https://david-dm.org/lukaselmer/sanhei-bills2)
+[![devDependencies Status](https://david-dm.org/lukaselmer/sanhei-bills2/dev-status.svg)](https://david-dm.org/lukaselmer/sanhei-bills2?type=dev)
+[![Known Vulnerabilities](https://snyk.io/test/github/lukaselmer/sanhei-bills2/badge.svg)](https://snyk.io/test/github/lukaselmer/sanhei-bills2)
 
 # SanheiBills2
 
