@@ -1,11 +1,6 @@
-<h1> Welcome to {{title}}!! </h1>
+<sb-auth-widget></sb-auth-widget>
 
-<div>
-  <div> {{ (user | async)?.uid }} </div>
-  <div><img [src]="(user | async)?.photoURL"></div>
-  <button (click)="login()">Login</button>
-  <button (click)="logout()">Logout</button>
-</div>
+<h1> Welcome to {{title}}!! </h1>
 
 <ul>
   <li *ngFor="let bill of bills | async">

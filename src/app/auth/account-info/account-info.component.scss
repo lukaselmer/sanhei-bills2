@@ -1,0 +1,27 @@
+.preview {
+  text-align: right;
+
+  img {
+    cursor: pointer;
+    width: 40px;
+    border-radius: 100%;
+  }
+}
+
+md-card {
+  width: 250px;
+  top: 55px;
+  right: 20px;
+  position: absolute;
+  text-align: left;
+
+  img {
+    width: 52px;
+    height: 52px;
+    border-radius: 100%;
+  }
+}
+
+md-card-actions {
+  text-align: right;
+}

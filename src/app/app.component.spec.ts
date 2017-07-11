@@ -1,17 +1,29 @@
 import { async, TestBed } from '@angular/core/testing';
+import { MdButtonModule, MdCardModule, MdProgressSpinnerModule } from '@angular/material';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AccountInfoComponent } from './auth/account-info/account-info.component';
+import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MdButtonModule,
+        MdProgressSpinnerModule,
+        MdCardModule
+      ],
       providers: [
         { provide: AngularFireDatabase, useValue: { list: () => { } } },
-        { provide: AngularFireAuth, useValue: {} }
+        {
+          provide: AngularFireAuth, useValue: { authState: { subscribe: () => { } } }
+        }
       ],
       declarations: [
+        AuthWidgetComponent,
+        AccountInfoComponent,
         AppComponent
       ]
     }).compileComponents();
