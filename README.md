@@ -7,6 +7,7 @@
 [![dependencies Status](https://david-dm.org/lukaselmer/sanhei-bills2/status.svg)](https://david-dm.org/lukaselmer/sanhei-bills2)
 [![devDependencies Status](https://david-dm.org/lukaselmer/sanhei-bills2/dev-status.svg)](https://david-dm.org/lukaselmer/sanhei-bills2?type=dev)
 [![Known Vulnerabilities](https://snyk.io/test/github/lukaselmer/sanhei-bills2/badge.svg)](https://snyk.io/test/github/lukaselmer/sanhei-bills2)
+[![Greenkeeper badge](https://badges.greenkeeper.io/lukaselmer/sanhei-bills2.svg)](https://greenkeeper.io/)
 
 # SanheiBills2
 
