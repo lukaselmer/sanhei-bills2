@@ -4,22 +4,27 @@
   text-align: right;
 
   img {
-    cursor: pointer;
     width: 40px;
+
+    cursor: pointer;
+
     border-radius: 50%;
   }
 }
 
 md-card {
-  width: 250px;
+  position: absolute;
   top: 55px;
   right: 20px;
-  position: absolute;
+
+  width: 250px;
+
   text-align: left;
 
   img {
     width: 52px;
     height: 52px;
+
     border-radius: 50%;
   }
 }
