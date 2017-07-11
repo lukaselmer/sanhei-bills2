@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MdButtonModule, MdCardModule, MdCheckbox, MdList, MdListItem, MdProgressSpinnerModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from 'angularfire2';
@@ -7,19 +8,26 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import 'hammerjs';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+import { AccountInfoComponent } from './auth/account-info/account-info.component';
+import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
 import { BillsListComponent } from './bills/bills-list/bills-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BillsListComponent
+    BillsListComponent,
+    AccountInfoComponent,
+    AuthWidgetComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MdButtonModule,
+    MdProgressSpinnerModule,
+    MdCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
