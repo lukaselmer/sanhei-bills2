@@ -4,3 +4,5 @@ npm i
 
 echo 'Checking if sanhei-bills.dev is in /etc/hosts'
 grep 'sanhei-bills.dev' /etc/hosts || echo '127.0.0.1 sanhei-bills.dev' | sudo tee -a /etc/hosts
+which mdl || gem install mdl
+ln -s ../../bin/fix .git/hooks/pre-commit
