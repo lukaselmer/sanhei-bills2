@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "csscomb": "csscomb src/app",
     "e2e": "ng e2e",
-    "ci": "ng lint && ng test --single-run --progress false"
+    "ci": "bin/fix && ng test --single-run --progress false"
   },
   "private": false,
   "dependencies": {
