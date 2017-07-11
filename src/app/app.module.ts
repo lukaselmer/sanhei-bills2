@@ -8,24 +8,19 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import 'hammerjs';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { AccountInfoComponent } from './auth/account-info/account-info.component';
-import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AccountInfoComponent,
-    AuthWidgetComponent
-  ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdProgressSpinnerModule,
-    MdCardModule
+    AuthModule
+  ],
+  declarations: [
+    AppComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
