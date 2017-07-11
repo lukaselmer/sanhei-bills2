@@ -13,9 +13,14 @@ cache:
 script: npm run ci
 env:
   CODECLIMATE_REPO_TOKEN: 55944955a9f4d206eb7530d523e0abf2956fe916ebcad96c6d11aa751731e3f7
+  global:
+    secure: UH0E3jCW4pRAYSWTKDN/k6DKqcm9rkQ9BHZ5c6P3a+e0hSyjiPXxdwEOBgIUsKRtw3BF6+T2jGG5iv0YMlIq87a0ZSnX8zQfBAFr5QGp0PyxnJjx/8FVeAs7x7fAFLAraX5t9KwDUxWffDl1l0Pfgy62PDoKrM1m1yG37juPE6pK5wT/OoT9ygmnYk/gJOgI3YrmEpCyzz0pb38HIGC1yjseeSKW5kUQXeAIlT2XAHAnZZodlamK6RN8UNZkwU8Ha0x4XQ9RQs+dM3cFDv49rxmmNQwkJo/8mvbL9jC7ULtoy27EWKoCvSosz8H4Va7tzOn7eaQcIbdNn/+6eMbJu5JJ3sXn88Q2ujWG8iuF+9jzzvMibKhUdz+/GmsQAFWCh7s7F7zLw7yYWaMGRbhEMKOEGtdPDo4XM2wYzyvjpXNbtZS21/2h/zVDSE9gHiUAMtLOWbGi494BGK8tezwYT8t9DtmGxxLKhAFbsc2t2/i+HBjBsHjfIULwcYxvozFG/nGnfwB03F7tMb76z+K2xNudY499AmmcqF63xp7LyMBZPle/J+YaUWcXymQsBvqi9nMi9D2uVGvHyefKuauEpsNLb8Y6+nTieM3dd5K9umd+uwikItyUKJASa32lgpcM/kPb/mqREkAp1ffyojE2IBD8V9r1Ho6HEZTLvuyQCQQ=
 after_success:
 - npm install -g codeclimate-test-reporter
-- codeclimate-test-reporter > coverage/lcov.info
+- codeclimate-test-reporter < coverage/lcov.info
+- echo $SECRET_TEST
+- npm install -g codacy-coverage
+- cat coverage/lcov.info | ./node_modules/.bin/codacy-coverage
 before_deploy: npm run build --prod --progress false
 deploy:
   skip_cleanup: true
