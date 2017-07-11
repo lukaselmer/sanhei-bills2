@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MaterialModule, MdCheckboxModule, MdListModule } from '@angular/material';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import 'rxjs/add/observable/of';
@@ -21,6 +22,10 @@ describe('BillsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MdListModule,
+        MdCheckboxModule
+      ],
       providers: [
         {
           provide: AngularFireDatabase, useValue: {
@@ -52,27 +57,27 @@ describe('BillsListComponent', () => {
     expect(compiled.querySelector('table')).not.toBe(null);
   }));
 
-  it('should render the heading for the table', async(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('table > thead > tr').childElementCount).toBe(3);
-  }));
+  // it('should render the heading for the table', async(() => {
+  //   fixture.detectChanges();
+  //   const compiled = fixture.debugElement.nativeElement;
+  //   expect(compiled.querySelector('table > thead > tr').childElementCount).toBe(3);
+  // }));
 
   it('should render a row for each bill', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('table > tbody').childElementCount).toBe(bills.length);
+    expect(compiled.querySelector('md-list > md-list-item').childElementCount).toBe(bills.length);
   }));
 
   it('should render the row for the bill', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     const bill = bills[0];
-    const element = compiled.querySelector(`tr#bill_${bill.id}`)
+    const element = compiled.querySelector(`md-list-item#bill_${bill.id}`)
     expect(element).not.toBe(null);
-    expect(element.querySelector(':nth-child(1)').textContent).toContain(bill.id);
+    expect(element.querySelector(':nth-child(2)').textContent).toContain(bill.id);
 
     const billTitle = `${bill.uid} ${bill.address1}, ${bill.address2}, ${bill.title1}, ${bill.title2}`
-    expect(element.querySelector(':nth-child(2)').textContent).toContain(billTitle);
+    expect(element.querySelector(':nth-child(3)').textContent).toContain(billTitle);
   }));
 });
