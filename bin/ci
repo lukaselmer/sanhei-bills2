@@ -3,6 +3,7 @@
 npm run ci
 
 if [[ $TRAVIS_BRANCH == 'master' ]]
-  # prepare for deployment
+  echo 'master branch detected, preparing deployment'
   bin/production-build
+  ls -la dist
 fi
