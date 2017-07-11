@@ -11,9 +11,9 @@ node_js:
 cache:
   directories:
   - node_modules
-script: bin/ci
+script: npm run ci
+before_deploy: npm run build --prod
 deploy:
-  skip_cleanup: true
   on:
     branch: master
   provider: firebase

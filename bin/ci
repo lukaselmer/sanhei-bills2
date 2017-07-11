@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-npm run ci
-
-if [[ $TRAVIS_BRANCH == 'master' ]]; then
-  echo 'master branch detected, preparing deployment'
-  bin/production-build
-fi
