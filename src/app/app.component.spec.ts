@@ -4,6 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AccountInfoComponent } from './auth/account-info/account-info.component';
 import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
+import { BillsListComponent } from './bills/bills-list/bills-list.component';
 
 import { AppComponent } from './app.component';
 
@@ -24,7 +25,8 @@ describe('AppComponent', () => {
       declarations: [
         AuthWidgetComponent,
         AccountInfoComponent,
-        AppComponent
+        AppComponent,
+        BillsListComponent
       ]
     }).compileComponents();
   }));
