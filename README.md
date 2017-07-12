@@ -1,4 +1,18 @@
 [![Build Status](https://travis-ci.org/lukaselmer/sanhei-bills2.svg?branch=master)](https://travis-ci.org/lukaselmer/sanhei-bills2)
+[![Code Climate](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/gpa.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2)
+[![Code Climate Test Coverage](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/coverage.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2/coverage)
+[![Code Climate Issue Count](https://codeclimate.com/github/lukaselmer/sanhei-bills2/badges/issue_count.svg)](https://codeclimate.com/github/lukaselmer/sanhei-bills2)
+[![Codacy](https://api.codacy.com/project/badge/Grade/cc92ebe2a13244738fc76d55482fe9b6)](https://www.codacy.com/app/renuo/sanhei-bills2)
+[![Codacy Test Coverage](https://api.codacy.com/project/badge/Coverage/cc92ebe2a13244738fc76d55482fe9b6)](https://www.codacy.com/app/renuo/sanhei-bills2?utm_source=github.com&utm_medium=referral&utm_content=lukaselmer/sanhei-bills2&utm_campaign=Badge_Coverage)
+[![dependencies Status](https://david-dm.org/lukaselmer/sanhei-bills2/status.svg)](https://david-dm.org/lukaselmer/sanhei-bills2)
+[![devDependencies Status](https://david-dm.org/lukaselmer/sanhei-bills2/dev-status.svg)](https://david-dm.org/lukaselmer/sanhei-bills2?type=dev)
+[![Known Vulnerabilities](https://snyk.io/test/github/lukaselmer/sanhei-bills2/badge.svg)](https://snyk.io/test/github/lukaselmer/sanhei-bills2)
+[![Greenkeeper badge](https://badges.greenkeeper.io/lukaselmer/sanhei-bills2.svg)](https://greenkeeper.io/)
+[![NSP Status](https://nodesecurity.io/orgs/lukaselmer/projects/44cae39e-0b80-474c-8b7d-27ef4063a9e6/badge)](https://nodesecurity.io/orgs/lukaselmer/projects/44cae39e-0b80-474c-8b7d-27ef4063a9e6)
+[![bitHound Overall Score](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/score.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2)
+[![bitHound Code](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/code.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2)
+[![bitHound Dependencies](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/dependencies.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/devDependencies.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2/master/dependencies/npm)
 
 # SanheiBills2
 

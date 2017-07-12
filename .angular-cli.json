@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "sb",
       "styles": [
-        "styles.scss"
+        "scss/global.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

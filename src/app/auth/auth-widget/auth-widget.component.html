@@ -1,8 +1,5 @@
 <section [ngSwitch]="loginStatus">
-  <ng-container *ngSwitchCase="'unknown'">
-    <md-spinner></md-spinner>
-    <div style="clear: both"></div>
-  </ng-container>
+  <md-spinner *ngSwitchCase="'unknown'" color="accent"></md-spinner>
   <div *ngSwitchCase="'signedOut'">
     <button md-raised-button (click)="login()">Sign in</button>
   </div>

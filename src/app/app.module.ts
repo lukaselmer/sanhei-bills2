@@ -8,17 +8,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import 'hammerjs';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { AccountInfoComponent } from './auth/account-info/account-info.component';
-import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
-import { BillsListComponent } from './bills/bills-list/bills-list.component';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BillsListComponent,
-    AccountInfoComponent,
-    AuthWidgetComponent
-  ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -29,6 +21,10 @@ import { BillsListComponent } from './bills/bills-list/bills-list.component';
     MdProgressSpinnerModule,
     MdCardModule,
     MaterialModule
+    AuthModule
+  ],
+  declarations: [
+    AppComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

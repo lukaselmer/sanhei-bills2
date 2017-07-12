@@ -3,13 +3,28 @@ addons:
   chrome: stable
 language: node_js
 before_install:
-  - export CHROME_BIN=google-chrome-stable
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - bin/setup
-node_js:
-  - "node"
+- export CHROME_BIN=google-chrome-stable
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- gem install mdl
 cache:
   directories:
   - node_modules
 script: npm run ci
+env:
+  global:
+    secure: Uwc/4DXZ96evLZ/RNLkO8V23d/q3TeOJ9fPJCAhzNJraWR/YcSIVM8dAMicpDhXWxCJ0jSrU7Vn8StfXEVFhw8BRcgHwaOGpjKiNFYNMk9INRi0tOZq/ul6NcTm94qSq7VO18/x+qBNLbfDYYjlFOTLkgo86fa5sO3q3tDpt4Ui39Dbigavbb/ZSccL61cMYbk8+6WqF3GBzOIOmf3UP3EifmTU/W4Jt1HqglPJ0cw06ZMLf7caIH1d2Zk+qiyvt1OqAjs7OkJ2CVmJTNv1ZljwYvvcH5jWxGi0nhUHcNjWFm+HOBWkYeZ1umRojFlExZR8wc9F1SENqLbVd1V5r6cVztHrgiacWzxgcHpPBBlHwKSbq7i8lWeVkHDZte0cboFGYfs2i3+bZjxYDr9C7bioyHBMPb6rOtw5zstL63LBOgTe558YF/i3K2nrBMMJZ3j8cvuvRXDaB4PvFrIl7XpE7ZfpOlQ542N6pS8DVyTaBjhxM47w4uChD/fLwxUKfC/IWH9HYJ4spl/O1nYHp+yHa4gZ9ZYVGlTT33+D6xUoHKcfI1VkPw/rLycEyTcYfwFK/U8Aa3zqovrFBcdlKP77Qg+lO8yPLeGEEwYNcjaQippN5NFH2IM/XAGFye2fbQPoqG2gsP4xE8OB+ccTxEfnJFRbuZqqYivwR8NRU39A=
+after_success:
+- npm install -g codeclimate-test-reporter
+- CODECLIMATE_REPO_TOKEN=55944955a9f4d206eb7530d523e0abf2956fe916ebcad96c6d11aa751731e3f7 codeclimate-test-reporter < coverage/lcov.info
+- npm install -g codacy-coverage
+- cat coverage/lcov.info | codacy-coverage
+before_deploy: npm run build-prod
+deploy:
+  skip_cleanup: true
+  on:
+    branch: master
+  provider: firebase
+  token:
+    secure: C/ijVEECipluzfapXKOnXp1dy0y65knHmVQ5oMINK6gzTxFKGxjPKvmQVkK8o50VL+zsqDcsYq/dySI357Ls8vDekLoWJqb7ZkcDGS+4vxcj4L9zjKAv6dOeLF8Ng3bXIkCJ1sNSTrzBMKS2CxHlceWiDjM6XaybGuvWLufCXvUQh7rUCeleTdvTFLBnN3zB+fpIVhruOfgoU74nhBolv9/9PWsr0P8JZA1RyN0CqYkUGbS7TkEsnKM+ih3f+e3RhF7MtCyuAoD+UegUfNhoX6GrOxMkM0eP98mnWB9p8qoTUcd+z9G44x97oNtzG9+cqhTb4B42jGcVumMdSDVZqysBvEotJMf4G+PASycdsyF+OuIr2m7yLt/dzlUn5Lv+MOOjf34BDT98KbXKyeuM9zgKtvEI/1h1VJTccZr/Is8igTtoR05+xhQ1o/W0EsMDRzCWFiApysST07am8quv3yLr8MK8dOVl0OpGGJL7oo/bw1Q3ru/bFx1iq2O/iKIr1lEiqdXs4Ubbk7l8i0eYeDP1I6vFvAeKi1j7/A1R9UQcroUBPNppHagQBfy7VfaRt20FZO8NahucoK3ZLL/1RjXwxF4pwznMXO5/quTXEcSXauxXoK7XKptgmeZ+BkfCjH7ysn6eK/SGXBHmMd6y4NLfpy7g4O9D5spqluwzDb0=
+  project: sanhei-bills

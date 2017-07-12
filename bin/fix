@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+DIFF_BEFORE=`git diff | shasum -a 256`
+npm run lint --fix true
+DIFF_AFTER=`git diff | shasum -a 256`
+if [[ ! $DIFF_BEFORE == $DIFF_AFTER ]]; then
+  echo 'tslint has rearranged some of your ts that has to be reviewed manually, commit aborted'
+fi
+
+mdl .
+if [ $? -ne 0 ]; then
+  echo 'Violated markdown rules, see https://github.com/mivok/markdownlint/blob/master/docs/RULES.md, commit aborted'
+  exit 1
+fi
+
+DIFF_BEFORE=`git diff | shasum -a 256`
+npm run csscomb
+DIFF_AFTER=`git diff | shasum -a 256`
+if [[ ! $DIFF_BEFORE == $DIFF_AFTER ]]; then
+  echo 'csscomb has rearranged some of your scss that has to be reviewed manually, commit aborted'
+  exit 1
+fi
+
