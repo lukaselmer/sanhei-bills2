@@ -10,6 +10,9 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/lukaselmer/sanhei-bills2.svg)](https://greenkeeper.io/)
 [![NSP Status](https://nodesecurity.io/orgs/lukaselmer/projects/44cae39e-0b80-474c-8b7d-27ef4063a9e6/badge)](https://nodesecurity.io/orgs/lukaselmer/projects/44cae39e-0b80-474c-8b7d-27ef4063a9e6)
 [![bitHound Overall Score](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/score.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2)
+[![bitHound Code](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/code.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2)
+[![bitHound Dependencies](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/dependencies.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/devDependencies.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2/master/dependencies/npm)
 
 # SanheiBills2
 
