@@ -18,10 +18,6 @@ import { BillsModule } from './bills/bills.module';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdProgressSpinnerModule,
-    MdCardModule,
-    MaterialModule,
     AuthModule,
     BillsModule
   ],
