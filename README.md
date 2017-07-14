@@ -13,6 +13,7 @@
 [![bitHound Code](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/code.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2)
 [![bitHound Dependencies](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/dependencies.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/devDependencies.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2/master/dependencies/npm)
+[![codecov](https://codecov.io/gh/lukaselmer/sanhei-bills2/branch/master/graph/badge.svg)](https://codecov.io/gh/lukaselmer/sanhei-bills2)
 
 # SanheiBills2
 
