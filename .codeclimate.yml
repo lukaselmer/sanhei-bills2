@@ -1,0 +1,20 @@
+engines:
+  tslint:
+    enabled: true
+    channel: beta
+    config: tslint.json
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript:
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.ts"
+exclude_paths:
+- node_modules
+- coverage
+- dist
+- ssl
