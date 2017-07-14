@@ -38,6 +38,9 @@ module.exports = function (config) {
         flags: ['--no-sandbox', '--headless', '--disable-gpu', '--remote-debugging-port=9222']
       }
     },
+    files: [
+      { pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css' }
+    ],
     singleRun: false
   });
 };
