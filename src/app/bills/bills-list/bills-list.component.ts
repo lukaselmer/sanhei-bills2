@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MaterialModule, MdCheckbox, MdList, MdListItem } from '@angular/material';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
