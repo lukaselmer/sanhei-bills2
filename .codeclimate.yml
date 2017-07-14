@@ -16,6 +16,8 @@ ratings:
   - "src/**"
   - "e2e/**"
   - "bin/**"
+  - "karma.conf.js"
+  - "protractor.conf.js"
 exclude_paths:
 - node_modules
 - coverage
