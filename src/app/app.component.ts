@@ -8,16 +8,5 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'sb';
-  bills: FirebaseListObservable<any>;
-
-  constructor(private db: AngularFireDatabase) { }
-
-  ngOnInit() {
-    this.bills = this.db.list('billing/bills', {
-      query: { limitToFirst: 15 }
-    });
-  }
-
+export class AppComponent {
 }
