@@ -5,9 +5,5 @@
 <main>
   <h1> Welcome to {{title}}!! </h1>
 
-  <ul>
-    <li *ngFor="let bill of bills | async">
-      {{bill.address1}}
-    </li>
-  </ul>
+  <sb-bills-list></sb-bills-list>
 </main>
