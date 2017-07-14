@@ -51,17 +51,11 @@ describe('BillsListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render a table', async(() => {
+  it('should render an md-list', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('table')).not.toBe(null);
+    expect(compiled.querySelector('md-list')).not.toBe(null);
   }));
-
-  // it('should render the heading for the table', async(() => {
-  //   fixture.detectChanges();
-  //   const compiled = fixture.debugElement.nativeElement;
-  //   expect(compiled.querySelector('table > thead > tr').childElementCount).toBe(3);
-  // }));
 
   it('should render a row for each bill', async(() => {
     fixture.detectChanges();
@@ -75,9 +69,10 @@ describe('BillsListComponent', () => {
     const bill = bills[0];
     const element = compiled.querySelector(`md-list-item#bill_${bill.id}`)
     expect(element).not.toBe(null);
-    expect(element.querySelector(':nth-child(2)').textContent).toContain(bill.id);
+    expect(element.querySelector('div.md-list-item').textContent).toContain(bill.id);
 
     const billTitle = `${bill.uid} ${bill.address1}, ${bill.address2}, ${bill.title1}, ${bill.title2}`
-    expect(element.querySelector(':nth-child(3)').textContent).toContain(billTitle);
+    expect(element.querySelector('.mat-list-item-content :nth-child(5)').textContent).toContain(billTitle);
+
   }));
 });
