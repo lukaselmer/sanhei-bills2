@@ -18,7 +18,7 @@ describe('BillsListComponent', () => {
       title1: 'Objekt: Adresse',
       title2: 'Zusatz'
     }
-  ]
+  ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,15 +30,14 @@ describe('BillsListComponent', () => {
         {
           provide: AngularFireDatabase, useValue: {
             list: () => {
-              return Observable.of(bills)
+              return Observable.of(bills);
             }
           }
         },
         { provide: AngularFireAuth, useValue: {} }
       ],
       declarations: [BillsListComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -67,12 +66,11 @@ describe('BillsListComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     const bill = bills[0];
-    const element = compiled.querySelector(`md-list-item#bill_${bill.id}`)
+    const element = compiled.querySelector(`md-list-item#bill_${bill.id}`);
     expect(element).not.toBe(null);
     expect(element.querySelector('div.md-list-item').textContent).toContain(bill.id);
 
-    const billTitle = `${bill.uid} ${bill.address1}, ${bill.address2}, ${bill.title1}, ${bill.title2}`
+    const billTitle = `${bill.uid} ${bill.address1}, ${bill.address2}, ${bill.title1}, ${bill.title2}`;
     expect(element.querySelector('.mat-list-item-content :nth-child(5)').textContent).toContain(billTitle);
-
   }));
 });
