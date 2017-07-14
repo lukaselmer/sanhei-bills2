@@ -9,7 +9,7 @@ import 'hammerjs';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { BillsListComponent } from './bills/bills-list/bills-list.component';
+import { BillsModule } from './bills/bills.module';
 
 @NgModule({
   imports: [
@@ -18,15 +18,15 @@ import { BillsListComponent } from './bills/bills-list/bills-list.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
-    AuthModule,
     MdButtonModule,
     MdProgressSpinnerModule,
     MdCardModule,
-    MaterialModule
+    MaterialModule,
+    AuthModule,
+    BillsModule
   ],
   declarations: [
-    AppComponent,
-    BillsListComponent
+    AppComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
