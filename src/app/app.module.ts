@@ -9,6 +9,7 @@ import 'hammerjs';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
+import { BillsListComponent } from './bills/bills-list/bills-list.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { AuthModule } from './auth/auth.module';
     AuthModule
   ],
   declarations: [
-    AppComponent
+    AppComponent,
+    BillsListComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
