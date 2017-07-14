@@ -1,8 +1,9 @@
 engines:
-  tslint:
-    enabled: true
-    channel: beta
-    config: tslint.json
+  # waiting for https://github.com/tkqubo/codeclimate-tslint/issues/26
+  # tslint:
+  #   enabled: true
+  #   channel: beta
+  #   config: tslint.json
   duplication:
     enabled: true
     config:
@@ -12,7 +13,9 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "**.ts"
+  - "src/**"
+  - "e2e/**"
+  - "bin/**"
 exclude_paths:
 - node_modules
 - coverage
