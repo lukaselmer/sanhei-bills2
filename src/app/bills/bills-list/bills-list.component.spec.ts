@@ -4,6 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { BillsService } from '../bills.service';
 import { BillsListComponent } from './bills-list.component';
 
 describe('BillsListComponent', () => {
@@ -27,6 +28,7 @@ describe('BillsListComponent', () => {
         MdCheckboxModule
       ],
       providers: [
+        { provide: BillsService, useValue: { forIndex: () => Observable.of(bills) } },
         {
           provide: AngularFireDatabase, useValue: {
             list: () => {
@@ -68,9 +70,9 @@ describe('BillsListComponent', () => {
     const bill = bills[0];
     const element = compiled.querySelector(`md-list-item#bill_${bill.id}`);
     expect(element).not.toBe(null);
-    expect(element.querySelector('div.md-list-item').textContent).toContain(bill.id);
+    expect(element.querySelector('[md-line]:nth-child(2)').textContent.trim()).toEqual(bill.id);
 
     const billTitle = `${bill.uid} ${bill.address1}, ${bill.address2}, ${bill.title1}, ${bill.title2}`;
-    expect(element.querySelector('.mat-list-item-content :nth-child(5)').textContent).toContain(billTitle);
+    expect(element.querySelector('[md-line]:nth-child(3)').textContent.trim()).toEqual(billTitle);
   }));
 });

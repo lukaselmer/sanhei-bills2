@@ -2,15 +2,15 @@
 
 <md-list>
   <md-list-item class="md-2-line" *ngFor="let bill of bills | async" id="bill_{{ bill.id }}">
-    <md-checkbox></md-checkbox>
-    <div class="md-list-item">
+    <md-checkbox md-line></md-checkbox>
+    <div md-line>
       <span>{{ bill.id }}</span>
     </div>
-    <div class="md-list-item">
+    <div md-line>
       <span><strong>{{bill.uid}}</strong> {{ bill.address1 }}, {{ bill.address2 }}, {{ bill.title1 }}, {{ bill.title2 }}</span>
     </div>
-    <div class="md-list-item">
-      <!-- links -->
+    <div md-line>
+      {{bill | json}}
     </div>
   </md-list-item>
 </md-list>

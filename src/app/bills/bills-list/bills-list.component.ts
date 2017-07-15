@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { BillsService } from 'app/bills/bills.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 
@@ -11,13 +12,11 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class BillsListComponent implements OnInit {
-  bills: FirebaseListObservable<any>;
+  bills: Observable<any[]>;
 
-  constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) { }
+  constructor(private db: AngularFireDatabase, private billsService: BillsService) { }
 
   ngOnInit() {
-    this.bills = this.db.list('billing/bills', {
-      query: { limitToFirst: 15 }
-    });
+    this.bills = this.billsService.forIndex();
   }
 }
