@@ -4,6 +4,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { BillsService } from 'app/bills/bills.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
+import { Bill } from './../bill';
 
 @Component({
   selector: 'sb-bills-list',
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class BillsListComponent implements OnInit {
-  bills: Observable<any[]>;
+  bills: Observable<Bill[]>;
 
   constructor(private db: AngularFireDatabase, private billsService: BillsService) { }
 
