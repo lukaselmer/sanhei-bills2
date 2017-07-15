@@ -6,7 +6,16 @@
     },
     "billing": {
       ".read": "root.child('admins/'+auth.uid).exists()",
-      ".write": "root.child('admins/'+auth.uid).exists()"
+      ".write": "root.child('admins/'+auth.uid).exists()",
+      "bills": {
+        ".indexOn": "id"
+      },
+      "articles": {
+        ".indexOn": "id"
+      },
+      "bill_articles": {
+        ".indexOn": "id"
+      }
     }
   }
 }
