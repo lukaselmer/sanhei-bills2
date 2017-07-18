@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { BillsService } from 'app/bills/bills.service';
-import * as firebase from 'firebase/app';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './../bill';
+import { SearchResult } from './../search/search-result';
 
 @Component({
   selector: 'sb-bills-list',
@@ -13,11 +15,35 @@ import { Bill } from './../bill';
 })
 
 export class BillsListComponent implements OnInit {
-  bills: Observable<Bill[]>;
+  bills$: Observable<Bill[]>;
+  displayedSearchTerm = '';
+  showProgress = true;
+
+  private searchTermStream = new BehaviorSubject<string>('');
 
   constructor(private billsService: BillsService) { }
 
   ngOnInit() {
-    this.bills = this.billsService.forIndex();
+    const billsSearch$ = this.searchTermStream
+      .distinctUntilChanged()
+      .debounceTime(10)
+      .distinctUntilChanged()
+      .switchMap(term => this.reallyStartSearching(term));
+    this.bills$ = billsSearch$.map(search => search.list);
+    billsSearch$.subscribe(search => this.updateProgress(search));
+  }
+
+  private reallyStartSearching(term: string) {
+    if (this.displayedSearchTerm !== term) this.showProgress = true;
+    return this.billsService.search(term);
+  }
+
+  private updateProgress(search: SearchResult<Bill>) {
+    this.displayedSearchTerm = search.term;
+    this.showProgress = search.dbStatus !== 'loaded';
+  }
+
+  searchKeyup(searchTerm: string) {
+    this.searchTermStream.next(searchTerm);
   }
 }
