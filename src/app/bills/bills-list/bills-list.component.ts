@@ -15,7 +15,7 @@ import { Bill } from './../bill';
 export class BillsListComponent implements OnInit {
   bills: Observable<Bill[]>;
 
-  constructor(private db: AngularFireDatabase, private billsService: BillsService) { }
+  constructor(private billsService: BillsService) { }
 
   ngOnInit() {
     this.bills = this.billsService.forIndex();
