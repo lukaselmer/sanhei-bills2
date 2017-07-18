@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MdCheckboxModule, MdListModule } from '@angular/material';
+import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsService } from './bills.service';
 
 @NgModule({
   imports: [
     CommonModule,
+    MdCheckboxModule,
+    MdInputModule,
     MdListModule,
-    MdCheckboxModule
+    MdProgressBarModule
   ],
   declarations: [
     BillsListComponent

@@ -1,7 +1,13 @@
 <h1>Bills</h1>
 
+<md-input-container>
+  <input mdInput placeholder="Search" #searchTerm (keyup)="searchKeyup(searchTerm.value)">
+</md-input-container>
+
+<md-progress-bar *ngIf="showProgress" mode="indeterminate" color="accent"></md-progress-bar>
+
 <md-list>
-  <md-list-item class="md-2-line" *ngFor="let bill of bills | async" id="bill_{{ bill.id }}">
+  <md-list-item *ngFor="let bill of bills$ | async" id="bill_ {{ bill.id }}">
     <md-checkbox md-line></md-checkbox>
     <div md-line>
       <span>{{ bill.id }}</span>
