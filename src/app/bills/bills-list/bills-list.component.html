@@ -7,7 +7,7 @@
 <md-progress-bar *ngIf="showProgress" mode="indeterminate" color="accent"></md-progress-bar>
 
 <md-list>
-  <md-list-item *ngFor="let bill of bills$ | async" id="bill_ {{ bill.id }}">
+  <md-list-item *ngFor="let bill of bills$ | async">
     <md-checkbox md-line></md-checkbox>
     <div md-line>
       <span>{{ bill.id }}</span>

@@ -83,6 +83,7 @@
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
+    // "no-unnecessary-type-assertion": true, rule requires type checking
     // "no-unused-variable": true, rule requires type checking
     // "no-use-before-declare": true, rule requires type checking
     "no-var-keyword": true,
