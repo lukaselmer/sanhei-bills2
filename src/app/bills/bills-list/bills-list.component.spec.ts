@@ -28,15 +28,7 @@ describe('BillsListComponent', () => {
         MdCheckboxModule
       ],
       providers: [
-        { provide: BillsService, useValue: { forIndex: () => Observable.of(bills) } },
-        {
-          provide: AngularFireDatabase, useValue: {
-            list: () => {
-              return Observable.of(bills);
-            }
-          }
-        },
-        { provide: AngularFireAuth, useValue: {} }
+        { provide: BillsService, useValue: { forIndex: () => Observable.of(bills) } }
       ],
       declarations: [BillsListComponent]
     }).compileComponents();
