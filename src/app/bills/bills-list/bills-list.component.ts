@@ -5,6 +5,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { DataStoreStatus } from '../store/data-store-status';
 import { Bill } from './../bill';
 import { SearchResult } from './../search/search-result';
 
@@ -17,7 +18,7 @@ import { SearchResult } from './../search/search-result';
 export class BillsListComponent implements OnInit {
   bills$: Observable<Bill[]>;
   displayedSearchTerm = '';
-  showProgress = true;
+  loadStatus: DataStoreStatus = 'loading';
 
   private searchTermStream = new BehaviorSubject<string>('');
 
@@ -34,13 +35,13 @@ export class BillsListComponent implements OnInit {
   }
 
   private reallyStartSearching(term: string) {
-    if (this.displayedSearchTerm !== term) this.showProgress = true;
+    if (this.displayedSearchTerm !== term) this.loadStatus = 'loading';
     return this.billsService.search(term);
   }
 
   private updateProgress(search: SearchResult<Bill>) {
     this.displayedSearchTerm = search.term;
-    this.showProgress = search.dbStatus !== 'loaded';
+    this.loadStatus = search.dbStatus;
   }
 
   searchKeyup(searchTerm: string) {

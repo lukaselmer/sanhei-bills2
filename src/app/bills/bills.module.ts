@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsService } from './bills.service';
+import { DataStoreService } from './store/data-store.service';
+import { IDBStoreService } from './store/idb-store.service';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { BillsService } from './bills.service';
     BillsListComponent
   ],
   providers: [
-    BillsService
+    BillsService,
+    DataStoreService,
+    IDBStoreService
   ]
 })
 export class BillsModule { }
