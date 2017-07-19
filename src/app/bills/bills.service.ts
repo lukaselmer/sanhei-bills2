@@ -13,4 +13,8 @@ export class BillsService {
       query: { limitToFirst: 15, orderByChild: 'id', startAt: 1001 }
     });
   }
+
+  getBill(id: number) {
+    // Get bill
+  }
 }

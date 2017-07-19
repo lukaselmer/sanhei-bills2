@@ -1,7 +1,11 @@
 <h1>Bills</h1>
 
+<hr>
+<router-outlet></router-outlet>
+<hr>
+
 <md-list>
-  <md-list-item class="md-2-line" *ngFor="let bill of bills | async" id="bill_{{ bill.id }}">
+  <md-list-item class="md-2-line" *ngFor="let bill of bills | async" id="bill_{{ bill.id }}" (click)="onSelect(bill)">
     <md-checkbox md-line></md-checkbox>
     <div md-line>
       <span>{{ bill.id }}</span>
