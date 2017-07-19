@@ -34,7 +34,8 @@ export class BillsListComponent implements OnInit {
     billsSearch$.subscribe(search => this.updateProgress(search));
   }
 
-  private reallyStartSearching(term: string) {
+  private reallyStartSearching(rawTerm: string) {
+    const term = rawTerm.toLowerCase();
     if (this.displayedSearchTerm !== term) this.loadStatus = 'loading';
     return this.billsService.search(term);
   }
