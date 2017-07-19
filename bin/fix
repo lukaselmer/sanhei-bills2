@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DIFF_BEFORE=`git diff | shasum -a 256`
-npm run lint --fix true
+npm run lint
 DIFF_AFTER=`git diff | shasum -a 256`
 if [[ ! $DIFF_BEFORE == $DIFF_AFTER ]]; then
   echo 'tslint has rearranged some of your ts that has to be reviewed manually, commit aborted'

@@ -8,7 +8,7 @@
     "build": "ng build",
     "build-prod": "ng build --prod --progress false",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint --fix true",
     "csscomb": "csscomb src/app",
     "e2e": "ng e2e",
     "ci": "bin/fix && ng test --single-run --progress false --code-coverage"
