@@ -4,7 +4,7 @@
   <input mdInput placeholder="Search" #searchTerm (keyup)="searchKeyup(searchTerm.value)">
 </md-input-container>
 
-<md-progress-bar *ngIf="showProgress" mode="indeterminate" color="accent"></md-progress-bar>
+<md-progress-bar *ngIf="loadStatus !== 'loaded'" [mode]="loadStatus === 'loading' ? 'query' : 'indeterminate'" color="accent"></md-progress-bar>
 
 <md-list>
   <md-list-item *ngFor="let bill of bills$ | async">
