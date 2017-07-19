@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import 'rxjs/add/observable/of';
@@ -36,7 +36,11 @@ describe('BillsListComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: BillsService, useValue: { search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch) } }
+        {
+          provide: BillsService, useValue: {
+            search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch)
+          }
+        }
       ],
       declarations: [BillsListComponent]
     }).compileComponents();
@@ -68,11 +72,24 @@ describe('BillsListComponent', () => {
   it('should render the row for the bill', fakeAsync(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    const element = compiled.querySelector(`md-list-item`);
+    const element = compiled.querySelector('md-list-item');
     expect(element).not.toBe(null);
     expect(element.querySelector('[md-line]:nth-child(2)').textContent.trim()).toEqual(bill.id.toString());
 
     const billTitle = `${bill.uid} ${bill.address1}, ${bill.address2}, ${bill.title1}, ${bill.title2}`;
     expect(element.querySelector('[md-line]:nth-child(3)').textContent.trim()).toEqual(billTitle);
   }));
+
+  it('should search through the bills', fakeAsync(inject([BillsService], (service: BillsService) => {
+    expect((component as any).searchTermStream.getValue()).toEqual('');
+    spyOn(service, 'search').and.callThrough();
+    const compiled = fixture.debugElement.nativeElement;
+    const element = compiled.querySelector('input');
+    expect(service.search).toHaveBeenCalledTimes(0);
+    element.value = 'Some';
+    element.dispatchEvent(new Event('keyup'));
+    tick(100);
+    expect((component as any).searchTermStream.getValue()).toEqual('some');
+    expect(service.search).toHaveBeenCalledWith('some');
+  })));
 });
