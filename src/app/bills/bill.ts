@@ -1,28 +1,31 @@
 export class Bill {
   id: number;
+  cashback: number;
+  uid: number;
+  vat: number;
+  workHours: number;
+
+  deleted: boolean;
+  finished: boolean;
+  paid: boolean;
+
   address1?: string;
   address2?: string;
   address3?: string;
   address4?: string;
   address5?: string;
-  billType: string;
-  billedAt: Date;
-  cashback: number;
-  deleted: boolean;
+  billType?: string;
   description: string;
-  finished: boolean;
-  fixedAt: Date;
   fixedAtOverride: string;
-  orderedAt: Date;
   ordererName: string;
   ownerName: string;
-  paid: boolean;
   title1: string;
   title2: string;
-  uid: number;
-  vat: number;
-  workHours: string;
   worker: string;
+
+  fixedAt: Date;
+  orderedAt: Date;
+  billedAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }

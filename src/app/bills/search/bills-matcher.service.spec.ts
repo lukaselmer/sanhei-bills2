@@ -6,27 +6,78 @@ import { BillMatcherService } from './bill-matcher.service';
 
 describe('BillMatcherService', () => {
   let service: BillMatcherService;
-  const billMock: Bill = {
-    address1: 'A street',
-    address2: 'Something',
-    address3: 'lower'
-  } as any;
+  const bill = {
+    id: 1000,
+    cashback: 2000,
+    uid: 3000,
+    vat: 4.51,
+    workHours: 5000,
+    address1: 'address1',
+    address2: 'address2',
+    address3: 'address3',
+    address4: 'address4',
+    address5: 'address5',
+    billType: 'billType',
+    description: 'description',
+    fixedAtOverride: 'fixedAtOverride',
+    ordererName: 'ordererName',
+    ownerName: 'ownerName',
+    title1: 'title1',
+    title2: 'title2',
+    worker: 'worker',
+    deleted: false,
+    finished: false,
+    paid: false,
+    billedAt: new Date(2017, 5, 23),
+    fixedAt: new Date(2017, 5, 21),
+    orderedAt: new Date(2017, 5, 20),
+    createdAt: new Date(2017, 5, 22),
+    updatedAt: new Date(2017, 5, 24)
+  };
+
+  function billVariant(attributes: Partial<Bill>): Bill {
+    return { ...bill, ...attributes };
+  }
 
   beforeEach(() => {
     service = new BillMatcherService();
   });
 
   it('always matches the empty string', () => {
-    expect(service.matches('', billMock)).toBeTruthy();
+    expect(service.matches('', bill)).toBeTruthy();
   });
 
   it('ignores case and spaces', () => {
-    expect(service.matches('some', billMock)).toBeTruthy();
-    expect(service.matches('a stre', billMock)).toBeTruthy();
-    expect(service.matches('bla', billMock)).toBeFalsy();
+    const variant = billVariant({
+      address1: 'A street',
+      address2: 'Something',
+      address3: 'lower'
+    });
+    expect(service.matches('some', variant)).toBeTruthy();
+    expect(service.matches('a stre', variant)).toBeTruthy();
+    expect(service.matches('low', variant)).toBeTruthy();
+    expect(service.matches('bla', variant)).toBeFalsy();
   });
 
   it('does not search within a field', () => {
-    expect(service.matches('street', billMock)).toBeFalsy();
+    const variant = billVariant({ address1: 'A street' });
+    expect(service.matches('street', bill)).toBeFalsy();
+  });
+
+  it('searches in all address fields', () => {
+    expect(service.matches('address1', bill)).toBeTruthy();
+    expect(service.matches('address2', bill)).toBeTruthy();
+    expect(service.matches('address3', bill)).toBeTruthy();
+    expect(service.matches('address4', bill)).toBeTruthy();
+    expect(service.matches('address5', bill)).toBeTruthy();
+  });
+
+  it('searches in all number fields', () => {
+    expect(service.matches('1000', bill)).toBeTruthy();
+    expect(service.matches('2000', bill)).toBeTruthy();
+    expect(service.matches('3000', bill)).toBeTruthy();
+    expect(service.matches('4.51', bill)).toBeTruthy();
+    expect(service.matches('5000', bill)).toBeTruthy();
+    expect(service.matches('6000', bill)).toBeFalsy();
   });
 });
