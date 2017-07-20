@@ -1,10 +1,10 @@
 export class Bill {
   id: number;
-  address1: string;
-  address2: string;
-  address3: string;
-  address4: string;
-  address5: string;
+  address1?: string;
+  address2?: string;
+  address3?: string;
+  address4?: string;
+  address5?: string;
   billType: string;
   billedAt: Date;
   cashback: number;
