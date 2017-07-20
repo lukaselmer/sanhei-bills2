@@ -6,6 +6,7 @@ export class BillMatcherService {
   matches(term: string, bill: Bill): boolean {
     if (term === '') return true;
     if (this.matchesNumber(term, bill)) return true;
+    if (this.matchesIdOrUid(term, bill)) return true;
     if (this.matchesAddress(term, bill)) return true;
     if (this.matchesOtherStringFields(term, bill)) return true;
     if (this.matchesDates(term, bill)) return true;
@@ -22,6 +23,10 @@ export class BillMatcherService {
       bill.uid === termAsNumber ||
       bill.vat === termAsNumber ||
       bill.workHours === termAsNumber;
+  }
+
+  private matchesIdOrUid(term: string, bill: Bill) {
+    return bill.id.toString().startsWith(term) || bill.uid.toString().startsWith(term);
   }
 
   private matchesAddress(term: string, bill: Bill) {
@@ -43,10 +48,15 @@ export class BillMatcherService {
   }
 
   private matchesDates(term: string, bill: Bill) {
-    return (bill.billedAt && (bill.billedAt.toLocaleDateString().startsWith(term) || bill.billedAt.toISOString().startsWith(term))) ||
-      (bill.fixedAt && (bill.fixedAt.toLocaleDateString().startsWith(term) || bill.fixedAt.toISOString().startsWith(term))) ||
-      (bill.orderedAt && (bill.orderedAt.toLocaleDateString().startsWith(term) || bill.orderedAt.toISOString().startsWith(term))) ||
-      (bill.createdAt && (bill.createdAt.toLocaleDateString().startsWith(term) || bill.createdAt.toISOString().startsWith(term))) ||
-      (bill.updatedAt && (bill.updatedAt.toLocaleDateString().startsWith(term) || bill.updatedAt.toISOString().startsWith(term)));
+    return (bill.billedAt &&
+      (new Date(bill.billedAt).toLocaleDateString().startsWith(term) || new Date(bill.billedAt).toISOString().startsWith(term))) ||
+      (bill.fixedAt &&
+        (new Date(bill.fixedAt).toLocaleDateString().startsWith(term) || new Date(bill.fixedAt).toISOString().startsWith(term))) ||
+      (bill.orderedAt &&
+        (new Date(bill.orderedAt).toLocaleDateString().startsWith(term) || new Date(bill.orderedAt).toISOString().startsWith(term))) ||
+      (bill.createdAt &&
+        (new Date(bill.createdAt).toLocaleDateString().startsWith(term) || new Date(bill.createdAt).toISOString().startsWith(term))) ||
+      (bill.updatedAt &&
+        (new Date(bill.updatedAt).toLocaleDateString().startsWith(term) || new Date(bill.updatedAt).toISOString().startsWith(term)));
   }
 }

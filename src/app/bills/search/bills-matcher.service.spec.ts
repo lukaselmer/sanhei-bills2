@@ -28,11 +28,11 @@ describe('BillMatcherService', () => {
     deleted: false,
     finished: false,
     paid: false,
-    billedAt: new Date(2017, 5, 23),
-    fixedAt: new Date(2017, 5, 21),
-    orderedAt: new Date(2017, 5, 20),
-    createdAt: new Date(2017, 5, 22),
-    updatedAt: new Date(2017, 5, 24)
+    billedAt: new Date(2017, 5, 23).toISOString(),
+    fixedAt: new Date(2017, 5, 21).toISOString(),
+    orderedAt: new Date(2017, 5, 20).toISOString(),
+    createdAt: new Date(2017, 5, 22).toISOString(),
+    updatedAt: new Date(2017, 5, 24).toISOString()
   };
 
   function billVariant(attributes: Partial<Bill>): Bill {
@@ -62,6 +62,20 @@ describe('BillMatcherService', () => {
   it('does not search within a field', () => {
     const variant = billVariant({ address1: 'A street' });
     expect(service.matches('street', bill)).toBeFalsy();
+  });
+
+  it('matches the beginning of the id and uid', () => {
+    const variant = billVariant({ id: 7324, uid: 3324 });
+    expect(service.matches('7', variant)).toBeTruthy();
+    expect(service.matches('73', variant)).toBeTruthy();
+    expect(service.matches('732', variant)).toBeTruthy();
+    expect(service.matches('7324', variant)).toBeTruthy();
+    expect(service.matches('73245', variant)).toBeFalsy();
+    expect(service.matches('3', variant)).toBeTruthy();
+    expect(service.matches('33', variant)).toBeTruthy();
+    expect(service.matches('332', variant)).toBeTruthy();
+    expect(service.matches('3324', variant)).toBeTruthy();
+    expect(service.matches('33245', variant)).toBeFalsy();
   });
 
   it('searches in all address fields', () => {
