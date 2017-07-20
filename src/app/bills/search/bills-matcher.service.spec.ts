@@ -72,12 +72,30 @@ describe('BillMatcherService', () => {
     expect(service.matches('address5', bill)).toBeTruthy();
   });
 
-  it('searches in all number fields', () => {
+  it('searches in other string fields', () => {
+    expect(service.matches('billtype', bill)).toBeTruthy();
+    expect(service.matches('fixedatoverride', bill)).toBeTruthy();
+    expect(service.matches('orderername', bill)).toBeTruthy();
+    expect(service.matches('ownername', bill)).toBeTruthy();
+    expect(service.matches('title1', bill)).toBeTruthy();
+    expect(service.matches('title2', bill)).toBeTruthy();
+    expect(service.matches('worker', bill)).toBeTruthy();
+  });
+
+  it('searches in number fields', () => {
     expect(service.matches('1000', bill)).toBeTruthy();
     expect(service.matches('2000', bill)).toBeTruthy();
     expect(service.matches('3000', bill)).toBeTruthy();
     expect(service.matches('4.51', bill)).toBeTruthy();
     expect(service.matches('5000', bill)).toBeTruthy();
     expect(service.matches('6000', bill)).toBeFalsy();
+  });
+
+  it('searches in date fields', () => {
+    expect(service.matches('2017-06-19', bill)).toBeTruthy();
+    expect(service.matches('2017-06-20', bill)).toBeTruthy();
+    expect(service.matches('2017-06-21', bill)).toBeTruthy();
+    expect(service.matches('2017-06-22', bill)).toBeTruthy();
+    expect(service.matches('2017-06-23', bill)).toBeTruthy();
   });
 });
