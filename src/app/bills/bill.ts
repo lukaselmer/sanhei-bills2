@@ -23,9 +23,9 @@ export class Bill {
   title2?: string;
   worker?: string;
 
-  fixedAt?: Date;
-  orderedAt?: Date;
-  billedAt?: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
+  fixedAt?: string;
+  orderedAt?: string;
+  billedAt?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

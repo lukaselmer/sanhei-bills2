@@ -7,10 +7,14 @@ import { BillMatcherService } from './search/bill-matcher.service';
 describe('BillsService', () => {
   let service: BillsService;
   const billMock1: Bill = {
+    id: 1,
+    uid: 1001,
     address1: 'A street',
     address2: 'Something'
   } as any;
   const billMock2: Bill = {
+    id: 2,
+    uid: 1002,
     address1: 'Mr',
     address2: 'Hello',
     address3: 'Something else',
