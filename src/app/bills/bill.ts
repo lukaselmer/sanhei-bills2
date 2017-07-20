@@ -15,17 +15,17 @@ export class Bill {
   address4?: string;
   address5?: string;
   billType?: string;
-  description: string;
-  fixedAtOverride: string;
-  ordererName: string;
-  ownerName: string;
-  title1: string;
-  title2: string;
-  worker: string;
+  description?: string;
+  fixedAtOverride?: string;
+  ordererName?: string;
+  ownerName?: string;
+  title1?: string;
+  title2?: string;
+  worker?: string;
 
-  fixedAt: Date;
-  orderedAt: Date;
-  billedAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  fixedAt?: Date;
+  orderedAt?: Date;
+  billedAt?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
