@@ -16,11 +16,15 @@ export class BillsService {
 
   search(term: string): Observable<SearchResult<Bill>> {
     const billMatcher = this.billMatcherFactory.createBillMatcher(term);
-    return this.dataStore.getBillsStream().map(bills => {
-      const filteredBills = bills
-        .filter(bill => billMatcher.matches(bill))
-        .slice(0, 10);
-      return { term, list: filteredBills, dbStatus: this.dataStore.status };
-    });
+    return this.dataStore.getBillsStream()
+      .map(bills =>
+        bills
+          .filter(bill => billMatcher.matches(bill))
+          .slice(0, 10)
+      ).map(filteredBills => this.wrapSearchResult(term, filteredBills));
+  }
+
+  private wrapSearchResult(term: string, filteredBills: Bill[]) {
+    return { term, list: filteredBills, dbStatus: this.dataStore.status };
   }
 }
