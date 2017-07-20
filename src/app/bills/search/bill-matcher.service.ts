@@ -48,15 +48,10 @@ export class BillMatcherService {
   }
 
   private matchesDates(term: string, bill: Bill) {
-    return (bill.billedAt &&
-      (new Date(bill.billedAt).toLocaleDateString().startsWith(term) || new Date(bill.billedAt).toISOString().startsWith(term))) ||
-      (bill.fixedAt &&
-        (new Date(bill.fixedAt).toLocaleDateString().startsWith(term) || new Date(bill.fixedAt).toISOString().startsWith(term))) ||
-      (bill.orderedAt &&
-        (new Date(bill.orderedAt).toLocaleDateString().startsWith(term) || new Date(bill.orderedAt).toISOString().startsWith(term))) ||
-      (bill.createdAt &&
-        (new Date(bill.createdAt).toLocaleDateString().startsWith(term) || new Date(bill.createdAt).toISOString().startsWith(term))) ||
-      (bill.updatedAt &&
-        (new Date(bill.updatedAt).toLocaleDateString().startsWith(term) || new Date(bill.updatedAt).toISOString().startsWith(term)));
+    return (bill.billedAt && bill.billedAt.startsWith(term)) ||
+      (bill.fixedAt && bill.fixedAt.startsWith(term)) ||
+      (bill.orderedAt && bill.orderedAt.startsWith(term)) ||
+      (bill.createdAt && bill.createdAt.startsWith(term)) ||
+      (bill.updatedAt && bill.updatedAt.startsWith(term));
   }
 }
