@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeAll';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/toArray';
+
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
@@ -16,12 +21,13 @@ export class BillsService {
 
   search(term: string): Observable<SearchResult<Bill>> {
     const billMatcher = this.billMatcherFactory.createBillMatcher(term);
-    return this.dataStore.getBillsStream()
-      .map(bills =>
-        bills
-          .filter(bill => billMatcher.matches(bill))
-          .slice(0, 10)
-      ).map(filteredBills => this.wrapSearchResult(term, filteredBills));
+    // workaround: the typings of mergeAll are wrong, see https://github.com/ReactiveX/rxjs/pull/2760
+    const billsAsObservable: Observable<Bill> = this.dataStore.getBillsStream().mergeAll() as any;
+    return billsAsObservable
+      .filter(bill => billMatcher.matches(bill))
+      .take(10)
+      .toArray()
+      .map(filteredBills => this.wrapSearchResult(term, filteredBills));
   }
 
   private wrapSearchResult(term: string, filteredBills: Bill[]) {
