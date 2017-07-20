@@ -3,6 +3,7 @@ addons:
   chrome: stable
 language: node_js
 before_install:
+- export TZ=Europe/Zurich
 - export CHROME_BIN=google-chrome-stable
 - gem install mdl
 cache:
