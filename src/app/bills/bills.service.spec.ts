@@ -2,6 +2,7 @@ import { async } from '@angular/core/testing';
 import { BillsService } from 'app/bills/bills.service';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
+import { BillMatcherService } from './search/bill-matcher.service';
 
 describe('BillsService', () => {
   let service: BillsService;
@@ -24,7 +25,7 @@ describe('BillsService', () => {
 
   beforeEach(() => {
     spyOn(dataStoreServiceMock, 'loadData');
-    service = new BillsService(dataStoreServiceMock);
+    service = new BillsService(dataStoreServiceMock, new BillMatcherService());
   });
 
   it('loads the data when constructed', async(() => {
