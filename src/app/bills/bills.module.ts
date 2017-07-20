@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsService } from './bills.service';
-import { BillMatcherService } from './search/bill-matcher.service';
+import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { DataStoreService } from './store/data-store.service';
 import { IDBStoreService } from './store/idb-store.service';
 
@@ -22,7 +22,7 @@ import { IDBStoreService } from './store/idb-store.service';
     BillsListComponent
   ],
   providers: [
-    BillMatcherService,
+    BillMatcherFactory,
     BillsService,
     DataStoreService,
     IDBStoreService

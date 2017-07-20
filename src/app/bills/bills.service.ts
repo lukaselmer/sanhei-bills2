@@ -4,20 +4,21 @@ import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
-import { BillMatcherService } from './search/bill-matcher.service';
+import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchResult } from './search/search-result';
 import { DataStoreService } from './store/data-store.service';
 
 @Injectable()
 export class BillsService {
-  constructor(private dataStore: DataStoreService, private billMatcher: BillMatcherService) {
+  constructor(private dataStore: DataStoreService, private billMatcherFactory: BillMatcherFactory) {
     this.dataStore.loadData();
   }
 
   search(term: string): Observable<SearchResult<Bill>> {
+    const billMatcher = this.billMatcherFactory.createBillMatcher(term);
     return this.dataStore.getBillsStream().map(bills => {
       const filteredBills = bills
-        .filter(bill => this.billMatcher.matches(term, bill))
+        .filter(bill => billMatcher.matches(bill))
         .slice(0, 10);
       return { term, list: filteredBills, dbStatus: this.dataStore.status };
     });
