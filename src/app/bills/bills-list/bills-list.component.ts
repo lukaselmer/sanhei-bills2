@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BillsService } from 'app/bills/bills.service';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/switchMap';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -29,9 +30,10 @@ export class BillsListComponent implements OnInit {
       .distinctUntilChanged()
       .debounceTime(10)
       .distinctUntilChanged()
-      .switchMap(term => this.reallyStartSearching(term));
-    this.bills$ = billsSearch$.map(search => search.list);
+      .switchMap(term => this.reallyStartSearching(term))
+      .share();
     billsSearch$.subscribe(search => this.updateProgress(search));
+    this.bills$ = billsSearch$.map(search => search.list);
   }
 
   private reallyStartSearching(term: string) {
