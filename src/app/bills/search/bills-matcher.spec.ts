@@ -111,4 +111,18 @@ describe('BillMatcherService', () => {
     expect(match('2017-06-22', bill)).toBeTruthy();
     expect(match('2017-06-23', bill)).toBeTruthy();
   });
+
+  describe('performance', () => {
+    it('takes less than 125ms to match 10_000 bills', () => {
+      const start = Date.now();
+
+      for (let i = 0; i < 10000; ++i) {
+        match('address will not be found', bill);
+      }
+
+      const difference = Date.now() - start;
+      // console.log(`It took ${(difference)}ms`);
+      expect(difference).toBeLessThan(125);
+    });
+  });
 });
