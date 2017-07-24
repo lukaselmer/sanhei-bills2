@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { DataStoreStatus } from '../store/data-store-status';
 import { Bill } from './../bill';
+import { BillView } from './../bill-view';
 import { SearchResult } from './../search/search-result';
 
 @Component({
@@ -17,7 +18,7 @@ import { SearchResult } from './../search/search-result';
 })
 
 export class BillsListComponent implements OnInit {
-  bills$: Observable<Bill[]>;
+  bills$: Observable<BillView[]>;
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
 
@@ -33,7 +34,7 @@ export class BillsListComponent implements OnInit {
       .switchMap(term => this.reallyStartSearching(term))
       .share();
     billsSearch$.subscribe(search => this.updateProgress(search));
-    this.bills$ = billsSearch$.map(search => search.list);
+    this.bills$ = billsSearch$.map(search => search.list.map(bill => new BillView(bill)));
   }
 
   private reallyStartSearching(term: string) {

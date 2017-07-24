@@ -29,6 +29,6 @@ const bill = {
   updatedAt: new Date(2017, 5, 24).toISOString()
 };
 
-export function billVariant(attributes: Partial<Bill>): Bill {
+export function billVariant(attributes: Partial<Bill> = {}): Bill {
   return { ...bill, ...attributes };
 }

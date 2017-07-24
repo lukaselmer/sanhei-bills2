@@ -9,15 +9,11 @@
 
 <md-list>
   <md-list-item *ngFor="let bill of bills$ | async">
-    <md-checkbox md-line></md-checkbox>
-    <div md-line>
-      <span>{{ bill.id }}</span>
-    </div>
-    <div md-line>
-      <span><strong>{{bill.uid}}</strong> {{ bill.address1 }}, {{ bill.address2 }}, {{ bill.title1 }}, {{ bill.title2 }}</span>
-    </div>
-    <div md-line>
-      {{bill | json}}
-    </div>
+    <div md-line><strong>{{bill.uid}} | {{ bill.id }}</strong></div>
+    <div md-line>{{ bill.commaSeparatedAddress }}</div>
+    <div md-line>{{ bill.title1 }}, {{ bill.title2 }}</div>
+    <div md-line *ngIf="bill.fixedAt">Arbeiten am: {{ bill.fixedAt | date:'yyyy-MM-dd' }} | {{ bill.billedAt | date:'mediumDate' }}</div>
+    <div md-line *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt | date:'yyyy-MM-dd' }} | {{ bill.billedAt | date:'mediumDate' }}</div>
+    <div md-line>{{ bill.ownerName }}, {{ bill.ordererName }}, {{ bill.worker }}</div>
   </md-list-item>
 </md-list>

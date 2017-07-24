@@ -28,23 +28,23 @@ export class BillMatcher {
   }
 
   private matchesStringsOrDates(bill: Bill) {
-    return bill.address1.toLowerCase().startsWith(this.term) ||
-      bill.address2.toLowerCase().startsWith(this.term) ||
-      bill.address3.toLowerCase().startsWith(this.term) ||
-      bill.address4.toLowerCase().startsWith(this.term) ||
-      bill.address5.toLowerCase().startsWith(this.term) ||
-      bill.billType.toLowerCase().startsWith(this.term) ||
-      bill.fixedAtOverride.toLowerCase().startsWith(this.term) ||
-      bill.ordererName.toLowerCase().startsWith(this.term) ||
-      bill.ownerName.toLowerCase().startsWith(this.term) ||
-      bill.title1.toLowerCase().startsWith(this.term) ||
-      bill.title2.toLowerCase().startsWith(this.term) ||
-      bill.worker.toLowerCase().startsWith(this.term) ||
-      bill.billedAt.toLowerCase().startsWith(this.term) ||
-      bill.fixedAt.toLowerCase().startsWith(this.term) ||
-      bill.orderedAt.toLowerCase().startsWith(this.term) ||
-      bill.createdAt.toLowerCase().startsWith(this.term) ||
-      bill.updatedAt.toLowerCase().startsWith(this.term);
+    return bill.address1 && bill.address1.toLowerCase().startsWith(this.term) ||
+      bill.address2 && bill.address2.toLowerCase().startsWith(this.term) ||
+      bill.address3 && bill.address3.toLowerCase().startsWith(this.term) ||
+      bill.address4 && bill.address4.toLowerCase().startsWith(this.term) ||
+      bill.address5 && bill.address5.toLowerCase().startsWith(this.term) ||
+      bill.billType && bill.billType.toLowerCase().startsWith(this.term) ||
+      bill.fixedAtOverride && bill.fixedAtOverride.toLowerCase().startsWith(this.term) ||
+      bill.ordererName && bill.ordererName.toLowerCase().startsWith(this.term) ||
+      bill.ownerName && bill.ownerName.toLowerCase().startsWith(this.term) ||
+      bill.title1 && bill.title1.toLowerCase().startsWith(this.term) ||
+      bill.title2 && bill.title2.toLowerCase().startsWith(this.term) ||
+      bill.worker && bill.worker.toLowerCase().startsWith(this.term) ||
+      bill.billedAt && bill.billedAt.toLowerCase().startsWith(this.term) ||
+      bill.fixedAt && bill.fixedAt.toLowerCase().startsWith(this.term) ||
+      bill.orderedAt && bill.orderedAt.toLowerCase().startsWith(this.term) ||
+      bill.createdAt && bill.createdAt.toLowerCase().startsWith(this.term) ||
+      bill.updatedAt && bill.updatedAt.toLowerCase().startsWith(this.term);
 
     /**
      * This is the same as the following code. The code is inlined for performance reasons.
