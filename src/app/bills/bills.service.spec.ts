@@ -2,24 +2,29 @@ import { async } from '@angular/core/testing';
 import { BillsService } from 'app/bills/bills.service';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
+import { billVariant } from './bill.mock';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 
 describe('BillsService', () => {
   let service: BillsService;
-  const billMock1: Bill = {
+  const billMock1 = billVariant({
     id: 1,
     uid: 1001,
     address1: 'A street',
-    address2: 'Something'
-  } as any;
-  const billMock2: Bill = {
+    address2: 'Something',
+    address3: '',
+    address4: '',
+    address5: ''
+  });
+  const billMock2 = billVariant({
     id: 2,
     uid: 1002,
     address1: 'Mr',
     address2: 'Hello',
     address3: 'Something else',
-    address4: 'World'
-  } as any;
+    address4: 'World',
+    address5: ''
+  });
   const billsMock = [billMock1, billMock2];
   const dataStoreServiceMock: any = {
     loadData: () => { },
