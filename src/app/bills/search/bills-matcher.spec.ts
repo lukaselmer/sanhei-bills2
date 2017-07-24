@@ -113,16 +113,20 @@ describe('BillMatcherService', () => {
   });
 
   describe('performance', () => {
-    it('takes less than 125ms to match 10_000 bills', () => {
-      const start = Date.now();
+    const maxTime = 150; // ms
+    const numBills = 25000;
 
-      for (let i = 0; i < 10000; ++i) {
-        match('address will not be found', bill);
+    it(`takes less than ${maxTime}ms to match ${numBills} bills`, () => {
+      const start = Date.now();
+      const matcher = new BillMatcher('address will not be found');
+
+      for (let i = 0; i < numBills; ++i) {
+        matcher.matches(bill);
       }
 
       const difference = Date.now() - start;
       // console.log(`It took ${(difference)}ms`);
-      expect(difference).toBeLessThan(125);
+      expect(difference).toBeLessThan(maxTime);
     });
   });
 });
