@@ -1,24 +1,27 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { billVariant } from 'app/bills/bill.mock';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
 import { Bill } from './../bill';
+import { BillView } from './../bill-view';
 import { BillsListComponent } from './bills-list.component';
 
 describe('BillsListComponent', () => {
   let component: BillsListComponent;
   let fixture: ComponentFixture<BillsListComponent>;
-  const bill: Bill = {
+  const bill = billVariant({
     id: 1234,
-    uid: '17071234',
+    uid: 17071234,
     address1: 'Adresszeile 1',
     address2: 'Adressezeile 2',
     title1: 'Objekt: Adresse',
     title2: 'Zusatz'
-  } as any;
+  });
+  const billView = new BillView(bill);
   const bills = [bill];
   const billsSearch = {
     term: '',
@@ -74,10 +77,17 @@ describe('BillsListComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     const element = compiled.querySelector('md-list-item');
     expect(element).not.toBe(null);
-    expect(element.querySelector('[md-line]:nth-child(2)').textContent.trim()).toEqual(bill.id.toString());
 
-    const billTitle = `${bill.uid} ${bill.address1}, ${bill.address2}, ${bill.title1}, ${bill.title2}`;
-    expect(element.querySelector('[md-line]:nth-child(3)').textContent.trim()).toEqual(billTitle);
+    function line(lineNumber: number): string {
+      return element.querySelector(`[md-line]:nth-child(${lineNumber})`).textContent.trim();
+    }
+
+    expect(line(1)).toEqual(`${bill.uid} | ${bill.id}`);
+    expect(line(2)).toEqual(`${billView.commaSeparatedAddress}`);
+    expect(line(3)).toEqual(`${billView.title1}, ${billView.title2}`);
+    expect(line(4)).toEqual('Arbeiten am: 2017-06-21 | Jun 23, 2017');
+    expect(line(5)).toEqual('Verrechnet am: 2017-06-23 | Jun 23, 2017');
+    expect(line(6)).toEqual(`${bill.ownerName}, ${bill.ordererName}, ${bill.worker}`);
   }));
 
   it('should search through the bills', fakeAsync(inject([BillsService], (service: BillsService) => {
