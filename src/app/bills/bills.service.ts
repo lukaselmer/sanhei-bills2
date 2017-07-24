@@ -32,6 +32,10 @@ export class BillsService {
           .toArray();
       })
       .concatAll()
+      .catch(e => {
+        console.error(e);
+        return Observable.of([]);
+      })
       .map(filteredBills => this.wrapSearchResult(term, filteredBills));
   }
 
