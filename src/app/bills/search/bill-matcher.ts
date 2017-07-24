@@ -28,24 +28,23 @@ export class BillMatcher {
   }
 
   private matchesStringsOrDates(bill: Bill) {
-    return bill.address1 && bill.address1.toLowerCase().startsWith(this.term) ||
-      bill.address2 && bill.address2.toLowerCase().startsWith(this.term) ||
-      bill.address3 && bill.address3.toLowerCase().startsWith(this.term) ||
-      bill.address4 && bill.address4.toLowerCase().startsWith(this.term) ||
-      bill.address5 && bill.address5.toLowerCase().startsWith(this.term) ||
-      bill.billType && bill.billType.toLowerCase().startsWith(this.term) ||
-      bill.fixedAtOverride && bill.fixedAtOverride.toLowerCase().startsWith(this.term) ||
-      bill.ordererName && bill.ordererName.toLowerCase().startsWith(this.term) ||
-      bill.ownerName && bill.ownerName.toLowerCase().startsWith(this.term) ||
-      bill.title1 && bill.title1.toLowerCase().startsWith(this.term) ||
-      bill.title2 && bill.title2.toLowerCase().startsWith(this.term) ||
-      bill.worker && bill.worker.toLowerCase().startsWith(this.term) ||
-      bill.billedAt && bill.billedAt.toLowerCase().startsWith(this.term) ||
-      bill.fixedAt && bill.fixedAt.toLowerCase().startsWith(this.term) ||
-      bill.orderedAt && bill.orderedAt.toLowerCase().startsWith(this.term) ||
-      bill.createdAt && bill.createdAt.toLowerCase().startsWith(this.term) ||
-      bill.updatedAt && bill.updatedAt.toLowerCase().startsWith(this.term) ||
-      false;
+    return bill.address1.toLowerCase().startsWith(this.term) ||
+      bill.address2.toLowerCase().startsWith(this.term) ||
+      bill.address3.toLowerCase().startsWith(this.term) ||
+      bill.address4.toLowerCase().startsWith(this.term) ||
+      bill.address5.toLowerCase().startsWith(this.term) ||
+      bill.billType.toLowerCase().startsWith(this.term) ||
+      bill.fixedAtOverride.toLowerCase().startsWith(this.term) ||
+      bill.ordererName.toLowerCase().startsWith(this.term) ||
+      bill.ownerName.toLowerCase().startsWith(this.term) ||
+      bill.title1.toLowerCase().startsWith(this.term) ||
+      bill.title2.toLowerCase().startsWith(this.term) ||
+      bill.worker.toLowerCase().startsWith(this.term) ||
+      bill.billedAt.toLowerCase().startsWith(this.term) ||
+      bill.fixedAt.toLowerCase().startsWith(this.term) ||
+      bill.orderedAt.toLowerCase().startsWith(this.term) ||
+      bill.createdAt.toLowerCase().startsWith(this.term) ||
+      bill.updatedAt.toLowerCase().startsWith(this.term);
 
     /**
      * This is the same as the following code. The code is inlined for performance reasons.
@@ -55,8 +54,8 @@ export class BillMatcher {
      *   return fields.map(field => bill[field] || '');
      * }
      *
-     * private startsWithTerm(value?: string): boolean {
-     *   return value && value.toLowerCase().startsWith(this.term) || false;
+     * private startsWithTerm(value: string): boolean {
+     *   return value.toLowerCase().startsWith(this.term);
      * }
      *
      * return this.pick(bill,
@@ -64,26 +63,6 @@ export class BillMatcher {
      *   'billType', 'fixedAtOverride', 'ordererName', 'ownerName', 'title1', 'title2', 'worker',
      *   'billedAt', 'fixedAt', 'orderedAt', 'createdAt', 'updatedAt'
      * ).some(x => this.startsWithTerm(x));
-     *
-     * Which is the same as:
-     *
-     * return this.startsWithTerm(bill.address1) ||
-     *   this.startsWithTerm(bill.address2) ||
-     *   this.startsWithTerm(bill.address3) ||
-     *   this.startsWithTerm(bill.address4) ||
-     *   this.startsWithTerm(bill.address5) ||
-     *   this.startsWithTerm(bill.billType) ||
-     *   this.startsWithTerm(bill.fixedAtOverride) ||
-     *   this.startsWithTerm(bill.ordererName) ||
-     *   this.startsWithTerm(bill.ownerName) ||
-     *   this.startsWithTerm(bill.title1) ||
-     *   this.startsWithTerm(bill.title2) ||
-     *   this.startsWithTerm(bill.worker) ||
-     *   this.startsWithTerm(bill.billedAt) ||
-     *   this.startsWithTerm(bill.fixedAt) ||
-     *   this.startsWithTerm(bill.orderedAt) ||
-     *   this.startsWithTerm(bill.createdAt) ||
-     *   this.startsWithTerm(bill.updatedAt);
      */
   }
 }

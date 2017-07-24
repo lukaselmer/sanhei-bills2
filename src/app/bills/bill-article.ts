@@ -3,6 +3,8 @@ export class BillArticle {
   amount: number;
   articleId: number;
   billId: number;
-  createdAt: Date;
-  updatedAt: Date;
+
+  // datetime format: 2010-04-23 14:35:57 UTC
+  createdAt: string;
+  updatedAt: string;
 }
