@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/do';
