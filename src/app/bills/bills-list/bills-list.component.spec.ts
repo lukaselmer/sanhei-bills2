@@ -112,5 +112,11 @@ describe('BillsListComponent', () => {
       element.dispatchEvent(new Event('click'));
       expect(component.editingBill).toEqual(bill);
     })));
+
+    it('should render the edit mask if a bill is editable', fakeAsync(inject([BillsService], (service: BillsService) => {
+      expect(component.editingBill).toBeUndefined();
+      component.editBill(billView);
+      expect(component.editingBill).toBe(bill);
+    })));
   });
 });

@@ -13,6 +13,7 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/toArray';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
+import { BillForm } from './bill-form';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchResult } from './search/search-result';
 import { DataStoreService } from './store/data-store.service';
@@ -43,5 +44,15 @@ export class BillsService {
 
   private wrapSearchResult(term: string, filteredBills: Bill[]) {
     return { term, list: filteredBills, dbStatus: this.dataStore.status };
+  }
+
+  editBill(id: number): Observable<BillForm> {
+    return this.dataStore.getBillsStream()
+      .map(bills => bills.find(bill => bill.id === id))
+      .map(bill => {
+        if (!bill) throw new Error(`Bill ${id} not found`);
+        return bill;
+      })
+      .map(bill => new BillForm(bill));
   }
 }
