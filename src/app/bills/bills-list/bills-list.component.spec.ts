@@ -102,4 +102,15 @@ describe('BillsListComponent', () => {
     expect((component as any).searchTermStream.getValue()).toEqual('some');
     expect(service.search).toHaveBeenCalledWith('some');
   })));
+
+  describe('edit', () => {
+    it('should edit a bill', fakeAsync(inject([BillsService], (service: BillsService) => {
+      expect(component.editingBill).toBeUndefined();
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      const element = compiled.querySelector('md-list-item');
+      element.dispatchEvent(new Event('click'));
+      expect(component.editingBill).toEqual(bill);
+    })));
+  });
 });

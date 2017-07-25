@@ -8,7 +8,7 @@
 <md-progress-bar *ngIf="loadStatus === 'loadedFromIDB' || loadStatus === 'shortListLoaded'" mode="indeterminate" color="accent"></md-progress-bar>
 
 <md-list>
-  <md-list-item *ngFor="let bill of bills$ | async">
+  <md-list-item *ngFor="let bill of bills$ | async" (click)="editBill(bill)">
     <div md-line><strong>{{bill.uid}} | {{ bill.id }}</strong></div>
     <div md-line>{{ bill.commaSeparatedAddress }}</div>
     <div md-line>{{ bill.title1 }}, {{ bill.title2 }}</div>

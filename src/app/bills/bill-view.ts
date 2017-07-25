@@ -1,7 +1,7 @@
 import { Bill } from './bill';
 
 export class BillView {
-  constructor(private bill: Bill) { }
+  constructor(public bill: Bill) { }
 
   get id() { return this.bill.id; }
   get cashback() { return this.bill.cashback; }

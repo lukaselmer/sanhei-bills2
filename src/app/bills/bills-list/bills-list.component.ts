@@ -18,6 +18,7 @@ import { SearchResult } from './../search/search-result';
 })
 
 export class BillsListComponent implements OnInit {
+  editingBill?: Bill = undefined;
   bills$: Observable<BillView[]>;
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
@@ -49,5 +50,9 @@ export class BillsListComponent implements OnInit {
 
   searchKeyup(searchTerm: string) {
     this.searchTermStream.next(searchTerm.toLowerCase());
+  }
+
+  editBill(billView: BillView) {
+    this.editingBill = billView.bill;
   }
 }
