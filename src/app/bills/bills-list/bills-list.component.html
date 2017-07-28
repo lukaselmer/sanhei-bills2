@@ -7,6 +7,8 @@
 <md-progress-bar *ngIf="loadStatus === 'loading'" mode="query" color="accent"></md-progress-bar>
 <md-progress-bar *ngIf="loadStatus === 'loadedFromIDB' || loadStatus === 'shortListLoaded'" mode="indeterminate" color="accent"></md-progress-bar>
 
+<sb-bill-edit billForm="editingBill | async" *ngIf="editingBill | async"></sb-bill-edit>
+
 <md-list>
   <md-list-item *ngFor="let bill of bills$ | async" (click)="editBill(bill)">
     <div md-line><strong>{{bill.uid}} | {{ bill.id }}</strong></div>

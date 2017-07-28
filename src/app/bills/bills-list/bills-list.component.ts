@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { DataStoreStatus } from '../store/data-store-status';
 import { Bill } from './../bill';
+import { BillForm } from './../bill-form';
 import { BillView } from './../bill-view';
 import { SearchResult } from './../search/search-result';
 
@@ -18,7 +19,7 @@ import { SearchResult } from './../search/search-result';
 })
 
 export class BillsListComponent implements OnInit {
-  editingBill?: Bill = undefined;
+  editingBill?: Observable<BillForm> = undefined;
   bills$: Observable<BillView[]>;
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
@@ -53,6 +54,6 @@ export class BillsListComponent implements OnInit {
   }
 
   editBill(billView: BillView) {
-    this.editingBill = billView.bill;
+    this.editingBill = this.billsService.editBill(billView.id);
   }
 }

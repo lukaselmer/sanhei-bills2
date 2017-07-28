@@ -4,9 +4,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { billVariant } from 'app/bills/bill.mock';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { BillEditComponent } from '../bill-edit/bill-edit.component';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
 import { Bill } from './../bill';
+import { BillForm } from './../bill-form';
 import { BillView } from './../bill-view';
 import { BillsListComponent } from './bills-list.component';
 
@@ -22,6 +24,7 @@ describe('BillsListComponent', () => {
     title2: 'Zusatz'
   });
   const billView = new BillView(bill);
+  const billForm = new BillForm(bill);
   const bills = [bill];
   const billsSearch = {
     term: '',
@@ -41,11 +44,12 @@ describe('BillsListComponent', () => {
       providers: [
         {
           provide: BillsService, useValue: {
-            search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch)
+            search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch),
+            editBill: (): Observable<BillForm> => Observable.of(billForm)
           }
         }
       ],
-      declarations: [BillsListComponent]
+      declarations: [BillsListComponent, BillEditComponent]
     }).compileComponents();
   }));
 
@@ -106,17 +110,29 @@ describe('BillsListComponent', () => {
   describe('edit', () => {
     it('should edit a bill', fakeAsync(inject([BillsService], (service: BillsService) => {
       expect(component.editingBill).toBeUndefined();
+      spyOn(service, 'editBill').and.callThrough();
       fixture.detectChanges();
       const compiled = fixture.debugElement.nativeElement;
       const element = compiled.querySelector('md-list-item');
       element.dispatchEvent(new Event('click'));
-      expect(component.editingBill).toEqual(bill);
+      expect(service.editBill).toHaveBeenCalledWith(bill.id);
+      if (!component.editingBill) {
+        fail('component.editingBill should be defined');
+      } else {
+        component.editingBill.subscribe(bf => expect(bf).toBe(billForm));
+      }
     })));
 
     it('should render the edit mask if a bill is editable', fakeAsync(inject([BillsService], (service: BillsService) => {
       expect(component.editingBill).toBeUndefined();
+      fixture.detectChanges();
+      expect(fixture.debugElement.nativeElement.querySelector('sb-bill-edit')).toBeFalsy();
+
       component.editBill(billView);
-      expect(component.editingBill).toBe(bill);
+
+      fixture.detectChanges();
+      const element = fixture.debugElement.nativeElement.querySelector('sb-bill-edit');
+      expect(element).toBeTruthy();
     })));
   });
 });
