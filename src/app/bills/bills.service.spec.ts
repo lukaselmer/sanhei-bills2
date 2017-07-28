@@ -92,4 +92,13 @@ describe('BillsService', () => {
       expect(searchResult.list.length).toEqual(6);
     });
   }));
+
+  it('catches the error if there is one', async(() => {
+    spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([null, billMock1, billMock2]));
+    spyOn(console, 'error');
+    service.search('world').first().subscribe(searchResult => {
+      expect(searchResult.list).toEqual([]);
+      expect(console.error).toHaveBeenCalled();
+    });
+  }));
 });
