@@ -83,8 +83,8 @@ describe('BillMatcherService', () => {
   });
 
   describe('performance', () => {
-    const maxTime = 150; // ms
-    const numBills = 25000;
+    const maxTime = 250; // ms
+    const numBills = 20000;
 
     it(`takes less than ${maxTime}ms to match ${numBills} bills`, () => {
       const start = Date.now();
