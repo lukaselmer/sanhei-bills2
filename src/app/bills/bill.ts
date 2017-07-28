@@ -5,9 +5,9 @@ export class Bill {
   vat: number;
   workHours: number;
 
-  deleted: boolean;
-  finished: boolean;
+  finished: boolean; // means finished editing
   paid: boolean;
+  deleted: boolean;
 
   address1: string;
   address2: string;
