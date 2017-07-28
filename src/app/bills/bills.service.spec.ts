@@ -37,68 +37,70 @@ describe('BillsService', () => {
     service = new BillsService(dataStoreServiceMock, new BillMatcherFactory());
   });
 
-  it('loads the data when constructed', async(() => {
-    expect(dataStoreServiceMock.loadData).toHaveBeenCalled();
-  }));
+  describe('loading and searching bills', () => {
+    it('loads the data when constructed', async(() => {
+      expect(dataStoreServiceMock.loadData).toHaveBeenCalled();
+    }));
 
-  it('does not filter if the filter is empty', async(() => {
-    service.search('').first().subscribe(searchResult => {
-      expect(searchResult.list).toEqual(billsMock);
-      expect(searchResult.term).toEqual('');
-      expect(searchResult.dbStatus).toEqual('loaded');
-    });
-  }));
+    it('does not filter if the filter is empty', async(() => {
+      service.search('').first().subscribe(searchResult => {
+        expect(searchResult.list).toEqual(billsMock);
+        expect(searchResult.term).toEqual('');
+        expect(searchResult.dbStatus).toEqual('loaded');
+      });
+    }));
 
-  it('does not filter if the filter is "some"', async(() => {
-    service.search('some').first().subscribe(searchResult => {
-      expect(searchResult.list).toEqual(billsMock);
-      expect(searchResult.term).toEqual('some');
-    });
-  }));
+    it('does not filter if the filter is "some"', async(() => {
+      service.search('some').first().subscribe(searchResult => {
+        expect(searchResult.list).toEqual(billsMock);
+        expect(searchResult.term).toEqual('some');
+      });
+    }));
 
-  it('shows the first if the filter is "a stre"', async(() => {
-    service.search('a stre').first().subscribe(searchResult => {
-      expect(searchResult.list).toEqual([billMock1]);
-      expect(searchResult.term).toEqual('a stre');
-    });
-  }));
+    it('shows the first if the filter is "a stre"', async(() => {
+      service.search('a stre').first().subscribe(searchResult => {
+        expect(searchResult.list).toEqual([billMock1]);
+        expect(searchResult.term).toEqual('a stre');
+      });
+    }));
 
-  it('shows the second if the filter is "world"', async(() => {
-    service.search('world').first().subscribe(searchResult => {
-      expect(searchResult.list).toEqual([billMock2]);
-    });
-  }));
+    it('shows the second if the filter is "world"', async(() => {
+      service.search('world').first().subscribe(searchResult => {
+        expect(searchResult.list).toEqual([billMock2]);
+      });
+    }));
 
-  it('shows nothing if the filter is "bla"', async(() => {
-    service.search('bla').first().subscribe(searchResult => {
-      expect(searchResult.list).toEqual([]);
-    });
-  }));
+    it('shows nothing if the filter is "bla"', async(() => {
+      service.search('bla').first().subscribe(searchResult => {
+        expect(searchResult.list).toEqual([]);
+      });
+    }));
 
-  it('limits the entries to 10', async(() => {
-    const a = billMock1;
-    const b = billMock2;
-    spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([a, b, a, b, a, b, a, b, a, b, a, b]));
-    service.search('').first().subscribe(searchResult => {
-      expect(searchResult.list.length).toEqual(10);
-    });
-  }));
+    it('limits the entries to 10', async(() => {
+      const a = billMock1;
+      const b = billMock2;
+      spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([a, b, a, b, a, b, a, b, a, b, a, b]));
+      service.search('').first().subscribe(searchResult => {
+        expect(searchResult.list.length).toEqual(10);
+      });
+    }));
 
-  it('searches in all entries', async(() => {
-    const a = billMock1;
-    const b = billMock2;
-    spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([a, b, a, b, a, b, a, b, a, b, a, b]));
-    service.search('world').first().subscribe(searchResult => {
-      expect(searchResult.list.length).toEqual(6);
-    });
-  }));
+    it('searches in all entries', async(() => {
+      const a = billMock1;
+      const b = billMock2;
+      spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([a, b, a, b, a, b, a, b, a, b, a, b]));
+      service.search('world').first().subscribe(searchResult => {
+        expect(searchResult.list.length).toEqual(6);
+      });
+    }));
 
-  it('catches the error if there is one', async(() => {
-    spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([null, billMock1, billMock2]));
-    spyOn(console, 'error');
-    service.search('world').first().subscribe(searchResult => {
-      expect(searchResult.list).toEqual([]);
-      expect(console.error).toHaveBeenCalled();
-    });
-  }));
+    it('catches the error if there is one', async(() => {
+      spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([null, billMock1, billMock2]));
+      spyOn(console, 'error');
+      service.search('world').first().subscribe(searchResult => {
+        expect(searchResult.list).toEqual([]);
+        expect(console.error).toHaveBeenCalled();
+      });
+    }));
+  });
 });
