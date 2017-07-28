@@ -9,9 +9,9 @@ export class BillView {
   get vat() { return this.bill.vat; }
   get workHours() { return this.bill.workHours; }
 
-  get deleted() { return this.bill.deleted; }
-  get finished() { return this.bill.finished; }
+  get finished() { return this.bill.finished; } // means finished editing
   get paid() { return this.bill.paid; }
+  get deleted() { return this.bill.deleted; }
 
   get address() {
     return [
