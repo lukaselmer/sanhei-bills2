@@ -59,7 +59,8 @@ export class DataStoreService {
   private loadAllBillsFromFirebase() {
     // load the rest of the bills and listen for updates
     this.db.list('billing/bills', {
-      query: { orderByChild: 'id' }
+      // TODO: fix firebase performance issue
+      query: { orderByChild: 'id', limitToLast: 100 }
     }).subscribe(reversedBills => {
       this.status = 'loaded';
       this.billsCache.next(reversedBills.reverse());

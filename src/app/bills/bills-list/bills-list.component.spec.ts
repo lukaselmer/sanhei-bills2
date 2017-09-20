@@ -1,14 +1,15 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { billVariant } from 'app/bills/bill.mock';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { BillEditComponent } from '../bill-edit/bill-edit.component';
+import { AppRoutingModule } from '../../app-routing.module';
+import { PageNotFoundComponent } from '../../not-found.component';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
 import { Bill } from './../bill';
-import { BillForm } from './../bill-form';
 import { BillView } from './../bill-view';
 import { BillsListComponent } from './bills-list.component';
 
@@ -24,7 +25,6 @@ describe('BillsListComponent', () => {
     title2: 'Zusatz'
   });
   const billView = new BillView(bill);
-  const billForm = new BillForm(bill);
   const bills = [bill];
   const billsSearch = {
     term: '',
@@ -39,17 +39,18 @@ describe('BillsListComponent', () => {
         MdInputModule,
         MdListModule,
         MdProgressBarModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        RouterTestingModule
       ],
       providers: [
         {
           provide: BillsService, useValue: {
             search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch),
-            editBill: (): Observable<BillForm> => Observable.of(billForm)
+            editBill: (): Observable<Bill> => Observable.of(bill)
           }
         }
       ],
-      declarations: [BillsListComponent, BillEditComponent]
+      declarations: [BillsListComponent]
     }).compileComponents();
   }));
 
@@ -106,33 +107,4 @@ describe('BillsListComponent', () => {
     expect((component as any).searchTermStream.getValue()).toEqual('some');
     expect(service.search).toHaveBeenCalledWith('some');
   })));
-
-  describe('edit', () => {
-    it('should edit a bill', fakeAsync(inject([BillsService], (service: BillsService) => {
-      expect(component.editingBill).toBeUndefined();
-      spyOn(service, 'editBill').and.callThrough();
-      fixture.detectChanges();
-      const compiled = fixture.debugElement.nativeElement;
-      const element = compiled.querySelector('md-list-item');
-      element.dispatchEvent(new Event('click'));
-      expect(service.editBill).toHaveBeenCalledWith(bill.id);
-      if (!component.editingBill) {
-        fail('component.editingBill should be defined');
-      } else {
-        component.editingBill.subscribe(bf => expect(bf).toBe(billForm));
-      }
-    })));
-
-    it('should render the edit mask if a bill is editable', fakeAsync(inject([BillsService], (service: BillsService) => {
-      expect(component.editingBill).toBeUndefined();
-      fixture.detectChanges();
-      expect(fixture.debugElement.nativeElement.querySelector('sb-bill-edit')).toBeFalsy();
-
-      component.editBill(billView);
-
-      fixture.detectChanges();
-      const element = fixture.debugElement.nativeElement.querySelector('sb-bill-edit');
-      expect(element).toBeTruthy();
-    })));
-  });
 });

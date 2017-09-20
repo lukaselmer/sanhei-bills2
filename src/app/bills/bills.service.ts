@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/delay';
@@ -13,7 +14,6 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/toArray';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
-import { BillForm } from './bill-form';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchResult } from './search/search-result';
 import { DataStoreService } from './store/data-store.service';
@@ -46,13 +46,10 @@ export class BillsService {
     return { term, list: filteredBills, dbStatus: this.dataStore.status };
   }
 
-  editBill(id: number): Observable<BillForm> {
+  editBill(id: number): Observable<Bill> {
     return this.dataStore.getBillsStream()
       .map(bills => bills.find(bill => bill.id === id))
-      .map(bill => {
-        if (!bill) throw new Error(`Bill ${id} not found`);
-        return bill;
-      })
-      .map(bill => new BillForm(bill));
+      .filter(bill => !!bill)
+      .map((bill: Bill) => bill);
   }
 }

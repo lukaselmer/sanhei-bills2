@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <h1>Editing Bill {{bill?.id}}</h1>
+  <p>Form value: {{ form.value | json }}</p>
+  <p>Form status: {{ form.status | json }}</p>
+
+  <md-input-container style="width: 100%;">
+    <textarea mdTextareaAutosize mdInput placeholder="Address" formControlName="address"></textarea>
+  </md-input-container>
+
+  <!-- TODO: add other form fields and submit button -->
+</form>
+
+<a [routerLink]="['/bills']">Back to bills</a>

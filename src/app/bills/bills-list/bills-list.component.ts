@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BillsService } from 'app/bills/bills.service';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -8,7 +9,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { DataStoreStatus } from '../store/data-store-status';
 import { Bill } from './../bill';
-import { BillForm } from './../bill-form';
 import { BillView } from './../bill-view';
 import { SearchResult } from './../search/search-result';
 
@@ -19,14 +19,13 @@ import { SearchResult } from './../search/search-result';
 })
 
 export class BillsListComponent implements OnInit {
-  editingBill?: Observable<BillForm> = undefined;
   bills$: Observable<BillView[]>;
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
 
   private searchTermStream = new BehaviorSubject<string>('');
 
-  constructor(private billsService: BillsService) { }
+  constructor(private billsService: BillsService, private router: Router) { }
 
   ngOnInit() {
     const billsSearch$ = this.searchTermStream
@@ -54,6 +53,6 @@ export class BillsListComponent implements OnInit {
   }
 
   editBill(billView: BillView) {
-    this.editingBill = this.billsService.editBill(billView.id);
+    this.router.navigate(['bills', billView.id]);
   }
 }

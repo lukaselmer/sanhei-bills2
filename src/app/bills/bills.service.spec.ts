@@ -1,5 +1,6 @@
 import { async } from '@angular/core/testing';
 import { BillsService } from 'app/bills/bills.service';
+import 'rxjs/add/operator/count';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
 import { billVariant } from './bill.mock';
@@ -107,13 +108,12 @@ describe('BillsService', () => {
   describe('editing bills', () => {
     it('returns a bill form when a bill is edited', () => {
       service.editBill(2).first()
-        .subscribe(form => expect(form.bill).toEqual(billMock2));
+        .subscribe(bill => expect(bill).toEqual(billMock2));
     });
 
-    it('raises an error if an invalid id is passed', () => {
-      service.editBill(20).first()
-        .subscribe(() => fail('no error was emitted'),
-        error => expect(error.message).toEqual('Bill 20 not found'));
+    it('returns nothing if an invalid id is passed', () => {
+      expect(service.editBill(20).count()
+        .subscribe(count => expect(count).toBe(0)));
     });
   });
 });

@@ -1,5 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
 import { MdButtonModule, MdCardModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { BillsService } from 'app/bills/bills.service';
@@ -17,7 +18,8 @@ describe('AppComponent', () => {
         MdButtonModule,
         MdCardModule,
         MdInputModule,
-        MdProgressSpinnerModule
+        MdProgressSpinnerModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: BillsService, useValue: { search: () => { } } },
@@ -28,7 +30,6 @@ describe('AppComponent', () => {
         AuthWidgetComponent,
         AccountInfoComponent,
         AppComponent,
-        BillEditComponent,
         BillsListComponent
       ]
     }).compileComponents();
