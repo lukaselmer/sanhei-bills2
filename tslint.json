@@ -55,8 +55,14 @@
     ],
     "member-ordering": [
       true,
-      "static-before-instance",
-      "variables-before-functions"
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "constructor",
+          "instance-method"
+        ]
+      }
     ],
     "no-arg": true,
     "no-bitwise": true,
@@ -80,9 +86,19 @@
     ],
     "no-misused-new": true,
     "no-non-null-assertion": true,
+    "no-parameter-reassignment": true,
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
+    "no-submodule-imports": [
+      true,
+      "rxjs",
+      "@angular",
+      "zone.js",
+      "angularfire2",
+      "core-js",
+      "firebase"
+    ],
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
@@ -92,6 +108,11 @@
     // "no-use-before-declare": true, rule requires type checking
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
+    // "object-literal-sort-keys": [
+    //   true,
+    //   "ignore-case",
+    //   "match-declaration-order"
+    // ],
     "one-line": [
       true,
       "check-open-brace",
@@ -131,8 +152,13 @@
       "check-branch",
       "check-decl",
       "check-operator",
+      "check-module",
       "check-separator",
-      "check-type"
+      "check-rest-spread",
+      "check-type",
+      "check-typecast",
+      "check-type-operator",
+      "check-preblock"
     ],
     "no-irregular-whitespace": true,
     "directive-selector": [
