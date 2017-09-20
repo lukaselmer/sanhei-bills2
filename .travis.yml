@@ -6,6 +6,7 @@ before_install:
 - export TZ=Europe/Zurich
 - export CHROME_BIN=google-chrome-stable
 - gem install mdl
+- npm install -g @angular/cli
 cache:
   directories:
   - node_modules
