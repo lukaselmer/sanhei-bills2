@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BillsService } from 'app/bills/bills.service';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/switchMap';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { BillsService } from '../bills.service';
 import { DataStoreStatus } from '../store/data-store-status';
 import { Bill } from './../bill';
 import { BillView } from './../bill-view';

@@ -1,8 +1,8 @@
 import { async } from '@angular/core/testing';
-import { BillsService } from 'app/bills/bills.service';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './bill';
 import { billVariant } from './bill.mock';
+import { BillsService } from './bills.service';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 
 describe('BillsService', () => {
