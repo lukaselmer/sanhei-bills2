@@ -31,7 +31,7 @@ export class DataStoreService {
     try {
       const bills = await this.idbStoreService.loadFromIDB<Bill>('bills');
       this.status = 'loadedFromIDB';
-      this.billsCache.next(bills);
+      this.nextBills(bills);
     } catch (ex) {
       console.error(ex);
     }
@@ -46,7 +46,7 @@ export class DataStoreService {
     if (this.billsCache.getValue().length === 0) {
       const firstReversedBills = await this.forIndex().first().toPromise();
       this.status = 'shortListLoaded';
-      this.billsCache.next(firstReversedBills.reverse());
+      this.nextBills(firstReversedBills.reverse());
     }
   }
 
@@ -63,7 +63,11 @@ export class DataStoreService {
       query: { orderByChild: 'id', limitToLast: 100 }
     }).subscribe(reversedBills => {
       this.status = 'loaded';
-      this.billsCache.next(reversedBills.reverse());
+      this.nextBills(reversedBills.reverse());
     });
+  }
+
+  private nextBills(bills: Bill[]) {
+    this.billsCache.next(bills);
   }
 }
