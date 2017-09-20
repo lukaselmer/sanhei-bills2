@@ -4,6 +4,7 @@ export class Bill {
   uid: number;
   vat: number;
   workHours: number;
+  discount: number;
 
   finished: boolean; // means finished editing
   paid: boolean;

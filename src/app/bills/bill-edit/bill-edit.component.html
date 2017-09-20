@@ -1,13 +1,51 @@
+<h1>Rechnung {{bill?.id}} bearbeiten</h1>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-  <h1>Editing Bill {{bill?.id}}</h1>
-  <p>Form value: {{ form.value | json }}</p>
-  <p>Form status: {{ form.status | json }}</p>
+  <!-- <p>Form value: {{ form.value | json }}</p>
+    <p>Form status: {{ form.status | json }}</p> -->
 
-  <md-form-field style="width: 100%;">
-    <textarea mdTextareaAutosize mdInput placeholder="Address" formControlName="address"></textarea>
-  </md-form-field>
+  <md-card>
+    <md-form-field>
+      <textarea mdInput formControlName="address" mdTextareaAutosize placeholder="Adresse"></textarea>
+    </md-form-field>
+    <md-form-field><input mdInput formControlName="billType" placeholder="Art (Rechnung / Offerte / Spezial)"></md-form-field>
+    <md-form-field><input mdInput formControlName="title1" placeholder="Titel Rechnung"></md-form-field>
+    <md-form-field><input mdInput formControlName="ownerName" placeholder="Besitzer"></md-form-field>
+    <md-form-field><input mdInput formControlName="ordererName" placeholder="Auftraggeber/Nr"></md-form-field>
+  </md-card>
 
-  <!-- TODO: add other form fields and submit button -->
+  <md-card>
+    <md-form-field><input mdInput formControlName="title2" placeholder="Titel Beschreibung"></md-form-field>
+    <md-form-field>
+      <textarea mdInput formControlName="description" mdTextareaAutosize placeholder="Arbeitsbeschreibung"></textarea>
+    </md-form-field>
+  </md-card>
+
+  <md-card>
+    <md-form-field><input mdInput formControlName="fixedAtDescription" placeholder="Ausgeführte Arbeiten am (yyyy-mm-dd als Datum, oder Freitext)"></md-form-field>
+    <md-form-field><input mdInput formControlName="orderedAt" placeholder="Auftragsdatum (yyyy-mm-dd)"></md-form-field>
+  </md-card>
+
+  <md-card>
+    <md-form-field><input mdInput formControlName="cashback" placeholder="Skonto in %"></md-form-field>
+    <md-form-field><input mdInput formControlName="vat" placeholder="MWST in %"></md-form-field>
+    <md-form-field><input mdInput formControlName="discount" placeholder="Rabatt"></md-form-field>
+  </md-card>
+
+  <md-card>
+    <md-form-field><input mdInput formControlName="worker" placeholder="Beschreibung der gearbeiteten Stunden"></md-form-field>
+    <md-form-field><input mdInput formControlName="workHours" placeholder="Gearbeitete Stunden"></md-form-field>
+  </md-card>
+
+  <button md-raised-button color="primary" type="submit">
+    Speichern
+  </button>
+
+  <button md-raised-button class="abort-button" type="button" (click)="abort()">
+    Abbrechen
+  </button>
+
+  <button md-fab color="primary" class="floating-save-button" type="submit">
+    <md-icon class="md-24" aria-label="Speichern">save</md-icon>
+  </button>
 </form>
-
-<a [routerLink]="['/bills']">Back to bills</a>

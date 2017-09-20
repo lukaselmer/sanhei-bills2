@@ -9,7 +9,7 @@
 
 <md-list>
   <md-list-item *ngFor="let bill of bills$ | async" (click)="editBill(bill)">
-    <div md-line><strong><a [routerLink]="bill.id">{{bill.uid}} | {{ bill.id }}</a></strong></div>
+    <div md-line><strong><a href="#" (click)="editBill(bill)">{{bill.uid}} | {{ bill.id }}</a></strong></div>
     <div md-line>{{ bill.commaSeparatedAddress }}</div>
     <div md-line>{{ bill.title1 }}, {{ bill.title2 }}</div>
     <div md-line *ngIf="bill.fixedAt">Arbeiten am: {{ bill.fixedAt | date:'yyyy-MM-dd' }} | {{ bill.billedAt | date:'mediumDate' }}</div>

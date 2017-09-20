@@ -1,0 +1,32 @@
+md-form-field {
+  width: 100%;
+}
+
+@media (min-width: 700px) {
+  md-form-field {
+    width: 100%;
+  }
+
+  md-card {
+    margin-bottom: 20px;
+  }
+
+  // .address {
+  //   width: 50%;
+  //   padding-left: 50%;
+  // }
+}
+
+form {
+  margin-bottom: 15px;
+}
+
+.abort-button {
+  margin-left: 10px;
+}
+
+.floating-save-button {
+  position: fixed;
+  right: 30px;
+  bottom: 10px;
+}

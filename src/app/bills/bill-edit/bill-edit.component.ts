@@ -1,17 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/switchMap';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { DataStoreStatus } from '../store/data-store-status';
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
 import { Bill } from './../bill';
-import { BillView } from './../bill-view';
 import { BillsService } from './../bills.service';
-import { SearchResult } from './../search/search-result';
 
 @Component({
   selector: 'sb-bill-edit',
@@ -38,6 +35,7 @@ export class BillEditComponent implements OnInit {
         )
       ],
       workHours: '',
+      discount: '',
 
       finished: '',
       paid: '',
@@ -46,14 +44,13 @@ export class BillEditComponent implements OnInit {
       address: ['', Validators.required],
       billType: ['', Validators.required],
       description: '',
-      fixedAtOverride: '',
+      fixedAtDescription: ['', Validators.required],
       ordererName: ['', Validators.required],
       ownerName: ['', Validators.required],
       title1: ['', Validators.required],
       title2: ['', Validators.required],
       worker: ['', Validators.required],
 
-      fixedAt: ['', Validators.required],
       orderedAt: '',
       billedAt: ''
     });
@@ -69,6 +66,7 @@ export class BillEditComponent implements OnInit {
       cashback: bill.cashback,
       vat: bill.vat,
       workHours: bill.workHours,
+      discount: bill.discount,
       finished: bill.finished,
       paid: bill.paid,
       deleted: bill.deleted,
@@ -81,13 +79,14 @@ export class BillEditComponent implements OnInit {
       ].join('\n').trim(),
       billType: bill.billType,
       description: bill.description,
-      fixedAtOverride: bill.fixedAtOverride,
       ordererName: bill.ordererName,
       ownerName: bill.ownerName,
       title1: bill.title1,
       title2: bill.title2,
       worker: bill.worker,
-      fixedAt: bill.fixedAt,
+      fixedAtDescription: bill.fixedAtOverride.length > 0 ?
+        bill.fixedAtOverride :
+        bill.fixedAt,
       orderedAt: bill.orderedAt,
       billedAt: bill.billedAt
     };
@@ -95,6 +94,13 @@ export class BillEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('submit');
     // TODO: implement this
+    // combine fixedAtOverride / fixedAt
+  }
+
+  abort() {
+    // TODO: implement this
+    console.log('abort');
   }
 }

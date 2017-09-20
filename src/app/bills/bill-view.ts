@@ -8,6 +8,7 @@ export class BillView {
   get uid() { return this.bill.uid; }
   get vat() { return this.bill.vat; }
   get workHours() { return this.bill.workHours; }
+  get discount() { return this.bill.discount; }
 
   get finished() { return this.bill.finished; } // means finished editing
   get paid() { return this.bill.paid; }

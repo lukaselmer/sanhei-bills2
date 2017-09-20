@@ -6,6 +6,7 @@ const bill = {
   uid: 3000,
   vat: 4.51,
   workHours: 5000,
+  discount: 4,
   address1: 'address1',
   address2: 'address2',
   address3: 'address3',

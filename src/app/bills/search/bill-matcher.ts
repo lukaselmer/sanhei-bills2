@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Bill } from '../bill';
 
 export class BillMatcher {
@@ -20,7 +19,8 @@ export class BillMatcher {
 
     return bill.cashback === termAsNumber ||
       bill.vat === termAsNumber ||
-      bill.workHours === termAsNumber;
+      bill.workHours === termAsNumber ||
+      bill.discount === termAsNumber;
   }
 
   private matchesIdOrUid(bill: Bill) {
