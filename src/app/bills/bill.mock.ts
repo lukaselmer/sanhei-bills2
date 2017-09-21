@@ -26,8 +26,8 @@ const bill = {
   billedAt: new Date(2017, 5, 23).toISOString(),
   fixedAt: new Date(2017, 5, 21).toISOString(),
   orderedAt: new Date(2017, 5, 20).toISOString(),
-  createdAt: new Date(2017, 5, 22).toISOString(),
-  updatedAt: new Date(2017, 5, 24).toISOString()
+  createdAt: new Date(2017, 5, 22).getTime(),
+  updatedAt: new Date(2017, 5, 24).getTime()
 };
 
 export function billVariant(attributes: Partial<Bill> = {}): Bill {

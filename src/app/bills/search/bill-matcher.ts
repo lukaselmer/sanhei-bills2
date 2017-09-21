@@ -8,6 +8,7 @@ export class BillMatcher {
 
     if (this.matchesIdOrUid(bill)) return true;
     if (this.matchesNumber(bill)) return true;
+    if (this.matchesTimestamps(bill)) return true;
     if (this.matchesStringsOrDates(bill)) return true;
 
     return false;
@@ -27,6 +28,11 @@ export class BillMatcher {
     return bill.id.toString().startsWith(this.term) || bill.uid.toString().startsWith(this.term);
   }
 
+  private matchesTimestamps(bill: Bill) {
+    return bill.createdAt && new Date(bill.createdAt).toISOString().startsWith(this.term) ||
+      bill.updatedAt && new Date(bill.updatedAt).toISOString().startsWith(this.term);
+  }
+
   private matchesStringsOrDates(bill: Bill) {
     return bill.address1 && bill.address1.toLowerCase().startsWith(this.term) ||
       bill.address2 && bill.address2.toLowerCase().startsWith(this.term) ||
@@ -42,9 +48,7 @@ export class BillMatcher {
       bill.worker && bill.worker.toLowerCase().startsWith(this.term) ||
       bill.billedAt && bill.billedAt.toLowerCase().startsWith(this.term) ||
       bill.fixedAt && bill.fixedAt.toLowerCase().startsWith(this.term) ||
-      bill.orderedAt && bill.orderedAt.toLowerCase().startsWith(this.term) ||
-      bill.createdAt && bill.createdAt.toLowerCase().startsWith(this.term) ||
-      bill.updatedAt && bill.updatedAt.toLowerCase().startsWith(this.term);
+      bill.orderedAt && bill.orderedAt.toLowerCase().startsWith(this.term);
 
     /**
      * This is the same as the following code. The code is inlined for performance reasons.

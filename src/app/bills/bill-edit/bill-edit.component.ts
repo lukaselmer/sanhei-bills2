@@ -6,6 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as firebase from 'firebase';
 
 import { Bill } from './../bill';
 import { BillsService } from './../bills.service';
@@ -37,9 +38,9 @@ export class BillEditComponent implements OnInit {
       workHours: '',
       discount: '',
 
-      finished: '',
-      paid: '',
-      deleted: '',
+      // finished: '',
+      // paid: '',
+      // deleted: '',
 
       address: ['', Validators.required],
       billType: ['', Validators.required],
@@ -67,9 +68,9 @@ export class BillEditComponent implements OnInit {
       vat: bill.vat,
       workHours: bill.workHours,
       discount: bill.discount,
-      finished: bill.finished,
-      paid: bill.paid,
-      deleted: bill.deleted,
+      // finished: bill.finished,
+      // paid: bill.paid,
+      // deleted: bill.deleted,
       address: [
         bill.address1,
         bill.address2,
@@ -94,9 +95,64 @@ export class BillEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('submit');
-    // TODO: implement this
-    // combine fixedAtOverride / fixedAt
+    if (this.form.invalid) return;
+    // TODO: exception handling
+    this.billsService.updateBill(this.extractValuesFromForm());
+    this.abort();
+  }
+
+  private extractValuesFromForm(): Bill {
+    const v = this.form.value;
+    return {
+      uid: this.bill.uid,
+      id: this.bill.id,
+      cashback: v.cashback,
+      vat: v.vat,
+      workHours: v.workHours,
+      discount: v.discount,
+      finished: this.bill.finished,
+      paid: this.bill.paid,
+      deleted: this.bill.deleted,
+      billType: v.billType,
+      description: v.description,
+      ordererName: v.ordererName,
+      ownerName: v.ownerName,
+      title1: v.title1,
+      title2: v.title2,
+      worker: v.worker,
+      orderedAt: v.orderedAt,
+      billedAt: v.billedAt,
+      createdAt: this.bill.createdAt,
+      updatedAt: firebase.database.ServerValue.TIMESTAMP as number,
+      ...this.extractAddress(),
+      ...this.extractFixedAt()
+    };
+  }
+
+  private extractAddress() {
+    const v = this.form.value;
+    const address = v.address.split('\n');
+
+    // if (address[5]) {
+    //   TODO: error handling
+    // }
+
+    return {
+      address1: address[0] || '',
+      address2: address[1] || '',
+      address3: address[2] || '',
+      address4: address[3] || '',
+      address5: address[4] || ''
+    };
+  }
+
+  private extractFixedAt() {
+    const fixedAtDescription: string = this.form.value.fixedAtDescription.trim();
+    const dateRegexp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+    if (fixedAtDescription.match(dateRegexp)) {
+      return { fixedAt: fixedAtDescription, fixedAtOverride: '' };
+    }
+    return { fixedAt: '', fixedAtOverride: fixedAtDescription };
   }
 
   abort() {

@@ -1,11 +1,11 @@
+import 'rxjs/add/observable/of';
+
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { AppRoutingModule } from '../../app-routing.module';
-import { PageNotFoundComponent } from '../../not-found.component';
+
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
@@ -65,34 +65,38 @@ describe('BillsListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render an md-list', async(() => {
+  it('should render a md-card', async(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('md-list')).not.toBe(null);
+    expect(compiled.querySelector('md-form-field')).not.toBe(null);
   }));
 
   it('should render a row for each bill', fakeAsync(() => {
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('md-list > md-list-item').childElementCount).toBe(bills.length);
+    const compiled: HTMLElement = fixture.debugElement.nativeElement;
+    expect(compiled.querySelectorAll('md-card').length).toBe(bills.length);
   }));
 
   it('should render the row for the bill', fakeAsync(() => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    const element = compiled.querySelector('md-list-item');
+    const element = compiled.querySelector('md-card');
     expect(element).not.toBe(null);
 
     function line(lineNumber: number): string {
       return element.querySelector(`[md-line]:nth-child(${lineNumber})`).textContent.trim();
     }
 
-    expect(line(1)).toEqual(`${bill.uid} | ${bill.id}`);
-    expect(line(2)).toEqual(`${billView.commaSeparatedAddress}`);
-    expect(line(3)).toEqual(`${billView.title1}, ${billView.title2}`);
-    expect(line(4)).toEqual('Arbeiten am: 2017-06-21 | Jun 23, 2017');
-    expect(line(5)).toEqual('Verrechnet am: 2017-06-23 | Jun 23, 2017');
-    expect(line(6)).toEqual(`${bill.ownerName}, ${bill.ordererName}, ${bill.worker}`);
+    function queryContent(query: string): string {
+      return element.querySelector(query).textContent.trim();
+    }
+
+    expect(queryContent('md-card-title')).toEqual(`${bill.uid} | ${bill.id}`);
+    expect(queryContent('md-card-subtitle :first-child')).toEqual(`${billView.title1}, ${billView.title2}`);
+    expect(queryContent('md-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
+    expect(queryContent('md-card-content :last-child')).toEqual(`${bill.ownerName}, ${bill.ordererName}, ${bill.worker}`);
+    expect(queryContent('md-card-content :nth-child(1)')).toEqual(`Arbeiten am: fixedAtOverride |`);
+    expect(queryContent('md-card-content :nth-child(2)')).toEqual(`Verrechnet am: 2017-06-23`);
   }));
 
   it('should search through the bills', fakeAsync(inject([BillsService], (service: BillsService) => {

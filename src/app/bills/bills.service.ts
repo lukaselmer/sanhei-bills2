@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
@@ -12,7 +11,10 @@ import 'rxjs/add/operator/mergeAll';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/toArray';
+
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+
 import { Bill } from './bill';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchResult } from './search/search-result';
@@ -51,5 +53,9 @@ export class BillsService {
       .map(bills => bills.find(bill => bill.id === id))
       .filter(bill => !!bill)
       .map((bill: Bill) => bill);
+  }
+
+  updateBill(bill: Bill) {
+    this.dataStore.updateBill(bill);
   }
 }
