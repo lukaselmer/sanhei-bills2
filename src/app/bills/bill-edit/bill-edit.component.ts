@@ -5,7 +5,7 @@ import 'rxjs/add/operator/switchMap';
 
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Bill } from './../bill';
 import { BillsService } from './../bills.service';
@@ -20,8 +20,8 @@ export class BillEditComponent implements OnInit {
   form: FormGroup;
   bill: Bill;
 
-  constructor(router: ActivatedRoute, private billsService: BillsService, private fb: FormBuilder) {
-    this.id = +router.snapshot.params['id'];
+  constructor(private router: Router, route: ActivatedRoute, private billsService: BillsService, private fb: FormBuilder) {
+    this.id = +route.snapshot.params['id'];
     this.createForm();
   }
 
@@ -100,7 +100,8 @@ export class BillEditComponent implements OnInit {
   }
 
   abort() {
-    // TODO: implement this
-    console.log('abort');
+    this.router.navigate(['bills']);
+    window.scrollTo(0, 0);
+    return false;
   }
 }
