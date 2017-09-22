@@ -104,15 +104,6 @@ export class BillEditComponent implements OnInit {
   private extractValuesFromForm(): Bill {
     const v = this.form.value;
     return {
-      uid: this.bill.uid,
-      id: this.bill.id,
-      cashback: v.cashback,
-      vat: v.vat,
-      workHours: v.workHours,
-      discount: v.discount,
-      finished: this.bill.finished,
-      paid: this.bill.paid,
-      deleted: this.bill.deleted,
       billType: v.billType,
       description: v.description,
       ordererName: v.ordererName,
@@ -120,12 +111,61 @@ export class BillEditComponent implements OnInit {
       title1: v.title1,
       title2: v.title2,
       worker: v.worker,
-      orderedAt: v.orderedAt,
-      billedAt: v.billedAt,
-      createdAt: this.bill.createdAt,
-      updatedAt: firebase.database.ServerValue.TIMESTAMP as number,
-      ...this.extractAddress(),
+      ...this.extractNumbers(),
+      ...this.applyExistingValuesFromBill(),
+      ...this.extractDates(),
+      ...this.setTimestamps(),
+      ...this.extractAddress()
+    };
+  }
+
+  private extractNumbers() {
+    const v = this.form.value;
+    const z: string = v.cashback;
+    return {
+      cashback: parseInt(v.cashback, 10),
+      vat: parseInt(v.vat, 10),
+      workHours: parseInt(v.workHours, 10),
+      discount: parseInt(v.discount, 10)
+    };
+  }
+
+  private applyExistingValuesFromBill() {
+    return {
+      uid: this.bill.uid,
+      id: this.bill.id,
+      finished: this.bill.finished,
+      paid: this.bill.paid,
+      deleted: this.bill.deleted
+    };
+  }
+
+  private extractDates() {
+    const v = this.form.value;
+    return {
+      orderedAt: this.dateOrEmpty(v.orderedAt),
+      billedAt: this.dateOrEmpty(v.billedAt),
       ...this.extractFixedAt()
+    };
+  }
+
+  private dateOrEmpty(potentialDate: string) {
+    const dateRegexp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+    return (potentialDate || '').match(dateRegexp) ? potentialDate : '';
+  }
+
+  private extractFixedAt() {
+    const fixedAtDescription: string = this.form.value.fixedAtDescription.trim();
+    if (this.dateOrEmpty(fixedAtDescription) === '') {
+      return { fixedAt: '', fixedAtOverride: fixedAtDescription };
+    }
+    return { fixedAt: fixedAtDescription, fixedAtOverride: '' };
+  }
+
+  private setTimestamps() {
+    return {
+      createdAt: this.bill.createdAt,
+      updatedAt: firebase.database.ServerValue.TIMESTAMP as number
     };
   }
 
@@ -144,15 +184,6 @@ export class BillEditComponent implements OnInit {
       address4: address[3] || '',
       address5: address[4] || ''
     };
-  }
-
-  private extractFixedAt() {
-    const fixedAtDescription: string = this.form.value.fixedAtDescription.trim();
-    const dateRegexp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
-    if (fixedAtDescription.match(dateRegexp)) {
-      return { fixedAt: fixedAtDescription, fixedAtOverride: '' };
-    }
-    return { fixedAt: '', fixedAtOverride: fixedAtDescription };
   }
 
   abort() {
