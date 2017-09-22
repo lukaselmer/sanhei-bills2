@@ -68,9 +68,6 @@ export class BillEditComponent implements OnInit {
       vat: bill.vat,
       workHours: bill.workHours,
       discount: bill.discount,
-      // finished: bill.finished,
-      // paid: bill.paid,
-      // deleted: bill.deleted,
       address: [
         bill.address1,
         bill.address2,
@@ -95,22 +92,18 @@ export class BillEditComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
-    // TODO: exception handling
-    this.billsService.updateBill(this.extractValuesFromForm());
-    this.abort();
+    if (this.form.valid) {
+      this.billsService.updateBill(this.extractValuesFromForm());
+      this.abort();
+    } else {
+      window.scrollTo(0, 0);
+    }
   }
 
   private extractValuesFromForm(): Bill {
     const v = this.form.value;
     return {
-      billType: v.billType,
-      description: v.description,
-      ordererName: v.ordererName,
-      ownerName: v.ownerName,
-      title1: v.title1,
-      title2: v.title2,
-      worker: v.worker,
+      ...this.extractStrings(),
       ...this.extractNumbers(),
       ...this.applyExistingValuesFromBill(),
       ...this.extractDates(),
@@ -119,9 +112,21 @@ export class BillEditComponent implements OnInit {
     };
   }
 
+  private extractStrings() {
+    const v = this.form.value;
+    return {
+      billType: v.billType,
+      description: v.description,
+      ordererName: v.ordererName,
+      ownerName: v.ownerName,
+      title1: v.title1,
+      title2: v.title2,
+      worker: v.worker
+    };
+  }
+
   private extractNumbers() {
     const v = this.form.value;
-    const z: string = v.cashback;
     return {
       cashback: parseInt(v.cashback, 10),
       vat: parseInt(v.vat, 10),
