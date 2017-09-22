@@ -48,7 +48,7 @@ export class DataStoreService {
     if (this.billsCache.getValue().length === 0) {
       const firstReversedBills = await this.forIndex().first().toPromise();
       this.status = 'shortListLoaded';
-      this.nextBills(firstReversedBills.reverse());
+      this.nextBills(firstReversedBills.slice().reverse());
     }
   }
 
@@ -65,7 +65,7 @@ export class DataStoreService {
       query: { orderByChild: 'id', limitToLast: 100 }
     }).subscribe(reversedBills => {
       this.status = 'loaded';
-      this.nextBills(reversedBills.reverse());
+      this.nextBills(reversedBills.slice().reverse());
     });
   }
 
