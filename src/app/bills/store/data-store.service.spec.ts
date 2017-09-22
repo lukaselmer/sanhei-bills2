@@ -1,16 +1,15 @@
-import { async, fakeAsync, tick } from '@angular/core/testing';
+import { async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
+
 import { Bill } from './../bill';
 import { DataStoreService } from './data-store.service';
-import { IDBStoreService } from './idb-store.service';
 
 describe('DataStoreService', () => {
   let service: DataStoreService;
   const billMock: Bill = {
     id: 1234,
     uid: '17071234',
-    address1: 'Adresszeile 1',
-    address2: 'Adressezeile 2',
+    address: 'Adresszeile 1\nAdressezeile 2',
     title1: 'Objekt: Adresse',
     title2: 'Zusatz'
   } as any;

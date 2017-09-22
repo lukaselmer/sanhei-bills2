@@ -14,25 +14,16 @@ export class BillView {
   get paid() { return this.bill.paid; }
   get deleted() { return this.bill.deleted; }
 
-  get address() {
-    return [
-      this.bill.address1,
-      this.bill.address2,
-      this.bill.address3,
-      this.bill.address4,
-      this.bill.address5
-    ].filter(line => line);
+  get address() { return this.bill.address; }
+
+  get addressLines() {
+    return this.bill.address.split('\n').filter(line => line);
   }
 
   get commaSeparatedAddress() {
-    return this.address.join(', ');
+    return this.addressLines.join(', ');
   }
 
-  get address1() { return this.bill.address1; }
-  get address2() { return this.bill.address2; }
-  get address3() { return this.bill.address3; }
-  get address4() { return this.bill.address4; }
-  get address5() { return this.bill.address5; }
   get billType() { return this.bill.billType; }
   get description() { return this.bill.description; }
   get fixedAtOverride() { return this.bill.fixedAtOverride; }

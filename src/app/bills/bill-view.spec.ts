@@ -7,24 +7,24 @@ function billView(attributes: Partial<Bill> = {}) {
 }
 
 describe('BillView', () => {
-  describe('address helpers', () => {
+  describe('address lines helpers', () => {
     it('converts all address fields', () => {
-      expect(billView().address).toEqual([
+      expect(billView().addressLines).toEqual([
         'address1', 'address2', 'address3', 'address4', 'address5'
       ]);
     });
 
     it('omits empty fields', () => {
       expect(billView({
-        address1: '', address2: '', address4: ''
-      }).address).toEqual([
+        address: '\naddress3\n\naddress5\n'
+      }).addressLines).toEqual([
         'address3', 'address5'
       ]);
     });
 
     it('comma separates the address', () => {
-      expect(billView({ address4: '' }).commaSeparatedAddress).toEqual(
-        'address1, address2, address3, address5'
+      expect(billView({ address: '1\n2\n3\n4\n5' }).commaSeparatedAddress).toEqual(
+        '1, 2, 3, 4, 5'
       );
     });
   });

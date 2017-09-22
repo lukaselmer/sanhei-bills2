@@ -10,11 +10,7 @@ export class Bill {
   paid: boolean;
   deleted: boolean;
 
-  address1: string;
-  address2: string;
-  address3: string;
-  address4: string;
-  address5: string;
+  address: string;
   billType: string;
   description: string;
   fixedAtOverride: string;

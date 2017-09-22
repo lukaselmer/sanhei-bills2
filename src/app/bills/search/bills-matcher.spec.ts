@@ -1,7 +1,4 @@
-import { async } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
 import { billVariant } from '../bill.mock';
-import { BillsService } from '../bills.service';
 import { Bill } from './../bill';
 import { BillMatcher } from './bill-matcher';
 
@@ -18,9 +15,7 @@ describe('BillMatcherService', () => {
 
   it('ignores case and spaces', () => {
     const variant = billVariant({
-      address1: 'A street',
-      address2: 'Something',
-      address3: 'lower'
+      address: 'A street\nSomething\nlower'
     });
     expect(match('some', variant)).toBeTruthy();
     expect(match('a stre', variant)).toBeTruthy();
@@ -29,7 +24,7 @@ describe('BillMatcherService', () => {
   });
 
   it('does not search within a field', () => {
-    const variant = billVariant({ address1: 'A street' });
+    const variant = billVariant({ address: 'A street' });
     expect(match('street', bill)).toBeFalsy();
   });
 

@@ -68,13 +68,7 @@ export class BillEditComponent implements OnInit {
       vat: bill.vat,
       workHours: bill.workHours,
       discount: bill.discount,
-      address: [
-        bill.address1,
-        bill.address2,
-        bill.address3,
-        bill.address4,
-        bill.address5
-      ].join('\n').trim(),
+      address: bill.address,
       billType: bill.billType,
       description: bill.description,
       ordererName: bill.ordererName,
@@ -107,14 +101,14 @@ export class BillEditComponent implements OnInit {
       ...this.extractNumbers(),
       ...this.applyExistingValuesFromBill(),
       ...this.extractDates(),
-      ...this.setTimestamps(),
-      ...this.extractAddress()
+      ...this.setTimestamps()
     };
   }
 
   private extractStrings() {
     const v = this.form.value;
     return {
+      address: v.address.trim(),
       billType: v.billType,
       description: v.description,
       ordererName: v.ordererName,
@@ -171,23 +165,6 @@ export class BillEditComponent implements OnInit {
     return {
       createdAt: this.bill.createdAt,
       updatedAt: firebase.database.ServerValue.TIMESTAMP as number
-    };
-  }
-
-  private extractAddress() {
-    const v = this.form.value;
-    const address = v.address.split('\n');
-
-    // if (address[5]) {
-    //   TODO: error handling
-    // }
-
-    return {
-      address1: address[0] || '',
-      address2: address[1] || '',
-      address3: address[2] || '',
-      address4: address[3] || '',
-      address5: address[4] || ''
     };
   }
 

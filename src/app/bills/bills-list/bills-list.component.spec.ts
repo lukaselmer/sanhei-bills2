@@ -19,8 +19,7 @@ describe('BillsListComponent', () => {
   const bill = billVariant({
     id: 1234,
     uid: 17071234,
-    address1: 'Adresszeile 1',
-    address2: 'Adressezeile 2',
+    address: 'Adresszeile 1\nAdressezeile 2',
     title1: 'Objekt: Adresse',
     title2: 'Zusatz'
   });
