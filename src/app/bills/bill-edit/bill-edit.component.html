@@ -1,9 +1,6 @@
 <h1>Rechnung {{bill?.id}} bearbeiten</h1>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-  <!-- <p>Form value: {{ form.value | json }}</p>
-    <p>Form status: {{ form.status | json }}</p> -->
-
   <md-card>
     <md-form-field>
       <textarea mdInput formControlName="address" mdTextareaAutosize placeholder="Adresse"></textarea>
