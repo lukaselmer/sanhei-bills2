@@ -26,7 +26,7 @@ export class BillEditComponent implements OnInit {
     this.createForm();
   }
 
-  createForm() {
+  private createForm() {
     this.form = this.fb.group({
       cashback: '',
       vat: ['',
@@ -37,10 +37,6 @@ export class BillEditComponent implements OnInit {
       ],
       workHours: '',
       discount: '',
-
-      // finished: '',
-      // paid: '',
-      // deleted: '',
 
       address: ['', Validators.required],
       billType: ['', Validators.required],
@@ -122,10 +118,10 @@ export class BillEditComponent implements OnInit {
   private extractNumbers() {
     const v = this.form.value;
     return {
-      cashback: parseInt(v.cashback, 10),
-      vat: parseInt(v.vat, 10),
-      workHours: parseInt(v.workHours, 10),
-      discount: parseInt(v.discount, 10)
+      cashback: parseFloat(v.cashback),
+      vat: parseFloat(v.vat),
+      workHours: parseFloat(v.workHours),
+      discount: parseFloat(v.discount)
     };
   }
 

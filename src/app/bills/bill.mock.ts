@@ -19,9 +19,10 @@ const bill = {
   deleted: false,
   finished: false,
   paid: false,
-  billedAt: new Date(2017, 5, 23).toISOString(),
-  fixedAt: new Date(2017, 5, 21).toISOString(),
-  orderedAt: new Date(2017, 5, 20).toISOString(),
+  billedAt: '2017-06-22',
+  fixedAt: '2017-06-20',
+  orderedAt: '2017-06-19',
+
   createdAt: new Date(2017, 5, 22).getTime(),
   updatedAt: new Date(2017, 5, 24).getTime()
 };

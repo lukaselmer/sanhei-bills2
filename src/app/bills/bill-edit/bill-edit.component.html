@@ -21,6 +21,7 @@
   <md-card>
     <md-form-field><input mdInput formControlName="fixedAtDescription" placeholder="Ausgeführte Arbeiten am (yyyy-mm-dd als Datum, oder Freitext)"></md-form-field>
     <md-form-field><input mdInput formControlName="orderedAt" placeholder="Auftragsdatum (yyyy-mm-dd)"></md-form-field>
+    <md-form-field><input mdInput formControlName="billedAt" placeholder="Verrechnet am (yyyy-mm-dd)"></md-form-field>
   </md-card>
 
   <md-card>
@@ -34,13 +35,9 @@
     <md-form-field><input mdInput formControlName="workHours" placeholder="Gearbeitete Stunden"></md-form-field>
   </md-card>
 
-  <button md-raised-button color="primary" type="submit">
-    SPEICHERN
-  </button>
+  <button md-raised-button color="primary" type="submit">SPEICHERN</button>
 
-  <button md-raised-button class="abort-button" type="button" (click)="abort()">
-    ABBRECHEN
-  </button>
+  <button md-raised-button class="abort-button" type="button" (click)="abort()">ABBRECHEN</button>
 
   <button md-fab color="primary" class="floating-save-button" type="submit">
     <md-icon class="md-24" aria-label="Speichern">save</md-icon>
