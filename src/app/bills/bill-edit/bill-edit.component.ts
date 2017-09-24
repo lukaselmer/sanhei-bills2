@@ -1,13 +1,11 @@
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/switchMap';
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as firebase from 'firebase';
-
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/switchMap';
 import { Bill } from './../bill';
 import { BillsService } from './../bills.service';
 

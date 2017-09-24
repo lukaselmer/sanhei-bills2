@@ -1,11 +1,9 @@
-import 'rxjs/add/operator/first';
-import 'rxjs/add/operator/toPromise';
-
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/toPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-
 import { Bill } from '../bill';
 import { DataStoreStatus } from './data-store-status';
 import { IDBStoreService } from './idb-store.service';

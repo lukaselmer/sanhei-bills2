@@ -1,8 +1,6 @@
-import 'rxjs/add/operator/count';
-
 import { async } from '@angular/core/testing';
+import 'rxjs/add/operator/count';
 import { Observable } from 'rxjs/Observable';
-
 import { billVariant } from './bill.mock';
 import { BillsService } from './bills.service';
 import { BillMatcherFactory } from './search/bill-matcher.factory';

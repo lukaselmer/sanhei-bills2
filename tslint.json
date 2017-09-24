@@ -4,13 +4,25 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "case-insensitive",
+        "named-imports-order": "case-insensitive",
+        "module-source-path": "full"
+      }
+    ],
     "trailing-comma": [
       true,
       {
-        "multiline": "never",
-        "singleline": "never",
+        "arrays": "never",
+        "objects": "never",
         "functions": "never",
-        "typeLiterals": "never"
+        "imports": "never",
+        "exports": "never",
+        "typeLiterals": "never",
+        "multiline": "never",
+        "singleline": "never"
       }
     ],
     "array-type": [

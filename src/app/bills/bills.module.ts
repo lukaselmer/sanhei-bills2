@@ -12,7 +12,6 @@ import {
   MdNativeDateModule,
   MdProgressBarModule
 } from '@angular/material';
-
 import { BillEditComponent } from './bill-edit/bill-edit.component';
 import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsRoutingModule } from './bills-routing.module';

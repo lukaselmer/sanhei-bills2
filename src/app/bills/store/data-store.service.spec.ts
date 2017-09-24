@@ -1,6 +1,5 @@
 import { async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
-
 import { Bill } from './../bill';
 import { DataStoreService } from './data-store.service';
 

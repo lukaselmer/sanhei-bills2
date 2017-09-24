@@ -3,7 +3,6 @@ import { MdButtonModule, MdCardModule, MdInputModule, MdProgressSpinnerModule } 
 import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-
 import { AppComponent } from './app.component';
 import { AccountInfoComponent } from './auth/account-info/account-info.component';
 import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';

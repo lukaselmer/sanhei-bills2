@@ -1,11 +1,9 @@
-import 'rxjs/add/observable/of';
-
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
