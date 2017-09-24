@@ -3,13 +3,12 @@ import { MdButtonModule, MdCardModule, MdInputModule, MdProgressSpinnerModule } 
 import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AccountInfoComponent } from './auth/account-info/account-info.component';
-import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
-import { BillEditComponent } from './bills/bill-edit/bill-edit.component';
-import { BillsListComponent } from './bills/bills-list/bills-list.component';
-import { BillsService } from './bills/bills.service';
 
 import { AppComponent } from './app.component';
+import { AccountInfoComponent } from './auth/account-info/account-info.component';
+import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
+import { BillsListComponent } from './bills/bills-list/bills-list.component';
+import { BillsService } from './bills/bills.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -22,9 +21,9 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: BillsService, useValue: { search: () => { } } },
-        { provide: AngularFireDatabase, useValue: { list: () => { } } },
-        { provide: AngularFireAuth, useValue: { authState: { subscribe: () => { } } } }
+        { provide: BillsService, useValue: { search: () => undefined } },
+        { provide: AngularFireDatabase, useValue: { list: () => undefined } },
+        { provide: AngularFireAuth, useValue: { authState: { subscribe: () => undefined } } }
       ],
       declarations: [
         AuthWidgetComponent,

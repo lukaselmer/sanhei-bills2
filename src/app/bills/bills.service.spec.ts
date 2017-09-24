@@ -21,7 +21,7 @@ describe('BillsService', () => {
   });
   const billsMock = [billMock1, billMock2];
   const dataStoreServiceMock: any = {
-    loadData: () => { },
+    loadData: () => undefined,
     getBillsStream: () => Observable.of(billsMock),
     status: 'loaded'
   };

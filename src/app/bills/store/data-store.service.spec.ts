@@ -18,7 +18,7 @@ describe('DataStoreService', () => {
     list: () => Observable.of([])
   };
   const idbMock: any = {
-    loadFromIDB: () => { },
+    loadFromIDB: () => undefined,
     storeInIDB: () => Observable.of(null).toPromise()
   };
 

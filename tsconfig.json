@@ -1,5 +1,4 @@
 {
-  // see also: "extends": "./node_modules/gts/tsconfig-google.json",
   "compileOnSave": false,
   "compilerOptions": {
     "allowSyntheticDefaultImports": false,
