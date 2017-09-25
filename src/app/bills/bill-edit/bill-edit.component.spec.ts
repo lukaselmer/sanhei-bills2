@@ -1,7 +1,8 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MdButtonModule, MdDatepickerModule, MdInputModule, MdListModule, MdNativeDateModule, MdProgressBarModule
+  MdButtonModule, MdCardModule, MdCheckboxModule, MdDatepickerModule, MdIconModule, MdInputModule, 
+  MdListModule, MdNativeDateModule, MdProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
