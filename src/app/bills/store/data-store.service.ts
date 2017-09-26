@@ -36,7 +36,7 @@ export class DataStoreService {
   }
 
   async loadData(): Promise<void> {
-    if (this.status !== 'idle') return Observable.of(undefined).toPromise();
+    if (this.status !== 'idle') return Promise.resolve(undefined);
     this.status = 'loading';
     await this.loadCachedDataFromIDB();
     await this.initializeFirebaseSync();
