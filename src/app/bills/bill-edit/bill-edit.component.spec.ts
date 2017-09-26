@@ -1,13 +1,13 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdDatepickerModule, MdIconModule, MdInputModule, 
+  MdButtonModule, MdCardModule, MdCheckboxModule, MdDatepickerModule, MdIconModule, MdInputModule,
   MdListModule, MdNativeDateModule, MdProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { billVariant } from '../bill.mock';
