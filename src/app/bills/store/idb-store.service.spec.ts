@@ -9,15 +9,15 @@ describe('IDBStoreService', () => {
     title1: 'Objekt: Adresse',
     title2: 'Zusatz'
   } as any;
-  const billsMock = [billMock, billMock];
+  const billsMock = { 1: billMock, 2: billMock };
 
   beforeEach(() => {
-    indexedDB.deleteDatabase('billing');
+    indexedDB.deleteDatabase('sanheiBilling');
   });
 
   it('should store and read bills in the db', ((done: any) => {
     new IDBStoreService().loadFromIDB('bills').then(billsBeforeStore => {
-      expect(billsBeforeStore).toEqual([]);
+      expect(billsBeforeStore).toEqual({});
       new IDBStoreService().storeInIDB('bills', billsMock).then(() => {
         new IDBStoreService().loadFromIDB('bills').then(bills => {
           expect(bills).toEqual(billsMock);
