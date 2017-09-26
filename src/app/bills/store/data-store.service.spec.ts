@@ -19,7 +19,7 @@ describe('DataStoreService', () => {
   };
   const idbMock: any = {
     loadFromIDB: () => undefined,
-    storeInIDB: () => Observable.of(null).toPromise()
+    storeInIDB: () => Promise.resolve(null)
   };
 
   beforeEach(() => {
@@ -55,9 +55,9 @@ describe('DataStoreService', () => {
 
   it('should not load partial data from firebase if there is a cache', async(() => {
     spyOn(idbMock, 'loadFromIDB').and.returnValues(
-      Observable.of({ 1: { id: 1, name: 'A1' }, 2: { id: 2, name: 'A2' } }).toPromise(),
-      Observable.of({ 1: { id: 1, name: 'BA1' }, 2: { id: 2, name: 'BA2' } }).toPromise(),
-      Observable.of({ 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5' } }).toPromise()
+      Promise.resolve({ 1: { id: 1, name: 'A1' }, 2: { id: 2, name: 'A2' } }),
+      Promise.resolve({ 1: { id: 1, name: 'BA1' }, 2: { id: 2, name: 'BA2' } }),
+      Promise.resolve({ 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5' } })
     );
     spyOn(idbMock, 'storeInIDB').and.callThrough();
     spyOn(angularFireMock, 'list').and.returnValues(
