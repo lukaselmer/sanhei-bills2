@@ -14,7 +14,8 @@ describe('DataStoreService', () => {
   } as any;
   const billsMock = [billMock, billMock];
   const angularFireMock: any = {
-    list: () => Observable.of([])
+    list: () => Observable.of([]),
+    object: () => Observable.of({})
   };
   const idbMock: any = {
     loadFromIDB: () => undefined,
@@ -25,39 +26,58 @@ describe('DataStoreService', () => {
     service = new DataStoreService(angularFireMock, idbMock);
   });
 
-  it('should load partial data from firebase if there is no cache', async(() => {
+  it('should load data from firebase if there is no cache', async(() => {
+    const db = {
+      articles: { 1: { id: 1, name: 'A1' }, 2: { id: 2, name: 'A2' } },
+      billArticles: { 1: { id: 1, name: 'BA1' }, 2: { id: 2, name: 'BA2' } },
+      bills: { 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5' } }
+    };
     spyOn(idbMock, 'loadFromIDB').and.returnValue(Observable.of([]).toPromise());
     spyOn(idbMock, 'storeInIDB').and.callThrough();
-    spyOn(angularFireMock, 'list').and.returnValues(
-      Observable.of([1, 2]),
-      Observable.of([1, 2, 3, 4, 5])
-    );
+    spyOn(angularFireMock, 'object').and.returnValues(Observable.of(db));
+    spyOn(angularFireMock, 'list').and.returnValue(Observable.of([]));
 
     service.loadData().then(() => {
-      expect(idbMock.loadFromIDB).toHaveBeenCalled();
-      expect(idbMock.storeInIDB).toHaveBeenCalledTimes(2);
-      expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', [2, 1]);
-      expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', [5, 4, 3, 2, 1]);
-      expect(angularFireMock.list).toHaveBeenCalledTimes(2);
+      expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(3);
+      expect(idbMock.loadFromIDB).toHaveBeenCalledWith('articles');
+      expect(idbMock.loadFromIDB).toHaveBeenCalledWith('billArticles');
+      expect(idbMock.loadFromIDB).toHaveBeenCalledWith('bills');
+      expect(idbMock.storeInIDB).toHaveBeenCalled();
+      expect(idbMock.storeInIDB).toHaveBeenCalledWith('articles', [db.articles[1], db.articles[2]]);
+      expect(idbMock.storeInIDB).toHaveBeenCalledWith('billArticles', [db.billArticles[1], db.billArticles[2]]);
+      expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', [db.bills[1], db.bills[5]]);
+      expect(angularFireMock.list).toHaveBeenCalledTimes(3);
       service.getBillsStream().first().subscribe(list => {
-        expect(list).toEqual([5, 4, 3, 2, 1] as any);
+        expect(list).toEqual([{ id: 5, name: 'B5' }, { id: 1, name: 'B1' }] as any);
       });
     });
   }));
 
   it('should not load partial data from firebase if there is a cache', async(() => {
-    spyOn(idbMock, 'loadFromIDB').and.returnValue(Observable.of([3, 2, 1]).toPromise());
+    spyOn(idbMock, 'loadFromIDB').and.returnValues(
+      Observable.of([{ id: 1, name: 'A1' }, { id: 2, name: 'A2' }]).toPromise(),
+      Observable.of([{ id: 1, name: 'BA1' }, { id: 2, name: 'BA2' }]).toPromise(),
+      Observable.of([{ id: 1, name: 'B1' }, { id: 5, name: 'B5' }]).toPromise()
+    );
     spyOn(idbMock, 'storeInIDB').and.callThrough();
-    spyOn(angularFireMock, 'list').and.returnValues(Observable.of([1, 2, 3, 4, 5]));
+    spyOn(angularFireMock, 'list').and.returnValues(
+      Observable.of([{ id: 3, name: 'A3' }, { id: 4, name: 'A4' }]),
+      Observable.of([]),
+      Observable.of([{ id: 2, name: 'B2' }])
+    );
 
     service.loadData().then(() => {
-      expect(idbMock.loadFromIDB).toHaveBeenCalled();
+      expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(3);
       expect(idbMock.storeInIDB).toHaveBeenCalledTimes(2);
-      expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', [3, 2, 1]);
-      expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', [5, 4, 3, 2, 1]);
-      expect(angularFireMock.list).toHaveBeenCalledTimes(1);
+      expect(idbMock.storeInIDB).toHaveBeenCalledWith('articles', [
+        { id: 1, name: 'A1' }, { id: 2, name: 'A2' }, { id: 3, name: 'A3' }, { id: 4, name: 'A4' }
+      ]);
+      expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', [
+        { id: 1, name: 'B1' }, { id: 2, name: 'B2' }, { id: 5, name: 'B5' }
+      ]);
+      expect(angularFireMock.list).toHaveBeenCalledTimes(3);
       service.getBillsStream().first().subscribe(list => {
-        expect(list).toEqual([5, 4, 3, 2, 1] as any);
+        expect(list).toEqual([{ id: 5, name: 'B5' }, { id: 2, name: 'B2' }, { id: 1, name: 'B1' }] as any);
       });
     });
   }));

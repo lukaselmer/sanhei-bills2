@@ -1,74 +1,116 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import * as firebase from 'firebase/app';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/toPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from '../bill';
+import { BillArticle } from '../bill-article';
+import { Article } from './../article';
+import { IBillingDatabase } from './billing-database';
 import { DataStoreStatus } from './data-store-status';
 import { IDBStoreService } from './idb-store.service';
 
 @Injectable()
 export class DataStoreService {
-  private billsCache = new BehaviorSubject<Bill[]>([]);
+  private storeStream = new BehaviorSubject<IBillingDatabase>({
+    articles: {}, billArticles: {}, bills: {}
+  });
 
-  status: DataStoreStatus = 'loading';
+  status: DataStoreStatus = 'idle';
 
   constructor(private db: AngularFireDatabase, private idbStoreService: IDBStoreService) { }
 
+  private store(): IBillingDatabase {
+    return this.storeStream.getValue();
+  }
+
   getBillsStream(): Observable<Bill[]> {
-    return this.billsCache.asObservable();
+    return this.storeStream.asObservable().map(stream =>
+      this.toArray(stream.bills).sort((a, b) => {
+        if (typeof a.id === 'number' && typeof b.id === 'number') return b.id - a.id;
+        return b.id.toString().localeCompare(a.id.toString());
+      })
+    );
   }
 
-  async loadData() {
-    await this.loadCachedBillsFromIDB();
-    await this.loadFirstBillsFromFirebase();
-    this.keepIDBBillsUpToDate();
-    this.loadAllBillsFromFirebase();
+  async loadData(): Promise<void> {
+    if (this.status !== 'idle') return Observable.of(undefined).toPromise();
+    this.status = 'loading';
+    await this.loadCachedDataFromIDB();
+    await this.initializeFirebaseSync();
+    // debug code:
+    // this.db.object('billing/bills/6381/updatedAt').set(firebase.database.ServerValue.TIMESTAMP);
+    // this.db.object('billing/articles/1/updatedAt').set(firebase.database.ServerValue.TIMESTAMP);
+    // this.db.object('billing/billArticles/1/updatedAt').set(firebase.database.ServerValue.TIMESTAMP);
   }
-
-  private async loadCachedBillsFromIDB(): Promise<void> {
-    try {
-      const bills = await this.idbStoreService.loadFromIDB<Bill>('bills');
-      this.status = 'loadedFromIDB';
-      this.nextBills(bills);
-    } catch (ex) {
-      console.error(ex);
-    }
-  }
-
-  private keepIDBBillsUpToDate() {
-    this.billsCache.subscribe(bills => this.idbStoreService.storeInIDB<Bill>('bills', bills));
-  }
-
-  private async loadFirstBillsFromFirebase() {
-    // load the first few records to display them asap
-    if (this.billsCache.getValue().length === 0) {
-      const firstReversedBills = await this.forIndex().first().toPromise();
-      this.status = 'shortListLoaded';
-      this.nextBills(firstReversedBills.slice().reverse());
-    }
-  }
-
-  private forIndex(): Observable<Bill[]> {
-    return this.db.list('billing/bills', {
-      query: { limitToLast: 1, orderByChild: 'id' }
+  private async loadCachedDataFromIDB(): Promise<void> {
+    const [articles, billArticles, bills] = await Promise.all([
+      this.idbStoreService.loadFromIDB<Article>('articles'),
+      this.idbStoreService.loadFromIDB<BillArticle>('billArticles'),
+      this.idbStoreService.loadFromIDB<Bill>('bills')
+    ]);
+    this.status = 'loadedFromIDB';
+    if (bills.length > 0) this.status = 'loaded';
+    this.storeStream.next({
+      articles: this.toObject(articles),
+      billArticles: this.toObject(billArticles),
+      bills: this.toObject(bills)
     });
   }
 
-  private loadAllBillsFromFirebase() {
-    // load the rest of the bills and listen for updates
-    this.db.list('billing/bills', {
-      // TODO: fix firebase performance issue
-      query: { orderByChild: 'id', limitToLast: 100000000 }
-    }).subscribe(reversedBills => {
-      this.status = 'loaded';
-      this.nextBills(reversedBills.slice().reverse());
+  private toObject<T extends { id: string | number }>(dbItems: T[]): { [index: string]: T } {
+    return dbItems.reduce((result: { [index: string]: T }, item, key) => {
+      result[item.id] = item;
+      return result;
+    }, {});
+  }
+
+  private toArray<T extends { id: number | string }>(items: { [index: string]: T }): T[] {
+    return Object.keys(items).map(key => items[key]);
+  }
+
+  private async initializeFirebaseSync() {
+    if (Object.keys(this.store().articles).length === 0) {
+      await this.downloadWholeDatabase();
+      await Promise.all([
+        this.idbStoreService.storeInIDB('articles', this.toArray(this.store().articles)),
+        this.idbStoreService.storeInIDB('billArticles', this.toArray(this.store().billArticles)),
+        this.idbStoreService.storeInIDB('bills', this.toArray(this.store().bills))
+      ]);
+    }
+
+    ['articles', 'billArticles', 'bills'].forEach((table: 'articles' | 'billArticles' | 'bills') => {
+      this.db.list(`billing/${table}`, {
+        query: { orderByChild: 'updatedAt', startAt: this.nextSyncTimestamp() }
+      }).subscribe(async updatedRecords => {
+        if (updatedRecords.length === 0) return;
+        const store = this.store();
+        updatedRecords.forEach(record => store[table][record.id] = record);
+        this.storeStream.next(store);
+        await this.idbStoreService.storeInIDB(table, this.toArray(store[table] as any));
+      });
     });
   }
 
-  private nextBills(bills: Bill[]) {
-    this.billsCache.next(bills);
+  private nextSyncTimestamp(): number {
+    const currentMaxTimestamp = Math.max(
+      ...this.toArray(this.store().articles).map(el => el.updatedAt),
+      ...this.toArray(this.store().billArticles).map(el => el.updatedAt),
+      ...this.toArray(this.store().bills).map(el => el.updatedAt)
+    );
+    return currentMaxTimestamp + 1;
+  }
+
+  private get bills(): Bill[] {
+    return this.toArray(this.storeStream.getValue().bills);
+  }
+
+  private async downloadWholeDatabase() {
+    const data: IBillingDatabase = await this.db.object('billing').first().toPromise();
+    this.status = 'loaded';
+    this.storeStream.next(data);
   }
 
   updateBill(bill: Bill) {

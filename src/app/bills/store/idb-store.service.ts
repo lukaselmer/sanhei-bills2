@@ -12,15 +12,14 @@ export class IDBStoreService {
         try {
           const db: IDBDatabase = (event.target as IDBRequest).result;
           const objectStore = db.transaction(table).objectStore(table);
-          const elements: T[] = [];
 
           objectStore.openCursor().onsuccess = cursorEvent => {
             const cursor: IDBCursorWithValue = (cursorEvent.target as any).result;
             if (cursor) {
-              elements.push(cursor.value);
+              resolve(cursor.value);
               cursor.continue();
             } else {
-              resolve(elements);
+              resolve([]);
             }
           };
         } catch (ex) {
@@ -45,9 +44,7 @@ export class IDBStoreService {
           const request = objectStore.clear();
           request.onerror = ex => reject(ex);
           request.onsuccess = () => {
-            elements.forEach(element => {
-              objectStore.add(element).onerror = ex => reject(ex);
-            });
+            objectStore.add(elements).onerror = ex => reject(ex);
           };
         } catch (ex) {
           reject(ex);
