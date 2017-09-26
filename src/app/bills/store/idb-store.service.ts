@@ -65,7 +65,7 @@ export class IDBStoreService {
       const db: IDBDatabase = (event.target as any).result;
       db.createObjectStore('bills', { autoIncrement: true });
       db.createObjectStore('articles', { autoIncrement: true });
-      db.createObjectStore('article_bills', { autoIncrement: true });
+      db.createObjectStore('billArticles', { autoIncrement: true });
     };
     return dbRequest;
   }

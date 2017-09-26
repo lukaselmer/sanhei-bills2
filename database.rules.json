@@ -8,13 +8,22 @@
       ".read": "root.child('admins/'+auth.uid).exists()",
       ".write": "root.child('admins/'+auth.uid).exists()",
       "bills": {
-        ".indexOn": "id"
+        ".indexOn": [
+          "id",
+          "updatedAt"
+        ]
       },
       "articles": {
-        ".indexOn": "id"
+        ".indexOn": [
+          "id",
+          "updatedAt"
+        ]
       },
-      "bill_articles": {
-        ".indexOn": "id"
+      "billArticles": {
+        ".indexOn": [
+          "id",
+          "updatedAt"
+        ]
       }
     }
   }
