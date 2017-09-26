@@ -33,12 +33,16 @@ export class BillView {
   get title2() { return this.bill.title2; }
   get worker() { return this.bill.worker; }
 
-  // date format: '' or 2017-05-30
-  get fixedAt() { return this.bill.fixedAt ? new Date(this.bill.fixedAt) : null; }
-  get orderedAt() { return this.bill.orderedAt ? new Date(this.bill.orderedAt) : null; }
+  get fixedAt() { return this.bill.fixedAt; }
+  get orderedAt() { return this.bill.orderedAt; }
+  get billedAt() { return this.bill.billedAt; }
 
+  // date format: '' or 2017-05-30
+  // get fixedAtDate() { return this.stringToDate(this.bill.fixedAt); }
+  // get orderedAtDate() { return this.stringToDate(this.bill.orderedAt); }
+  // get billedAtDate() { return this.stringToDate(this.bill.billedAt); }
+  // private stringToDate(str: string) { return str ? new Date(...str.split('-')) : null; }
   // datetime format: '' or 2010-04-23 14:35:57 UTC
-  get billedAt() { return this.bill.billedAt ? new Date(this.bill.billedAt) : null; }
-  get createdAt() { return this.bill.createdAt ? new Date(this.bill.createdAt) : null; }
-  get updatedAt() { return this.bill.updatedAt ? new Date(this.bill.updatedAt) : null; }
+  // get createdAt() { return this.bill.createdAt ? new Date(this.bill.createdAt) : null; }
+  // get updatedAt() { return this.bill.updatedAt ? new Date(this.bill.updatedAt) : null; }
 }
