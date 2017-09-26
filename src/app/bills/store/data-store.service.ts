@@ -52,19 +52,12 @@ export class DataStoreService {
       this.idbStoreService.loadFromIDB<Bill>('bills')
     ]);
     this.status = 'loadedFromIDB';
-    if (bills.length > 0) this.status = 'loaded';
+    if (Object.keys(bills).length > 0) this.status = 'loaded';
     this.storeStream.next({
-      articles: this.toObject(articles),
-      billArticles: this.toObject(billArticles),
-      bills: this.toObject(bills)
+      articles,
+      billArticles,
+      bills
     });
-  }
-
-  private toObject<T extends { id: string | number }>(dbItems: T[]): { [index: string]: T } {
-    return dbItems.reduce((result: { [index: string]: T }, item, key) => {
-      result[item.id] = item;
-      return result;
-    }, {});
   }
 
   private toArray<T extends { id: number | string }>(items: { [index: string]: T }): T[] {
@@ -75,9 +68,9 @@ export class DataStoreService {
     if (Object.keys(this.store().articles).length === 0) {
       await this.downloadWholeDatabase();
       await Promise.all([
-        this.idbStoreService.storeInIDB('articles', this.toArray(this.store().articles)),
-        this.idbStoreService.storeInIDB('billArticles', this.toArray(this.store().billArticles)),
-        this.idbStoreService.storeInIDB('bills', this.toArray(this.store().bills))
+        this.idbStoreService.storeInIDB('articles', this.store().articles),
+        this.idbStoreService.storeInIDB('billArticles', this.store().billArticles),
+        this.idbStoreService.storeInIDB('bills', this.store().bills)
       ]);
     }
 
@@ -89,7 +82,7 @@ export class DataStoreService {
         const store = this.store();
         updatedRecords.forEach(record => store[table][record.id] = record);
         this.storeStream.next(store);
-        await this.idbStoreService.storeInIDB(table, this.toArray(store[table] as any));
+        await this.idbStoreService.storeInIDB(table, store[table] as any);
       });
     });
   }

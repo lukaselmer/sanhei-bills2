@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 // see https://github.com/firebase/firebase-js-sdk/issues/17
 @Injectable()
 export class IDBStoreService {
-  loadFromIDB<T>(table: string): Promise<T[]> {
-    return new Promise<T[]>((resolve, reject) => {
+  loadFromIDB<T>(table: string): Promise<{ [index: string]: T }> {
+    return new Promise<{ [index: string]: T }>((resolve, reject) => {
       const dbRequest = this.openDB(reject);
 
       dbRequest.onsuccess = (event: any) => {
@@ -19,7 +19,7 @@ export class IDBStoreService {
               resolve(cursor.value);
               cursor.continue();
             } else {
-              resolve([]);
+              resolve({});
             }
           };
         } catch (ex) {
@@ -30,7 +30,7 @@ export class IDBStoreService {
     });
   }
 
-  storeInIDB<T>(table: string, elements: T[]): Promise<void> {
+  storeInIDB<T>(table: string, elements: { [index: string]: T }): Promise<void> {
     // this may be a bad idea since it is IO/CPU intensive
     // optimizations would be nice
     return new Promise<void>((resolve, reject) => {
@@ -56,7 +56,7 @@ export class IDBStoreService {
   }
 
   private openDB(reject: (reason?: any) => void): IDBOpenDBRequest {
-    const dbRequest = indexedDB.open('billing', 1);
+    const dbRequest = indexedDB.open('sanheiBilling', 1);
     dbRequest.onerror = event => reject(event);
     dbRequest.onupgradeneeded = event => {
       const db: IDBDatabase = (event.target as any).result;
