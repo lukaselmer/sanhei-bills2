@@ -13,7 +13,9 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/toArray';
 import { Observable } from 'rxjs/Observable';
+import { Article } from './article';
 import { Bill } from './bill';
+import { BillArticle } from './bill-article';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchResult } from './search/search-result';
 import { DataStoreService } from './store/data-store.service';
@@ -55,5 +57,17 @@ export class BillsService {
 
   async updateBill(bill: Bill) {
     await this.dataStore.updateBill(bill);
+  }
+
+  billArticlesForBill(bill: Bill): BillArticle[] {
+    const store = this.dataStore.store();
+    return Object.keys(store.billArticles)
+      .filter(key => store.billArticles[key].billId === bill.id)
+      .map(key => store.billArticles[key]);
+  }
+
+  articlesForBillArticles(billArticles: BillArticle[]): Article[] {
+    const store = this.dataStore.store();
+    return billArticles.map(billArticle => store.articles[billArticle.articleId]);
   }
 }

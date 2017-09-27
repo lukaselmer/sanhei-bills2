@@ -1,9 +1,12 @@
 import { async } from '@angular/core/testing';
 import 'rxjs/add/operator/count';
 import { Observable } from 'rxjs/Observable';
+import { articleVariant } from './article.mock';
+import { billArticleVariant } from './bill-article.mock';
 import { billVariant } from './bill.mock';
 import { BillsService } from './bills.service';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
+import { IBillingDatabase } from './store/billing-database';
 
 describe('BillsService', () => {
   let service: BillsService;
@@ -18,10 +21,25 @@ describe('BillsService', () => {
     address: 'Mr\nHello\nSomething else\nWorld'
   });
   const billsMock = [billMock1, billMock2];
+  const db: IBillingDatabase = {
+    articles: {
+      5: articleVariant({ id: 5 }),
+      6: articleVariant({ id: 6 })
+    },
+    billArticles: {
+      3: billArticleVariant({ id: 3, billId: 1, articleId: 5 }),
+      4: billArticleVariant({ id: 4, billId: 1, articleId: 6 })
+    },
+    bills: {
+      1: billMock1,
+      2: billMock2
+    }
+  };
   const dataStoreServiceMock: any = {
     loadData: () => undefined,
     getBillsStream: () => Observable.of(billsMock),
-    status: 'loaded'
+    status: 'loaded',
+    store: () => db
   };
 
   beforeEach(() => {
@@ -105,6 +123,18 @@ describe('BillsService', () => {
     it('returns nothing if an invalid id is passed', () => {
       expect(service.editBill(20).count()
         .subscribe(count => expect(count).toBe(0)));
+    });
+  });
+
+  describe('articles and bill articles', () => {
+    it('returns the bill articles of a bill', () => {
+      const billArticles = service.billArticlesForBill(billMock1);
+      expect(billArticles).toEqual([db.billArticles[3], db.billArticles[4]]);
+    });
+
+    it('returns the articles of bill articles', () => {
+      const billArticles = service.articlesForBillArticles([db.billArticles[3], db.billArticles[4]]);
+      expect(billArticles).toEqual([db.articles[5], db.articles[6]]);
     });
   });
 });

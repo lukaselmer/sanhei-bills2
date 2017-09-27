@@ -22,7 +22,7 @@ export class DataStoreService {
 
   constructor(private db: AngularFireDatabase, private idbStoreService: IDBStoreService) { }
 
-  private store(): IBillingDatabase {
+  store(): IBillingDatabase {
     return this.storeStream.getValue();
   }
 
