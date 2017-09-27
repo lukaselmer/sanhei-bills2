@@ -1,7 +1,17 @@
+import { Article } from './article';
 import { Bill } from './bill';
+import { BillArticle } from './bill-article';
+import { BillArticleView } from './bill-article-view';
 
 export class BillView {
-  constructor(private bill: Bill) { }
+  private pBillArticleViews: BillArticleView[];
+
+  constructor(private bill: Bill, billArticles: BillArticle[], articles: Article[]) {
+    this.pBillArticleViews = billArticles.map(billArticle => {
+      const article = articles.find(a => a.id === billArticle.articleId);
+      return article ? new BillArticleView(billArticle, article) : undefined;
+    }).filter(bav => bav) as BillArticleView[];
+  }
 
   get id() { return this.bill.id; }
   get cashback() { return this.bill.cashback; }
@@ -36,6 +46,10 @@ export class BillView {
   get fixedAt() { return this.bill.fixedAt; }
   get orderedAt() { return this.bill.orderedAt; }
   get billedAt() { return this.bill.billedAt; }
+
+  get billArticleViews() {
+    return this.pBillArticleViews;
+  }
 
   // date format: '' or 2017-05-30
   // get fixedAtDate() { return this.stringToDate(this.bill.fixedAt); }
