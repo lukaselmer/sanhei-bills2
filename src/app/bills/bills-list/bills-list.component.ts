@@ -38,7 +38,7 @@ export class BillsListComponent implements OnInit {
     this.bills$ = billsSearch$.map(search => search.list.map(bill => this.createBillView(bill)));
   }
 
-  private reallyStartSearching(term: string) {
+  private reallyStartSearching(term: string): Observable<SearchResult<Bill>> {
     if (this.displayedSearchTerm !== term) this.loadStatus = 'loading';
     return this.billsService.search(term);
   }
@@ -49,7 +49,9 @@ export class BillsListComponent implements OnInit {
   }
 
   private createBillView(bill: Bill): BillView {
-    return new BillView(bill);
+    const billArticles = this.billsService.billArticlesForBill(bill);
+    const articles = this.billsService.articlesForBillArticles(billArticles);
+    return new BillView(bill, billArticles, articles);
   }
 
   searchKeyup(searchTerm: string) {

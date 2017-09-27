@@ -45,7 +45,9 @@ describe('BillsListComponent', () => {
         {
           provide: BillsService, useValue: {
             search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch),
-            editBill: (): Observable<Bill> => Observable.of(bill)
+            editBill: (): Observable<Bill> => Observable.of(bill),
+            billArticlesForBill: () => [billArticleVariant()],
+            articlesForBillArticles: () => [articleVariant()]
           }
         }
       ],
