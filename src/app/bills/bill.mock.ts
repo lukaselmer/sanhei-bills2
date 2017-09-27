@@ -2,7 +2,7 @@ import { Bill } from './bill';
 
 const bill = {
   id: 1000,
-  cashback: 2000,
+  cashback: 2.5,
   uid: 3000,
   vat: 4.51,
   discount: 4,
