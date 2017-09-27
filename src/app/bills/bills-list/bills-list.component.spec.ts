@@ -4,6 +4,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { articleVariant } from '../article.mock';
+import { billArticleVariant } from '../bill-article.mock';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
@@ -15,13 +17,13 @@ describe('BillsListComponent', () => {
   let component: BillsListComponent;
   let fixture: ComponentFixture<BillsListComponent>;
   const bill = billVariant({
-    id: 1234,
-    uid: 17071234,
     address: 'Adresszeile 1\nAdressezeile 2',
     title1: 'Objekt: Adresse',
     title2: 'Zusatz'
   });
-  const billView = new BillView(bill);
+  const billView = new BillView(bill,
+    [billArticleVariant()],
+    [articleVariant()]);
   const bills = [bill];
   const billsSearch = {
     term: '',
