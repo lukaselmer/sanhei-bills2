@@ -45,8 +45,20 @@ export class BillView {
   get orderedAt() { return this.bill.orderedAt; }
   get billedAt() { return this.bill.billedAt; }
 
-  get billArticleViews() {
-    return this.pBillArticleViews;
+  get billArticleViews() { return this.pBillArticleViews; }
+
+  get totalNet() {
+    return this.billArticleViews
+      .map(bav => bav.totalPrice)
+      .reduce((sum, el) => sum + el, 0);
+  }
+
+  get totalDiscount() { return Math.round(20 * this.totalNet * this.discount / 100) / 20; }
+  get totalCashback() { return Math.round(20 * this.totalNet * this.cashback / 100) / 20; }
+  get totalVat() { return Math.round(20 * this.totalNet * this.vat / 100) / 20; }
+  get totalGross() {
+    const undroundedTotal = this.totalNet - this.totalDiscount - this.totalCashback + this.totalVat;
+    return Math.round(20 * undroundedTotal) / 20;
   }
 
   // date format: '' or 2017-05-30

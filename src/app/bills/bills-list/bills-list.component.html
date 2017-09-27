@@ -14,10 +14,10 @@
     <div>{{ bill.commaSeparatedAddress }}</div>
   </md-card-subtitle>
   <md-card-content>
-    <span *ngIf="bill.fixedAtOverride">Arbeiten am: {{ bill.fixedAtOverride }}</span>
-    <span *ngIf="!bill.fixedAtOverride && bill.fixedAt">Arbeiten am: {{ bill.fixedAt }}</span>
-    <span *ngIf="bill.billedAt && (bill.fixedAtOverride || bill.fixedAt)"> | </span>
-    <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }}</span>
+    <span *ngIf="bill.fixedAtOverride">Arbeiten am: {{ bill.fixedAtOverride }} | </span>
+    <span *ngIf="!bill.fixedAtOverride && bill.fixedAt">Arbeiten am: {{ bill.fixedAt }} | </span>
+    <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }} | </span>
+    <span>{{ bill.totalNet | currency:'CHF' }} netto | {{ bill.totalGross | currency:'CHF' }} brutto</span>
     <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
   </md-card-content>
 </md-card>

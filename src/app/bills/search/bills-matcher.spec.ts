@@ -61,7 +61,7 @@ describe('BillMatcherService', () => {
 
   it('searches in number fields', () => {
     expect(match('1000', bill)).toBeTruthy();
-    expect(match('2000', bill)).toBeTruthy();
+    expect(match('2.5', bill)).toBeTruthy();
     expect(match('3000', bill)).toBeTruthy();
     expect(match('4.51', bill)).toBeTruthy();
     expect(match('6000', bill)).toBeFalsy();
