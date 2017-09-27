@@ -53,7 +53,7 @@ export class BillsService {
       .map((bill: Bill) => bill);
   }
 
-  updateBill(bill: Bill) {
-    this.dataStore.updateBill(bill);
+  async updateBill(bill: Bill) {
+    await this.dataStore.updateBill(bill);
   }
 }

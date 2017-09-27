@@ -106,7 +106,7 @@ export class DataStoreService {
     this.storeStream.next(data);
   }
 
-  updateBill(bill: Bill) {
+  async updateBill(bill: Bill) {
     this.db.object(`billing/bills/${bill.id}`).set(bill);
   }
 }
