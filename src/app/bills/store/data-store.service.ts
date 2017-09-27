@@ -20,7 +20,11 @@ export class DataStoreService {
 
   status: DataStoreStatus = 'idle';
 
-  constructor(private db: AngularFireDatabase, private idbStoreService: IDBStoreService) { }
+  constructor(private db: AngularFireDatabase, private idbStoreService: IDBStoreService) {
+    this.db.object('.info/connected').subscribe(val => {
+      console.log(val);
+    });
+  }
 
   private store(): IBillingDatabase {
     return this.storeStream.getValue();
@@ -107,6 +111,12 @@ export class DataStoreService {
   }
 
   async updateBill(bill: Bill) {
+    // const store = this.store();
+    // store.bills[bill.id] = bill;
+    // store.bills[bill.id].updatedAt = new Date().getTime();
+    // this.idbStoreService.storeInIDB('bills', store['bills'] as any).then(() =>
+    // );
     this.db.object(`billing/bills/${bill.id}`).set(bill);
+    // this.db.database.goOffline
   }
 }
