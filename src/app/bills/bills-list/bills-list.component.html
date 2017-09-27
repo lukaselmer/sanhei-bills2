@@ -18,6 +18,6 @@
     <span *ngIf="!bill.fixedAtOverride && bill.fixedAt">Arbeiten am: {{ bill.fixedAt }}</span>
     <span *ngIf="bill.billedAt && (bill.fixedAtOverride || bill.fixedAt)"> | </span>
     <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }}</span>
-    <div>{{ bill.ownerName }}, {{ bill.ordererName }}, {{ bill.worker }}</div>
+    <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
   </md-card-content>
 </md-card>

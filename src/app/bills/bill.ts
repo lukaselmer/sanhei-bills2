@@ -3,7 +3,6 @@ export class Bill {
   cashback: number;
   uid: number;
   vat: number;
-  workHours: number;
   discount: number;
 
   finished: boolean; // means finished editing
@@ -18,7 +17,6 @@ export class Bill {
   ownerName: string;
   title1: string;
   title2: string;
-  worker: string;
 
   // date format: '' or 2017-05-30
   fixedAt: string;

@@ -17,7 +17,6 @@ export class BillView {
   get cashback() { return this.bill.cashback; }
   get uid() { return this.bill.uid; }
   get vat() { return this.bill.vat; }
-  get workHours() { return this.bill.workHours; }
   get discount() { return this.bill.discount; }
 
   get finished() { return this.bill.finished; } // means finished editing
@@ -41,7 +40,6 @@ export class BillView {
   get ownerName() { return this.bill.ownerName; }
   get title1() { return this.bill.title1; }
   get title2() { return this.bill.title2; }
-  get worker() { return this.bill.worker; }
 
   get fixedAt() { return this.bill.fixedAt; }
   get orderedAt() { return this.bill.orderedAt; }

@@ -95,10 +95,10 @@ describe('BillsListComponent', () => {
     expect(queryContent('md-card-title')).toEqual(`${bill.uid} | ${bill.id}`);
     expect(queryContent('md-card-subtitle :first-child')).toEqual(`${billView.title1}, ${billView.title2}`);
     expect(queryContent('md-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
-    expect(queryContent('md-card-content :last-child')).toEqual(`${bill.ownerName}, ${bill.ordererName}, ${bill.worker}`);
     expect(queryContent('md-card-content :nth-child(1)')).toEqual(`Arbeiten am: fixedAtOverride`);
     expect(queryContent('md-card-content :nth-child(2)')).toEqual(`|`);
     expect(queryContent('md-card-content :nth-child(3)')).toEqual(`Verrechnet am: 2017-06-22`);
+    expect(queryContent('md-card-content :nth-child(4)')).toEqual(`${bill.ownerName}, ${bill.ordererName}`);
   }));
 
   it('should search through the bills', fakeAsync(inject([BillsService], (service: BillsService) => {
