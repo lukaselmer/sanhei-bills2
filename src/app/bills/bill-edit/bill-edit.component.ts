@@ -8,6 +8,7 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/switchMap';
 import { Bill } from './../bill';
 import { BillsService } from './../bills.service';
+import { BillFormExtractor } from './bill-form-extractor';
 
 @Component({
   selector: 'sb-bill-edit',
@@ -77,83 +78,12 @@ export class BillEditComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.billsService.updateBill(this.extractValuesFromForm());
+      const updatedBill = new BillFormExtractor(this.bill, this.form.value).extractBill();
+      this.billsService.updateBill(updatedBill);
       this.abort();
     } else {
       window.scrollTo(0, 0);
     }
-  }
-
-  private extractValuesFromForm(): Bill {
-    const v = this.form.value;
-    return {
-      ...this.extractStrings(),
-      ...this.extractNumbers(),
-      ...this.applyExistingValuesFromBill(),
-      ...this.extractDates(),
-      ...this.setTimestamps()
-    };
-  }
-
-  private extractStrings() {
-    const v = this.form.value;
-    return {
-      address: v.address.trim(),
-      billType: v.billType,
-      description: v.description,
-      ordererName: v.ordererName,
-      ownerName: v.ownerName,
-      title1: v.title1,
-      title2: v.title2
-    };
-  }
-
-  private extractNumbers() {
-    const v = this.form.value;
-    return {
-      cashback: parseFloat(v.cashback),
-      vat: parseFloat(v.vat),
-      discount: parseFloat(v.discount)
-    };
-  }
-
-  private applyExistingValuesFromBill() {
-    return {
-      uid: this.bill.uid,
-      id: this.bill.id,
-      finished: this.bill.finished,
-      paid: this.bill.paid,
-      deleted: this.bill.deleted
-    };
-  }
-
-  private extractDates() {
-    const v = this.form.value;
-    return {
-      orderedAt: this.dateOrEmpty(v.orderedAt),
-      billedAt: this.dateOrEmpty(v.billedAt),
-      ...this.extractFixedAt()
-    };
-  }
-
-  private dateOrEmpty(potentialDate: string) {
-    const dateRegexp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
-    return (potentialDate || '').match(dateRegexp) ? potentialDate : '';
-  }
-
-  private extractFixedAt() {
-    const fixedAtDescription: string = this.form.value.fixedAtDescription.trim();
-    if (this.dateOrEmpty(fixedAtDescription) === '') {
-      return { fixedAt: '', fixedAtOverride: fixedAtDescription };
-    }
-    return { fixedAt: fixedAtDescription, fixedAtOverride: '' };
-  }
-
-  private setTimestamps() {
-    return {
-      createdAt: this.bill.createdAt,
-      updatedAt: firebase.database.ServerValue.TIMESTAMP as number
-    };
   }
 
   abort() {
