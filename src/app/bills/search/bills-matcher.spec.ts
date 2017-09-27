@@ -57,7 +57,6 @@ describe('BillMatcherService', () => {
     expect(match('ownername', bill)).toBeTruthy();
     expect(match('title1', bill)).toBeTruthy();
     expect(match('title2', bill)).toBeTruthy();
-    expect(match('worker', bill)).toBeTruthy();
   });
 
   it('searches in number fields', () => {
@@ -65,7 +64,6 @@ describe('BillMatcherService', () => {
     expect(match('2000', bill)).toBeTruthy();
     expect(match('3000', bill)).toBeTruthy();
     expect(match('4.51', bill)).toBeTruthy();
-    expect(match('5000', bill)).toBeTruthy();
     expect(match('6000', bill)).toBeFalsy();
   });
 

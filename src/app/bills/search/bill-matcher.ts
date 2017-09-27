@@ -20,7 +20,6 @@ export class BillMatcher {
 
     return bill.cashback === termAsNumber ||
       bill.vat === termAsNumber ||
-      bill.workHours === termAsNumber ||
       bill.discount === termAsNumber;
   }
 
@@ -41,7 +40,6 @@ export class BillMatcher {
       bill.ownerName.toLowerCase().startsWith(this.term) ||
       bill.title1.toLowerCase().startsWith(this.term) ||
       bill.title2.toLowerCase().startsWith(this.term) ||
-      bill.worker.toLowerCase().startsWith(this.term) ||
       bill.billedAt.toLowerCase().startsWith(this.term) ||
       bill.fixedAt.toLowerCase().startsWith(this.term) ||
       bill.orderedAt.toLowerCase().startsWith(this.term) ||

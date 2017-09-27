@@ -83,7 +83,6 @@ describe('BillEditComponent', () => {
     expect(selectField('address').value).toEqual(bill.address);
     expect(selectField('cashback').value).toEqual(bill.cashback + '');
     expect(selectField('vat').value).toEqual(bill.vat + '');
-    expect(selectField('workHours').value).toEqual(bill.workHours + '');
     expect(selectField('discount').value).toEqual(bill.discount + '');
     expect(selectField('address').value).toEqual(bill.address);
     expect(selectField('billType').value).toEqual(bill.billType);
@@ -91,7 +90,6 @@ describe('BillEditComponent', () => {
     expect(selectField('ownerName').value).toEqual(bill.ownerName);
     expect(selectField('title1').value).toEqual(bill.title1);
     expect(selectField('title2').value).toEqual(bill.title2);
-    expect(selectField('worker').value).toEqual(bill.worker);
     expect(selectField('orderedAt').value).toEqual(bill.orderedAt);
     expect(selectField('description').value).toEqual(bill.description);
     expect(selectField('fixedAtDescription').value).toEqual(bill.fixedAtOverride);

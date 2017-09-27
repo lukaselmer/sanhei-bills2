@@ -33,7 +33,6 @@ export class BillEditComponent implements OnInit {
           Validators.min(1)]
         )
       ],
-      workHours: '',
       discount: '',
 
       address: ['', Validators.required],
@@ -44,7 +43,6 @@ export class BillEditComponent implements OnInit {
       ownerName: ['', Validators.required],
       title1: ['', Validators.required],
       title2: ['', Validators.required],
-      worker: ['', Validators.required],
 
       orderedAt: '',
       billedAt: ''
@@ -60,7 +58,6 @@ export class BillEditComponent implements OnInit {
     const billFormValue = {
       cashback: bill.cashback,
       vat: bill.vat,
-      workHours: bill.workHours,
       discount: bill.discount,
       address: bill.address,
       billType: bill.billType,
@@ -69,7 +66,6 @@ export class BillEditComponent implements OnInit {
       ownerName: bill.ownerName,
       title1: bill.title1,
       title2: bill.title2,
-      worker: bill.worker,
       fixedAtDescription: bill.fixedAtOverride.length > 0 ?
         bill.fixedAtOverride :
         bill.fixedAt,
@@ -108,8 +104,7 @@ export class BillEditComponent implements OnInit {
       ordererName: v.ordererName,
       ownerName: v.ownerName,
       title1: v.title1,
-      title2: v.title2,
-      worker: v.worker
+      title2: v.title2
     };
   }
 
@@ -118,7 +113,6 @@ export class BillEditComponent implements OnInit {
     return {
       cashback: parseFloat(v.cashback),
       vat: parseFloat(v.vat),
-      workHours: parseFloat(v.workHours),
       discount: parseFloat(v.discount)
     };
   }
