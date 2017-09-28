@@ -2,6 +2,52 @@ md-form-field {
   width: 100%;
 }
 
+.article {
+  display: flex;
+
+  margin-bottom: 10px;
+
+  div:last-child {
+    flex-basis: 1%;
+    flex-grow: 0;
+  }
+
+  @media(min-width: 1000px) {
+    div {
+      flex-basis: 1%;
+      flex-grow: 1;
+    }
+    div:nth-child(2) {
+      flex-grow: 15;
+    }
+  }
+
+  @media(min-width: 750px) and (max-width: 999px) {
+    div {
+      flex-basis: 3%;
+      flex-grow: 1;
+    }
+    div:nth-child(2) {
+      flex-grow: 10;
+    }
+  }
+
+  @media(max-width: 749px) {
+    margin-bottom: 35px;
+
+    flex-wrap: wrap;
+    div {
+      flex-basis: 20%;
+      flex-grow: 1;
+    }
+    div:nth-child(2) {
+      flex-basis: 90%;
+      flex-grow: 10;
+      order: -1;
+    }
+  }
+}
+
 md-card {
   margin-bottom: 20px;
 }

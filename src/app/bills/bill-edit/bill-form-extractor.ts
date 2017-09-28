@@ -1,8 +1,18 @@
 import * as firebase from 'firebase/app';
 import { Bill } from './../bill';
+import { CombinedBillArticle } from './../combined-bill-article';
 
 export class BillFormExtractor {
   constructor(private bill: Bill, private formValue: any) { }
+
+  extractArticles(): CombinedBillArticle[] {
+    const articles: CombinedBillArticle[] = this.formValue.articles;
+    return articles.filter(article => {
+      const fieldValues = [article.description, article.price];
+      return [article.description, article.price, article.amount].every(fieldValue =>
+        fieldValue.trim() !== '');
+    });
+  }
 
   extractBill(): Bill {
     return {

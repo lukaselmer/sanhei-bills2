@@ -5,6 +5,7 @@ import { articleVariant } from './article.mock';
 import { billArticleVariant } from './bill-article.mock';
 import { billVariant } from './bill.mock';
 import { BillsService } from './bills.service';
+import { CombinedBillArticle } from './combined-bill-article';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { IBillingDatabase } from './store/billing-database';
 
@@ -135,6 +136,13 @@ describe('BillsService', () => {
     it('returns the articles of bill articles', () => {
       const billArticles = service.articlesForBillArticles([db.billArticles[3], db.billArticles[4]]);
       expect(billArticles).toEqual([db.articles[5], db.articles[6]]);
+    });
+
+    it('returns the combined bill articles of a bill', () => {
+      expect(service.combinedBillArticlesForBill(billMock1)).toEqual([
+        new CombinedBillArticle(db.articles[5], db.billArticles[3]),
+        new CombinedBillArticle(db.articles[6], db.billArticles[4])
+      ]);
     });
   });
 });
