@@ -50,7 +50,8 @@ describe('BillEditComponent', () => {
               expect(id).toEqual(bill.id);
               return Observable.of(bill);
             },
-            updateBill: (billToUpdate: Bill): void => undefined
+            updateBill: (billToUpdate: Bill): void => undefined,
+            combinedBillArticlesForBill: () => []
           }
         },
         {
@@ -80,6 +81,10 @@ describe('BillEditComponent', () => {
       return compiled.querySelector(`[formControlName=${formControlName}]`);
     }
 
+    function selectTextarea(formControlName: string): HTMLTextAreaElement {
+      return compiled.querySelector(`textarea[formControlName=${formControlName}]`);
+    }
+
     expect(selectField('address').value).toEqual(bill.address);
     expect(selectField('cashback').value).toEqual(bill.cashback + '');
     expect(selectField('vat').value).toEqual(bill.vat + '');
@@ -91,7 +96,7 @@ describe('BillEditComponent', () => {
     expect(selectField('title1').value).toEqual(bill.title1);
     expect(selectField('title2').value).toEqual(bill.title2);
     expect(selectField('orderedAt').value).toEqual(bill.orderedAt);
-    expect(selectField('description').value).toEqual(bill.description);
+    expect(selectTextarea('description').value).toEqual(bill.description);
     expect(selectField('fixedAtDescription').value).toEqual(bill.fixedAtOverride);
     expect(selectField('billedAt').value).toEqual(bill.billedAt);
   });
@@ -102,10 +107,11 @@ describe('BillEditComponent', () => {
     abortSpy.and.returnValue(false);
     component.onSubmit();
     expect(abortSpy).toHaveBeenCalled();
-    expect(updateBillSpy).toHaveBeenCalledWith({
+    expect(updateBillSpy.calls.first().args[0]).toEqual({
       ...bill,
       fixedAt: '',
       updatedAt: firebase.database.ServerValue.TIMESTAMP as number
     });
+    expect(updateBillSpy.calls.first().args[1]).toEqual([]);
   }));
 });

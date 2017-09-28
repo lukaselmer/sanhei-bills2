@@ -16,6 +16,7 @@ import { Observable } from 'rxjs/Observable';
 import { Article } from './article';
 import { Bill } from './bill';
 import { BillArticle } from './bill-article';
+import { CombinedBillArticle } from './combined-bill-article';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchResult } from './search/search-result';
 import { DataStoreService } from './store/data-store.service';
@@ -55,7 +56,8 @@ export class BillsService {
       .map((bill: Bill) => bill);
   }
 
-  async updateBill(bill: Bill) {
+  async updateBill(bill: Bill, combinedArticles: CombinedBillArticle[]) {
+    // TODO: store / update / delete articles and bill articles
     await this.dataStore.updateBill(bill);
   }
 
@@ -69,5 +71,13 @@ export class BillsService {
   articlesForBillArticles(billArticles: BillArticle[]): Article[] {
     const store = this.dataStore.store();
     return billArticles.map(billArticle => store.articles[billArticle.articleId]);
+  }
+
+  combinedBillArticlesForBill(bill: Bill): CombinedBillArticle[] {
+    const store = this.dataStore.store();
+    return this.billArticlesForBill(bill).map(billArticle => {
+      const article = store.articles[billArticle.articleId];
+      return new CombinedBillArticle(article, billArticle);
+    });
   }
 }

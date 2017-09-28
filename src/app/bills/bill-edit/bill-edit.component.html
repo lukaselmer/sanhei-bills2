@@ -1,6 +1,37 @@
 <h1>Rechnung {{bill?.id}} bearbeiten</h1>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+  <md-card formArrayName="articles">
+    <md-card-title>Artikel</md-card-title>
+    <md-card-content>
+      <div *ngFor="let article of articlesForm.controls; let i=index" [formGroupName]="i" class="article">
+        <div>
+          <md-form-field><input mdInput formControlName="catalogId" placeholder="Katalognr."></md-form-field>
+        </div>
+        <div>
+          <md-form-field><input mdInput formControlName="description" placeholder="Beschreibung"></md-form-field>
+        </div>
+        <div>
+          <md-form-field><input mdInput formControlName="dimension" placeholder="Dimension"></md-form-field>
+        </div>
+        <div>
+          <md-form-field><input mdInput formControlName="price" placeholder="Preis"></md-form-field>
+        </div>
+        <div>
+          <md-form-field><input mdInput formControlName="amount" placeholder="Anzahl"></md-form-field>
+        </div>
+        <div>
+          <button md-icon-button type="button" (click)="removeArticleAt(i)"><i class="material-icons">delete</i></button>
+        </div>
+      </div>
+    </md-card-content>
+    <md-card-actions>
+      <button md-button type="button" (click)="addNewArticle(1)">1 ARTIKEL HINZUFÜGEN</button>
+      <button md-button type="button" (click)="addNewArticle(5)">5 ARTIKEL HINZUFÜGEN</button>
+      <button md-button type="button" (click)="addNewArticle(10)">10 ARTIKEL HINZUFÜGEN</button>
+    </md-card-actions>
+  </md-card>
+
   <md-card>
     <md-form-field>
       <textarea mdInput formControlName="address" mdTextareaAutosize placeholder="Adresse"></textarea>

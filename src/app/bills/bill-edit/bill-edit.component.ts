@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as firebase from 'firebase/app';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/switchMap';
+import { Article } from './../article';
 import { Bill } from './../bill';
+import { BillArticle } from './../bill-article';
 import { BillsService } from './../bills.service';
+import { CombinedBillArticle } from './../combined-bill-article';
 import { BillFormExtractor } from './bill-form-extractor';
 
 @Component({
@@ -19,6 +17,10 @@ export class BillEditComponent implements OnInit {
   id: number;
   form: FormGroup;
   bill: Bill;
+  originalArticles: CombinedBillArticle[];
+  myArticlesForm: FormArray;
+  potentialDanglingArticles: Article[] = [];
+  submitted = false;
 
   constructor(private router: Router, route: ActivatedRoute, private billsService: BillsService, private fb: FormBuilder) {
     this.id = +route.snapshot.params['id'];
@@ -27,6 +29,8 @@ export class BillEditComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
+      articles: this.fb.array([]),
+
       cashback: '',
       vat: ['',
         Validators.compose([
@@ -55,8 +59,11 @@ export class BillEditComponent implements OnInit {
   }
 
   private billChanged(bill: Bill) {
+    if (this.submitted) return;
     this.bill = bill;
+    this.updateArticles();
     const billFormValue = {
+      articles: [],
       cashback: bill.cashback,
       vat: bill.vat,
       discount: bill.discount,
@@ -74,12 +81,45 @@ export class BillEditComponent implements OnInit {
       billedAt: bill.billedAt
     };
     this.form.setValue(billFormValue);
+    this.articlesChanged();
+  }
+
+  private updateArticles() {
+    this.originalArticles = this.billsService.combinedBillArticlesForBill(this.bill);
+  }
+
+  private articlesChanged() {
+    this.setArticles(this.originalArticles);
+    this.addNewArticle(Math.max(1, 5 - this.originalArticles.length));
+  }
+
+  removeArticleAt(index: number) {
+    const values: CombinedBillArticle[] = this.articlesForm.value;
+    const combinedArticles = values.filter((_, i) => i !== index);
+    this.setArticles(combinedArticles);
+  }
+
+  private setArticles(articles: CombinedBillArticle[]) {
+    const articleFormGroups = articles.map(ba => this.fb.group(ba));
+    this.myArticlesForm = this.fb.array(articleFormGroups);
+    this.form.setControl('articles', this.myArticlesForm);
+  }
+
+  addNewArticle(amount: number) {
+    for (let i = 0; i < amount; ++i) {
+      this.articlesForm.push(this.fb.group(new CombinedBillArticle()));
+    }
+  }
+
+  get articlesForm(): FormArray {
+    return this.form.get('articles') as FormArray;
   }
 
   onSubmit() {
     if (this.form.valid) {
-      const updatedBill = new BillFormExtractor(this.bill, this.form.value).extractBill();
-      this.billsService.updateBill(updatedBill);
+      this.submitted = true;
+      const extractor = new BillFormExtractor(this.bill, this.form.value);
+      this.billsService.updateBill(extractor.extractBill(), extractor.extractArticles());
       this.abort();
     } else {
       window.scrollTo(0, 0);
