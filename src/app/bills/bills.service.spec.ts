@@ -11,17 +11,21 @@ import { IBillingDatabase } from './store/billing-database';
 
 describe('BillsService', () => {
   let service: BillsService;
+
   const billMock1 = billVariant({
     id: 1,
     uid: 1001,
     address: 'A street\nSomething'
   });
+
   const billMock2 = billVariant({
     id: 2,
     uid: 1002,
     address: 'Mr\nHello\nSomething else\nWorld'
   });
+
   const billsMock = [billMock1, billMock2];
+
   const db: IBillingDatabase = {
     articles: {
       5: articleVariant({ id: 5 }),
@@ -36,16 +40,25 @@ describe('BillsService', () => {
       2: billMock2
     }
   };
+
   const dataStoreServiceMock: any = {
+    updateBill: () => Promise.resolve(''),
     loadData: () => undefined,
     getBillsStream: () => Observable.of(billsMock),
     status: 'loaded',
     store: () => db
   };
 
+  const articlesServiceMock: any = {
+    updateArticles: () => Promise.resolve(''),
+    billArticlesForBillId: () => undefined,
+    articlesForBillArticles: () => undefined,
+    combinedBillArticlesForBillId: () => undefined
+  };
+
   beforeEach(() => {
     spyOn(dataStoreServiceMock, 'loadData');
-    service = new BillsService(dataStoreServiceMock, new BillMatcherFactory());
+    service = new BillsService(dataStoreServiceMock, articlesServiceMock, new BillMatcherFactory());
   });
 
   describe('loading and searching bills', () => {
@@ -125,24 +138,35 @@ describe('BillsService', () => {
       expect(service.editBill(20).count()
         .subscribe(count => expect(count).toBe(0)));
     });
+
+    it('updates the bill', async () => {
+      spyOn(dataStoreServiceMock, 'updateBill').and.callThrough();
+      spyOn(articlesServiceMock, 'updateArticles').and.callThrough();
+      await service.updateBill(billMock1, []);
+      expect(dataStoreServiceMock.updateBill).toHaveBeenCalledWith(billMock1);
+      expect(articlesServiceMock.updateArticles)
+        .toHaveBeenCalledWith(billMock1.id, []);
+    });
   });
 
   describe('articles and bill articles', () => {
     it('returns the bill articles of a bill', () => {
-      const billArticles = service.billArticlesForBill(billMock1);
-      expect(billArticles).toEqual([db.billArticles[3], db.billArticles[4]]);
+      spyOn(articlesServiceMock, 'billArticlesForBillId');
+      service.billArticlesForBill(billMock1);
+      expect(articlesServiceMock.billArticlesForBillId).toHaveBeenCalledWith(billMock1.id);
     });
 
     it('returns the articles of bill articles', () => {
-      const billArticles = service.articlesForBillArticles([db.billArticles[3], db.billArticles[4]]);
-      expect(billArticles).toEqual([db.articles[5], db.articles[6]]);
+      spyOn(articlesServiceMock, 'articlesForBillArticles');
+      const args = [db.billArticles[3], db.billArticles[4]];
+      service.articlesForBillArticles(args);
+      expect(articlesServiceMock.articlesForBillArticles).toHaveBeenCalledWith(args);
     });
 
     it('returns the combined bill articles of a bill', () => {
-      expect(service.combinedBillArticlesForBill(billMock1)).toEqual([
-        new CombinedBillArticle(db.articles[5], db.billArticles[3]),
-        new CombinedBillArticle(db.articles[6], db.billArticles[4])
-      ]);
+      spyOn(articlesServiceMock, 'combinedBillArticlesForBillId');
+      service.combinedBillArticlesForBill(billMock1);
+      expect(articlesServiceMock.combinedBillArticlesForBillId).toHaveBeenCalledWith(billMock1.id);
     });
   });
 });

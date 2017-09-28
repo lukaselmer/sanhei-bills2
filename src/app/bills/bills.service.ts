@@ -14,6 +14,7 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/toArray';
 import { Observable } from 'rxjs/Observable';
 import { Article } from './article';
+import { ArticlesService } from './articles.service';
 import { Bill } from './bill';
 import { BillArticle } from './bill-article';
 import { CombinedBillArticle } from './combined-bill-article';
@@ -23,7 +24,10 @@ import { DataStoreService } from './store/data-store.service';
 
 @Injectable()
 export class BillsService {
-  constructor(private dataStore: DataStoreService, private billMatcherFactory: BillMatcherFactory) {
+  constructor(
+    private dataStore: DataStoreService,
+    private articlesService: ArticlesService,
+    private billMatcherFactory: BillMatcherFactory) {
     this.dataStore.loadData();
   }
 
@@ -57,27 +61,19 @@ export class BillsService {
   }
 
   async updateBill(bill: Bill, combinedArticles: CombinedBillArticle[]) {
-    // TODO: store / update / delete articles and bill articles
     await this.dataStore.updateBill(bill);
+    await this.articlesService.updateArticles(bill.id, combinedArticles);
   }
 
   billArticlesForBill(bill: Bill): BillArticle[] {
-    const store = this.dataStore.store();
-    return Object.keys(store.billArticles)
-      .filter(key => store.billArticles[key].billId === bill.id)
-      .map(key => store.billArticles[key]);
+    return this.articlesService.billArticlesForBillId(bill.id);
   }
 
   articlesForBillArticles(billArticles: BillArticle[]): Article[] {
-    const store = this.dataStore.store();
-    return billArticles.map(billArticle => store.articles[billArticle.articleId]);
+    return this.articlesService.articlesForBillArticles(billArticles);
   }
 
   combinedBillArticlesForBill(bill: Bill): CombinedBillArticle[] {
-    const store = this.dataStore.store();
-    return this.billArticlesForBill(bill).map(billArticle => {
-      const article = store.articles[billArticle.articleId];
-      return new CombinedBillArticle(article, billArticle);
-    });
+    return this.articlesService.combinedBillArticlesForBillId(bill.id);
   }
 }
