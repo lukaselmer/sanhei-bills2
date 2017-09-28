@@ -107,6 +107,6 @@ export class DataStoreService {
   }
 
   async updateBill(bill: Bill) {
-    this.db.object(`billing/bills/${bill.id}`).set(bill);
+    await this.db.object(`billing/bills/${bill.id}`).set(bill);
   }
 }
