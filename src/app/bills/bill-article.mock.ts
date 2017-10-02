@@ -8,7 +8,8 @@ const billArticle: BillArticle = {
   billId: 1000,
 
   createdAt: new Date(2017, 5, 22).getTime(),
-  updatedAt: new Date(2017, 5, 24).getTime()
+  updatedAt: new Date(2017, 5, 24).getTime(),
+  deletedAt: undefined
 };
 
 export function billArticleVariant(attributes: Partial<BillArticle> = {}): BillArticle {

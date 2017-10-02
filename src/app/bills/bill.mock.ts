@@ -14,7 +14,6 @@ const bill = {
   ownerName: 'ownerName',
   title1: 'title1',
   title2: 'title2',
-  deleted: false,
   finished: false,
   paid: false,
   billedAt: '2017-06-22',
@@ -22,7 +21,8 @@ const bill = {
   orderedAt: '2017-06-19',
 
   createdAt: new Date(2017, 5, 22).getTime(),
-  updatedAt: new Date(2017, 5, 24).getTime()
+  updatedAt: new Date(2017, 5, 24).getTime(),
+  deletedAt: undefined
 };
 
 export function billVariant(attributes: Partial<Bill> = {}): Bill {

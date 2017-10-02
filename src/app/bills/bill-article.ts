@@ -9,4 +9,5 @@ export class BillArticle {
   // firebase.database.ServerValue.TIMESTAMP
   createdAt: number;
   updatedAt: number;
+  deletedAt: number | undefined;
 }

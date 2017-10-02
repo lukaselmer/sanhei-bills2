@@ -7,7 +7,6 @@ export class Bill {
 
   finished: boolean; // means finished editing
   paid: boolean;
-  deleted: boolean;
 
   address: string;
   billType: string;
@@ -28,4 +27,5 @@ export class Bill {
   // firebase.database.ServerValue.TIMESTAMP
   createdAt: number;
   updatedAt: number;
+  deletedAt: number | undefined;
 }

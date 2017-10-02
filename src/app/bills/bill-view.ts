@@ -21,7 +21,7 @@ export class BillView {
 
   get finished() { return this.bill.finished; } // means finished editing
   get paid() { return this.bill.paid; }
-  get deleted() { return this.bill.deleted; }
+  get deleted() { return !!this.bill.deletedAt; }
 
   get address() { return this.bill.address; }
 
