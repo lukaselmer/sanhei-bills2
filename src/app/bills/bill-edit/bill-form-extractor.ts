@@ -52,7 +52,7 @@ export class BillFormExtractor {
       id: this.bill.id,
       finished: this.bill.finished,
       paid: this.bill.paid,
-      deleted: this.bill.deleted
+      deletedAt: this.bill.deletedAt
     };
   }
 
