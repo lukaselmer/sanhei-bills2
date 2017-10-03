@@ -81,6 +81,9 @@ export class DataStoreService {
         if (updatedRecords.length === 0) return;
         const store = this.store();
         updatedRecords.forEach(record => store[table][record.id] = record);
+        updatedRecords.forEach(record => {
+          if (record.deletedAt) delete store[table][record.id];
+        });
         this.storeStream.next(store);
         await this.idbStoreService.storeInIDB(table, store[table] as any);
       });
@@ -103,7 +106,20 @@ export class DataStoreService {
   private async downloadWholeDatabase() {
     const data: IBillingDatabase = await this.db.object('billing').first().toPromise();
     this.status = 'loaded';
+    this.removeDeleted(data);
     this.storeStream.next(data);
+  }
+
+  private removeDeleted(data: IBillingDatabase) {
+    this.removeDeletedEntries(data.articles);
+    this.removeDeletedEntries(data.bills);
+    this.removeDeletedEntries(data.billArticles);
+  }
+
+  private removeDeletedEntries<T extends Article | Bill | BillArticle>(entries: { [index: string]: T }) {
+    Object.keys(entries).forEach(id => {
+      if (entries[id].deletedAt) delete (entries[id]);
+    });
   }
 
   async updateBill(bill: Bill) {
