@@ -6,8 +6,8 @@ import 'rxjs/add/operator/toPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from '../bill';
-import { BillArticle } from '../bill-article';
 import { Article } from './../article';
+import { BillArticle } from './../bill-article';
 import { IBillingDatabase } from './billing-database';
 import { DataStoreStatus } from './data-store-status';
 import { IDBStoreService } from './idb-store.service';
@@ -80,7 +80,9 @@ export class DataStoreService {
       }).subscribe(async updatedRecords => {
         if (updatedRecords.length === 0) return;
         const store = this.store();
-        updatedRecords.forEach(record => store[table][record.id] = record);
+        updatedRecords.forEach(record => {
+          if (record.id) store[table][record.id] = record;
+        });
         updatedRecords.forEach(record => {
           if (record.deletedAt) delete store[table][record.id];
         });
@@ -122,7 +124,74 @@ export class DataStoreService {
     });
   }
 
+  async createBill(bill: Bill): Promise<Bill> {
+    this.setCreated(bill);
+    const newRef = this.db.list(`billing/bills`).push(bill);
+    await newRef;
+    bill.id = newRef.key as string;
+    await this.db.list(`billing/bills`).update(newRef, bill);
+    return await this.db.object(`billing/bills/${newRef.key}`).first().toPromise<Bill>();
+  }
+
   async updateBill(bill: Bill) {
+    this.setUpdated(bill);
     await this.db.object(`billing/bills/${bill.id}`).set(bill);
+  }
+
+  async deleteBill(bill: Bill) {
+    this.setDeleted(bill);
+    await this.db.object(`billing/bills/${bill.id}`).set(bill);
+  }
+
+  async createArticle(article: Article): Promise<Article> {
+    this.setCreated(article);
+    const newRef = this.db.list(`billing/articles`).push(article);
+    await newRef;
+    article.id = newRef.key as string;
+    await this.db.list(`billing/articles`).update(newRef, article);
+    return await this.db.object(`billing/articles/${newRef.key}`).first().toPromise<Article>();
+  }
+
+  async updateArticle(article: Article) {
+    this.setUpdated(article);
+    await this.db.object(`billing/articles/${article.id}`).set(article);
+  }
+
+  async deleteArticle(article: Article) {
+    this.setDeleted(article);
+    await this.db.object(`billing/articles/${article.id}`).set(article);
+  }
+
+  async createBillArticle(billArticle: BillArticle): Promise<BillArticle> {
+    this.setCreated(billArticle);
+    const newRef = this.db.list(`billing/billArticles`).push(billArticle);
+    await newRef;
+    billArticle.id = newRef.key as string;
+    await this.db.list(`billing/billArticles`).update(newRef, billArticle);
+    return await this.db.object(`billing/billArticles/${newRef.key}`).first().toPromise<BillArticle>();
+  }
+
+  async updateBillArticle(billArticle: BillArticle) {
+    this.setUpdated(billArticle);
+    await this.db.object(`billing/billArticles/${billArticle.id}`).set(billArticle);
+  }
+
+  async deleteBillArticle(billArticle: BillArticle) {
+    this.setDeleted(billArticle);
+    await this.db.object(`billing/billArticles/${billArticle.id}`).set(billArticle);
+  }
+
+  private setCreated(dbObject: Article | BillArticle | Bill) {
+    dbObject.createdAt = firebase.database.ServerValue.TIMESTAMP as number;
+    this.setUpdated(dbObject);
+  }
+
+  private setDeleted(dbObject: Article | BillArticle | Bill) {
+    dbObject.deletedAt = firebase.database.ServerValue.TIMESTAMP as number;
+    this.setUpdated(dbObject);
+  }
+
+  private setUpdated(dbObject: Article | BillArticle | Bill) {
+    dbObject.updatedAt = firebase.database.ServerValue.TIMESTAMP as number;
   }
 }

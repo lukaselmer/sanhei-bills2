@@ -1,5 +1,5 @@
 export class Bill {
-  id: number;
+  id: number | string;
   cashback: number;
   uid: number;
   vat: number;

@@ -66,4 +66,13 @@ describe('BillsService', () => {
       ]);
     });
   });
+
+  describe('update', () => {
+    it('deletes existing bill articles', () => {
+      service.updateArticles(billMock1.id, [
+        new CombinedBillArticle(db.articles[5], db.billArticles[3])
+      ]);
+      expect(service.billArticlesForBillId(billMock1.id)).toEqual([db.billArticles[3]]);
+    });
+  });
 });

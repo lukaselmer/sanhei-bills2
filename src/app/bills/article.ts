@@ -1,5 +1,5 @@
 export class Article {
-  id: number;
+  id: number | string;
   price: number;
 
   inCatalog: boolean;
