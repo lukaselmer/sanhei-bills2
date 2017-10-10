@@ -1,5 +1,6 @@
 export class Bill {
-  id: number;
+  id: string;
+  // TODO: humanId: number;
   cashback: number;
   uid: number;
   vat: number;

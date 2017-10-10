@@ -6,8 +6,8 @@ import 'rxjs/add/operator/toPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from '../bill';
-import { BillArticle } from '../bill-article';
 import { Article } from './../article';
+import { BillArticle } from './../bill-article';
 import { IBillingDatabase } from './billing-database';
 import { DataStoreStatus } from './data-store-status';
 import { IDBStoreService } from './idb-store.service';
@@ -28,10 +28,9 @@ export class DataStoreService {
 
   getBillsStream(): Observable<Bill[]> {
     return this.storeStream.asObservable().map(stream =>
-      this.toArray(stream.bills).sort((a, b) => {
-        if (typeof a.id === 'number' && typeof b.id === 'number') return b.id - a.id;
-        return b.id.toString().localeCompare(a.id.toString());
-      })
+      this.toArray(stream.bills).sort((a, b) =>
+        b.id.toString().localeCompare(a.id.toString())
+      )
     );
   }
 
@@ -60,7 +59,7 @@ export class DataStoreService {
     });
   }
 
-  private toArray<T extends { id: number | string }>(items: { [index: string]: T }): T[] {
+  private toArray<T extends { id: string }>(items: { [index: string]: T }): T[] {
     return Object.keys(items).map(key => items[key]);
   }
 
@@ -80,7 +79,9 @@ export class DataStoreService {
       }).subscribe(async updatedRecords => {
         if (updatedRecords.length === 0) return;
         const store = this.store();
-        updatedRecords.forEach(record => store[table][record.id] = record);
+        updatedRecords.forEach(record => {
+          if (record.id) store[table][record.id] = record;
+        });
         updatedRecords.forEach(record => {
           if (record.deletedAt) delete store[table][record.id];
         });
@@ -122,7 +123,36 @@ export class DataStoreService {
     });
   }
 
+  async createBill(bill: Bill): Promise<Bill> {
+    this.setCreated(bill);
+    const newRef = this.db.list(`billing/bills`).push(bill);
+    await newRef;
+    bill.id = newRef.key as string;
+    await this.db.list(`billing/bills`).update(newRef, bill);
+    return await this.db.object(`billing/bills/${newRef.key}`).first().toPromise<Bill>();
+  }
+
   async updateBill(bill: Bill) {
+    this.setUpdated(bill);
     await this.db.object(`billing/bills/${bill.id}`).set(bill);
+  }
+
+  async deleteBill(bill: Bill) {
+    this.setDeleted(bill);
+    await this.db.object(`billing/bills/${bill.id}`).set(bill);
+  }
+
+  private setCreated(dbObject: Article | BillArticle | Bill) {
+    dbObject.createdAt = firebase.database.ServerValue.TIMESTAMP as number;
+    this.setUpdated(dbObject);
+  }
+
+  private setDeleted(dbObject: Article | BillArticle | Bill) {
+    dbObject.deletedAt = firebase.database.ServerValue.TIMESTAMP as number;
+    this.setUpdated(dbObject);
+  }
+
+  private setUpdated(dbObject: Article | BillArticle | Bill) {
+    dbObject.updatedAt = firebase.database.ServerValue.TIMESTAMP as number;
   }
 }

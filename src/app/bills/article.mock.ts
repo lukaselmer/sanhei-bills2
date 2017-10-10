@@ -1,7 +1,7 @@
 import { Article } from './article';
 
 const article = {
-  id: 2000,
+  id: '2000',
   price: 150,
   inCatalog: true,
   catalogId: 'gn3if423g34g',

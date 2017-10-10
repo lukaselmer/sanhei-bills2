@@ -51,8 +51,8 @@ describe('BillView', () => {
         expect(billView({}, [{}], [{}]).totalNet).toEqual(5 * 150);
         expect(billView(
           {},
-          [{ articleId: 77, amount: 10 }, { articleId: 99, amount: 3 }],
-          [{ id: 99, price: 100 }, { id: 77, price: 20 }]
+          [{ articleId: '77', amount: 10 }, { articleId: '99', amount: 3 }],
+          [{ id: '99', price: 100 }, { id: '77', price: 20 }]
         ).totalNet).toEqual(10 * 20 + 3 * 100);
         expect(billView({}, [], []).totalNet).toEqual(0);
       });

@@ -53,7 +53,7 @@ export class BillsService {
     return { term, list: filteredBills, dbStatus: this.dataStore.status };
   }
 
-  editBill(id: number): Observable<Bill> {
+  editBill(id: string): Observable<Bill> {
     return this.dataStore.getBillsStream()
       .map(bills => bills.find(bill => bill.id === id))
       .filter(bill => !!bill)

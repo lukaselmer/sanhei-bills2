@@ -14,7 +14,7 @@ import { BillFormExtractor } from './bill-form-extractor';
   styleUrls: ['./bill-edit.component.scss']
 })
 export class BillEditComponent implements OnInit {
-  id: number;
+  id: string;
   form: FormGroup;
   bill: Bill;
   originalArticles: CombinedBillArticle[];
@@ -23,7 +23,7 @@ export class BillEditComponent implements OnInit {
   submitted = false;
 
   constructor(private router: Router, route: ActivatedRoute, private billsService: BillsService, private fb: FormBuilder) {
-    this.id = +route.snapshot.params['id'];
+    this.id = route.snapshot.params['id'];
     this.createForm();
   }
 

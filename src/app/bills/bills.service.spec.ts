@@ -13,13 +13,13 @@ describe('BillsService', () => {
   let service: BillsService;
 
   const billMock1 = billVariant({
-    id: 1,
+    id: '1',
     uid: 1001,
     address: 'A street\nSomething'
   });
 
   const billMock2 = billVariant({
-    id: 2,
+    id: '2',
     uid: 1002,
     address: 'Mr\nHello\nSomething else\nWorld'
   });
@@ -28,12 +28,12 @@ describe('BillsService', () => {
 
   const db: IBillingDatabase = {
     articles: {
-      5: articleVariant({ id: 5 }),
-      6: articleVariant({ id: 6 })
+      5: articleVariant({ id: '5' }),
+      6: articleVariant({ id: '6' })
     },
     billArticles: {
-      3: billArticleVariant({ id: 3, billId: 1, articleId: 5 }),
-      4: billArticleVariant({ id: 4, billId: 1, articleId: 6 })
+      3: billArticleVariant({ id: '3', billId: '1', articleId: '5' }),
+      4: billArticleVariant({ id: '4', billId: '1', articleId: '6' })
     },
     bills: {
       1: billMock1,
@@ -130,12 +130,12 @@ describe('BillsService', () => {
 
   describe('editing bills', () => {
     it('returns a bill form when a bill is edited', () => {
-      service.editBill(2).first()
+      service.editBill('2').first()
         .subscribe(bill => expect(bill).toEqual(billMock2));
     });
 
     it('returns nothing if an invalid id is passed', () => {
-      expect(service.editBill(20).count()
+      expect(service.editBill('20').count()
         .subscribe(count => expect(count).toBe(0)));
     });
 
