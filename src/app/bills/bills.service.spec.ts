@@ -2,10 +2,8 @@ import { async } from '@angular/core/testing';
 import 'rxjs/add/operator/count';
 import { Observable } from 'rxjs/Observable';
 import { articleVariant } from './article.mock';
-import { billArticleVariant } from './bill-article.mock';
 import { billVariant } from './bill.mock';
 import { BillsService } from './bills.service';
-import { CombinedBillArticle } from './combined-bill-article';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { IBillingDatabase } from './store/billing-database';
 
@@ -27,14 +25,6 @@ describe('BillsService', () => {
   const billsMock = [billMock1, billMock2];
 
   const db: IBillingDatabase = {
-    articles: {
-      5: articleVariant({ id: '5' }),
-      6: articleVariant({ id: '6' })
-    },
-    billArticles: {
-      3: billArticleVariant({ id: '3', billId: '1', articleId: '5' }),
-      4: billArticleVariant({ id: '4', billId: '1', articleId: '6' })
-    },
     bills: {
       1: billMock1,
       2: billMock2
@@ -50,10 +40,7 @@ describe('BillsService', () => {
   };
 
   const articlesServiceMock: any = {
-    updateArticles: () => Promise.resolve(''),
-    billArticlesForBillId: () => undefined,
-    articlesForBillArticles: () => undefined,
-    combinedBillArticlesForBillId: () => undefined
+    updateArticles: () => Promise.resolve('')
   };
 
   beforeEach(() => {
@@ -141,32 +128,8 @@ describe('BillsService', () => {
 
     it('updates the bill', async () => {
       spyOn(dataStoreServiceMock, 'updateBill').and.callThrough();
-      spyOn(articlesServiceMock, 'updateArticles').and.callThrough();
-      await service.updateBill(billMock1, []);
+      await service.updateBill(billMock1);
       expect(dataStoreServiceMock.updateBill).toHaveBeenCalledWith(billMock1);
-      expect(articlesServiceMock.updateArticles)
-        .toHaveBeenCalledWith(billMock1.id, []);
-    });
-  });
-
-  describe('articles and bill articles', () => {
-    it('returns the bill articles of a bill', () => {
-      spyOn(articlesServiceMock, 'billArticlesForBillId');
-      service.billArticlesForBill(billMock1);
-      expect(articlesServiceMock.billArticlesForBillId).toHaveBeenCalledWith(billMock1.id);
-    });
-
-    it('returns the articles of bill articles', () => {
-      spyOn(articlesServiceMock, 'articlesForBillArticles');
-      const args = [db.billArticles[3], db.billArticles[4]];
-      service.articlesForBillArticles(args);
-      expect(articlesServiceMock.articlesForBillArticles).toHaveBeenCalledWith(args);
-    });
-
-    it('returns the combined bill articles of a bill', () => {
-      spyOn(articlesServiceMock, 'combinedBillArticlesForBillId');
-      service.combinedBillArticlesForBill(billMock1);
-      expect(articlesServiceMock.combinedBillArticlesForBillId).toHaveBeenCalledWith(billMock1.id);
     });
   });
 });

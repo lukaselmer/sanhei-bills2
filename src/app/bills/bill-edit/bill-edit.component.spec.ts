@@ -12,6 +12,7 @@ import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
+import { DataStoreService } from '../store/data-store.service';
 import { Bill } from './../bill';
 import { BillEditComponent } from './bill-edit.component';
 
@@ -50,8 +51,7 @@ describe('BillEditComponent', () => {
               expect(id).toEqual(bill.id);
               return Observable.of(bill);
             },
-            updateBill: (billToUpdate: Bill): void => undefined,
-            combinedBillArticlesForBill: () => []
+            updateBill: (billToUpdate: Bill): void => undefined
           }
         },
         {
@@ -107,11 +107,10 @@ describe('BillEditComponent', () => {
     abortSpy.and.returnValue(false);
     component.onSubmit();
     expect(abortSpy).toHaveBeenCalled();
-    expect(updateBillSpy.calls.first().args[0]).toEqual({
+    expect(updateBillSpy).toHaveBeenCalledWith({
       ...bill,
       fixedAt: '',
       updatedAt: firebase.database.ServerValue.TIMESTAMP as number
     });
-    expect(updateBillSpy.calls.first().args[1]).toEqual([]);
   }));
 });

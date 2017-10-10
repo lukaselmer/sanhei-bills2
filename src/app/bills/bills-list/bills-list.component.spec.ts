@@ -4,8 +4,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { articleVariant } from '../article.mock';
-import { billArticleVariant } from '../bill-article.mock';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
@@ -21,9 +19,7 @@ describe('BillsListComponent', () => {
     title1: 'Objekt: Adresse',
     title2: 'Zusatz'
   });
-  const billView = new BillView(bill,
-    [billArticleVariant()],
-    [articleVariant()]);
+  const billView = new BillView(bill);
   const bills = [bill];
   const billsSearch = {
     term: '',
@@ -45,9 +41,7 @@ describe('BillsListComponent', () => {
         {
           provide: BillsService, useValue: {
             search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch),
-            editBill: (): Observable<Bill> => Observable.of(bill),
-            billArticlesForBill: () => [billArticleVariant()],
-            articlesForBillArticles: () => [articleVariant()]
+            editBill: (): Observable<Bill> => Observable.of(bill)
           }
         }
       ],
@@ -92,7 +86,7 @@ describe('BillsListComponent', () => {
       return element.querySelector(query).textContent.trim();
     }
 
-    expect(queryContent('md-card-title')).toEqual(`${bill.uid} | ${bill.id}`);
+    expect(queryContent('md-card-title')).toEqual(`${bill.uid} | ${bill.humanId}`);
     expect(queryContent('md-card-subtitle :first-child')).toEqual(`${billView.title1}, ${billView.title2}`);
     expect(queryContent('md-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
     expect(queryContent('md-card-content :nth-child(1)')).toEqual(`Arbeiten am: fixedAtOverride |`);

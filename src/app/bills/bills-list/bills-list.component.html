@@ -8,7 +8,7 @@
 </md-form-field>
 
 <md-card *ngFor="let bill of bills$ | async" (click)="editBill(bill)">
-  <md-card-title>{{bill.uid}} | {{ bill.id }}</md-card-title>
+  <md-card-title>{{bill.uid}} | {{ bill.humanId }}</md-card-title>
   <md-card-subtitle>
     <div>{{ bill.title1 }}, {{ bill.title2 }}</div>
     <div>{{ bill.commaSeparatedAddress }}</div>

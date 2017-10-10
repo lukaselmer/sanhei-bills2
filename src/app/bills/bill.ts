@@ -1,10 +1,13 @@
+import { Article } from './article';
 export class Bill {
   id: string;
-  // TODO: humanId: number;
+  humanId: number;
   cashback: number;
   uid: number;
   vat: number;
   discount: number;
+
+  articles: Article[];
 
   finished: boolean; // means finished editing
   paid: boolean;

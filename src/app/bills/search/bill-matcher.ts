@@ -4,14 +4,11 @@ export class BillMatcher {
   constructor(private term: string) { }
 
   matches(bill: Bill): boolean {
-    if (this.term === '') return true;
-
-    if (this.matchesIdOrUid(bill)) return true;
-    if (this.matchesNumber(bill)) return true;
-    if (this.matchesTimestamps(bill)) return true;
-    if (this.matchesStringsOrDates(bill)) return true;
-
-    return false;
+    return this.term === '' ||
+      this.matchesIdOrUid(bill) ||
+      this.matchesNumber(bill) ||
+      this.matchesTimestamps(bill) ||
+      this.matchesStringsOrDates(bill);
   }
 
   private matchesNumber(bill: Bill) {
@@ -24,8 +21,9 @@ export class BillMatcher {
   }
 
   private matchesIdOrUid(bill: Bill) {
-    return bill.id.toString().startsWith(this.term) ||
-      bill.uid.toString().startsWith(this.term);
+    return bill.id.startsWith(this.term) ||
+      bill.uid.toString().startsWith(this.term) ||
+      bill.humanId.toString().startsWith(this.term);
   }
 
   private matchesTimestamps(bill: Bill) {

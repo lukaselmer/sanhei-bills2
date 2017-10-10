@@ -12,18 +12,6 @@
           "id",
           "updatedAt"
         ]
-      },
-      "articles": {
-        ".indexOn": [
-          "id",
-          "updatedAt"
-        ]
-      },
-      "billArticles": {
-        ".indexOn": [
-          "id",
-          "updatedAt"
-        ]
       }
     }
   }

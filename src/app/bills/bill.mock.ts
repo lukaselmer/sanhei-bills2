@@ -1,7 +1,9 @@
+import { articleVariant } from './article.mock';
 import { Bill } from './bill';
 
 const bill = {
-  id: '1000',
+  id: 'RaNdOm1000',
+  humanId: 1000,
   cashback: 2.5,
   uid: 3000,
   vat: 4.51,
@@ -22,7 +24,9 @@ const bill = {
 
   createdAt: new Date(2017, 5, 22).getTime(),
   updatedAt: new Date(2017, 5, 24).getTime(),
-  deletedAt: undefined
+  deletedAt: undefined,
+
+  articles: [articleVariant()]
 };
 
 export function billVariant(attributes: Partial<Bill> = {}): Bill {
