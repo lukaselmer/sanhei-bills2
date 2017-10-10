@@ -1,18 +1,10 @@
 import * as firebase from 'firebase/app';
-import { Bill } from './../bill';
-import { CombinedBillArticle } from './../combined-bill-article';
+import { Article } from '../article';
+import { Bill } from '../bill';
+import { FormArticle } from './form-article';
 
 export class BillFormExtractor {
   constructor(private bill: Bill, private formValue: any) { }
-
-  extractArticles(): CombinedBillArticle[] {
-    const articles: CombinedBillArticle[] = this.formValue.articles;
-    return articles.filter(article => {
-      const fieldValues = [article.description, article.price];
-      return [article.description, article.price, article.amount].every(fieldValue =>
-        fieldValue.trim() !== '');
-    });
-  }
 
   extractBill(): Bill {
     return {
@@ -20,8 +12,25 @@ export class BillFormExtractor {
       ...this.extractNumbers(),
       ...this.applyExistingValuesFromBill(),
       ...this.extractDates(),
-      ...this.setTimestamps()
+      ...this.setTimestamps(),
+      articles: this.extractArticles()
     };
+  }
+
+  private extractArticles(): Article[] {
+    const rawArticles: FormArticle[] = this.formValue.articles;
+    return rawArticles.filter(article =>
+      [article.description, article.price, article.amount]
+        .every(fieldValue => fieldValue.trim() !== '')
+    ).map(article => {
+      return {
+        amount: parseFloat(article.amount),
+        price: parseFloat(article.price),
+        description: article.description,
+        dimension: article.dimension,
+        catalogId: article.catalogId
+      };
+    });
   }
 
   private extractStrings() {
@@ -50,6 +59,7 @@ export class BillFormExtractor {
     return {
       uid: this.bill.uid,
       id: this.bill.id,
+      humanId: this.bill.humanId,
       finished: this.bill.finished,
       paid: this.bill.paid,
       deletedAt: this.bill.deletedAt

@@ -3,10 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from './../article';
 import { Bill } from './../bill';
-import { BillArticle } from './../bill-article';
 import { BillsService } from './../bills.service';
-import { CombinedBillArticle } from './../combined-bill-article';
 import { BillFormExtractor } from './bill-form-extractor';
+import { FormArticle } from './form-article';
 
 @Component({
   selector: 'sb-bill-edit',
@@ -17,7 +16,7 @@ export class BillEditComponent implements OnInit {
   id: string;
   form: FormGroup;
   bill: Bill;
-  originalArticles: CombinedBillArticle[];
+  originalArticles: FormArticle[];
   myArticlesForm: FormArray;
   potentialDanglingArticles: Article[] = [];
   submitted = false;
@@ -61,7 +60,7 @@ export class BillEditComponent implements OnInit {
   private billChanged(bill: Bill) {
     if (this.submitted) return;
     this.bill = bill;
-    this.updateArticles();
+    this.originalArticles = this.bill.articles.map(article => new FormArticle(article));
     const billFormValue = {
       articles: [],
       cashback: bill.cashback,
@@ -84,22 +83,18 @@ export class BillEditComponent implements OnInit {
     this.articlesChanged();
   }
 
-  private updateArticles() {
-    this.originalArticles = this.billsService.combinedBillArticlesForBill(this.bill);
-  }
-
   private articlesChanged() {
     this.setArticles(this.originalArticles);
     this.addNewArticle(Math.max(1, 5 - this.originalArticles.length));
   }
 
   removeArticleAt(index: number) {
-    const values: CombinedBillArticle[] = this.articlesForm.value;
+    const values: FormArticle[] = this.articlesForm.value;
     const combinedArticles = values.filter((_, i) => i !== index);
     this.setArticles(combinedArticles);
   }
 
-  private setArticles(articles: CombinedBillArticle[]) {
+  private setArticles(articles: FormArticle[]) {
     const articleFormGroups = articles.map(ba => this.fb.group(ba));
     this.myArticlesForm = this.fb.array(articleFormGroups);
     this.form.setControl('articles', this.myArticlesForm);
@@ -107,7 +102,7 @@ export class BillEditComponent implements OnInit {
 
   addNewArticle(amount: number) {
     for (let i = 0; i < amount; ++i) {
-      this.articlesForm.push(this.fb.group(new CombinedBillArticle()));
+      this.articlesForm.push(this.fb.group(new FormArticle()));
     }
   }
 
@@ -119,7 +114,7 @@ export class BillEditComponent implements OnInit {
     if (this.form.valid) {
       this.submitted = true;
       const extractor = new BillFormExtractor(this.bill, this.form.value);
-      this.billsService.updateBill(extractor.extractBill(), extractor.extractArticles());
+      this.billsService.updateBill(extractor.extractBill());
       this.abort();
     } else {
       window.scrollTo(0, 0);

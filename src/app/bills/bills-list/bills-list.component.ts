@@ -35,7 +35,7 @@ export class BillsListComponent implements OnInit {
       .switchMap(term => this.reallyStartSearching(term))
       .share();
     billsSearch$.subscribe(search => this.updateProgress(search));
-    this.bills$ = billsSearch$.map(search => search.list.map(bill => this.createBillView(bill)));
+    this.bills$ = billsSearch$.map(search => search.list.map(bill => new BillView(bill)));
   }
 
   private reallyStartSearching(term: string): Observable<SearchResult<Bill>> {
@@ -46,12 +46,6 @@ export class BillsListComponent implements OnInit {
   private updateProgress(search: SearchResult<Bill>) {
     this.displayedSearchTerm = search.term;
     this.loadStatus = search.dbStatus;
-  }
-
-  private createBillView(bill: Bill): BillView {
-    const billArticles = this.billsService.billArticlesForBill(bill);
-    const articles = this.billsService.articlesForBillArticles(billArticles);
-    return new BillView(bill, billArticles, articles);
   }
 
   searchKeyup(searchTerm: string) {

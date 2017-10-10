@@ -29,9 +29,10 @@ describe('DataStoreService', () => {
   describe('loadData', () => {
     it('should load data from firebase if there is no cache', async(() => {
       const db = {
-        articles: { 1: { id: 1, name: 'A1' }, 2: { id: 2, name: 'A2' } },
-        billArticles: { 1: { id: 1, name: 'BA1' }, 2: { id: 2, name: 'BA2' } },
-        bills: { 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5' } }
+        bills: {
+          1: { id: 1, name: 'B1', createdAt: 100 },
+          5: { id: 5, name: 'B5', createdAt: 500 }
+        }
       };
       spyOn(idbMock, 'loadFromIDB').and.returnValue(Promise.resolve({}));
       spyOn(idbMock, 'storeInIDB').and.callThrough();
@@ -39,25 +40,22 @@ describe('DataStoreService', () => {
       spyOn(angularFireMock, 'list').and.returnValue(Observable.of([]));
 
       service.loadData().then(() => {
-        expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(3);
-        expect(idbMock.loadFromIDB).toHaveBeenCalledWith('articles');
-        expect(idbMock.loadFromIDB).toHaveBeenCalledWith('billArticles');
+        expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.loadFromIDB).toHaveBeenCalledWith('bills');
         expect(idbMock.storeInIDB).toHaveBeenCalled();
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('articles', { 1: db.articles[1], 2: db.articles[2] });
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('billArticles', { 1: db.billArticles[1], 2: db.billArticles[2] });
         expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', { 1: db.bills[1], 5: db.bills[5] });
-        expect(angularFireMock.list).toHaveBeenCalledTimes(3);
+        expect(angularFireMock.list).toHaveBeenCalledTimes(1);
         service.getBillsStream().first().subscribe(list => {
-          expect(list).toEqual([{ id: 5, name: 'B5' }, { id: 1, name: 'B1' }] as any);
+          expect(list).toEqual([
+            { id: 5, name: 'B5', createdAt: 500 },
+            { id: 1, name: 'B1', createdAt: 100 }
+          ] as any);
         });
       });
     }));
 
     it('should not store deleted entries if there is no cache', async(() => {
       const db = {
-        articles: { 1: { id: 1, name: 'A1' }, 2: { id: 2, name: 'A2', deletedAt: 12345 } },
-        billArticles: { 1: { id: 1, name: 'BA1' }, 2: { id: 2, name: 'BA2', deletedAt: 12345 } },
         bills: { 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5', deletedAt: 12345 } }
       };
       spyOn(idbMock, 'loadFromIDB').and.returnValue(Promise.resolve({}));
@@ -66,8 +64,6 @@ describe('DataStoreService', () => {
       spyOn(angularFireMock, 'list').and.returnValue(Observable.of([]));
 
       service.loadData().then(() => {
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('articles', { 1: db.articles[1] });
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('billArticles', { 1: db.billArticles[1] });
         expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', { 1: db.bills[1] });
         service.getBillsStream().first().subscribe(list => {
           expect(list).toEqual([{ id: 1, name: 'B1' }] as any);
@@ -77,65 +73,51 @@ describe('DataStoreService', () => {
 
     it('should not load partial data from firebase if there is a cache', async(() => {
       spyOn(idbMock, 'loadFromIDB').and.returnValues(
-        Promise.resolve({ 1: { id: 1, name: 'A1' }, 2: { id: 2, name: 'A2' } }),
-        Promise.resolve({ 1: { id: 1, name: 'BA1' }, 2: { id: 2, name: 'BA2' } }),
-        Promise.resolve({ 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5' } })
+        Promise.resolve({
+          1: { id: 1, name: 'B1', createdAt: 100 },
+          5: { id: 5, name: 'B5', createdAt: 500 }
+        })
       );
       spyOn(idbMock, 'storeInIDB').and.callThrough();
       spyOn(angularFireMock, 'list').and.returnValues(
-        Observable.of([{ id: 3, name: 'A3' }, { id: 4, name: 'A4' }]),
-        Observable.of([]),
-        Observable.of([{ id: 2, name: 'B2' }])
+        Observable.of([{ id: 2, name: 'B2', createdAt: 200 }])
       );
 
       service.loadData().then(() => {
-        expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(3);
-        expect(idbMock.storeInIDB).toHaveBeenCalledTimes(2);
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('articles', {
-          1: { id: 1, name: 'A1' },
-          2: { id: 2, name: 'A2' },
-          3: { id: 3, name: 'A3' },
-          4: { id: 4, name: 'A4' }
-        });
+        expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(1);
+        expect(idbMock.storeInIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', {
-          1: { id: 1, name: 'B1' },
-          2: { id: 2, name: 'B2' },
-          5: { id: 5, name: 'B5' }
+          1: { id: 1, name: 'B1', createdAt: 100 },
+          2: { id: 2, name: 'B2', createdAt: 200 },
+          5: { id: 5, name: 'B5', createdAt: 500 }
         });
-        expect(angularFireMock.list).toHaveBeenCalledTimes(3);
+        expect(angularFireMock.list).toHaveBeenCalledTimes(1);
         service.getBillsStream().first().subscribe(list => {
-          expect(list).toEqual([{ id: 5, name: 'B5' }, { id: 2, name: 'B2' }, { id: 1, name: 'B1' }] as any);
+          expect(list).toEqual([
+            { id: 5, name: 'B5', createdAt: 500 },
+            { id: 2, name: 'B2', createdAt: 200 },
+            { id: 1, name: 'B1', createdAt: 100 }
+          ] as any);
         });
       });
     }));
 
     it('should delete entries marked as deleted', async(() => {
       spyOn(idbMock, 'loadFromIDB').and.returnValues(
-        Promise.resolve({ 1: { id: 1, name: 'A1' }, 2: { id: 2, name: 'A2' } }),
-        Promise.resolve({ 1: { id: 1, name: 'BA1' }, 2: { id: 2, name: 'BA2' } }),
         Promise.resolve({ 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5' } })
       );
       spyOn(idbMock, 'storeInIDB').and.callThrough();
       spyOn(angularFireMock, 'list').and.returnValues(
-        Observable.of([{ id: 1, name: 'A1', deletedAt: 12345 }, { id: 4, name: 'A4' }]),
-        Observable.of([{ id: 1, name: 'BA1', deletedAt: 12345 }]),
         Observable.of([{ id: 1, name: 'B1', deletedAt: 12345 }])
       );
 
       service.loadData().then(() => {
-        expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(3);
-        expect(idbMock.storeInIDB).toHaveBeenCalledTimes(3);
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('articles', {
-          2: { id: 2, name: 'A2' },
-          4: { id: 4, name: 'A4' }
-        });
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('billArticles', {
-          2: { id: 2, name: 'BA2' }
-        });
+        expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(1);
+        expect(idbMock.storeInIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', {
           5: { id: 5, name: 'B5' }
         });
-        expect(angularFireMock.list).toHaveBeenCalledTimes(3);
+        expect(angularFireMock.list).toHaveBeenCalledTimes(1);
         service.getBillsStream().first().subscribe(list => {
           expect(list).toEqual([{ id: 5, name: 'B5' }] as any);
         });
@@ -147,9 +129,10 @@ describe('DataStoreService', () => {
     describe('when online', () => {
       it('updates the bill in firebase', async(async () => {
         spyOn(idbMock, 'loadFromIDB').and.returnValues(
-          Promise.resolve({ 1: { id: 1, description: 'A1' }, 2: { id: 2, description: 'A2' } }),
-          Promise.resolve({ 1: { id: 1, billId: 'BA1' }, 2: { id: 2, billId: 'BA2' } }),
-          Promise.resolve({ 1: { id: 1, title1: 'B1' }, 5: { id: 5, title1: 'B5' } })
+          Promise.resolve({
+            1: { id: 1, title1: 'B1' },
+            5: { id: 5, title1: 'B5' }
+          })
         );
         spyOn(idbMock, 'storeInIDB').and.callThrough();
 
@@ -161,7 +144,7 @@ describe('DataStoreService', () => {
         const latestBill: Bill = { ...bills[0], title1: 'newTitle' };
         await service.updateBill(latestBill);
         expect(angularFireMock.object).toHaveBeenCalledWith(`billing/bills/${latestBill.id}`);
-        expect(latestUpdatedBill).toBe(latestBill);
+        expect(latestUpdatedBill).toEqual(latestBill);
       }));
     });
   });

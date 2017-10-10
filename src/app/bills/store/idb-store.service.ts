@@ -61,8 +61,6 @@ export class IDBStoreService {
     dbRequest.onupgradeneeded = event => {
       const db: IDBDatabase = (event.target as any).result;
       db.createObjectStore('bills', { autoIncrement: true });
-      db.createObjectStore('articles', { autoIncrement: true });
-      db.createObjectStore('billArticles', { autoIncrement: true });
     };
     return dbRequest;
   }

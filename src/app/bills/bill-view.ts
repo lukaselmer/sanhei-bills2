@@ -1,19 +1,18 @@
 import { Article } from './article';
+import { ArticleView } from './article-view';
 import { Bill } from './bill';
-import { BillArticle } from './bill-article';
-import { BillArticleView } from './bill-article-view';
 
 export class BillView {
-  private pBillArticleViews: BillArticleView[];
+  private pBillArticleViews: ArticleView[];
 
-  constructor(private bill: Bill, billArticles: BillArticle[], articles: Article[]) {
-    this.pBillArticleViews = billArticles.map(billArticle => {
-      const article = articles.find(a => a.id === billArticle.articleId);
-      return article ? new BillArticleView(billArticle, article) : undefined;
-    }).filter(bav => bav) as BillArticleView[];
+  constructor(private bill: Bill) {
+    this.pBillArticleViews = bill.articles.map(article =>
+      new ArticleView(article)
+    );
   }
 
   get id() { return this.bill.id; }
+  get humanId() { return this.bill.humanId; }
   get cashback() { return this.bill.cashback; }
   get uid() { return this.bill.uid; }
   get vat() { return this.bill.vat; }
