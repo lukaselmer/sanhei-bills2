@@ -60,7 +60,5 @@ export class BillsService {
 
   async updateBill(bill: Bill) {
     await this.dataStore.updateBill(bill);
-    // TODO: update autocomplete:
-    // await this.articlesService.updateArticles(bill.id, combinedArticles);
   }
 }

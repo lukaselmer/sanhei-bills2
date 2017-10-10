@@ -7,6 +7,5 @@ import { DataStoreService } from './store/data-store.service';
 @Injectable()
 export class ArticlesService {
   constructor(private dataStore: DataStoreService) {
-    // this.dataStore.loadData();
   }
 }
