@@ -16,9 +16,7 @@ export class BillEditComponent implements OnInit {
   id: string;
   form: FormGroup;
   bill: Bill;
-  originalArticles: FormArticle[];
-  myArticlesForm: FormArray;
-  potentialDanglingArticles: Article[] = [];
+  formArticles: FormArticle[];
   submitted = false;
 
   constructor(private router: Router, route: ActivatedRoute, private billsService: BillsService, private fb: FormBuilder) {
@@ -60,9 +58,10 @@ export class BillEditComponent implements OnInit {
   private billChanged(bill: Bill) {
     if (this.submitted) return;
     this.bill = bill;
-    this.originalArticles = this.bill.articles.map(article => new FormArticle(article));
+    this.articlesChanged();
+
     const billFormValue = {
-      articles: [],
+      articles: this.formArticles,
       cashback: bill.cashback,
       vat: bill.vat,
       discount: bill.discount,
@@ -80,29 +79,42 @@ export class BillEditComponent implements OnInit {
       billedAt: bill.billedAt
     };
     this.form.setValue(billFormValue);
-    this.articlesChanged();
   }
 
   private articlesChanged() {
-    this.setArticles(this.originalArticles);
-    this.addNewArticle(Math.max(1, 5 - this.originalArticles.length));
+    this.formArticles = this.bill.articles.map(article => new FormArticle(article));
+    this.setArticles(this.formArticles);
+    this.addNewArticle(Math.max(1, 5 - this.formArticles.length));
   }
 
   removeArticleAt(index: number) {
+    // This would be nice, but it does not work because of angular material (atm): this.articlesForm.removeAt(index);
     const values: FormArticle[] = this.articlesForm.value;
     const combinedArticles = values.filter((_, i) => i !== index);
     this.setArticles(combinedArticles);
   }
 
   private setArticles(articles: FormArticle[]) {
-    const articleFormGroups = articles.map(ba => this.fb.group(ba));
-    this.myArticlesForm = this.fb.array(articleFormGroups);
-    this.form.setControl('articles', this.myArticlesForm);
+    const articleFormGroups = articles.map(a => this.fb.group({
+      amount: [a.amount, Validators.required],
+      price: [a.price, Validators.required],
+      catalogId: a.catalogId,
+      description: [a.description, Validators.required],
+      dimension: [a.dimension]
+    }));
+    this.form.setControl('articles', this.fb.array(articleFormGroups));
   }
 
   addNewArticle(amount: number) {
     for (let i = 0; i < amount; ++i) {
-      this.articlesForm.push(this.fb.group(new FormArticle()));
+      this.formArticles.push(new FormArticle());
+      this.articlesForm.push(this.fb.group({
+        amount: ['', Validators.required],
+        price: ['', Validators.required],
+        catalogId: [''],
+        description: ['', Validators.required],
+        dimension: ['']
+      }));
     }
   }
 
@@ -111,14 +123,33 @@ export class BillEditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.removeEmptyArticles();
     if (this.form.valid) {
       this.submitted = true;
       const extractor = new BillFormExtractor(this.bill, this.form.value);
       this.billsService.updateBill(extractor.extractBill());
       this.abort();
     } else {
-      window.scrollTo(0, 0);
+      // tslint:disable-next-line:no-unused-expression
+      this.scrollTo('.mat-input-element.ng-touched.ng-invalid') ||
+        this.scrollTo('.mat-input-element.ng-invalid') ||
+        window.scrollTo(0, 0);
     }
+  }
+
+  private scrollTo(query: string): boolean {
+    const element = document.querySelector(query) as HTMLElement;
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    return !!element;
+  }
+
+  private removeEmptyArticles() {
+    const values: FormArticle[] = this.articlesForm.value;
+    const combinedArticles = values.filter(val =>
+      val.amount !== '' || val.catalogId !== '' ||
+      val.description !== '' || val.dimension !== '' || val.price !== ''
+    );
+    this.setArticles(combinedArticles);
   }
 
   abort() {

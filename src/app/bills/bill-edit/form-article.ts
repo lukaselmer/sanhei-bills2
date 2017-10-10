@@ -7,7 +7,7 @@ export class FormArticle {
   price = '';
   amount = '';
 
-  constructor(public article?: Article) {
+  constructor(article?: Article) {
     if (!article) return;
 
     this.catalogId = article.catalogId;
