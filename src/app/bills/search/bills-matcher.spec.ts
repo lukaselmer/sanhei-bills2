@@ -29,7 +29,7 @@ describe('BillMatcherService', () => {
   });
 
   it('matches the beginning of the id and uid', () => {
-    const variant = billVariant({ id: 7324, uid: 3324 });
+    const variant = billVariant({ id: '7324', uid: 3324 });
     expect(match('7', variant)).toBeTruthy();
     expect(match('73', variant)).toBeTruthy();
     expect(match('732', variant)).toBeTruthy();

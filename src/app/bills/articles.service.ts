@@ -11,7 +11,7 @@ export class ArticlesService {
     this.dataStore.loadData();
   }
 
-  billArticlesForBillId(billId: number) {
+  billArticlesForBillId(billId: string) {
     const store = this.dataStore.store();
     return Object.keys(store.billArticles)
       .filter(key => store.billArticles[key].billId === billId)
@@ -23,7 +23,7 @@ export class ArticlesService {
     return billArticles.map(billArticle => store.articles[billArticle.articleId]);
   }
 
-  combinedBillArticlesForBillId(billId: number): CombinedBillArticle[] {
+  combinedBillArticlesForBillId(billId: string): CombinedBillArticle[] {
     const store = this.dataStore.store();
     return this.billArticlesForBillId(billId).map(billArticle => {
       const article = store.articles[billArticle.articleId];
@@ -31,7 +31,7 @@ export class ArticlesService {
     });
   }
 
-  async updateArticles(billId: number, combinedArticles: CombinedBillArticle[]) {
     // TODO: store / update / delete articles and bill articles
+  async updateArticles(billId: string, updatedArticles: CombinedBillArticle[]) {
   }
 }
