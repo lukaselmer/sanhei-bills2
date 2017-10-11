@@ -1,6 +1,7 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +36,7 @@ describe('BillsListComponent', () => {
         MdListModule,
         MdProgressBarModule,
         NoopAnimationsModule,
-        RouterTestingModule
+        RouterTestingModule.withRoutes([{ path: 'bills', component: BillsListComponent }])
       ],
       providers: [
         {
@@ -49,62 +50,80 @@ describe('BillsListComponent', () => {
     }).compileComponents();
   }));
 
-  beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(BillsListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    tick(100);
-  }));
-
-  it('should be created', () => {
-    expect(component).toBeTruthy();
+  describe('construction', () => {
+    it('reads the params from the activated route', fakeAsync(() => {
+      const router: Router = TestBed.get(Router);
+      const service: BillsService = TestBed.get(BillsService);
+      spyOn(service, 'search').and.callThrough();
+      router.navigate(['/bills'], { queryParams: { q: 'some', limit: 77 } });
+      fixture = TestBed.createComponent(BillsListComponent);
+      component = fixture.componentInstance;
+      tick();
+      fixture.detectChanges();
+      tick(100);
+      expect(service.search).toHaveBeenCalledWith({ term: 'some', limit: 77 });
+      expect((component as any).searchTermStream.getValue()).toEqual({ term: 'some', limit: 77 });
+    }));
   });
 
-  it('should render a md-card', async(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('md-form-field')).not.toBe(null);
-  }));
+  describe('bahaviour', () => {
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.createComponent(BillsListComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      tick(100);
+    }));
 
-  it('should render a row for each bill', fakeAsync(() => {
-    fixture.detectChanges();
-    const compiled: HTMLElement = fixture.debugElement.nativeElement;
-    expect(compiled.querySelectorAll('md-card').length).toBe(bills.length);
-  }));
+    it('should be created', () => {
+      expect(component).toBeTruthy();
+    });
 
-  it('should render the row for the bill', fakeAsync(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    const element = compiled.querySelector('md-card');
-    expect(element).not.toBe(null);
+    it('should render a md-card', async(() => {
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      expect(compiled.querySelector('md-form-field')).not.toBe(null);
+    }));
 
-    function line(lineNumber: number): string {
-      return element.querySelector(`[md-line]:nth-child(${lineNumber})`).textContent.trim();
-    }
+    it('should render a row for each bill', fakeAsync(() => {
+      fixture.detectChanges();
+      const compiled: HTMLElement = fixture.debugElement.nativeElement;
+      expect(compiled.querySelectorAll('md-card').length).toBe(bills.length + 1);
+    }));
 
-    function queryContent(query: string): string {
-      return element.querySelector(query).textContent.trim();
-    }
+    it('should render the row for the bill', fakeAsync(() => {
+      fixture.detectChanges();
+      const compiled = fixture.debugElement.nativeElement;
+      const element = compiled.querySelector('md-card');
+      expect(element).not.toBe(null);
 
-    expect(queryContent('md-card-title')).toEqual(`${bill.uid} | ${bill.humanId}`);
-    expect(queryContent('md-card-subtitle :first-child')).toEqual(`${billView.title1}, ${billView.title2}`);
-    expect(queryContent('md-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
-    expect(queryContent('md-card-content :nth-child(1)')).toEqual(`Arbeiten am: fixedAtOverride |`);
-    expect(queryContent('md-card-content :nth-child(2)')).toEqual(`Verrechnet am: 2017-06-22 |`);
-    expect(queryContent('md-card-content :nth-child(3)')).toEqual(`CHF750.00 netto | CHF735.10 brutto`);
-    expect(queryContent('md-card-content :nth-child(4)')).toEqual(`${bill.ownerName}, ${bill.ordererName}`);
-  }));
+      function line(lineNumber: number): string {
+        return element.querySelector(`[md-line]:nth-child(${lineNumber})`).textContent.trim();
+      }
 
-  it('should search through the bills', fakeAsync(inject([BillsService], (service: BillsService) => {
-    expect((component as any).searchTermStream.getValue()).toEqual({ term: '', limit: 10 });
-    spyOn(service, 'search').and.callThrough();
-    const compiled = fixture.debugElement.nativeElement;
-    const element = compiled.querySelector('input');
-    expect(service.search).toHaveBeenCalledTimes(0);
-    element.value = 'Some';
-    element.dispatchEvent(new Event('keyup'));
-    tick(100);
-    expect((component as any).searchTermStream.getValue()).toEqual({ term: 'some', limit: 10 });
-    expect(service.search).toHaveBeenCalledWith({ term: 'some', limit: 10 });
-  })));
+      function queryContent(query: string): string {
+        return element.querySelector(query).textContent.trim();
+      }
+
+      expect(queryContent('md-card-title')).toEqual(`${bill.uid} | ${bill.humanId}`);
+      expect(queryContent('md-card-subtitle :first-child')).toEqual(`${billView.title1}, ${billView.title2}`);
+      expect(queryContent('md-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
+      expect(queryContent('md-card-content :nth-child(1)')).toEqual(`Arbeiten am: fixedAtOverride |`);
+      expect(queryContent('md-card-content :nth-child(2)')).toEqual(`Verrechnet am: 2017-06-22 |`);
+      expect(queryContent('md-card-content :nth-child(3)')).toEqual(`CHF750.00 netto | CHF735.10 brutto`);
+      expect(queryContent('md-card-content :nth-child(4)')).toEqual(`${bill.ownerName}, ${bill.ordererName}`);
+    }));
+
+    it('should search through the bills', fakeAsync(inject([BillsService, Router], (service: BillsService, router: Router) => {
+      expect((component as any).searchTermStream.getValue()).toEqual({ term: '', limit: 10 });
+      spyOn(service, 'search').and.callThrough();
+      spyOn(router, 'navigate').and.returnValue('');
+      const compiled = fixture.debugElement.nativeElement;
+      const element = compiled.querySelector('input');
+      expect(service.search).toHaveBeenCalledTimes(0);
+      element.value = 'Some';
+      element.dispatchEvent(new Event('keyup'));
+      tick(100);
+      expect(router.navigate).toHaveBeenCalledWith(['/bills'], { queryParams: { q: 'some' } });
+    })));
+  });
 });

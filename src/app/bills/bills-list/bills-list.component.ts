@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/share';
@@ -26,7 +26,7 @@ export class BillsListComponent implements OnInit {
   private searchTermStream = new BehaviorSubject<SearchOptions>(
     { term: this.displayedSearchTerm, limit: 10 });
 
-  constructor(private billsService: BillsService, private router: Router) { }
+  constructor(private billsService: BillsService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const billsSearch$ = this.searchTermStream
@@ -36,7 +36,15 @@ export class BillsListComponent implements OnInit {
       .switchMap(term => this.reallyStartSearching(term))
       .share();
     billsSearch$.subscribe(search => this.updateProgress(search));
-    this.bills$ = billsSearch$.map(search => search.list.map(bill => new BillView(bill)));
+    this.bills$ = billsSearch$.map(search => search.list.map(bill => new BillView(bill))).share();
+
+    this.route
+      .queryParamMap
+      .map(params => {
+        const limit = parseInt(params.get('limit') || '10', 10);
+        const term = params.get('q') || '';
+        this.searchTermStream.next({ term, limit });
+      }).subscribe();
   }
 
   private reallyStartSearching(searchOptions: SearchOptions): Observable<SearchResult<Bill>> {
@@ -50,12 +58,29 @@ export class BillsListComponent implements OnInit {
   }
 
   searchKeyup(searchTerm: string) {
-    this.searchTermStream.next({ term: searchTerm.toLowerCase(), limit: 10 });
+    const cleanSearchTerm = searchTerm.toLowerCase().trim();
+    const queryParams = cleanSearchTerm === '' ? {} : { q: cleanSearchTerm };
+    this.router.navigate(['/bills'], { queryParams });
   }
 
   editBill(billView: BillView) {
     this.router.navigate(['bills', billView.id]);
     window.scrollTo(0, 0);
     return false;
+  }
+
+  loadMore() {
+    const searchQuery = this.searchTerm === '' ? {} : { q: this.searchTerm };
+    this.router.navigate(['/bills'], {
+      queryParams: { ...searchQuery, limit: this.searchLimit + 20 }
+    });
+  }
+
+  get searchTerm(): string {
+    return this.searchTermStream.getValue().term;
+  }
+
+  get searchLimit() {
+    return this.searchTermStream.getValue().limit;
   }
 }
