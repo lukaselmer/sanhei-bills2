@@ -54,7 +54,7 @@ describe('BillsService', () => {
     }));
 
     it('does not filter if the filter is empty', async(() => {
-      service.search('').first().subscribe(searchResult => {
+      service.search({ term: '', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list).toEqual(billsMock);
         expect(searchResult.term).toEqual('');
         expect(searchResult.dbStatus).toEqual('loaded');
@@ -62,27 +62,27 @@ describe('BillsService', () => {
     }));
 
     it('does not filter if the filter is "some"', async(() => {
-      service.search('some').first().subscribe(searchResult => {
+      service.search({ term: 'some', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list).toEqual(billsMock);
         expect(searchResult.term).toEqual('some');
       });
     }));
 
     it('shows the first if the filter is "a stre"', async(() => {
-      service.search('a stre').first().subscribe(searchResult => {
+      service.search({ term: 'a stre', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list).toEqual([billMock1]);
         expect(searchResult.term).toEqual('a stre');
       });
     }));
 
     it('shows the second if the filter is "world"', async(() => {
-      service.search('world').first().subscribe(searchResult => {
+      service.search({ term: 'world', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list).toEqual([billMock2]);
       });
     }));
 
     it('shows nothing if the filter is "bla"', async(() => {
-      service.search('bla').first().subscribe(searchResult => {
+      service.search({ term: 'bla', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list).toEqual([]);
       });
     }));
@@ -91,7 +91,7 @@ describe('BillsService', () => {
       const a = billMock1;
       const b = billMock2;
       spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([a, b, a, b, a, b, a, b, a, b, a, b]));
-      service.search('').first().subscribe(searchResult => {
+      service.search({ term: '', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list.length).toEqual(10);
       });
     }));
@@ -100,7 +100,7 @@ describe('BillsService', () => {
       const a = billMock1;
       const b = billMock2;
       spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([a, b, a, b, a, b, a, b, a, b, a, b]));
-      service.search('world').first().subscribe(searchResult => {
+      service.search({ term: 'world', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list.length).toEqual(6);
       });
     }));
@@ -108,7 +108,7 @@ describe('BillsService', () => {
     it('catches the error if there is one', async(() => {
       spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(Observable.of([null, billMock1, billMock2]));
       spyOn(console, 'error');
-      service.search('world').first().subscribe(searchResult => {
+      service.search({ term: 'world', limit: 10 }).first().subscribe(searchResult => {
         expect(searchResult.list).toEqual([]);
         expect(console.error).toHaveBeenCalled();
       });

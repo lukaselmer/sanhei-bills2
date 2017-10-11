@@ -96,7 +96,7 @@ describe('BillsListComponent', () => {
   }));
 
   it('should search through the bills', fakeAsync(inject([BillsService], (service: BillsService) => {
-    expect((component as any).searchTermStream.getValue()).toEqual('');
+    expect((component as any).searchTermStream.getValue()).toEqual({ term: '', limit: 10 });
     spyOn(service, 'search').and.callThrough();
     const compiled = fixture.debugElement.nativeElement;
     const element = compiled.querySelector('input');
@@ -104,7 +104,7 @@ describe('BillsListComponent', () => {
     element.value = 'Some';
     element.dispatchEvent(new Event('keyup'));
     tick(100);
-    expect((component as any).searchTermStream.getValue()).toEqual('some');
-    expect(service.search).toHaveBeenCalledWith('some');
+    expect((component as any).searchTermStream.getValue()).toEqual({ term: 'some', limit: 10 });
+    expect(service.search).toHaveBeenCalledWith({ term: 'some', limit: 10 });
   })));
 });

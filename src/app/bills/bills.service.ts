@@ -17,6 +17,7 @@ import { Article } from './article';
 import { ArticlesService } from './articles.service';
 import { Bill } from './bill';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
+import { SearchOptions } from './search/search-options';
 import { SearchResult } from './search/search-result';
 import { DataStoreService } from './store/data-store.service';
 
@@ -29,8 +30,8 @@ export class BillsService {
     this.dataStore.loadData();
   }
 
-  search(term: string): Observable<SearchResult<Bill>> {
-    const billMatcher = this.billMatcherFactory.createBillMatcher(term);
+  search(options: SearchOptions): Observable<SearchResult<Bill>> {
+    const billMatcher = this.billMatcherFactory.createBillMatcher(options.term);
 
     return this.dataStore.getBillsStream()
       .map(bills => {
@@ -44,7 +45,7 @@ export class BillsService {
         console.error(e);
         return Observable.of([]);
       })
-      .map(filteredBills => this.wrapSearchResult(term, filteredBills));
+      .map(filteredBills => this.wrapSearchResult(options.term, filteredBills));
   }
 
   private wrapSearchResult(term: string, filteredBills: Bill[]) {

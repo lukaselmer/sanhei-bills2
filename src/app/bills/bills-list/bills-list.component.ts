@@ -10,6 +10,7 @@ import { BillsService } from '../bills.service';
 import { DataStoreStatus } from '../store/data-store-status';
 import { Bill } from './../bill';
 import { BillView } from './../bill-view';
+import { SearchOptions } from './../search/search-options';
 import { SearchResult } from './../search/search-result';
 
 @Component({
@@ -17,13 +18,13 @@ import { SearchResult } from './../search/search-result';
   templateUrl: './bills-list.component.html',
   styleUrls: ['./bills-list.component.scss']
 })
-
 export class BillsListComponent implements OnInit {
   bills$: Observable<BillView[]>;
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
 
-  private searchTermStream = new BehaviorSubject<string>('');
+  private searchTermStream = new BehaviorSubject<SearchOptions>(
+    { term: this.displayedSearchTerm, limit: 10 });
 
   constructor(private billsService: BillsService, private router: Router) { }
 
@@ -38,9 +39,9 @@ export class BillsListComponent implements OnInit {
     this.bills$ = billsSearch$.map(search => search.list.map(bill => new BillView(bill)));
   }
 
-  private reallyStartSearching(term: string): Observable<SearchResult<Bill>> {
-    if (this.displayedSearchTerm !== term) this.loadStatus = 'loading';
-    return this.billsService.search(term);
+  private reallyStartSearching(searchOptions: SearchOptions): Observable<SearchResult<Bill>> {
+    if (this.displayedSearchTerm !== searchOptions.term) this.loadStatus = 'loading';
+    return this.billsService.search(searchOptions);
   }
 
   private updateProgress(search: SearchResult<Bill>) {
@@ -49,7 +50,7 @@ export class BillsListComponent implements OnInit {
   }
 
   searchKeyup(searchTerm: string) {
-    this.searchTermStream.next(searchTerm.toLowerCase());
+    this.searchTermStream.next({ term: searchTerm.toLowerCase(), limit: 10 });
   }
 
   editBill(billView: BillView) {
