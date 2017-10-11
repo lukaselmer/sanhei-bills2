@@ -13,6 +13,16 @@ md-form-field {
 
 md-card {
   margin-bottom: 20px;
+}
 
+.bill {
   cursor: pointer;
+}
+
+.load-more {
+  // setting the min-height avoids flickering when the next section
+  min-height: 45px;
+  button {
+    width: 100%;
+  }
 }

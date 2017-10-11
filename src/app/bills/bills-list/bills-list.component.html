@@ -4,20 +4,34 @@
 <h1>Rechnungen</h1>
 
 <md-form-field>
-  <input mdInput placeholder="Finden" #searchTerm (keyup)="searchKeyup(searchTerm.value)">
+  <input mdInput placeholder="Finden" [value]="searchTerm" #searchTermInput (keyup)="searchKeyup(searchTermInput.value)">
 </md-form-field>
 
-<md-card *ngFor="let bill of bills$ | async" (click)="editBill(bill)">
-  <md-card-title>{{bill.uid}} | {{ bill.humanId }}</md-card-title>
-  <md-card-subtitle>
-    <div>{{ bill.title1 }}, {{ bill.title2 }}</div>
-    <div>{{ bill.commaSeparatedAddress }}</div>
-  </md-card-subtitle>
-  <md-card-content>
-    <span *ngIf="bill.fixedAtOverride">Arbeiten am: {{ bill.fixedAtOverride }} | </span>
-    <span *ngIf="!bill.fixedAtOverride && bill.fixedAt">Arbeiten am: {{ bill.fixedAt }} | </span>
-    <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }} | </span>
-    <span>{{ bill.totalNet | currency:'CHF' }} netto | {{ bill.totalGross | currency:'CHF' }} brutto</span>
-    <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
-  </md-card-content>
-</md-card>
+<ng-container *ngIf="bills$ | async; let bills">
+  <section>
+    <md-card class="bill" *ngFor="let bill of bills" (click)="editBill(bill)">
+      <md-card-title>{{bill.uid}} | {{ bill.humanId }}</md-card-title>
+      <md-card-subtitle>
+        <div>{{ bill.title1 }}, {{ bill.title2 }}</div>
+        <div>{{ bill.commaSeparatedAddress }}</div>
+      </md-card-subtitle>
+      <md-card-content>
+        <span *ngIf="bill.fixedAtOverride">Arbeiten am: {{ bill.fixedAtOverride }} | </span>
+        <span *ngIf="!bill.fixedAtOverride && bill.fixedAt">Arbeiten am: {{ bill.fixedAt }} | </span>
+        <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }} | </span>
+        <span>{{ bill.totalNet | currency:'CHF' }} netto | {{ bill.totalGross | currency:'CHF' }} brutto</span>
+        <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
+      </md-card-content>
+    </md-card>
+  </section>
+
+  <md-card>
+    <md-card-subtitle *ngIf="bills.length === 0">KEINE RECHNUNGEN GEFUNDEN</md-card-subtitle>
+    <md-card-subtitle *ngIf="bills.length === 1">{{bills.length}} RECHNUNG</md-card-subtitle>
+    <md-card-subtitle *ngIf="bills.length >= 2">{{bills.length}} RECHNUNGEN</md-card-subtitle>
+  </md-card>
+
+  <section class="load-more">
+    <button *ngIf="bills.length >= searchLimit" md-button type="button" (click)="loadMore()">MEHR LADEN</button>
+  </section>
+</ng-container>

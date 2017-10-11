@@ -37,7 +37,7 @@ export class BillsService {
       .map(bills => {
         return Observable.from(bills)
           .filter(bill => billMatcher.matches(bill))
-          .take(10)
+          .take(options.limit)
           .toArray();
       })
       .concatAll()
