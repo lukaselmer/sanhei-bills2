@@ -5,7 +5,7 @@ import {
   MdListModule, MdNativeDateModule, MdProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import * as firebase from 'firebase/app';
 import 'rxjs/add/observable/of';
@@ -112,5 +112,14 @@ describe('BillEditComponent', () => {
       fixedAt: '',
       updatedAt: firebase.database.ServerValue.TIMESTAMP as number
     });
+  }));
+
+  it('aborts editing', fakeAsync(() => {
+    const router: Router = TestBed.get(Router);
+    fixture.detectChanges();
+    spyOn(router, 'navigate').and.returnValue('');
+    const compiled = fixture.debugElement.nativeElement;
+    component.abort();
+    expect(router.navigate).toHaveBeenCalledWith(['bills']);
   }));
 });

@@ -21,7 +21,7 @@ describe('BillsListComponent', () => {
     title2: 'Zusatz'
   });
   const billView = new BillView(bill);
-  const bills = [bill];
+  const bills = [bill, bill, bill, bill, bill, bill, bill, bill, bill, bill, bill];
   const billsSearch = {
     term: '',
     list: bills,
@@ -78,7 +78,7 @@ describe('BillsListComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should render a md-card', async(() => {
+    it('should render the search field', async(() => {
       fixture.detectChanges();
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('md-form-field')).not.toBe(null);
@@ -113,17 +113,36 @@ describe('BillsListComponent', () => {
       expect(queryContent('md-card-content :nth-child(4)')).toEqual(`${bill.ownerName}, ${bill.ordererName}`);
     }));
 
-    it('should search through the bills', fakeAsync(inject([BillsService, Router], (service: BillsService, router: Router) => {
+    it('should search through the bills', fakeAsync(() => {
+      const router: Router = TestBed.get(Router);
+      fixture.detectChanges();
       expect((component as any).searchTermStream.getValue()).toEqual({ term: '', limit: 10 });
-      spyOn(service, 'search').and.callThrough();
       spyOn(router, 'navigate').and.returnValue('');
       const compiled = fixture.debugElement.nativeElement;
       const element = compiled.querySelector('input');
-      expect(service.search).toHaveBeenCalledTimes(0);
       element.value = 'Some';
       element.dispatchEvent(new Event('keyup'));
-      tick(100);
       expect(router.navigate).toHaveBeenCalledWith(['/bills'], { queryParams: { q: 'some' } });
-    })));
+    }));
+
+    it('should load more bills', fakeAsync(() => {
+      fixture.detectChanges();
+      const router: Router = TestBed.get(Router);
+      spyOn(router, 'navigate').and.returnValue('');
+      const compiled = fixture.debugElement.nativeElement;
+      const element = compiled.querySelector('.load-more button');
+      element.dispatchEvent(new Event('click'));
+      expect(router.navigate).toHaveBeenCalledWith(['/bills'], { queryParams: { limit: 30 } });
+    }));
+
+    it('should edit the bills', fakeAsync(() => {
+      const router: Router = TestBed.get(Router);
+      fixture.detectChanges();
+      spyOn(router, 'navigate').and.returnValue('');
+      const compiled = fixture.debugElement.nativeElement;
+      const element = compiled.querySelector('.bill');
+      element.dispatchEvent(new Event('click'));
+      expect(router.navigate).toHaveBeenCalledWith(['bills', 'RaNdOm1000']);
+    }));
   });
 });
