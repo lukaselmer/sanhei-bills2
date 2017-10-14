@@ -31,7 +31,7 @@ export class BillsService {
   }
 
   search(options: SearchOptions): Observable<SearchResult<Bill>> {
-    const billMatcher = this.billMatcherFactory.createBillMatcher(options.term);
+    const billMatcher = this.billMatcherFactory.createBillMatcher(options);
 
     return this.dataStore.getBillsStream()
       .map(bills => {
