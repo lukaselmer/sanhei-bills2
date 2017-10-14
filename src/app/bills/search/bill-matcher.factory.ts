@@ -7,6 +7,10 @@ import { SearchOptions } from './search-options';
 @Injectable()
 export class BillMatcherFactory {
   createBillMatcher(options: SearchOptions): IBillMatcher {
-    return new FullTextMatcher(options.term);
+    return this.createFullTextMatcher(options.term);
+  }
+
+  createFullTextMatcher(term: string) {
+    return new FullTextMatcher(term);
   }
 }
