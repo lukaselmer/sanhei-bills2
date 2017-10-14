@@ -57,6 +57,7 @@ export class DataStoreService {
       if (bills.length === 0) return;
       const store = this.store();
       bills.forEach(bill => {
+        if (!bill.articles) bill.articles = [];
         if (bill.id) store.bills[bill.id] = bill;
         if (bill.deletedAt) delete store.bills[bill.id];
       });
@@ -79,8 +80,15 @@ export class DataStoreService {
   private async downloadWholeDatabase() {
     const data: IBillingDatabase = await this.db.object('billing').first().toPromise();
     this.status = 'loaded';
+    this.correctArticles(data);
     this.removeDeleted(data);
     this.storeStream.next(data);
+  }
+
+  private correctArticles(data: IBillingDatabase) {
+    Object.keys(data.bills).forEach(id => {
+      if (!data.bills[id].articles) data.bills[id].articles = [];
+    });
   }
 
   private removeDeleted(data: IBillingDatabase) {
