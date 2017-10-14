@@ -97,15 +97,15 @@ export class DataStoreService {
     });
   }
 
-  async createBill(bill: Bill): Promise<Bill> {
-    this.setCreated(bill);
-    const newRef = this.db.list(`billing/bills`).push(bill);
-    const x = await newRef;
-    console.log(x);
-    bill.id = newRef.key as string;
-    await this.db.list(`billing/bills`).update(newRef, bill);
-    return await this.db.object(`billing/bills/${newRef.key}`).valueChanges<Bill>().first().toPromise() as Bill;
-  }
+  // async createBill(bill: Bill): Promise<Bill> {
+  //   this.setCreated(bill);
+  //   const newRef = this.db.list(`billing/bills`).push(bill);
+  //   const x = await newRef;
+  //   console.log(x);
+  //   bill.id = newRef.key as string;
+  //   await this.db.list(`billing/bills`).update(newRef, bill);
+  //   return await this.db.object(`billing/bills/${newRef.key}`).valueChanges<Bill>().first().toPromise() as Bill;
+  // }
 
   async updateBill(bill: Bill) {
     this.setUpdated(bill);
@@ -116,15 +116,15 @@ export class DataStoreService {
     await this.db.object(`billing/bills/${bill.id}`).set(billAttributes);
   }
 
-  async deleteBill(bill: Bill) {
-    this.setDeleted(bill);
-    await this.db.object(`billing/bills/${bill.id}`).set(bill);
-  }
+  // async deleteBill(bill: Bill) {
+  //   this.setDeleted(bill);
+  //   await this.db.object(`billing/bills/${bill.id}`).set(bill);
+  // }
 
-  private setCreated(dbObject: Bill) {
-    dbObject.createdAt = firebase.database.ServerValue.TIMESTAMP as number;
-    this.setUpdated(dbObject);
-  }
+  // private setCreated(dbObject: Bill) {
+  //   dbObject.createdAt = firebase.database.ServerValue.TIMESTAMP as number;
+  //   this.setUpdated(dbObject);
+  // }
 
   private setDeleted(dbObject: Bill) {
     dbObject.deletedAt = firebase.database.ServerValue.TIMESTAMP as number;
