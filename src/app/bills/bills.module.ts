@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdDatepickerModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdNativeDateModule,
-  MdProgressBarModule
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatNativeDateModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { ArticlesService } from './articles.service';
 import { BillEditComponent } from './bill-edit/bill-edit.component';
@@ -25,15 +25,15 @@ import { IDBStoreService } from './store/idb-store.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MdButtonModule,
-    MdCheckboxModule,
-    MdCardModule,
-    MdIconModule,
-    MdInputModule,
-    MdListModule,
-    MdProgressBarModule,
-    MdNativeDateModule,
-    MdDatepickerModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatProgressBarModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     BillsRoutingModule
   ],
   declarations: [

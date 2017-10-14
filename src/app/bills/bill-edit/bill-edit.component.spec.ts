@@ -1,8 +1,8 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdDatepickerModule, MdIconModule, MdInputModule,
-  MdListModule, MdNativeDateModule, MdProgressBarModule
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatIconModule, MatInputModule,
+  MatListModule, MatNativeDateModule, MatProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,15 +32,15 @@ describe('BillEditComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        MdButtonModule,
-        MdCheckboxModule,
-        MdCardModule,
-        MdIconModule,
-        MdInputModule,
-        MdListModule,
-        MdProgressBarModule,
-        MdNativeDateModule,
-        MdDatepickerModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatCardModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatProgressBarModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
         NoopAnimationsModule,
         RouterTestingModule
       ],

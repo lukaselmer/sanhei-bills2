@@ -1,38 +1,38 @@
-<md-progress-bar *ngIf="loadStatus === 'loading'" mode="query" color="accent"></md-progress-bar>
-<md-progress-bar *ngIf="loadStatus === 'loadedFromIDB' || loadStatus === 'shortListLoaded'" mode="indeterminate" color="accent"></md-progress-bar>
+<mat-progress-bar *ngIf="loadStatus === 'loading'" mode="query" color="accent"></mat-progress-bar>
+<mat-progress-bar *ngIf="loadStatus === 'loadedFromIDB' || loadStatus === 'shortListLoaded'" mode="indeterminate" color="accent"></mat-progress-bar>
 
 <h1>Rechnungen</h1>
 
-<md-form-field>
-  <input mdInput placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"'
+<mat-form-field>
+  <input matInput placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"'
     [value]="searchTerm" #searchTermInput (keyup)="searchKeyup(searchTermInput.value)">
-</md-form-field>
+</mat-form-field>
 
 <ng-container *ngIf="bills$ | async; let bills">
   <section>
-    <md-card class="bill" *ngFor="let bill of bills" (click)="editBill(bill)">
-      <md-card-title>{{bill.uid}} | {{ bill.humanId }}</md-card-title>
-      <md-card-subtitle>
+    <mat-card class="bill" *ngFor="let bill of bills" (click)="editBill(bill)">
+      <mat-card-title>{{bill.uid}} | {{ bill.humanId }}</mat-card-title>
+      <mat-card-subtitle>
         <div>{{ bill.title1 }}, {{ bill.title2 }}</div>
         <div>{{ bill.commaSeparatedAddress }}</div>
-      </md-card-subtitle>
-      <md-card-content>
+      </mat-card-subtitle>
+      <mat-card-content>
         <span *ngIf="bill.fixedAtOverride">Arbeiten am: {{ bill.fixedAtOverride }} | </span>
         <span *ngIf="!bill.fixedAtOverride && bill.fixedAt">Arbeiten am: {{ bill.fixedAt }} | </span>
         <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }} | </span>
         <span>{{ bill.totalNet | currency:'CHF' }} netto | {{ bill.totalGross | currency:'CHF' }} brutto</span>
         <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
   </section>
 
-  <md-card>
-    <md-card-subtitle *ngIf="bills.length === 0">KEINE RECHNUNGEN GEFUNDEN</md-card-subtitle>
-    <md-card-subtitle *ngIf="bills.length === 1">{{bills.length}} RECHNUNG</md-card-subtitle>
-    <md-card-subtitle *ngIf="bills.length >= 2">{{bills.length}} RECHNUNGEN</md-card-subtitle>
-  </md-card>
+  <mat-card>
+    <mat-card-subtitle *ngIf="bills.length === 0">KEINE RECHNUNGEN GEFUNDEN</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="bills.length === 1">{{bills.length}} RECHNUNG</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="bills.length >= 2">{{bills.length}} RECHNUNGEN</mat-card-subtitle>
+  </mat-card>
 
   <section class="load-more">
-    <button *ngIf="bills.length >= searchLimit" md-button type="button" (click)="loadMore()">MEHR LADEN</button>
+    <button *ngIf="bills.length >= searchLimit" mat-button type="button" (click)="loadMore()">MEHR LADEN</button>
   </section>
 </ng-container>

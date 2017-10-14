@@ -1,14 +1,14 @@
-<md-card *ngIf="showDetails">
-  <md-card-header>
-    <img md-card-avatar (click)="toggle()" [src]="user.photoURL" alt="Profile Image">
-    <md-card-title>{{ user.displayName }}</md-card-title>
-    <md-card-subtitle>{{ user.email }}</md-card-subtitle>
-  </md-card-header>
-  <md-card-actions layout="row" layout-align="end center">
-    <button md-button (click)="logout()">Sign out</button>
-  </md-card-actions>
-</md-card>
+<mat-card *ngIf="showDetails">
+  <mat-card-header>
+    <img mat-card-avatar (click)="toggle()" [src]="user.photoURL" alt="Profile Image">
+    <mat-card-title>{{ user.displayName }}</mat-card-title>
+    <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions layout="row" layout-align="end center">
+    <button mat-button (click)="logout()">Sign out</button>
+  </mat-card-actions>
+</mat-card>
 
 <div class="preview">
-  <img (click)='toggle()' [src]="user.photoURL" class="md-card-image" alt="Profile Image">
+  <img (click)='toggle()' [src]="user.photoURL" class="mat-card-image" alt="Profile Image">
 </div>

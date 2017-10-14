@@ -1,7 +1,7 @@
 <section [ngSwitch]="loginStatus">
-  <md-spinner *ngSwitchCase="'unknown'" color="accent"></md-spinner>
+  <mat-spinner diameter="40" strokeWidth="6" *ngSwitchCase="'unknown'" color="accent"></mat-spinner>
   <div *ngSwitchCase="'signedOut'">
-    <button md-raised-button (click)="login()">Sign in</button>
+    <button mat-raised-button (click)="login()">Sign in</button>
   </div>
   <div *ngSwitchCase="'signedIn'">
     <sb-account-info [user]='user'></sb-account-info>
