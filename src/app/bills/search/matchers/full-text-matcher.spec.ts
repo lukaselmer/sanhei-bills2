@@ -76,7 +76,7 @@ describe('FullTextMatcher', () => {
   });
 
   describe('performance', () => {
-    const maxTime = 250; // ms
+    const maxTime = 280; // ms
     const numBills = 20000;
 
     it(`takes less than ${maxTime}ms to match ${numBills} bills`, () => {
