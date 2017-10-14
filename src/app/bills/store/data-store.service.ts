@@ -53,17 +53,15 @@ export class DataStoreService {
 
     this.db.list('billing/bills', {
       query: { orderByChild: 'updatedAt', startAt: this.nextSyncTimestamp() }
-    }).subscribe(async updatedRecords => {
-      if (updatedRecords.length === 0) return;
+    }).subscribe(async (bills: Bill[]) => {
+      if (bills.length === 0) return;
       const store = this.store();
-      updatedRecords.forEach(record => {
-        if (record.id) store['bills'][record.id] = record;
-      });
-      updatedRecords.forEach(record => {
-        if (record.deletedAt) delete store['bills'][record.id];
+      bills.forEach(bill => {
+        if (bill.id) store.bills[bill.id] = bill;
+        if (bill.deletedAt) delete store.bills[bill.id];
       });
       this.storeStream.next(store);
-      await this.idbStoreService.storeInIDB('bills', store['bills'] as any);
+      await this.idbStoreService.storeInIDB('bills', store.bills);
     });
   }
 
@@ -86,12 +84,8 @@ export class DataStoreService {
   }
 
   private removeDeleted(data: IBillingDatabase) {
-    this.removeDeletedEntries(data.bills);
-  }
-
-  private removeDeletedEntries(entries: { [index: string]: Bill }) {
-    Object.keys(entries).forEach(id => {
-      if (entries[id].deletedAt) delete (entries[id]);
+    Object.keys(data.bills).forEach(id => {
+      if (data.bills[id].deletedAt) delete (data.bills[id]);
     });
   }
 
