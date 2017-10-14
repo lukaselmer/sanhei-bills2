@@ -1,5 +1,5 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { MdCheckboxModule, MdInputModule, MdListModule, MdProgressBarModule } from '@angular/material';
+import { MatCheckboxModule, MatInputModule, MatListModule, MatProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -31,10 +31,10 @@ describe('BillsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        MdCheckboxModule,
-        MdInputModule,
-        MdListModule,
-        MdProgressBarModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatListModule,
+        MatProgressBarModule,
         NoopAnimationsModule,
         RouterTestingModule.withRoutes([{ path: 'bills', component: BillsListComponent }])
       ],
@@ -81,19 +81,19 @@ describe('BillsListComponent', () => {
     it('should render the search field', async(() => {
       fixture.detectChanges();
       const compiled = fixture.debugElement.nativeElement;
-      expect(compiled.querySelector('md-form-field')).not.toBe(null);
+      expect(compiled.querySelector('mat-form-field')).not.toBe(null);
     }));
 
     it('should render a row for each bill', fakeAsync(() => {
       fixture.detectChanges();
       const compiled: HTMLElement = fixture.debugElement.nativeElement;
-      expect(compiled.querySelectorAll('md-card').length).toBe(bills.length + 1);
+      expect(compiled.querySelectorAll('mat-card').length).toBe(bills.length + 1);
     }));
 
     it('should render the row for the bill', fakeAsync(() => {
       fixture.detectChanges();
       const compiled = fixture.debugElement.nativeElement;
-      const element = compiled.querySelector('md-card');
+      const element = compiled.querySelector('mat-card');
       expect(element).not.toBe(null);
 
       function line(lineNumber: number): string {
@@ -104,13 +104,13 @@ describe('BillsListComponent', () => {
         return element.querySelector(query).textContent.trim();
       }
 
-      expect(queryContent('md-card-title')).toEqual(`${bill.uid} | ${bill.humanId}`);
-      expect(queryContent('md-card-subtitle :first-child')).toEqual(`${billView.title1}, ${billView.title2}`);
-      expect(queryContent('md-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
-      expect(queryContent('md-card-content :nth-child(1)')).toEqual(`Arbeiten am: fixedAtOverride |`);
-      expect(queryContent('md-card-content :nth-child(2)')).toEqual(`Verrechnet am: 2017-06-22 |`);
-      expect(queryContent('md-card-content :nth-child(3)')).toEqual(`CHF750.00 netto | CHF735.10 brutto`);
-      expect(queryContent('md-card-content :nth-child(4)')).toEqual(`${bill.ownerName}, ${bill.ordererName}`);
+      expect(queryContent('mat-card-title')).toEqual(`${bill.uid} | ${bill.humanId}`);
+      expect(queryContent('mat-card-subtitle :first-child')).toEqual(`${billView.title1}, ${billView.title2}`);
+      expect(queryContent('mat-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
+      expect(queryContent('mat-card-content :nth-child(1)')).toEqual(`Arbeiten am: fixedAtOverride |`);
+      expect(queryContent('mat-card-content :nth-child(2)')).toEqual(`Verrechnet am: 2017-06-22 |`);
+      expect(queryContent('mat-card-content :nth-child(3)')).toEqual(`CHF750.00 netto | CHF735.10 brutto`);
+      expect(queryContent('mat-card-content :nth-child(4)')).toEqual(`${bill.ownerName}, ${bill.ordererName}`);
     }));
 
     it('should search through the bills', fakeAsync(() => {

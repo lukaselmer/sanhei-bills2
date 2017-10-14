@@ -1,8 +1,8 @@
 .preview {
-  text-align: right;
-
   img {
     width: 40px;
+    margin-top: 0;
+    margin-right: 0;
 
     cursor: pointer;
 
@@ -10,7 +10,7 @@
   }
 }
 
-md-card {
+mat-card {
   position: absolute;
   z-index: 10;
   top: 55px;
@@ -28,6 +28,6 @@ md-card {
   }
 }
 
-md-card-actions {
+mat-card-actions {
   text-align: right;
 }
