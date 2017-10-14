@@ -35,7 +35,7 @@ describe('BillView', () => {
   describe('bill articles and articles', () => {
     it('merges articles and bill articles', () => {
       const billArticleView = new ArticleView(articleVariant());
-      expect(billView({}).billArticleViews).toEqual([
+      expect(billView().billArticleViews).toEqual([
         billArticleView
       ]);
     });
@@ -52,9 +52,9 @@ describe('BillView', () => {
         expect(billView({ articles: [] }).totalNet).toEqual(0);
       });
 
-      it('discount', () => { expect(billView({}).totalDiscount).toEqual(30 /* 5 * 150 * 0.04 */); });
-      it('cashback', () => { expect(billView({}).totalCashback).toEqual(18.75 /* 5 * 150 * 0.025 */); });
-      it('vat', () => { expect(billView({}).totalVat).toEqual(33.85 /* rounded: 5 * 150 * 0.0451 */); });
+      it('discount', () => { expect(billView().totalDiscount).toEqual(30 /* 5 * 150 * 0.04 */); });
+      it('cashback', () => { expect(billView().totalCashback).toEqual(18.75 /* 5 * 150 * 0.025 */); });
+      it('vat', () => { expect(billView().totalVat).toEqual(33.85 /* rounded: 5 * 150 * 0.0451 */); });
 
       describe('rounding the', () => {
         it('discount', () => {
