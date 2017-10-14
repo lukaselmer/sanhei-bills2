@@ -43,12 +43,15 @@ describe('DataStoreService', () => {
         expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.loadFromIDB).toHaveBeenCalledWith('bills');
         expect(idbMock.storeInIDB).toHaveBeenCalled();
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', { 1: db.bills[1], 5: db.bills[5] });
+        expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', {
+          1: { id: 1, name: 'B1', createdAt: 100, articles: [] },
+          5: { id: 5, name: 'B5', createdAt: 500, articles: [] }
+        });
         expect(angularFireMock.list).toHaveBeenCalledTimes(1);
         service.getBillsStream().first().subscribe(list => {
           expect(list).toEqual([
-            { id: 5, name: 'B5', createdAt: 500 },
-            { id: 1, name: 'B1', createdAt: 100 }
+            { id: 5, name: 'B5', createdAt: 500, articles: [] },
+            { id: 1, name: 'B1', createdAt: 100, articles: [] }
           ] as any);
         });
       });
@@ -56,7 +59,10 @@ describe('DataStoreService', () => {
 
     it('should not store deleted entries if there is no cache', async(() => {
       const db = {
-        bills: { 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5', deletedAt: 12345 } }
+        bills: {
+          1: { id: 1, name: 'B1' },
+          5: { id: 5, name: 'B5', deletedAt: 12345 }
+        }
       };
       spyOn(idbMock, 'loadFromIDB').and.returnValue(Promise.resolve({}));
       spyOn(idbMock, 'storeInIDB').and.callThrough();
@@ -64,9 +70,11 @@ describe('DataStoreService', () => {
       spyOn(angularFireMock, 'list').and.returnValue(Observable.of([]));
 
       service.loadData().then(() => {
-        expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', { 1: db.bills[1] });
+        expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', {
+          1: { id: 1, name: 'B1', articles: [] }
+        });
         service.getBillsStream().first().subscribe(list => {
-          expect(list).toEqual([{ id: 1, name: 'B1' }] as any);
+          expect(list).toEqual([{ id: 1, name: 'B1', articles: [] }] as any);
         });
       });
     }));
@@ -74,8 +82,8 @@ describe('DataStoreService', () => {
     it('should not load partial data from firebase if there is a cache', async(() => {
       spyOn(idbMock, 'loadFromIDB').and.returnValues(
         Promise.resolve({
-          1: { id: 1, name: 'B1', createdAt: 100 },
-          5: { id: 5, name: 'B5', createdAt: 500 }
+          1: { id: 1, name: 'B1', createdAt: 100, articles: [] },
+          5: { id: 5, name: 'B5', createdAt: 500, articles: [] }
         })
       );
       spyOn(idbMock, 'storeInIDB').and.callThrough();
@@ -87,16 +95,16 @@ describe('DataStoreService', () => {
         expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.storeInIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', {
-          1: { id: 1, name: 'B1', createdAt: 100 },
-          2: { id: 2, name: 'B2', createdAt: 200 },
-          5: { id: 5, name: 'B5', createdAt: 500 }
+          1: { id: 1, name: 'B1', createdAt: 100, articles: [] },
+          2: { id: 2, name: 'B2', createdAt: 200, articles: [] },
+          5: { id: 5, name: 'B5', createdAt: 500, articles: [] }
         });
         expect(angularFireMock.list).toHaveBeenCalledTimes(1);
         service.getBillsStream().first().subscribe(list => {
           expect(list).toEqual([
-            { id: 5, name: 'B5', createdAt: 500 },
-            { id: 2, name: 'B2', createdAt: 200 },
-            { id: 1, name: 'B1', createdAt: 100 }
+            { id: 5, name: 'B5', createdAt: 500, articles: [] },
+            { id: 2, name: 'B2', createdAt: 200, articles: [] },
+            { id: 1, name: 'B1', createdAt: 100, articles: [] }
           ] as any);
         });
       });
@@ -104,7 +112,7 @@ describe('DataStoreService', () => {
 
     it('should delete entries marked as deleted', async(() => {
       spyOn(idbMock, 'loadFromIDB').and.returnValues(
-        Promise.resolve({ 1: { id: 1, name: 'B1' }, 5: { id: 5, name: 'B5' } })
+        Promise.resolve({ 1: { id: 1, name: 'B1', articles: [] }, 5: { id: 5, name: 'B5', articles: [] } })
       );
       spyOn(idbMock, 'storeInIDB').and.callThrough();
       spyOn(angularFireMock, 'list').and.returnValues(
@@ -115,11 +123,11 @@ describe('DataStoreService', () => {
         expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.storeInIDB).toHaveBeenCalledTimes(1);
         expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', {
-          5: { id: 5, name: 'B5' }
+          5: { id: 5, name: 'B5', articles: [] }
         });
         expect(angularFireMock.list).toHaveBeenCalledTimes(1);
         service.getBillsStream().first().subscribe(list => {
-          expect(list).toEqual([{ id: 5, name: 'B5' }] as any);
+          expect(list).toEqual([{ id: 5, name: 'B5', articles: [] }] as any);
         });
       });
     }));
@@ -130,8 +138,8 @@ describe('DataStoreService', () => {
       it('updates the bill in firebase', async(async () => {
         spyOn(idbMock, 'loadFromIDB').and.returnValues(
           Promise.resolve({
-            1: { id: 1, title1: 'B1' },
-            5: { id: 5, title1: 'B5' }
+            1: { id: 1, title1: 'B1', articles: [] },
+            5: { id: 5, title1: 'B5', articles: [] }
           })
         );
         spyOn(idbMock, 'storeInIDB').and.callThrough();
