@@ -51,9 +51,9 @@ export class DataStoreService {
       await this.idbStoreService.storeInIDB('bills', this.store().bills);
     }
 
-    this.db.list('billing/bills', {
-      query: { orderByChild: 'updatedAt', startAt: this.nextSyncTimestamp() }
-    }).subscribe(async (bills: Bill[]) => {
+    this.db.list('billing/bills', query => {
+      return query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp());
+    }).valueChanges().subscribe(async (bills: Bill[]) => {
       if (bills.length === 0) return;
       const store = this.store();
       bills.forEach(bill => {
@@ -78,7 +78,7 @@ export class DataStoreService {
   }
 
   private async downloadWholeDatabase() {
-    const data: IBillingDatabase = await this.db.object('billing').first().toPromise();
+    const data: IBillingDatabase = await this.db.object('billing').valueChanges().first().toPromise() as IBillingDatabase;
     this.status = 'loaded';
     this.correctArticles(data);
     this.removeDeleted(data);
@@ -100,10 +100,11 @@ export class DataStoreService {
   async createBill(bill: Bill): Promise<Bill> {
     this.setCreated(bill);
     const newRef = this.db.list(`billing/bills`).push(bill);
-    await newRef;
+    const x = await newRef;
+    console.log(x);
     bill.id = newRef.key as string;
     await this.db.list(`billing/bills`).update(newRef, bill);
-    return await this.db.object(`billing/bills/${newRef.key}`).first().toPromise<Bill>();
+    return await this.db.object(`billing/bills/${newRef.key}`).valueChanges<Bill>().first().toPromise() as Bill;
   }
 
   async updateBill(bill: Bill) {

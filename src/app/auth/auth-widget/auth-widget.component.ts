@@ -8,7 +8,7 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./auth-widget.component.scss']
 })
 export class AuthWidgetComponent implements OnInit {
-  user: firebase.User;
+  user: firebase.User | null;
   loginStatus: 'unknown' | 'signedIn' | 'signedOut' = 'unknown';
 
   constructor(private auth: AngularFireAuth) { }
@@ -17,7 +17,7 @@ export class AuthWidgetComponent implements OnInit {
     this.auth.authState.subscribe(user => this.updateLoginStatus(user));
   }
 
-  updateLoginStatus(user: firebase.User) {
+  updateLoginStatus(user: firebase.User | null) {
     this.user = user;
     this.loginStatus = user ? 'signedIn' : 'signedOut';
   }

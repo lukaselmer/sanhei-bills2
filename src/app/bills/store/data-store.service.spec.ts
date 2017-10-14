@@ -3,6 +3,10 @@ import { Observable } from 'rxjs/Observable';
 import { Bill } from './../bill';
 import { DataStoreService } from './data-store.service';
 
+function generateValueChangedEvent(objects: any) {
+  return { valueChanges: () => Observable.of(objects) };
+}
+
 describe('DataStoreService', () => {
   let service: DataStoreService;
   const billMock: Bill = {
@@ -14,8 +18,8 @@ describe('DataStoreService', () => {
   } as any;
   const billsMock = [billMock, billMock];
   const angularFireMock: any = {
-    list: () => Observable.of([]),
-    object: () => Observable.of({})
+    list: () => generateValueChangedEvent([]),
+    object: () => generateValueChangedEvent({})
   };
   const idbMock: any = {
     loadFromIDB: () => undefined,
@@ -36,8 +40,8 @@ describe('DataStoreService', () => {
       };
       spyOn(idbMock, 'loadFromIDB').and.returnValue(Promise.resolve({}));
       spyOn(idbMock, 'storeInIDB').and.callThrough();
-      spyOn(angularFireMock, 'object').and.returnValues(Observable.of(db));
-      spyOn(angularFireMock, 'list').and.returnValue(Observable.of([]));
+      spyOn(angularFireMock, 'object').and.returnValues(generateValueChangedEvent(db));
+      spyOn(angularFireMock, 'list').and.returnValue(generateValueChangedEvent([]));
 
       service.loadData().then(() => {
         expect(idbMock.loadFromIDB).toHaveBeenCalledTimes(1);
@@ -66,8 +70,8 @@ describe('DataStoreService', () => {
       };
       spyOn(idbMock, 'loadFromIDB').and.returnValue(Promise.resolve({}));
       spyOn(idbMock, 'storeInIDB').and.callThrough();
-      spyOn(angularFireMock, 'object').and.returnValues(Observable.of(db));
-      spyOn(angularFireMock, 'list').and.returnValue(Observable.of([]));
+      spyOn(angularFireMock, 'object').and.returnValues(generateValueChangedEvent(db));
+      spyOn(angularFireMock, 'list').and.returnValue(generateValueChangedEvent([]));
 
       service.loadData().then(() => {
         expect(idbMock.storeInIDB).toHaveBeenCalledWith('bills', {
@@ -88,7 +92,7 @@ describe('DataStoreService', () => {
       );
       spyOn(idbMock, 'storeInIDB').and.callThrough();
       spyOn(angularFireMock, 'list').and.returnValues(
-        Observable.of([{ id: 2, name: 'B2', createdAt: 200 }])
+        generateValueChangedEvent([{ id: 2, name: 'B2', createdAt: 200 }])
       );
 
       service.loadData().then(() => {
@@ -116,7 +120,7 @@ describe('DataStoreService', () => {
       );
       spyOn(idbMock, 'storeInIDB').and.callThrough();
       spyOn(angularFireMock, 'list').and.returnValues(
-        Observable.of([{ id: 1, name: 'B1', deletedAt: 12345 }])
+        generateValueChangedEvent([{ id: 1, name: 'B1', deletedAt: 12345 }])
       );
 
       service.loadData().then(() => {
