@@ -1,6 +1,7 @@
-import { Bill } from '../bill';
+import { Bill } from '../../bill';
+import { IBillMatcher } from './i-bill-matcher';
 
-export class BillMatcher {
+export class FullTextMatcher implements IBillMatcher {
   constructor(private term: string) { }
 
   matches(bill: Bill): boolean {

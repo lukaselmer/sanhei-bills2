@@ -1,14 +1,14 @@
-import { billVariant } from '../bill.mock';
-import { Bill } from './../bill';
-import { BillMatcher } from './bill-matcher';
+import { billVariant } from '../../bill.mock';
+import { Bill } from './../../bill';
+import { FullTextMatcher } from './full-text-matcher';
 
 const bill = billVariant({});
 
 function match(term: string, potentialMatchingBill: Bill) {
-  return new BillMatcher(term).matches(potentialMatchingBill);
+  return new FullTextMatcher(term).matches(potentialMatchingBill);
 }
 
-describe('BillMatcherService', () => {
+describe('FullTextMatcher', () => {
   it('always matches the empty string', () => {
     expect(match('', bill)).toBeTruthy();
   });
@@ -81,7 +81,7 @@ describe('BillMatcherService', () => {
 
     it(`takes less than ${maxTime}ms to match ${numBills} bills`, () => {
       const start = Date.now();
-      const matcher = new BillMatcher('address will not be found');
+      const matcher = new FullTextMatcher('address will not be found');
 
       for (let i = 0; i < numBills; ++i) {
         matcher.matches(bill);
