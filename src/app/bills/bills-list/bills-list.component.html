@@ -4,7 +4,8 @@
 <h1>Rechnungen</h1>
 
 <md-form-field>
-  <input mdInput placeholder="Finden" [value]="searchTerm" #searchTermInput (keyup)="searchKeyup(searchTermInput.value)">
+  <input mdInput placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"'
+    [value]="searchTerm" #searchTermInput (keyup)="searchKeyup(searchTermInput.value)">
 </md-form-field>
 
 <ng-container *ngIf="bills$ | async; let bills">
