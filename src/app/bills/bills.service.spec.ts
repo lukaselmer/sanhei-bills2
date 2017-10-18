@@ -39,13 +39,9 @@ describe('BillsService', () => {
     store: () => db
   };
 
-  const articlesServiceMock: any = {
-    updateArticles: () => Promise.resolve('')
-  };
-
   beforeEach(() => {
     spyOn(dataStoreServiceMock, 'loadData');
-    service = new BillsService(dataStoreServiceMock, articlesServiceMock, new BillMatcherFactory());
+    service = new BillsService(dataStoreServiceMock, new BillMatcherFactory());
   });
 
   describe('loading and searching bills', () => {

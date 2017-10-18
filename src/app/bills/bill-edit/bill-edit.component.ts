@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Rx';
 import { Article } from './../article';
+import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { BillsService } from './../bills.service';
 import { BillFormExtractor } from './bill-form-extractor';
@@ -18,8 +21,12 @@ export class BillEditComponent implements OnInit {
   bill: Bill;
   formArticles: FormArticle[];
   submitted = false;
+  autocompleteOptions: { [index: string]: Observable<string[]> } = {};
+  articleDescriptionFocusStream = new Subject<string>();
 
-  constructor(private router: Router, route: ActivatedRoute, private billsService: BillsService, private fb: FormBuilder) {
+  constructor(
+    private router: Router, route: ActivatedRoute, private billsService: BillsService,
+    private articlesService: ArticlesService, private fb: FormBuilder) {
     this.id = route.snapshot.params['id'];
     this.createForm();
   }
@@ -52,7 +59,17 @@ export class BillEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initBillAutocomplete();
     this.billsService.editBill(this.id).forEach(bill => this.billChanged(bill));
+  }
+
+  private initBillAutocomplete() {
+    ['billType', 'address', 'title1', 'title2', 'ownerName', 'ordererName', 'description']
+      .forEach(field =>
+        this.autocompleteOptions[field] = (this.form.get(field) as FormControl)
+          .valueChanges
+          .map(v => this.articlesService.autocompleteOptions(field, v))
+      );
   }
 
   private billChanged(bill: Bill) {
@@ -89,13 +106,15 @@ export class BillEditComponent implements OnInit {
 
   removeArticleAt(index: number) {
     // This would be nice, but it does not work because of angular material (atm): this.articlesForm.removeAt(index);
+    // TODO: autocomplete: if the cursor is in a field with autocomplete, the element cannot be deleted, otherwise
+    // this is raised: ERROR TypeError: Cannot read property 'destroyed' of null
     const values: FormArticle[] = this.articlesForm.value;
     const combinedArticles = values.filter((_, i) => i !== index);
     this.setArticles(combinedArticles);
   }
 
-  private setArticles(articles: FormArticle[]) {
-    const articleFormGroups = articles.map(a => this.fb.group({
+  private setArticles(formArticles: FormArticle[]) {
+    const articleFormGroups = formArticles.map(a => this.fb.group({
       amount: [a.amount, Validators.required],
       price: [a.price, Validators.required],
       catalogId: a.catalogId,
@@ -103,19 +122,27 @@ export class BillEditComponent implements OnInit {
       dimension: [a.dimension]
     }));
     this.form.setControl('articles', this.fb.array(articleFormGroups));
+
+    this.initArticlesAutocomplete();
+  }
+
+  private initArticlesAutocomplete() {
+    this.autocompleteOptions['articleDescription'] = Observable.from(
+      [this.articleDescriptionFocusStream,
+      ...this.articlesForm.controls.map(articleForm =>
+        articleForm.valueChanges.map(article => article.description)
+      )]
+    ).mergeAll()
+      .map(x => this.articlesService.uniqueDescriptions(x));
+  }
+
+  articleFocus(value: string) {
+    this.articleDescriptionFocusStream.next(value);
   }
 
   addNewArticle(amount: number) {
-    for (let i = 0; i < amount; ++i) {
-      this.formArticles.push(new FormArticle());
-      this.articlesForm.push(this.fb.group({
-        amount: ['', Validators.required],
-        price: ['', Validators.required],
-        catalogId: [''],
-        description: ['', Validators.required],
-        dimension: ['']
-      }));
-    }
+    for (let i = 0; i < amount; ++i) this.formArticles.push(new FormArticle());
+    this.setArticles(this.formArticles);
   }
 
   get articlesForm(): FormArray {

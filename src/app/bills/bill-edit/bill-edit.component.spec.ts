@@ -1,8 +1,8 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatIconModule, MatInputModule,
-  MatListModule, MatNativeDateModule, MatProgressBarModule
+  MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatIconModule,
+  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { DataStoreService } from '../store/data-store.service';
+import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { BillEditComponent } from './bill-edit.component';
 
@@ -41,6 +42,7 @@ describe('BillEditComponent', () => {
         MatProgressBarModule,
         MatNativeDateModule,
         MatDatepickerModule,
+        MatAutocompleteModule,
         NoopAnimationsModule,
         RouterTestingModule
       ],
@@ -53,8 +55,11 @@ describe('BillEditComponent', () => {
             },
             updateBill: (billToUpdate: Bill): void => undefined
           }
-        },
-        {
+        }, {
+          provide: ArticlesService, useValue: {
+            updateArticles: () => Promise.resolve('')
+          }
+        }, {
           provide: ActivatedRoute, useValue: {
             snapshot: {
               params: {
