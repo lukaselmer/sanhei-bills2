@@ -12,8 +12,14 @@
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="description" placeholder="Beschreibung">
+            <input #articleDescription matInput (focus)="articleFocus(articleDescription.value)" formControlName="description" placeholder="Beschreibung"
+              [matAutocomplete]="articleDescriptionAuto">
           </mat-form-field>
+          <mat-autocomplete #articleDescriptionAuto="matAutocomplete">
+            <mat-option *ngFor="let option of autocompleteOptions['articleDescription'] | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
         </div>
         <div>
           <mat-form-field>
@@ -46,29 +52,69 @@
 
   <mat-card>
     <mat-form-field>
-      <textarea matInput formControlName="address" matTextareaAutosize placeholder="Adresse"></textarea>
+      <input matInput formControlName="billType" placeholder="Art (Rechnung / Offerte / Spezial)" [matAutocomplete]="billTypeAuto">
     </mat-form-field>
+    <mat-autocomplete #billTypeAuto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['billType'] | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+
     <mat-form-field>
-      <input matInput formControlName="billType" placeholder="Art (Rechnung / Offerte / Spezial)">
+      <input matInput formControlName="title1" placeholder="Titel Rechnung" [matAutocomplete]="title1Auto">
     </mat-form-field>
+    <mat-autocomplete #title1Auto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['title1'] | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+
     <mat-form-field>
-      <input matInput formControlName="title1" placeholder="Titel Rechnung">
+      <textarea matInput formControlName="address" matTextareaAutosize placeholder="Adresse" [matAutocomplete]="addressAuto"></textarea>
     </mat-form-field>
+    <mat-autocomplete #addressAuto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['address'] | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+
     <mat-form-field>
-      <input matInput formControlName="ownerName" placeholder="Eigentümer">
+      <input matInput formControlName="ownerName" placeholder="Eigentümer" [matAutocomplete]="ownerNameAuto">
     </mat-form-field>
+    <mat-autocomplete #ownerNameAuto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['ownerName'] | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+
     <mat-form-field>
-      <input matInput formControlName="ordererName" placeholder="Auftraggeber/Nr">
+      <input matInput formControlName="ordererName" placeholder="Auftraggeber/Nr" [matAutocomplete]="ordererNameAuto">
     </mat-form-field>
+    <mat-autocomplete #ordererNameAuto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['ordererName'] | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-card>
 
   <mat-card>
     <mat-form-field>
-      <input matInput formControlName="title2" placeholder="Titel Beschreibung">
+      <input matInput formControlName="title2" placeholder="Titel Beschreibung" [matAutocomplete]="title2Auto">
     </mat-form-field>
+    <mat-autocomplete #title2Auto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['title2'] | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+
     <mat-form-field>
-      <textarea matInput formControlName="description" matTextareaAutosize placeholder="Arbeitsbeschreibung"></textarea>
+      <textarea matInput formControlName="description" matTextareaAutosize placeholder="Arbeitsbeschreibung" [matAutocomplete]="descriptionAuto"></textarea>
     </mat-form-field>
+    <mat-autocomplete #descriptionAuto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['description'] | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
   </mat-card>
 
   <mat-card>

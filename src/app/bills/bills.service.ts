@@ -9,6 +9,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeAll';
+import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/toArray';
@@ -25,7 +26,6 @@ import { DataStoreService } from './store/data-store.service';
 export class BillsService {
   constructor(
     private dataStore: DataStoreService,
-    private articlesService: ArticlesService,
     private billMatcherFactory: BillMatcherFactory) {
     this.dataStore.loadData();
   }
