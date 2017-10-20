@@ -10,6 +10,10 @@ import { BillsService } from './../bills.service';
 import { BillFormExtractor } from './bill-form-extractor';
 import { FormArticle } from './form-article';
 
+// Remove this as soon as the rule is fixed (current version: 3.2.1),
+// see https://github.com/mgechev/codelyzer/releases
+/* tslint:disable:no-access-missing-member */
+
 @Component({
   selector: 'sb-bill-edit',
   templateUrl: './bill-edit.component.html',
