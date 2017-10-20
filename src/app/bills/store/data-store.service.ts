@@ -116,10 +116,10 @@ export class DataStoreService {
     await this.db.object(`billing/bills/${bill.id}`).set(billAttributes);
   }
 
-  // async deleteBill(bill: Bill) {
-  //   this.setDeleted(bill);
-  //   await this.db.object(`billing/bills/${bill.id}`).set(bill);
-  // }
+  async deleteBill(bill: Bill) {
+    this.setDeleted(bill);
+    await this.db.object(`billing/bills/${bill.id}`).set(bill);
+  }
 
   // private setCreated(dbObject: Bill) {
   //   dbObject.createdAt = firebase.database.ServerValue.TIMESTAMP as number;

@@ -17,7 +17,9 @@ mat-card {
 }
 
 .bill {
-  cursor: pointer;
+  mat-card-title, mat-card-subtitle, mat-card-content {
+    cursor: pointer;
+  }
 }
 
 .load-more {

@@ -140,7 +140,7 @@ describe('BillsListComponent', () => {
       fixture.detectChanges();
       spyOn(router, 'navigate').and.returnValue('');
       const compiled = fixture.debugElement.nativeElement;
-      const element = compiled.querySelector('.bill');
+      const element = compiled.querySelector('.bill mat-card-title');
       element.dispatchEvent(new Event('click'));
       expect(router.navigate).toHaveBeenCalledWith(['bills', 'RaNdOm1000']);
     }));

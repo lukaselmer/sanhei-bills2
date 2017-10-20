@@ -4,25 +4,30 @@
 <h1>Rechnungen</h1>
 
 <mat-form-field>
-  <input matInput placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"'
-    [value]="searchTerm" #searchTermInput (keyup)="searchKeyup(searchTermInput.value)">
+  <input matInput placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"' [value]="searchTerm" #searchTermInput
+    (keyup)="searchKeyup(searchTermInput.value)">
 </mat-form-field>
 
 <ng-container *ngIf="bills$ | async; let bills">
   <section>
-    <mat-card class="bill" *ngFor="let bill of bills" (click)="editBill(bill)">
-      <mat-card-title>{{bill.uid}} | {{ bill.humanId }}</mat-card-title>
-      <mat-card-subtitle>
+    <mat-card class="bill" *ngFor="let bill of bills">
+      <mat-card-title (click)="editBill(bill)">{{bill.uid}} | {{ bill.humanId }}</mat-card-title>
+      <mat-card-subtitle (click)="editBill(bill)">
         <div>{{ bill.title1 }}, {{ bill.title2 }}</div>
         <div>{{ bill.commaSeparatedAddress }}</div>
       </mat-card-subtitle>
-      <mat-card-content>
+      <mat-card-content (click)="editBill(bill)">
         <span *ngIf="bill.fixedAtOverride">Arbeiten am: {{ bill.fixedAtOverride }} | </span>
         <span *ngIf="!bill.fixedAtOverride && bill.fixedAt">Arbeiten am: {{ bill.fixedAt }} | </span>
         <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }} | </span>
         <span>{{ bill.totalNet | currency:'CHF' }} netto | {{ bill.totalGross | currency:'CHF' }} brutto</span>
         <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
       </mat-card-content>
+      <mat-card-actions>
+        <button mat-icon-button type="button" (click)="removeBill(bill)">
+          <i class="material-icons">delete</i>
+        </button>
+      </mat-card-actions>
     </mat-card>
   </section>
 
