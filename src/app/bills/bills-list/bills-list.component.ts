@@ -69,6 +69,12 @@ export class BillsListComponent implements OnInit {
     return false;
   }
 
+  async removeBill(billView: BillView) {
+    if (!confirm('Wirklich löschen?')) return;
+    const bill = await this.billsService.editBill(billView.id).first().toPromise();
+    await this.billsService.deleteBill(bill);
+  }
+
   loadMore() {
     const searchQuery = this.searchTerm === '' ? {} : { q: this.searchTerm };
     this.router.navigate(['/bills'], {

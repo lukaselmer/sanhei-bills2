@@ -62,4 +62,8 @@ export class BillsService {
   async updateBill(bill: Bill) {
     await this.dataStore.updateBill(bill);
   }
+
+  async deleteBill(bill: Bill) {
+    await this.dataStore.deleteBill(bill);
+  }
 }
