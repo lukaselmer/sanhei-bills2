@@ -42,7 +42,7 @@ export class BillFormExtractor {
       ordererName: v.ordererName,
       ownerName: v.ownerName,
       title: v.title,
-      title2: v.title2
+      descriptionTitle: v.descriptionTitle
     };
   }
 

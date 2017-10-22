@@ -13,7 +13,7 @@
     <mat-card class="bill" *ngFor="let bill of bills">
       <mat-card-title (click)="editBill(bill)">{{bill.uid}} | {{ bill.humanId }}</mat-card-title>
       <mat-card-subtitle (click)="editBill(bill)">
-        <div>{{ bill.title }}, {{ bill.title2 }}</div>
+        <div>{{ bill.title }}, {{ bill.descriptionTitle }}</div>
         <div>{{ bill.commaSeparatedAddress }}</div>
       </mat-card-subtitle>
       <mat-card-content (click)="editBill(bill)">

@@ -18,7 +18,7 @@ export class Bill {
   ordererName: string;
   ownerName: string;
   title: string;
-  title2: string;
+  descriptionTitle: string;
 
   // date format: '' or free text or 2017-05-30 or 2017-05-20, 2017-05-21, 2017-05-22
   workedAt: string;

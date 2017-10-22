@@ -37,7 +37,7 @@ export class FullTextMatcher implements IBillMatcher {
       bill.ordererName.toLowerCase().startsWith(this.term) ||
       bill.ownerName.toLowerCase().startsWith(this.term) ||
       bill.title.toLowerCase().startsWith(this.term) ||
-      bill.title2.toLowerCase().startsWith(this.term) ||
+      bill.descriptionTitle.toLowerCase().startsWith(this.term) ||
       bill.billedAt.toLowerCase().startsWith(this.term) ||
       bill.workedAt.toLowerCase().startsWith(this.term) ||
       bill.orderedAt.toLowerCase().startsWith(this.term) ||
