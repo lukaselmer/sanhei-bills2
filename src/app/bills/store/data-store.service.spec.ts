@@ -13,7 +13,7 @@ describe('DataStoreService', () => {
     id: 1234,
     uid: '17071234',
     address: 'Adresszeile 1\nAdressezeile 2',
-    title1: 'Objekt: Adresse',
+    title: 'Objekt: Adresse',
     title2: 'Zusatz'
   } as any;
   const billsMock = [billMock, billMock];
@@ -142,8 +142,8 @@ describe('DataStoreService', () => {
       it('updates the bill in firebase', async(async () => {
         spyOn(idbMock, 'loadFromIDB').and.returnValues(
           Promise.resolve({
-            1: { id: 1, title1: 'B1', articles: [] },
-            5: { id: 5, title1: 'B5', articles: [] }
+            1: { id: 1, title: 'B1', articles: [] },
+            5: { id: 5, title: 'B5', articles: [] }
           })
         );
         spyOn(idbMock, 'storeInIDB').and.callThrough();
@@ -153,7 +153,7 @@ describe('DataStoreService', () => {
 
         await service.loadData();
         const bills = await service.getBillsStream().first().toPromise();
-        const latestBill: Bill = { ...bills[0], title1: 'newTitle' };
+        const latestBill: Bill = { ...bills[0], title: 'newTitle' };
         await service.updateBill(latestBill);
         expect(angularFireMock.object).toHaveBeenCalledWith(`billing/bills/${latestBill.id}`);
         expect(latestUpdatedBill).toEqual(latestBill);
