@@ -51,7 +51,7 @@ export class BillEditComponent implements OnInit {
       address: ['', Validators.required],
       billType: ['', Validators.required],
       description: '',
-      fixedAt: [''],
+      workedAt: [''],
       ordererName: [''],
       ownerName: [''],
       title1: ['', Validators.required],
@@ -93,7 +93,7 @@ export class BillEditComponent implements OnInit {
       ownerName: bill.ownerName,
       title1: bill.title1,
       title2: bill.title2,
-      fixedAt: bill.fixedAt,
+      workedAt: bill.workedAt,
       orderedAt: bill.orderedAt,
       billedAt: bill.billedAt
     };
