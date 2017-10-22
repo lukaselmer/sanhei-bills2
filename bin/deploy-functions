@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+(ng lint && cd functions && webpack && firebase deploy --only functions --project development)
