@@ -71,7 +71,7 @@ export class BillFormExtractor {
     return {
       orderedAt: this.dateOrEmpty(v.orderedAt),
       billedAt: this.dateOrEmpty(v.billedAt),
-      ...this.extractFixedAt()
+      ...this.extractworkedAt()
     };
   }
 
@@ -80,8 +80,8 @@ export class BillFormExtractor {
     return (potentialDate || '').match(dateRegexp) ? potentialDate : '';
   }
 
-  private extractFixedAt() {
-    return { fixedAt: this.formValue.fixedAt.trim() };
+  private extractworkedAt() {
+    return { workedAt: this.formValue.workedAt.trim() };
   }
 
   private setTimestamps() {

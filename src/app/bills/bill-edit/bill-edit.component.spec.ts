@@ -113,7 +113,7 @@ describe('BillEditComponent', () => {
     expect(abortSpy).toHaveBeenCalled();
     expect(updateBillSpy).toHaveBeenCalledWith({
       ...bill,
-      fixedAt: '2017-06-20',
+      workedAt: '2017-06-20',
       updatedAt: firebase.database.ServerValue.TIMESTAMP as number
     });
   }));

@@ -18,7 +18,7 @@ const bill = {
   finished: false,
   paid: false,
   billedAt: '2017-06-22',
-  fixedAt: '2017-06-20',
+  workedAt: '2017-06-20',
   orderedAt: '2017-06-19',
 
   createdAt: new Date(2017, 5, 22).getTime(),

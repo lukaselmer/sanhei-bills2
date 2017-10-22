@@ -39,7 +39,7 @@ export class BillView {
   get title1() { return this.bill.title1; }
   get title2() { return this.bill.title2; }
 
-  get fixedAt() { return this.bill.fixedAt; }
+  get workedAt() { return this.bill.workedAt; }
   get orderedAt() { return this.bill.orderedAt; }
   get billedAt() { return this.bill.billedAt; }
 
@@ -60,7 +60,7 @@ export class BillView {
   }
 
   // date format: '' or 2017-05-30
-  // get fixedAtDate() { return this.stringToDate(this.bill.fixedAt); }
+  // get workedAtDate() { return this.stringToDate(this.bill.workedAt); }
   // get orderedAtDate() { return this.stringToDate(this.bill.orderedAt); }
   // get billedAtDate() { return this.stringToDate(this.bill.billedAt); }
   // private stringToDate(str: string) { return str ? new Date(...str.split('-')) : null; }
