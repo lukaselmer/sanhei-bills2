@@ -15,14 +15,15 @@ export class Bill {
   address: string;
   billType: string;
   description: string;
-  fixedAtOverride: string;
   ordererName: string;
   ownerName: string;
   title1: string;
   title2: string;
 
-  // date format: '' or 2017-05-30
+  // date format: '' or free text or 2017-05-30 or 2017-05-20, 2017-05-21, 2017-05-22
   fixedAt: string;
+
+  // date format: '' or 2017-05-30
   orderedAt: string;
   billedAt: string;
 

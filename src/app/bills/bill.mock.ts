@@ -11,7 +11,6 @@ const bill = {
   address: 'address1\naddress2\naddress3\naddress4\naddress5',
   billType: 'billType',
   description: 'description',
-  fixedAtOverride: 'fixedAtOverride',
   ordererName: 'ordererName',
   ownerName: 'ownerName',
   title1: 'title1',

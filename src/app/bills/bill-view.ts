@@ -34,7 +34,6 @@ export class BillView {
 
   get billType() { return this.bill.billType; }
   get description() { return this.bill.description; }
-  get fixedAtOverride() { return this.bill.fixedAtOverride; }
   get ordererName() { return this.bill.ordererName; }
   get ownerName() { return this.bill.ownerName; }
   get title1() { return this.bill.title1; }
