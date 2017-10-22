@@ -55,7 +55,7 @@ describe('FullTextMatcher', () => {
     expect(match('orderername', bill)).toBeTruthy();
     expect(match('ownername', bill)).toBeTruthy();
     expect(match('title', bill)).toBeTruthy();
-    expect(match('descriptionTitle', bill)).toBeTruthy();
+    expect(match('descriptiontitle', bill)).toBeTruthy();
   });
 
   it('searches in number fields', () => {
