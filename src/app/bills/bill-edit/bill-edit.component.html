@@ -99,10 +99,10 @@
 
   <mat-card>
     <mat-form-field>
-      <input matInput formControlName="title2" placeholder="Titel Beschreibung" [matAutocomplete]="title2Auto">
+      <input matInput formControlName="descriptionTitle" placeholder="Titel Beschreibung" [matAutocomplete]="descriptionTitleAuto">
     </mat-form-field>
-    <mat-autocomplete #title2Auto="matAutocomplete">
-      <mat-option *ngFor="let option of autocompleteOptions['title2'] | async" [value]="option">
+    <mat-autocomplete #descriptionTitleAuto="matAutocomplete">
+      <mat-option *ngFor="let option of autocompleteOptions['descriptionTitle'] | async" [value]="option">
         {{ option }}
       </mat-option>
     </mat-autocomplete>

@@ -14,7 +14,7 @@ const bill = {
   ordererName: 'ordererName',
   ownerName: 'ownerName',
   title: 'title',
-  title2: 'title2',
+  descriptionTitle: 'descriptionTitle',
   finished: false,
   paid: false,
   billedAt: '2017-06-22',

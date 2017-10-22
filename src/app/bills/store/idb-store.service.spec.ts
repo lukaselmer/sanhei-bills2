@@ -7,7 +7,7 @@ describe('IDBStoreService', () => {
     uid: '17071234',
     address1: 'Adresszeile 1\nAdressezeile 2',
     title: 'Objekt: Adresse',
-    title2: 'Zusatz'
+    descriptionTitle: 'Zusatz'
   } as any;
   const billsMock = { 1: billMock, 2: billMock };
 

@@ -18,7 +18,7 @@ describe('BillsListComponent', () => {
   const bill = billVariant({
     address: 'Adresszeile 1\nAdressezeile 2',
     title: 'Objekt: Adresse',
-    title2: 'Zusatz'
+    descriptionTitle: 'Zusatz'
   });
   const billView = new BillView(bill);
   const bills = [bill, bill, bill, bill, bill, bill, bill, bill, bill, bill, bill];
@@ -105,7 +105,7 @@ describe('BillsListComponent', () => {
       }
 
       expect(queryContent('mat-card-title')).toEqual(`${bill.uid} | ${bill.humanId}`);
-      expect(queryContent('mat-card-subtitle :first-child')).toEqual(`${billView.title}, ${billView.title2}`);
+      expect(queryContent('mat-card-subtitle :first-child')).toEqual(`${billView.title}, ${billView.descriptionTitle}`);
       expect(queryContent('mat-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
       expect(queryContent('mat-card-content :nth-child(1)')).toEqual(`Arbeiten am: 2017-06-20 |`);
       expect(queryContent('mat-card-content :nth-child(2)')).toEqual(`Verrechnet am: 2017-06-22 |`);
