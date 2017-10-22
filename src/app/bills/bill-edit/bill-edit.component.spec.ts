@@ -102,7 +102,6 @@ describe('BillEditComponent', () => {
     expect(selectField('title2').value).toEqual(bill.title2);
     expect(selectField('orderedAt').value).toEqual(bill.orderedAt);
     expect(selectTextarea('description').value).toEqual(bill.description);
-    expect(selectField('fixedAtDescription').value).toEqual(bill.fixedAtOverride);
     expect(selectField('billedAt').value).toEqual(bill.billedAt);
   });
 
@@ -114,7 +113,7 @@ describe('BillEditComponent', () => {
     expect(abortSpy).toHaveBeenCalled();
     expect(updateBillSpy).toHaveBeenCalledWith({
       ...bill,
-      fixedAt: '',
+      fixedAt: '2017-06-20',
       updatedAt: firebase.database.ServerValue.TIMESTAMP as number
     });
   }));

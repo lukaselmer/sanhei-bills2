@@ -34,7 +34,6 @@ export class FullTextMatcher implements IBillMatcher {
 
   private matchesStringsOrDates(bill: Bill) {
     return bill.billType.toLowerCase().startsWith(this.term) ||
-      bill.fixedAtOverride.toLowerCase().startsWith(this.term) ||
       bill.ordererName.toLowerCase().startsWith(this.term) ||
       bill.ownerName.toLowerCase().startsWith(this.term) ||
       bill.title1.toLowerCase().startsWith(this.term) ||

@@ -52,7 +52,6 @@ describe('FullTextMatcher', () => {
 
   it('searches in other string fields', () => {
     expect(match('billtype', bill)).toBeTruthy();
-    expect(match('fixedatoverride', bill)).toBeTruthy();
     expect(match('orderername', bill)).toBeTruthy();
     expect(match('ownername', bill)).toBeTruthy();
     expect(match('title1', bill)).toBeTruthy();

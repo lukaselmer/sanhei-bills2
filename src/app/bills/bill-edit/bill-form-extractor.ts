@@ -81,11 +81,7 @@ export class BillFormExtractor {
   }
 
   private extractFixedAt() {
-    const fixedAtDescription: string = this.formValue.fixedAtDescription.trim();
-    if (this.dateOrEmpty(fixedAtDescription) === '') {
-      return { fixedAt: '', fixedAtOverride: fixedAtDescription };
-    }
-    return { fixedAt: fixedAtDescription, fixedAtOverride: '' };
+    return { fixedAt: this.formValue.fixedAt.trim() };
   }
 
   private setTimestamps() {
