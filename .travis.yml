@@ -24,7 +24,9 @@ after_success:
 - cat coverage/lcov.info | codacy-coverage
 - npm install -g codecov
 - codecov
-before_deploy: npm run build-prod
+before_deploy:
+- npm run build-prod
+- npm i -g webpack && cd functions && npm i && webpack && cd ..
 deploy:
   skip_cleanup: true
   on:
