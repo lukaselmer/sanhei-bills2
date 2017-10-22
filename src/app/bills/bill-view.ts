@@ -36,7 +36,7 @@ export class BillView {
   get description() { return this.bill.description; }
   get ordererName() { return this.bill.ordererName; }
   get ownerName() { return this.bill.ownerName; }
-  get title1() { return this.bill.title1; }
+  get title() { return this.bill.title; }
   get title2() { return this.bill.title2; }
 
   get workedAt() { return this.bill.workedAt; }

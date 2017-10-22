@@ -25,7 +25,7 @@ describe('BillEditComponent', () => {
     id: '1234',
     uid: 17071234,
     address: 'Adresszeile 1\nAdressezeile 2',
-    title1: 'Objekt: Adresse',
+    title: 'Objekt: Adresse',
     title2: 'Zusatz'
   });
 
@@ -98,7 +98,7 @@ describe('BillEditComponent', () => {
     expect(selectField('billType').value).toEqual(bill.billType);
     expect(selectField('ordererName').value).toEqual(bill.ordererName);
     expect(selectField('ownerName').value).toEqual(bill.ownerName);
-    expect(selectField('title1').value).toEqual(bill.title1);
+    expect(selectField('title').value).toEqual(bill.title);
     expect(selectField('title2').value).toEqual(bill.title2);
     expect(selectField('orderedAt').value).toEqual(bill.orderedAt);
     expect(selectTextarea('description').value).toEqual(bill.description);

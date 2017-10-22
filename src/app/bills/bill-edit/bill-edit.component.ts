@@ -54,7 +54,7 @@ export class BillEditComponent implements OnInit {
       workedAt: [''],
       ordererName: [''],
       ownerName: [''],
-      title1: ['', Validators.required],
+      title: ['', Validators.required],
       title2: ['', Validators.required],
 
       orderedAt: '',
@@ -68,7 +68,7 @@ export class BillEditComponent implements OnInit {
   }
 
   private initBillAutocomplete() {
-    ['billType', 'address', 'title1', 'title2', 'ownerName', 'ordererName', 'description']
+    ['billType', 'address', 'title', 'title2', 'ownerName', 'ordererName', 'description']
       .forEach(field =>
         this.autocompleteOptions[field] = (this.form.get(field) as FormControl)
           .valueChanges
@@ -91,7 +91,7 @@ export class BillEditComponent implements OnInit {
       description: bill.description,
       ordererName: bill.ordererName,
       ownerName: bill.ownerName,
-      title1: bill.title1,
+      title: bill.title,
       title2: bill.title2,
       workedAt: bill.workedAt,
       orderedAt: bill.orderedAt,

@@ -13,7 +13,7 @@ const bill = {
   description: 'description',
   ordererName: 'ordererName',
   ownerName: 'ownerName',
-  title1: 'title1',
+  title: 'title',
   title2: 'title2',
   finished: false,
   paid: false,
