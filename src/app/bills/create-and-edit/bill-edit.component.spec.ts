@@ -81,14 +81,20 @@ describe('BillEditComponent', () => {
     tick(1);
   }));
 
-  it('submits the form', inject([BillsService], (service: BillsService) => {
-    const updateBillSpy = spyOn(service, 'updateBill');
-    const abortSpy = spyOn(component, 'navigateToIndex');
-    abortSpy.and.returnValue(false);
-    component.saveBill({ a: 'bill' } as any);
-    expect(abortSpy).toHaveBeenCalled();
-    expect(updateBillSpy).toHaveBeenCalledWith({ a: 'bill' } as any);
-  }));
+  it('submits the form', () => {
+    const service: BillsService = TestBed.get(BillsService);
+    spyOn(service, 'updateBill');
+    const abortSpy = spyOn(component, 'navigateToIndex').and.returnValue(false);
+
+    const compiled = fixture.debugElement.nativeElement;
+    const element = compiled.querySelector('form');
+    element.dispatchEvent(new Event('submit'));
+
+    const expectedEditedBill = { ...bill };
+    delete expectedEditedBill.updatedAt;
+    expect(component.navigateToIndex).toHaveBeenCalled();
+    expect(service.updateBill).toHaveBeenCalledWith(expectedEditedBill);
+  });
 
   it('aborts editing', fakeAsync(() => {
     const router: Router = TestBed.get(Router);

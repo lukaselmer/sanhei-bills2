@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BillEditComponent } from './bill-edit/bill-edit.component';
 import { BillsListComponent } from './bills-list/bills-list.component';
+import { BillEditComponent } from './create-and-edit/bill-edit.component';
 
 const routes: Routes = [
   {

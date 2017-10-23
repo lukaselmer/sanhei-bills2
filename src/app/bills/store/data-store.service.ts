@@ -6,6 +6,8 @@ import 'rxjs/add/operator/toPromise';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from '../bill';
+import { EditedBill } from './../edited-bill';
+import { NewBill } from './../new-bill';
 import { IBillingDatabase } from './billing-database';
 import { DataStoreStatus } from './data-store-status';
 import { IDBStoreService } from './idb-store.service';
@@ -97,17 +99,12 @@ export class DataStoreService {
     });
   }
 
-  // async createBill(bill: Bill): Promise<Bill> {
-  //   this.setCreated(bill);
-  //   const newRef = this.db.list(`billing/bills`).push(bill);
-  //   const x = await newRef;
-  //   console.log(x);
-  //   bill.id = newRef.key as string;
-  //   await this.db.list(`billing/bills`).update(newRef, bill);
-  //   return await this.db.object(`billing/bills/${newRef.key}`).valueChanges<Bill>().first().toPromise() as Bill;
-  // }
+  async createBill(newBill: NewBill): Promise<void> {
+    this.setCreated(newBill);
+    return this.db.list(`billing/bills`).push(newBill);
+  }
 
-  async updateBill(bill: Bill) {
+  async updateBill(bill: EditedBill) {
     this.setUpdated(bill);
     const billAttributes = { ...bill } as any;
     Object.keys(billAttributes).forEach(k => {
@@ -121,17 +118,17 @@ export class DataStoreService {
     await this.db.object(`billing/bills/${bill.id}`).set(bill);
   }
 
-  // private setCreated(dbObject: Bill) {
-  //   dbObject.createdAt = firebase.database.ServerValue.TIMESTAMP as number;
-  //   this.setUpdated(dbObject);
-  // }
+  private setCreated(newBill: NewBill) {
+    newBill.createdAt = firebase.database.ServerValue.TIMESTAMP;
+    this.setUpdated(newBill);
+  }
 
   private setDeleted(dbObject: Bill) {
     dbObject.deletedAt = firebase.database.ServerValue.TIMESTAMP as number;
     this.setUpdated(dbObject);
   }
 
-  private setUpdated(dbObject: Bill) {
-    dbObject.updatedAt = firebase.database.ServerValue.TIMESTAMP as number;
+  private setUpdated(bill: Bill | NewBill | EditedBill) {
+    bill.updatedAt = firebase.database.ServerValue.TIMESTAMP;
   }
 }

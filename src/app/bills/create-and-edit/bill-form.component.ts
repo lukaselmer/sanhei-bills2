@@ -1,3 +1,5 @@
+import { EditedBill } from './../edited-bill';
+import { NewBill } from './../new-bill';
 // Remove this as soon as the rule is fixed (current version: 3.2.1),
 // see https://github.com/mgechev/codelyzer/releases
 /* tslint:disable:no-access-missing-member */
@@ -19,7 +21,10 @@ import { FormArticle } from './form-article';
 export class BillFormComponent implements OnInit, OnChanges {
   @Input() bill: Bill;
 
-  @Output() onSubmitted = new EventEmitter<Bill>();
+  /**
+   * Emits the valid form value once
+   */
+  @Output() onSubmitted = new EventEmitter<any>();
   @Output() onAborted = new EventEmitter<void>();
 
   form: FormGroup;
@@ -152,8 +157,7 @@ export class BillFormComponent implements OnInit, OnChanges {
   onSubmit() {
     this.removeEmptyArticles();
     if (this.form.valid) {
-      const extractor = new BillFormExtractor(this.bill, this.form.value);
-      this.onSubmitted.emit(extractor.extractBill());
+      this.onSubmitted.emit(this.form.value);
       this.onSubmitted.complete();
     } else {
       // tslint:disable-next-line:no-unused-expression
