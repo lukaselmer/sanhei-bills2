@@ -141,9 +141,6 @@ export class BillFormComponent implements OnInit, OnChanges {
   }
 
   removeArticleAt(index: number) {
-    // This would be nice, but it does not work because of angular material (atm): this.articlesForm.removeAt(index);
-    // TODO: autocomplete: if the cursor is in a field with autocomplete, the element cannot be deleted, otherwise
-    // this is raised: ERROR TypeError: Cannot read property 'destroyed' of null
     const values: FormArticle[] = this.articlesForm.value;
     const combinedArticles = values.filter((_, i) => i !== index);
     this.setArticles(combinedArticles);
