@@ -10,26 +10,51 @@ import { RouterTestingModule } from '@angular/router/testing';
 import * as firebase from 'firebase/app';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { billVariant } from '../bill.mock';
+import { newBillVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { DataStoreService } from '../store/data-store.service';
 import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
-import { EditedBill } from './../edited-bill';
-import { BillEditComponent } from './bill-edit.component';
+import { NewBill } from './../new-bill';
 import { BillFormComponent } from './bill-form.component';
+import { BillNewComponent } from './bill-new.component';
 
-describe('BillEditComponent', () => {
-  let component: BillEditComponent;
-  let fixture: ComponentFixture<BillEditComponent>;
+describe('BillNewComponent', () => {
+  let component: BillNewComponent;
+  let fixture: ComponentFixture<BillNewComponent>;
 
-  const bill = billVariant({
-    id: '1234',
-    uid: 17071234,
-    address: 'Adresszeile 1\nAdressezeile 2',
-    title: 'Objekt: Adresse',
-    descriptionTitle: 'Zusatz'
-  });
+  const newBill = newBillVariant({ articles: [] });
+
+  function fillForm() {
+    const compiled = fixture.debugElement.nativeElement;
+    function selectField(formControlName: string): HTMLInputElement {
+      return compiled.querySelector(`[formControlName=${formControlName}]`);
+    }
+
+    function selectTextarea(formControlName: string): HTMLTextAreaElement {
+      return compiled.querySelector(`textarea[formControlName=${formControlName}]`);
+    }
+
+    function fill(el: HTMLInputElement | HTMLTextAreaElement, value: string) {
+      el.focus();
+      el.value = value;
+      el.dispatchEvent(new Event('input'));
+    }
+
+    fill(selectField('cashback'), newBill.cashback + '');
+    fill(selectField('vat'), newBill.vat + '');
+    fill(selectField('discount'), newBill.discount + '');
+    fill(selectField('billType'), newBill.billType);
+    fill(selectField('ordererName'), newBill.ordererName);
+    fill(selectField('ownerName'), newBill.ownerName);
+    fill(selectField('title'), newBill.title);
+    fill(selectField('descriptionTitle'), newBill.descriptionTitle);
+    fill(selectField('orderedAt'), newBill.orderedAt);
+    fill(selectField('billedAt'), newBill.billedAt);
+    fill(selectField('workedAt'), newBill.workedAt);
+    fill(selectTextarea('address'), newBill.address);
+    fill(selectTextarea('description'), newBill.description);
+  }
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -51,32 +76,21 @@ describe('BillEditComponent', () => {
       providers: [
         {
           provide: BillsService, useValue: {
-            editBill: (id: string): Observable<Bill> => {
-              expect(id).toEqual(bill.id);
-              return Observable.of(bill);
-            },
-            updateBill: (billToUpdate: EditedBill): void => undefined
+            createBill: (billToUpdate: NewBill): void => undefined
           }
         }, {
           provide: ArticlesService, useValue: {
-            updateArticles: () => Promise.resolve('')
-          }
-        }, {
-          provide: ActivatedRoute, useValue: {
-            snapshot: {
-              params: {
-                id: bill.id
-              }
-            }
+            updateArticles: () => Promise.resolve(''),
+            autocompleteOptions: () => []
           }
         }
       ],
-      declarations: [BillEditComponent, BillFormComponent]
+      declarations: [BillNewComponent, BillFormComponent]
     }).compileComponents();
   }));
 
   beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(BillEditComponent);
+    fixture = TestBed.createComponent(BillNewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     tick(1);
@@ -84,17 +98,21 @@ describe('BillEditComponent', () => {
 
   it('submits the form', () => {
     const service: BillsService = TestBed.get(BillsService);
-    spyOn(service, 'updateBill');
+    spyOn(service, 'createBill');
     const abortSpy = spyOn(component, 'navigateToIndex').and.returnValue(false);
 
     const compiled = fixture.debugElement.nativeElement;
     const element = compiled.querySelector('form');
     element.dispatchEvent(new Event('submit'));
 
-    const expectedEditedBill = { ...bill };
-    delete expectedEditedBill.updatedAt;
+    expect(component.navigateToIndex).not.toHaveBeenCalled();
+    expect(service.createBill).not.toHaveBeenCalled();
+
+    fillForm();
+
+    element.dispatchEvent(new Event('submit'));
     expect(component.navigateToIndex).toHaveBeenCalled();
-    expect(service.updateBill).toHaveBeenCalledWith(expectedEditedBill);
+    expect(service.createBill).toHaveBeenCalledWith(newBill);
   });
 
   it('aborts editing', fakeAsync(() => {
