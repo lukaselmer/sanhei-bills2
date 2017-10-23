@@ -13,19 +13,27 @@ export class BillEditFormExtractor extends BillFormExtractor {
       ...this.extractNumbers(),
       ...this.extractDates(),
       articles: this.extractArticles(),
-      ...this.applyValuesForExistingBill()
+      ...this.applyValuesForExistingBill(),
+      ...this.extractIds()
     };
   }
 
   private applyValuesForExistingBill() {
     return {
-      uid: this.bill.uid,
       id: this.bill.id,
-      humanId: this.bill.humanId,
       finished: this.bill.finished,
       paid: this.bill.paid,
       createdAt: this.bill.createdAt,
       deletedAt: this.bill.deletedAt
     };
+  }
+
+  private extractIds() {
+    const humanId = parseInt(this.formValue.humanId, 10);
+    const createdAt = new Date(this.bill.createdAt);
+    const month = `${createdAt.getUTCMonth() + 1}`;
+    const monthStr = month.length === 1 ? `0${month}` : month;
+    const uid = parseInt(`${createdAt.getUTCFullYear() % 2000}${monthStr}${humanId}`, 10);
+    return { humanId, uid };
   }
 }

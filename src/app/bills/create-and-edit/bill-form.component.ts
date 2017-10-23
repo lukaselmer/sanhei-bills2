@@ -2,7 +2,7 @@
 // see https://github.com/mgechev/codelyzer/releases
 /* tslint:disable:no-access-missing-member */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
@@ -18,7 +18,7 @@ import { FormArticle } from './form-article';
   templateUrl: './bill-form.component.html',
   styleUrls: ['./bill-form.component.scss']
 })
-export class BillFormComponent implements OnInit, OnChanges {
+export class BillFormComponent implements OnChanges {
   @Input() bill: Bill;
   @Input() createNewBill: boolean;
 
@@ -33,47 +33,61 @@ export class BillFormComponent implements OnInit, OnChanges {
   autocompleteOptions: { [index: string]: Observable<string[]> } = {};
   articleDescriptionFocusStream = new Subject<string>();
 
-  constructor(private articlesService: ArticlesService, private fb: FormBuilder) {
-    this.createForm();
-  }
+  constructor(private articlesService: ArticlesService, private fb: FormBuilder) { }
 
   private createForm() {
+    if (this.form) return;
+
     this.form = this.fb.group({
       articles: this.fb.array([]),
 
-      cashback: ['', Validators.required],
-      vat: ['',
+      ...this.editSpecificFormValues(),
+
+      cashback: ['2', Validators.required],
+      vat: ['8',
         Validators.compose([
           Validators.required,
           Validators.min(1)]
         )
       ],
-      discount: ['', Validators.required],
+      discount: ['0', Validators.required],
 
       address: ['', Validators.required],
-      billType: ['', Validators.required],
+      billType: ['Rechnung', Validators.required],
       description: '',
       workedAt: [''],
       ordererName: [''],
       ownerName: [''],
-      title: ['', Validators.required],
+      title: ['Objekt: ', Validators.required],
       descriptionTitle: ['', Validators.required],
 
-      orderedAt: '',
-      billedAt: ''
+      orderedAt: this.dateDefault(),
+      billedAt: this.dateDefault()
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.bill && changes.bill.currentValue) this.billChanged(this.bill);
+  private editSpecificFormValues() {
+    return this.createNewBill ? {} : { humanId: ['', Validators.required] };
   }
 
-  ngOnInit(): void {
+  private dateDefault(): string {
+    const d = new Date();
+    const month = `${d.getMonth() + 1}`;
+    return `${d.getFullYear()}-${month.length === 1 ? '0' + month : month}-`;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const validBillEditValue = changes.bill && changes.bill.currentValue;
+    if (!this.createNewBill && !validBillEditValue) return;
+
+    this.createForm();
     this.initBillAutocomplete();
-    if (this.createNewBill) this.initNewBill();
+    this.createNewBill ? this.initNewBill() : this.billChanged();
   }
 
   private initBillAutocomplete() {
+    if (this.autocompleteOptions['title']) return;
+
     ['billType', 'address', 'title', 'descriptionTitle', 'ownerName', 'ordererName', 'description']
       .forEach(field =>
         this.autocompleteOptions[field] = (this.form.get(field) as FormControl)
@@ -85,51 +99,27 @@ export class BillFormComponent implements OnInit, OnChanges {
 
   private initNewBill() {
     this.addNewArticles(5);
-
-    const billFormValue = {
-      articles: this.formArticles,
-      cashback: '2',
-      vat: '8',
-      discount: '0',
-      address: '',
-      billType: 'Rechnung',
-      description: '',
-      ordererName: '',
-      ownerName: '',
-      title: 'Objekt: ',
-      descriptionTitle: '',
-      workedAt: this.dateDefault(),
-      orderedAt: this.dateDefault(),
-      billedAt: ''
-    };
-    this.form.setValue(billFormValue);
   }
 
-  private dateDefault(): string {
-    const d = new Date();
-    const month = `${d.getMonth() + 1}`;
-    return `${d.getFullYear()}-${month.length === 1 ? '0' + month : month}-`;
-  }
-
-  private billChanged(bill: Bill) {
-    this.bill = bill;
+  private billChanged() {
     this.articlesChanged();
 
     const billFormValue = {
       articles: this.formArticles,
-      cashback: bill.cashback,
-      vat: bill.vat,
-      discount: bill.discount,
-      address: bill.address,
-      billType: bill.billType,
-      description: bill.description,
-      ordererName: bill.ordererName,
-      ownerName: bill.ownerName,
-      title: bill.title,
-      descriptionTitle: bill.descriptionTitle,
-      workedAt: bill.workedAt,
-      orderedAt: bill.orderedAt,
-      billedAt: bill.billedAt
+      humanId: this.bill.humanId,
+      cashback: this.bill.cashback,
+      vat: this.bill.vat,
+      discount: this.bill.discount,
+      address: this.bill.address,
+      billType: this.bill.billType,
+      description: this.bill.description,
+      ordererName: this.bill.ordererName,
+      ownerName: this.bill.ownerName,
+      title: this.bill.title,
+      descriptionTitle: this.bill.descriptionTitle,
+      workedAt: this.bill.workedAt,
+      orderedAt: this.bill.orderedAt,
+      billedAt: this.bill.billedAt
     };
     this.form.setValue(billFormValue);
   }
