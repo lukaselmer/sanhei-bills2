@@ -14,11 +14,11 @@ import {
   MatProgressBarModule
 } from '@angular/material';
 import { ArticlesService } from './articles.service';
-import { BillEditComponent } from './bill-edit/bill-edit.component';
-import { BillFormComponent } from './bill-edit/bill-form.component';
 import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsRoutingModule } from './bills-routing.module';
 import { BillsService } from './bills.service';
+import { BillEditComponent } from './create-and-edit/bill-edit.component';
+import { BillFormComponent } from './create-and-edit/bill-form.component';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { DataStoreService } from './store/data-store.service';
 import { IDBStoreService } from './store/idb-store.service';
