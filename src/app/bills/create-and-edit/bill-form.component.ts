@@ -86,11 +86,6 @@ export class BillFormComponent implements OnInit, OnChanges {
   private initNewBill() {
     this.addNewArticles(5);
 
-    // TODO: Nice to have: get date of last bill
-    const d = new Date();
-    const monthStr = d.getMonth() + 1 > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`;
-    const dateStart = `${d.getFullYear()}-${monthStr}-`;
-
     const billFormValue = {
       articles: this.formArticles,
       cashback: '2',
@@ -103,11 +98,17 @@ export class BillFormComponent implements OnInit, OnChanges {
       ownerName: '',
       title: 'Objekt: ',
       descriptionTitle: '',
-      workedAt: dateStart,
-      orderedAt: dateStart,
+      workedAt: this.dateDefault(),
+      orderedAt: this.dateDefault(),
       billedAt: ''
     };
     this.form.setValue(billFormValue);
+  }
+
+  private dateDefault(): string {
+    const d = new Date();
+    const month = `${d.getMonth() + 1}`;
+    return `${d.getFullYear()}-${month.length === 1 ? '0' + month : month}-`;
   }
 
   private billChanged(bill: Bill) {
