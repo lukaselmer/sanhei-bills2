@@ -20,6 +20,12 @@ mat-card {
   mat-card-title, mat-card-subtitle, mat-card-content {
     cursor: pointer;
   }
+
+  mat-card-actions {
+    position: absolute;
+    top: 0;
+    right: 27px;
+  }
 }
 
 .load-more {
@@ -28,4 +34,10 @@ mat-card {
   button {
     width: 100%;
   }
+}
+
+.floating-create-button {
+  position: fixed;
+  right: 30px;
+  bottom: 10px;
 }

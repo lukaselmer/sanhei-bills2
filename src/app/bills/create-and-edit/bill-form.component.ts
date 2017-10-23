@@ -20,6 +20,7 @@ import { FormArticle } from './form-article';
 })
 export class BillFormComponent implements OnInit, OnChanges {
   @Input() bill: Bill;
+  @Input() createNewBill: boolean;
 
   /**
    * Emits the valid form value once
@@ -28,7 +29,7 @@ export class BillFormComponent implements OnInit, OnChanges {
   @Output() onAborted = new EventEmitter<void>();
 
   form: FormGroup;
-  formArticles: FormArticle[];
+  formArticles: FormArticle[] = [];
   autocompleteOptions: { [index: string]: Observable<string[]> } = {};
   articleDescriptionFocusStream = new Subject<string>();
 
@@ -69,6 +70,7 @@ export class BillFormComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.initBillAutocomplete();
+    if (this.createNewBill) this.initNewBill();
   }
 
   private initBillAutocomplete() {
@@ -76,8 +78,36 @@ export class BillFormComponent implements OnInit, OnChanges {
       .forEach(field =>
         this.autocompleteOptions[field] = (this.form.get(field) as FormControl)
           .valueChanges
+          .startWith('')
           .map(v => this.articlesService.autocompleteOptions(field, v))
       );
+  }
+
+  private initNewBill() {
+    this.addNewArticles(5);
+
+    // TODO: Nice to have: get date of last bill
+    const d = new Date();
+    const monthStr = d.getMonth() + 1 > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`;
+    const dateStart = `${d.getFullYear()}-${monthStr}-`;
+
+    const billFormValue = {
+      articles: this.formArticles,
+      cashback: '2',
+      vat: '8',
+      discount: '0',
+      address: '',
+      billType: 'Rechnung',
+      description: '',
+      ordererName: '',
+      ownerName: '',
+      title: 'Objekt: ',
+      descriptionTitle: '',
+      workedAt: dateStart,
+      orderedAt: dateStart,
+      billedAt: ''
+    };
+    this.form.setValue(billFormValue);
   }
 
   private billChanged(bill: Bill) {
@@ -106,7 +136,7 @@ export class BillFormComponent implements OnInit, OnChanges {
   private articlesChanged() {
     this.formArticles = this.bill.articles.map(article => new FormArticle(article));
     this.setArticles(this.formArticles);
-    this.addNewArticle(Math.max(1, 5 - this.formArticles.length));
+    this.addNewArticles(Math.max(1, 5 - this.formArticles.length));
   }
 
   removeArticleAt(index: number) {
@@ -145,7 +175,7 @@ export class BillFormComponent implements OnInit, OnChanges {
     this.articleDescriptionFocusStream.next(value);
   }
 
-  addNewArticle(amount: number) {
+  addNewArticles(amount: number) {
     for (let i = 0; i < amount; ++i) this.formArticles.push(new FormArticle());
     this.setArticles(this.formArticles);
   }

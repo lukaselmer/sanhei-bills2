@@ -19,6 +19,7 @@ import { BillsRoutingModule } from './bills-routing.module';
 import { BillsService } from './bills.service';
 import { BillEditComponent } from './create-and-edit/bill-edit.component';
 import { BillFormComponent } from './create-and-edit/bill-form.component';
+import { BillNewComponent } from './create-and-edit/bill-new.component';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { DataStoreService } from './store/data-store.service';
 import { IDBStoreService } from './store/idb-store.service';
@@ -42,7 +43,8 @@ import { IDBStoreService } from './store/idb-store.service';
   declarations: [
     BillsListComponent,
     BillEditComponent,
-    BillFormComponent
+    BillFormComponent,
+    BillNewComponent
   ],
   exports: [
     BillsListComponent

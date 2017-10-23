@@ -83,7 +83,7 @@ describe('BillFormComponent', () => {
 
   it('renders the form fields and sets the values', () => {
     const compiled = fixture.debugElement.nativeElement;
-    function selectField(formControlName: string): HTMLTextAreaElement {
+    function selectField(formControlName: string): HTMLInputElement {
       return compiled.querySelector(`[formControlName=${formControlName}]`);
     }
 
@@ -91,18 +91,18 @@ describe('BillFormComponent', () => {
       return compiled.querySelector(`textarea[formControlName=${formControlName}]`);
     }
 
-    expect(selectField('address').value).toEqual(bill.address);
     expect(selectField('cashback').value).toEqual(bill.cashback + '');
     expect(selectField('vat').value).toEqual(bill.vat + '');
     expect(selectField('discount').value).toEqual(bill.discount + '');
-    expect(selectField('address').value).toEqual(bill.address);
     expect(selectField('billType').value).toEqual(bill.billType);
     expect(selectField('ordererName').value).toEqual(bill.ordererName);
     expect(selectField('ownerName').value).toEqual(bill.ownerName);
     expect(selectField('title').value).toEqual(bill.title);
     expect(selectField('descriptionTitle').value).toEqual(bill.descriptionTitle);
     expect(selectField('orderedAt').value).toEqual(bill.orderedAt);
-    expect(selectTextarea('description').value).toEqual(bill.description);
     expect(selectField('billedAt').value).toEqual(bill.billedAt);
+    expect(selectField('workedAt').value).toEqual(bill.workedAt);
+    expect(selectTextarea('address').value).toEqual(bill.address);
+    expect(selectTextarea('description').value).toEqual(bill.description);
   });
 });
