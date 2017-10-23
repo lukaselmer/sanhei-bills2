@@ -1,6 +1,6 @@
 import { Article } from './article';
 
-export class Bill {
+export class EditedBill {
   id: string;
   humanId: number;
   cashback: number;
@@ -32,6 +32,6 @@ export class Bill {
   // see https://firebase.google.com/docs/database/web/offline-capabilities
   // firebase.database.ServerValue.TIMESTAMP
   createdAt: number;
-  updatedAt: number;
+  updatedAt?: object;
   deletedAt: number | undefined;
 }

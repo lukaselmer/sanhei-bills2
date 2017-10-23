@@ -154,7 +154,7 @@ describe('DataStoreService', () => {
         await service.loadData();
         const bills = await service.getBillsStream().first().toPromise();
         const latestBill: Bill = { ...bills[0], title: 'newTitle' };
-        await service.updateBill(latestBill);
+        await service.updateBill(latestBill as any);
         expect(angularFireMock.object).toHaveBeenCalledWith(`billing/bills/${latestBill.id}`);
         expect(latestUpdatedBill).toEqual(latestBill);
       }));

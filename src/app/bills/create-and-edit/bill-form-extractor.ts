@@ -1,23 +1,14 @@
 import * as firebase from 'firebase/app';
 import { Article } from '../article';
 import { Bill } from '../bill';
+import { EditedBill } from './../edited-bill';
+import { NewBill } from './../new-bill';
 import { FormArticle } from './form-article';
 
-export class BillFormExtractor {
-  constructor(private bill: Bill, private formValue: any) { }
+export abstract class BillFormExtractor {
+  constructor(private formValue: any) { }
 
-  extractBill(): Bill {
-    return {
-      ...this.extractStrings(),
-      ...this.extractNumbers(),
-      ...this.applyExistingValuesFromBill(),
-      ...this.extractDates(),
-      ...this.setTimestamps(),
-      articles: this.extractArticles()
-    };
-  }
-
-  private extractArticles(): Article[] {
+  protected extractArticles(): Article[] {
     const rawArticles: FormArticle[] = this.formValue.articles;
     return rawArticles.filter(article =>
       [article.description, article.price, article.amount]
@@ -26,27 +17,27 @@ export class BillFormExtractor {
       return {
         amount: parseFloat(article.amount),
         price: parseFloat(article.price),
-        description: article.description,
-        dimension: article.dimension,
-        catalogId: article.catalogId
+        description: article.description.trim(),
+        dimension: article.dimension.trim(),
+        catalogId: article.catalogId.trim()
       };
     });
   }
 
-  private extractStrings() {
+  protected extractStrings() {
     const v = this.formValue;
     return {
       address: v.address.trim(),
-      billType: v.billType,
-      description: v.description,
-      ordererName: v.ordererName,
-      ownerName: v.ownerName,
-      title: v.title,
-      descriptionTitle: v.descriptionTitle
+      billType: v.billType.trim(),
+      description: v.description.trim(),
+      ordererName: v.ordererName.trim(),
+      ownerName: v.ownerName.trim(),
+      title: v.title.trim(),
+      descriptionTitle: v.descriptionTitle.trim()
     };
   }
 
-  private extractNumbers() {
+  protected extractNumbers() {
     const v = this.formValue;
     return {
       cashback: parseFloat(v.cashback),
@@ -55,18 +46,7 @@ export class BillFormExtractor {
     };
   }
 
-  private applyExistingValuesFromBill() {
-    return {
-      uid: this.bill.uid,
-      id: this.bill.id,
-      humanId: this.bill.humanId,
-      finished: this.bill.finished,
-      paid: this.bill.paid,
-      deletedAt: this.bill.deletedAt
-    };
-  }
-
-  private extractDates() {
+  protected extractDates() {
     const v = this.formValue;
     return {
       orderedAt: this.dateOrEmpty(v.orderedAt),
@@ -82,12 +62,5 @@ export class BillFormExtractor {
 
   private extractworkedAt() {
     return { workedAt: this.formValue.workedAt.trim() };
-  }
-
-  private setTimestamps() {
-    return {
-      createdAt: this.bill.createdAt,
-      updatedAt: firebase.database.ServerValue.TIMESTAMP as number
-    };
   }
 }

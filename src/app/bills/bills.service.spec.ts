@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { articleVariant } from './article.mock';
 import { billVariant } from './bill.mock';
 import { BillsService } from './bills.service';
+import { EditedBill } from './edited-bill';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { IBillingDatabase } from './store/billing-database';
 
@@ -124,7 +125,7 @@ describe('BillsService', () => {
 
     it('updates the bill', async () => {
       spyOn(dataStoreServiceMock, 'updateBill').and.callThrough();
-      await service.updateBill(billMock1);
+      await service.updateBill(billMock1 as any);
       expect(dataStoreServiceMock.updateBill).toHaveBeenCalledWith(billMock1);
     });
   });

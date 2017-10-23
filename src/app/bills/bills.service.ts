@@ -17,6 +17,8 @@ import { Observable } from 'rxjs/Observable';
 import { Article } from './article';
 import { ArticlesService } from './articles.service';
 import { Bill } from './bill';
+import { EditedBill } from './edited-bill';
+import { NewBill } from './new-bill';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchOptions } from './search/search-options';
 import { SearchResult } from './search/search-result';
@@ -59,11 +61,15 @@ export class BillsService {
       .map((bill: Bill) => bill);
   }
 
-  async updateBill(bill: Bill) {
+  async updateBill(bill: EditedBill) {
     await this.dataStore.updateBill(bill);
   }
 
   async deleteBill(bill: Bill) {
     await this.dataStore.deleteBill(bill);
+  }
+
+  async createBill(newBill: NewBill) {
+    await this.dataStore.createBill(newBill);
   }
 }
