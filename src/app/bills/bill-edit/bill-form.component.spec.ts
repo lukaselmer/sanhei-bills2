@@ -18,7 +18,7 @@ import { Bill } from './../bill';
 import { BillEditComponent } from './bill-edit.component';
 import { BillFormComponent } from './bill-form.component';
 
-describe('BillEditComponent', () => {
+describe('BillFormComponent', () => {
   let component: BillEditComponent;
   let fixture: ComponentFixture<BillEditComponent>;
 
@@ -81,21 +81,28 @@ describe('BillEditComponent', () => {
     tick(1);
   }));
 
-  it('submits the form', inject([BillsService], (service: BillsService) => {
-    const updateBillSpy = spyOn(service, 'updateBill');
-    const abortSpy = spyOn(component, 'navigateToIndex');
-    abortSpy.and.returnValue(false);
-    component.saveBill({ a: 'bill' } as any);
-    expect(abortSpy).toHaveBeenCalled();
-    expect(updateBillSpy).toHaveBeenCalledWith({ a: 'bill' } as any);
-  }));
-
-  it('aborts editing', fakeAsync(() => {
-    const router: Router = TestBed.get(Router);
-    fixture.detectChanges();
-    spyOn(router, 'navigate').and.returnValue('');
+  it('renders the form fields and sets the values', () => {
     const compiled = fixture.debugElement.nativeElement;
-    component.navigateToIndex();
-    expect(router.navigate).toHaveBeenCalledWith(['bills']);
-  }));
+    function selectField(formControlName: string): HTMLTextAreaElement {
+      return compiled.querySelector(`[formControlName=${formControlName}]`);
+    }
+
+    function selectTextarea(formControlName: string): HTMLTextAreaElement {
+      return compiled.querySelector(`textarea[formControlName=${formControlName}]`);
+    }
+
+    expect(selectField('address').value).toEqual(bill.address);
+    expect(selectField('cashback').value).toEqual(bill.cashback + '');
+    expect(selectField('vat').value).toEqual(bill.vat + '');
+    expect(selectField('discount').value).toEqual(bill.discount + '');
+    expect(selectField('address').value).toEqual(bill.address);
+    expect(selectField('billType').value).toEqual(bill.billType);
+    expect(selectField('ordererName').value).toEqual(bill.ordererName);
+    expect(selectField('ownerName').value).toEqual(bill.ownerName);
+    expect(selectField('title').value).toEqual(bill.title);
+    expect(selectField('descriptionTitle').value).toEqual(bill.descriptionTitle);
+    expect(selectField('orderedAt').value).toEqual(bill.orderedAt);
+    expect(selectTextarea('description').value).toEqual(bill.description);
+    expect(selectField('billedAt').value).toEqual(bill.billedAt);
+  });
 });
