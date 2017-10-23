@@ -23,6 +23,9 @@
         <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
       </mat-card-content>
       <mat-card-actions>
+        <button mat-icon-button type="button" routerLink="{{bill.id}}/🖨">
+          <i class="material-icons">print</i>
+        </button>
         <button mat-icon-button type="button" (click)="removeBill(bill)">
           <i class="material-icons">delete</i>
         </button>
@@ -41,6 +44,6 @@
   </section>
 </ng-container>
 
-<button routerLink="new" mat-fab color="primary" class="floating-create-button" type="submit">
+<button routerLink="🆕" mat-fab color="primary" class="floating-create-button" type="submit">
   <mat-icon class="md-24" aria-label="Rechnung erstellen">add</mat-icon>
 </button>

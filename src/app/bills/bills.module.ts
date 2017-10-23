@@ -22,6 +22,7 @@ import { BillAutocompleteService } from './create-and-edit/bill-autocomplete.ser
 import { BillEditComponent } from './create-and-edit/bill-edit.component';
 import { BillFormComponent } from './create-and-edit/bill-form.component';
 import { BillNewComponent } from './create-and-edit/bill-new.component';
+import { BillPrintComponent } from './print/bill-print.component';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { DataStoreService } from './store/data-store.service';
 import { IDBStoreService } from './store/idb-store.service';
@@ -47,7 +48,8 @@ import { IDBStoreService } from './store/idb-store.service';
     BillEditComponent,
     BillFormComponent,
     BillNewComponent,
-    ArticlesFormComponent
+    ArticlesFormComponent,
+    BillPrintComponent
   ],
   exports: [
     BillsListComponent
