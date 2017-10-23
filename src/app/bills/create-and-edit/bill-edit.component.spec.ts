@@ -24,8 +24,6 @@ describe('BillEditComponent', () => {
   let fixture: ComponentFixture<BillEditComponent>;
 
   const bill = billVariant({
-    id: '1234',
-    uid: 17071234,
     address: 'Adresszeile 1\nAdressezeile 2',
     title: 'Objekt: Adresse',
     descriptionTitle: 'Zusatz'

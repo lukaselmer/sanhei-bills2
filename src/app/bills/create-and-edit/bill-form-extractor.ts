@@ -6,7 +6,7 @@ import { NewBill } from './../new-bill';
 import { FormArticle } from './form-article';
 
 export abstract class BillFormExtractor {
-  constructor(private formValue: any) { }
+  constructor(protected formValue: any) { }
 
   protected extractArticles(): Article[] {
     const rawArticles: FormArticle[] = this.formValue.articles;

@@ -2,7 +2,7 @@ import { billVariant } from '../../bill.mock';
 import { Bill } from './../../bill';
 import { FullTextMatcher } from './full-text-matcher';
 
-const bill = billVariant({});
+const bill = billVariant({ humanId: 1000, uid: 3000 });
 
 function match(term: string, potentialMatchingBill: Bill) {
   return new FullTextMatcher(term).matches(potentialMatchingBill);

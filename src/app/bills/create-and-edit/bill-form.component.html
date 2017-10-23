@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
   <mat-card formArrayName="articles">
     <mat-card-title>Artikel</mat-card-title>
     <mat-card-content>
@@ -49,6 +49,10 @@
   </mat-card>
 
   <mat-card>
+    <mat-form-field *ngIf="!createNewBill">
+      <input matInput formControlName="humanId" placeholder="ID">
+    </mat-form-field>
+
     <mat-form-field>
       <input matInput formControlName="billType" placeholder="Art (Rechnung / Offerte / Spezial)" [matAutocomplete]="billTypeAuto">
     </mat-form-field>
