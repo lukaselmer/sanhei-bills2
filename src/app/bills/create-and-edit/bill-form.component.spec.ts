@@ -58,7 +58,8 @@ describe('BillFormComponent', () => {
           }
         }, {
           provide: ArticlesService, useValue: {
-            updateArticles: () => Promise.resolve('')
+            updateArticles: () => Promise.resolve(''),
+            autocompleteOptions: () => []
           }
         }, {
           provide: ActivatedRoute, useValue: {
