@@ -1,5 +1,5 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { validDateNumbers } from './date-helper';
+import { validDateNumbers } from '../../../shared/date-helper';
 
 export function workedAtValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {

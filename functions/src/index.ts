@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
+import { dateForUID } from '../../src/app/shared/date-helper';
 import { Bill } from './../../src/app/bills/bill';
 
 admin.initializeApp(functions.config().firebase);
@@ -18,11 +19,7 @@ async function setHumanId(data: functions.database.DeltaSnapshot, nextHumanId: n
 }
 
 async function setUid(data: functions.database.DeltaSnapshot, nextHumanId: number) {
-  const date = new Date();
-  const year = date.getUTCFullYear() % 2000;
-  const monthStr = `${date.getUTCMonth() + 1}`;
-  const monthPadded = monthStr.length === 1 ? `0${monthStr}` : monthStr;
-  const uidStr = `${year}${monthPadded}${nextHumanId}`;
+  const uidStr = `${dateForUID()}${nextHumanId}`;
   data.ref.child('uid').set(+uidStr);
 }
 

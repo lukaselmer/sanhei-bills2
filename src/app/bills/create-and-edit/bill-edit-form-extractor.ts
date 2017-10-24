@@ -1,3 +1,4 @@
+import { dateForUID } from '../../shared/date-helper';
 import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
 import { BillFormExtractor } from './bill-form-extractor';
@@ -30,10 +31,7 @@ export class BillEditFormExtractor extends BillFormExtractor {
 
   private extractIds() {
     const humanId = parseInt(this.formValue.humanId, 10);
-    const createdAt = new Date(this.bill.createdAt);
-    const month = `${createdAt.getUTCMonth() + 1}`;
-    const monthStr = month.length === 1 ? `0${month}` : month;
-    const uid = parseInt(`${createdAt.getUTCFullYear() % 2000}${monthStr}${humanId}`, 10);
+    const uid = parseInt(`${dateForUID(this.bill.createdAt)}${humanId}`, 10);
     return { humanId, uid };
   }
 }
