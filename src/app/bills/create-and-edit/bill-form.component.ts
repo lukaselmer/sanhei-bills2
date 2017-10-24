@@ -68,6 +68,13 @@ export class BillFormComponent implements OnChanges {
           Validators.max(100)]
         )
       ],
+      paymentDeadlineInDays: ['30',
+        Validators.compose([
+          Validators.required,
+          Validators.min(1),
+          Validators.max(1000)]
+        )
+      ],
 
       address: ['', Validators.required],
       billType: ['Rechnung', Validators.required],
@@ -127,6 +134,7 @@ export class BillFormComponent implements OnChanges {
       cashback: this.bill.cashback,
       vat: this.bill.vat,
       discount: this.bill.discount,
+      paymentDeadlineInDays: this.bill.paymentDeadlineInDays || 30,
       address: this.bill.address,
       billType: this.bill.billType,
       description: this.bill.description,
