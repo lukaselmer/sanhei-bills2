@@ -1,5 +1,6 @@
 // Remove this as soon as the rule is fixed (current version: 3.2.1),
 // see https://github.com/mgechev/codelyzer/releases
+import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper';
 /* tslint:disable:no-access-missing-member */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
@@ -96,9 +97,7 @@ export class BillFormComponent implements OnChanges {
   }
 
   private dateDefault(): string {
-    const d = new Date();
-    const month = `${d.getMonth() + 1}`;
-    return `${d.getFullYear()}-${month.length === 1 ? '0' + month : month}-`;
+    return currentDateAsISO8601WithoutDays();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
