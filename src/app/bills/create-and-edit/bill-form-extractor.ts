@@ -49,7 +49,7 @@ export abstract class BillFormExtractor {
 
   private extractPaymentDeadline() {
     const days = parseInt(this.formValue.paymentDeadlineInDays, 10);
-    return days === 30 ? {} : { paymentDeadlineInDays: days };
+    return days === Bill.DEFAULTS.paymentDeadlineInDays ? {} : { paymentDeadlineInDays: days };
   }
 
   protected extractDates() {
