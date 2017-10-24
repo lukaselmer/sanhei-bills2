@@ -1,6 +1,10 @@
 import { Article } from './article';
 
 export class Bill {
+  static DEFAULTS = {
+    paymentDeadlineInDays: 30
+  };
+
   id: string;
   humanId: number;
   cashback: number;

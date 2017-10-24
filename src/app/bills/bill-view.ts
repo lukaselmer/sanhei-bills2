@@ -17,7 +17,7 @@ export class BillView {
   get uid() { return this.bill.uid; }
   get vat() { return this.bill.vat; }
   get discount() { return this.bill.discount; }
-  get paymentDeadlineInDays() { return this.bill.paymentDeadlineInDays || 30; }
+  get paymentDeadlineInDays() { return this.bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays; }
 
   get finished() { return this.bill.finished; } // means finished editing
   get paid() { return this.bill.paid; }
