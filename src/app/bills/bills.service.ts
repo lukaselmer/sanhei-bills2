@@ -14,6 +14,7 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/toArray';
 import { Observable } from 'rxjs/Observable';
+import { currentDateAsISO8601 } from '../shared/date-helper';
 import { Article } from './article';
 import { ArticlesService } from './articles.service';
 import { Bill } from './bill';
@@ -71,5 +72,12 @@ export class BillsService {
 
   async createBill(newBill: NewBill) {
     await this.dataStore.createBill(newBill);
+  }
+
+  async markAsPrinted(bill: Bill) {
+    if (bill.billedAt) return;
+
+    bill.billedAt = currentDateAsISO8601();
+    await this.dataStore.updateBill(bill);
   }
 }

@@ -104,7 +104,7 @@ export class DataStoreService {
     return this.db.list(`billing/bills`).push(newBill);
   }
 
-  async updateBill(bill: EditedBill) {
+  async updateBill(bill: EditedBill | Bill) {
     this.setUpdated(bill);
     const billAttributes = { ...bill } as any;
     Object.keys(billAttributes).forEach(k => {
