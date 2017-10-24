@@ -7,6 +7,7 @@ export class Bill {
   uid: number;
   vat: number;
   discount: number;
+  paymentDeadlineInDays?: number;
 
   articles: Article[];
 

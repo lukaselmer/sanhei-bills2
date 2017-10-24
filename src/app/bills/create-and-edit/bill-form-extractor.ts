@@ -42,8 +42,14 @@ export abstract class BillFormExtractor {
     return {
       cashback: parseFloat(v.cashback),
       vat: parseFloat(v.vat),
-      discount: parseFloat(v.discount)
+      discount: parseFloat(v.discount),
+      ...this.extractPaymentDeadline()
     };
+  }
+
+  private extractPaymentDeadline() {
+    const days = parseInt(this.formValue.paymentDeadlineInDays, 10);
+    return days === 30 ? {} : { paymentDeadlineInDays: days };
   }
 
   protected extractDates() {
