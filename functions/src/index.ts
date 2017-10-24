@@ -5,7 +5,6 @@ import { Bill } from './../../src/app/bills/bill';
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.database();
-let lastSetVersion = 0;
 
 /**
  * There is a race condition in updateBillIds: it can happen that the same bill
@@ -35,8 +34,7 @@ export const updateBillIds = functions.database.ref('billing/bills/{billId}').on
       .once('value', snapshot => {
         const val = snapshot.val();
         const lastVersionInDb = val[Object.keys(val)[0]].humanId;
-        const nextHumanId = Math.max(lastSetVersion + 1, lastVersionInDb + 1);
-        lastSetVersion = nextHumanId;
+        const nextHumanId = lastVersionInDb + 1;
         data.ref.child('humanId').set(nextHumanId);
         Promise.all([
           setIdPromise,

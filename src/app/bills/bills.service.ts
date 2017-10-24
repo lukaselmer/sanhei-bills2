@@ -67,6 +67,7 @@ export class BillsService {
   }
 
   async deleteBill(bill: Bill) {
+    bill.humanId = 0;
     await this.dataStore.deleteBill(bill);
   }
 

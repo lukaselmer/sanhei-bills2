@@ -34,6 +34,7 @@ describe('BillsService', () => {
 
   const dataStoreServiceMock: any = {
     updateBill: () => Promise.resolve(''),
+    deleteBill: () => Promise.resolve(''),
     loadData: () => undefined,
     getBillsStream: () => Observable.of(billsMock),
     status: 'loaded',
@@ -127,6 +128,17 @@ describe('BillsService', () => {
       spyOn(dataStoreServiceMock, 'updateBill').and.callThrough();
       await service.updateBill(billMock1 as any);
       expect(dataStoreServiceMock.updateBill).toHaveBeenCalledWith(billMock1);
+    });
+  });
+
+  describe('delete bill', () => {
+    it('deletes the bill', async () => {
+      spyOn(dataStoreServiceMock, 'deleteBill').and.callThrough();
+      await service.deleteBill(billMock1);
+      expect(dataStoreServiceMock.deleteBill).toHaveBeenCalledWith({
+        ...billMock1,
+        humanId: 0
+      });
     });
   });
 
