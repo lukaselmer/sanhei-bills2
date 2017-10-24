@@ -12,6 +12,10 @@ import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
 import { BillFormExtractor } from './bill-form-extractor';
 import { FormArticle } from './form-article';
+import { dateValidator } from './validators/date-validator.directive';
+import { numberValidator } from './validators/number-validator.directive';
+import { requiredIfOneSiblingHasContent } from './validators/required-if-one-sibling-has-content.directive';
+import { workedAtValidator } from './validators/worked-at-validator.directive';
 
 @Component({
   selector: 'sb-bill-form',
@@ -43,26 +47,39 @@ export class BillFormComponent implements OnChanges {
 
       ...this.editSpecificFormValues(),
 
-      cashback: ['2', Validators.required],
+      cashback: ['2',
+        Validators.compose([
+          Validators.required,
+          Validators.min(0),
+          Validators.max(100)]
+        )
+      ],
       vat: ['8',
         Validators.compose([
           Validators.required,
-          Validators.min(1)]
+          Validators.min(1),
+          Validators.max(100)]
         )
       ],
-      discount: ['0', Validators.required],
+      discount: ['0',
+        Validators.compose([
+          Validators.required,
+          Validators.min(0),
+          Validators.max(100)]
+        )
+      ],
 
       address: ['', Validators.required],
       billType: ['Rechnung', Validators.required],
       description: '',
-      workedAt: [''],
+      workedAt: ['', workedAtValidator()],
       ordererName: [''],
       ownerName: [''],
       title: ['Objekt: ', Validators.required],
       descriptionTitle: ['', Validators.required],
 
-      orderedAt: this.dateDefault(),
-      billedAt: this.dateDefault()
+      orderedAt: [this.dateDefault(), dateValidator()],
+      billedAt: [this.dateDefault(), dateValidator()]
     });
   }
 
@@ -138,15 +155,36 @@ export class BillFormComponent implements OnChanges {
 
   private setArticles(formArticles: FormArticle[]) {
     const articleFormGroups = formArticles.map(a => this.fb.group({
-      amount: [a.amount, Validators.required],
-      price: [a.price, Validators.required],
+      amount: [a.amount, Validators.compose([
+        requiredIfOneSiblingHasContent(),
+        numberValidator()
+      ])],
+      price: [a.price, Validators.compose([
+        requiredIfOneSiblingHasContent(),
+        numberValidator()
+      ])],
       catalogId: a.catalogId,
-      description: [a.description, Validators.required],
-      dimension: [a.dimension]
+      description: [a.description, requiredIfOneSiblingHasContent()],
+      dimension: a.dimension
     }));
+    this.keepAricleValidationsUpdated(articleFormGroups);
     this.form.setControl('articles', this.fb.array(articleFormGroups));
-
     this.initArticlesAutocomplete();
+  }
+
+  private keepAricleValidationsUpdated(articleFormGroups: FormGroup[]) {
+    // automaticValueChangeInProgress avoids recursive value changes
+    let automaticValueChangeInProgress = false;
+    articleFormGroups.forEach(fg => {
+      fg.valueChanges.map(() => {
+        if (automaticValueChangeInProgress) return;
+        automaticValueChangeInProgress = true;
+        Object.keys(fg.controls).forEach(fieldKey =>
+          fg.controls[fieldKey].setValue(fg.controls[fieldKey].value)
+        );
+        automaticValueChangeInProgress = false;
+      }).subscribe();
+    });
   }
 
   private initArticlesAutocomplete() {
@@ -173,7 +211,7 @@ export class BillFormComponent implements OnChanges {
   }
 
   onSubmit() {
-    this.removeEmptyArticles();
+    // this.removeEmptyArticles();
     if (this.form.valid) {
       this.onSubmitted.emit(this.form.value);
       this.onSubmitted.complete();
