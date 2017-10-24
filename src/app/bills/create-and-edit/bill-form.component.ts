@@ -211,31 +211,24 @@ export class BillFormComponent implements OnChanges {
   }
 
   onSubmit() {
-    // this.removeEmptyArticles();
     if (this.form.valid) {
       this.onSubmitted.emit(this.form.value);
       this.onSubmitted.complete();
     } else {
       // tslint:disable-next-line:no-unused-expression
-      this.scrollTo('.mat-input-element.ng-touched.ng-invalid') ||
-        this.scrollTo('.mat-input-element.ng-invalid') ||
+      this.scrollToAndFocus('.mat-input-element.ng-touched.ng-invalid') ||
+        this.scrollToAndFocus('.mat-input-element.ng-invalid') ||
         window.scrollTo(0, 0);
     }
   }
 
-  private scrollTo(query: string): boolean {
+  private scrollToAndFocus(query: string): boolean {
     const element = document.querySelector(query) as HTMLElement;
-    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      setTimeout(() => element.focus(), 500);
+    }
     return !!element;
-  }
-
-  private removeEmptyArticles() {
-    const values: FormArticle[] = this.articlesForm.value;
-    const combinedArticles = values.filter(val =>
-      val.amount !== '' || val.catalogId !== '' ||
-      val.description !== '' || val.dimension !== '' || val.price !== ''
-    );
-    this.setArticles(combinedArticles);
   }
 
   abort() {
