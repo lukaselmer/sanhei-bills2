@@ -129,4 +129,22 @@ describe('BillsService', () => {
       expect(dataStoreServiceMock.updateBill).toHaveBeenCalledWith(billMock1);
     });
   });
+
+  describe('mark bill as printed', () => {
+    it('marks the bill as printed', async () => {
+      spyOn(dataStoreServiceMock, 'updateBill').and.callThrough();
+      const bill = billVariant({ billedAt: '' });
+      await service.markAsPrinted(bill);
+      expect(bill.billedAt.length).toEqual(10);
+      expect(dataStoreServiceMock.updateBill).toHaveBeenCalledWith(bill);
+    });
+
+    it('does not mark a bill if it was printed already', async () => {
+      spyOn(dataStoreServiceMock, 'updateBill').and.callThrough();
+      const bill = billVariant({ billedAt: '2017-05-22' });
+      await service.markAsPrinted(bill);
+      expect(bill.billedAt).toEqual('2017-05-22');
+      expect(dataStoreServiceMock.updateBill).not.toHaveBeenCalled();
+    });
+  });
 });
