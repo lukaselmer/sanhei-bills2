@@ -35,7 +35,7 @@ describe('BillView', () => {
   describe('bill articles and articles', () => {
     it('merges articles and bill articles', () => {
       const billArticleView = new ArticleView(articleVariant());
-      expect(billView().billArticleViews).toEqual([
+      expect(billView().articles).toEqual([
         billArticleView
       ]);
     });

@@ -44,10 +44,10 @@ export class BillView {
   get orderedAt() { return this.bill.orderedAt; }
   get billedAt() { return this.bill.billedAt; }
 
-  get billArticleViews() { return this.pBillArticleViews; }
+  get articles() { return this.pBillArticleViews; }
 
   get totalNet() {
-    return this.billArticleViews
+    return this.articles
       .map(bav => bav.totalPrice)
       .reduce((sum, el) => sum + el, 0);
   }

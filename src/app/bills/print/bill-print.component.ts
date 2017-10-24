@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Bill } from './../bill';
+import { BillView } from './../bill-view';
 import { BillsService } from './../bills.service';
 
 @Component({
@@ -10,13 +10,15 @@ import { BillsService } from './../bills.service';
 })
 export class BillPrintComponent implements OnInit {
   id: string;
-  bill: Bill;
+  billView: BillView;
 
   constructor(private router: Router, route: ActivatedRoute, private billsService: BillsService) {
     this.id = route.snapshot.params['id'];
   }
 
   ngOnInit(): void {
-    this.billsService.editBill(this.id).forEach(bill => this.bill = bill);
+    this.billsService.editBill(this.id).forEach(bill => {
+      if (bill) this.billView = new BillView(bill);
+    });
   }
 }

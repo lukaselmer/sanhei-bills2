@@ -1,5 +1,8 @@
-{{bill | json}}
+<p>
+  <mark>See BillView class and BillsListComponent HTML</mark>
+</p>
 
-<h1>Rechnung {{bill?.id}}</h1>
-
-<h2>{{bill.title}}</h2>
+<article *ngIf="billView">
+  <h1>Rechnung {{billView.id}}</h1>
+  <!-- <h2>{{billView.title}}</h2> -->
+</article>
