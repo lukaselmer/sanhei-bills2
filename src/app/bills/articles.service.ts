@@ -8,8 +8,7 @@ import { DataStoreService } from './store/data-store.service';
 export class ArticlesService {
   articleDescriptionsCache: string[];
 
-  constructor(private dataStore: DataStoreService) {
-  }
+  constructor(private dataStore: DataStoreService) { }
 
   uniqueDescriptions(filter: string): string[] {
     const lowerCaseFilter = filter.toLocaleLowerCase();
@@ -33,6 +32,7 @@ export class ArticlesService {
     return this.articleDescriptionsCache;
   }
 
+  // TODO: move this method to another service (bills service or autocomplete service)
   autocompleteOptions(field: string, filter: string): string[] {
     const bills = this.dataStore.store().bills;
     const uniqFieldValues: { [index: string]: boolean } = {};

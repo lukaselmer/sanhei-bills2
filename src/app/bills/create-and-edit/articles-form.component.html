@@ -1,0 +1,50 @@
+<ng-container [formGroup]="formGroup">
+  <mat-card formArrayName="articles">
+    <mat-card-title>Artikel</mat-card-title>
+    <mat-card-content>
+      <div *ngFor="let article of articlesForm.controls; let i=index" [formGroupName]="i" class="article">
+        <div>
+          <mat-form-field>
+            <input matInput formControlName="catalogId" placeholder="Katalognr.">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input #articleDescription matInput (focus)="articleFocus(articleDescription.value)" formControlName="description" placeholder="Beschreibung"
+              [matAutocomplete]="articleDescriptionAuto">
+          </mat-form-field>
+          <mat-autocomplete #articleDescriptionAuto="matAutocomplete">
+            <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput formControlName="dimension" placeholder="Dimension">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput formControlName="price" placeholder="Preis">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput formControlName="amount" placeholder="Anzahl">
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-icon-button type="button" (click)="removeArticleAt(i)">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button type="button" (click)="addNewArticles(1)">1 ARTIKEL HINZUFÜGEN</button>
+      <button mat-button type="button" (click)="addNewArticles(5)">5 ARTIKEL HINZUFÜGEN</button>
+      <button mat-button type="button" (click)="addNewArticles(10)">10 ARTIKEL HINZUFÜGEN</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
