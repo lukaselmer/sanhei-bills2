@@ -1,8 +1,95 @@
-<p>
-  <mark>See BillView class and BillsListComponent HTML</mark>
-</p>
-
 <article *ngIf="billView">
-  <h1>Rechnung {{billView.id}}</h1>
-  <!-- <h2>{{billView.title}}</h2> -->
+  <section class="address">
+    <div *ngFor="let addressLine of billView.addressLines">
+      {{addressLine}}
+    </div>
+  </section>
+
+  <section class="date">
+    Zürich, {{billView.billedAtDate}}
+  </section>
+
+  <section>
+    <h1>Rechnung {{billView.uid}}</h1>
+    <h2>{{billView.title}}</h2>
+  </section>
+
+  <section>
+    <div>
+      <div>Rechnungsnummer:</div>
+      <div>{{billView.uid}}</div>
+    </div>
+    <div>
+      <div>Auftraggeber/Nr.:</div>
+      <div>{{billView.ordererName}}</div>
+    </div>
+    <div>
+      <div>Eigentümer:</div>
+      <div>{{billView.ownerName}}</div>
+    </div>
+    <div>
+      <div>Ausgeführte Arbeiten am:</div>
+      <div>{{billView.workedAt}}</div>
+    </div>
+  </section>
+
+  <section>
+    <div>
+      {{billView.descriptionTitle}}
+    </div>
+    <div>
+      {{billView.description}}
+    </div>
+  </section>
+
+  <section>
+    <div>
+      <div>
+        <div>Posten</div>
+        <div>Dimension</div>
+        <div>Anzahl</div>
+        <div></div>
+        <div>Preis CHF</div>
+      </div>
+      <div *ngFor="let articleView of billView.articles">
+        <div>{{articleView.article.description}}</div>
+        <div>{{articleView.article.dimension}}</div>
+        <div>{{articleView.article.amount}}</div>
+        <div>{{articleView.article.price}}</div>
+        <div>{{articleView.totalPrice}}</div>
+      </div>
+      <div>
+        <div>Brutto</div>
+        <div>{{billView.totalNet}}</div>
+      </div>
+      <div>
+        <div>Rabatt</div>
+        <div>{{billView.discount}} %</div>
+        <div>{{billView.totalNet}}</div>
+        <div>{{billView.totalDiscount}}</div>
+      </div>
+      <div>
+        <div>Skonto</div>
+        <div>{{billView.cashback}} %</div>
+        <div>{{billView.totalAfterDiscount}}</div>
+        <div>{{billView.totalCashback}}</div>
+      </div>
+      <div>
+        <div>MWSt CHE-105.833.781</div>
+        <div>{{billView.vat}} %</div>
+        <div>{{billView.totalAfterCashback}}</div>
+        <div>{{billView.totalVat}}</div>
+      </div>
+      <div>
+        <div>Total netto inkl. MWSt</div>
+        <div>Fr.</div>
+        <div>{{billView.totalGross}}</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div>Zahlungskonditionen: {{billView.paymentDeadlineInDays}} Tage netto.</div>
+    <div>Besten Dank für Ihren Auftrag.</div>
+  </section>
 </article>

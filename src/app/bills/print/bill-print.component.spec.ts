@@ -23,7 +23,8 @@ describe('BillPrintComponent', () => {
   let fixture: ComponentFixture<BillPrintComponent>;
 
   const bill = billVariant({
-    id: '1234',
+    id: 'oiawefjawef',
+    humanId: 1234,
     uid: 17071234,
     address: 'Adresszeile 1\nAdressezeile 2',
     title: 'Objekt: Adresse',
@@ -48,7 +49,8 @@ describe('BillPrintComponent', () => {
             editBill: (id: string): Observable<Bill> => {
               expect(id).toEqual(bill.id);
               return Observable.of(bill);
-            }
+            },
+            markAsPrinted: () => { }
           }
         }, {
           provide: ActivatedRoute, useValue: {
@@ -77,6 +79,6 @@ describe('BillPrintComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     const element: HTMLHeadingElement = compiled.querySelector('h1');
 
-    expect(element.innerText).toEqual('Rechnung 1234');
+    expect(element.innerText).toEqual('Rechnung 17071234');
   });
 });

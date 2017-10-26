@@ -18,7 +18,10 @@ export class BillPrintComponent implements OnInit {
 
   ngOnInit(): void {
     this.billsService.editBill(this.id).forEach(bill => {
-      if (bill) this.billView = new BillView(bill);
+      if (bill) {
+        this.billView = new BillView(bill);
+        this.billsService.markAsPrinted(bill);
+      }
     });
   }
 }
