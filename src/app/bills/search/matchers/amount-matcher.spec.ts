@@ -18,10 +18,10 @@ describe('AmountMatcher', () => {
   });
 
   it('matches the gross amount', () => {
-    expect(match(735.1, billVariant())).toBeTruthy();
-    expect(match(735.1 + 0.5, billVariant())).toBeTruthy();
-    expect(match(735.1 - 0.5, billVariant())).toBeTruthy();
-    expect(match(735.1 + 1, billVariant())).toBeFalsy();
-    expect(match(735.1 - 1, billVariant())).toBeFalsy();
+    expect(match(733.65, billVariant())).toBeTruthy();
+    expect(match(733.65 + 0.5, billVariant())).toBeTruthy();
+    expect(match(733.65 - 0.5, billVariant())).toBeTruthy();
+    expect(match(733.65 + 1, billVariant())).toBeFalsy();
+    expect(match(733.65 - 1, billVariant())).toBeFalsy();
   });
 });

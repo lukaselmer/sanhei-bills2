@@ -53,8 +53,10 @@ describe('BillView', () => {
       });
 
       it('discount', () => { expect(billView().totalDiscount).toEqual(30 /* 5 * 150 * 0.04 */); });
-      it('cashback', () => { expect(billView().totalCashback).toEqual(18.75 /* 5 * 150 * 0.025 */); });
-      it('vat', () => { expect(billView().totalVat).toEqual(33.85 /* rounded: 5 * 150 * 0.0451 */); });
+      it('totalAfterDiscount', () => { expect(billView().totalAfterDiscount).toEqual(720 /* 750 - 30 */); });
+      it('cashback', () => { expect(billView().totalCashback).toEqual(18 /* (5 * 150 - 30) * 0.025 */); });
+      it('totalAfterCashback', () => { expect(billView().totalAfterCashback).toEqual(702 /* 750 - 30 - 18 */); });
+      it('vat', () => { expect(billView().totalVat).toEqual(31.65 /* rounded: (5 * 150 - 30 - 18) * 0.0451 */); });
 
       describe('rounding the', () => {
         it('discount', () => {
@@ -62,20 +64,20 @@ describe('BillView', () => {
           expect(billView({ discount: 3.998 }).totalDiscount).toEqual(30);
         });
 
-        it('vat', () => {
-          expect(billView({ vat: 6.002 }).totalVat).toEqual(45);
-          expect(billView({ vat: 5.998 }).totalVat).toEqual(45);
+        it('cashback', () => {
+          expect(billView({ cashback: 3.409722222 }).totalCashback).toEqual(24.55);
+          expect(billView({ cashback: 3.4131943 }).totalCashback).toEqual(24.55);
+          expect(billView({ cashback: 3.4131945 }).totalCashback).toEqual(24.6);
         });
 
-        it('cashback', () => {
-          expect(billView({ cashback: 3.41 }).totalCashback).toEqual(25.6);
-          expect(billView({ cashback: 3.410001 }).totalCashback).toEqual(25.6);
-          expect(billView({ cashback: 3.409999 }).totalCashback).toEqual(25.55);
+        it('vat', () => {
+          expect(billView({ vat: 6.413675214 }).totalVat).toEqual(45);
+          expect(billView({ vat: 6.406837607 }).totalVat).toEqual(45);
         });
       });
 
       it('total gross', () => {
-        expect(billView({ cashback: 3.409999, discount: 3.409999, vat: 3.41 }).totalGross)
+        expect(billView({ cashback: 3.409999, discount: 3.5302633, vat: 3.67 }).totalGross)
           .toEqual(724.5 /* rounded 750 - 25.55 - 25.55 + 25.60 */);
       });
     });

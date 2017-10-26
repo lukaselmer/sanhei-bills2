@@ -109,7 +109,7 @@ describe('BillsListComponent', () => {
       expect(queryContent('mat-card-subtitle :last-child')).toEqual(billView.commaSeparatedAddress);
       expect(queryContent('mat-card-content :nth-child(1)')).toEqual(`Arbeiten am: 2017-06-20 |`);
       expect(queryContent('mat-card-content :nth-child(2)')).toEqual(`Verrechnet am: 2017-06-22 |`);
-      expect(queryContent('mat-card-content :nth-child(3)')).toEqual(`CHF750.00 netto | CHF735.10 brutto`);
+      expect(queryContent('mat-card-content :nth-child(3)')).toEqual(`CHF750.00 netto | CHF733.65 brutto`);
       expect(queryContent('mat-card-content :nth-child(4)')).toEqual(`${bill.ownerName}, ${bill.ordererName}`);
     }));
 
