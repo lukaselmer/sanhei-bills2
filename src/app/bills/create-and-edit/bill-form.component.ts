@@ -1,4 +1,3 @@
-import { BillAutocompleteService } from './bill-autocomplete.service';
 // Remove this as soon as the rule is fixed (current version: 3.2.1),
 // see https://github.com/mgechev/codelyzer/releases
 /* tslint:disable:no-access-missing-member */
@@ -11,6 +10,7 @@ import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper';
 import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
+import { BillAutocompleteService } from './bill-autocomplete.service';
 import { BillFormExtractor } from './bill-form-extractor';
 import { dateValidator } from './validators/date-validator.directive';
 import { numberValidator } from './validators/number-validator.directive';
