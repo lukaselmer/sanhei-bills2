@@ -38,7 +38,7 @@
     "indent": [true, "spaces"],
     "interface-over-type-literal": true,
     "label-position": true,
-    "max-line-length": [true, 140],
+    "max-line-length": [true, 110],
     "member-access": [true, "no-public"],
     "member-ordering": [
       true,
@@ -62,7 +62,15 @@
     "no-shadowed-variable": true,
     "no-string-literal": false,
     "no-string-throw": true,
-    "no-submodule-imports": [true, "rxjs", "@angular", "zone.js", "angularfire2", "core-js", "firebase"],
+    "no-submodule-imports": [
+      true,
+      "rxjs",
+      "@angular",
+      "zone.js",
+      "angularfire2",
+      "core-js",
+      "firebase"
+    ],
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
@@ -77,7 +85,14 @@
     //   "ignore-case",
     //   "match-declaration-order"
     // ],
-    "one-line": [true, "check-open-brace", "check-catch", "check-finally", "check-else", "check-whitespace"],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-finally",
+      "check-else",
+      "check-whitespace"
+    ],
     "prefer-const": true,
     "quotemark": [true, "single"],
     "radix": true,
