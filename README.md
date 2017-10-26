@@ -15,6 +15,7 @@
 [![bitHound Dev Dependencies](https://www.bithound.io/github/lukaselmer/sanhei-bills2/badges/devDependencies.svg)](https://www.bithound.io/github/lukaselmer/sanhei-bills2/master/dependencies/npm)
 [![codecov](https://codecov.io/gh/lukaselmer/sanhei-bills2/branch/master/graph/badge.svg)](https://codecov.io/gh/lukaselmer/sanhei-bills2)
 [![Stories in Ready](https://badge.waffle.io/lukaselmer/sanhei-bills2.svg?label=ready&title=Ready)](http://waffle.io/lukaselmer/sanhei-bills2)
+[![codebeat badge](https://codebeat.co/badges/7684be16-7c66-4f2d-b366-4410018d7326)](https://codebeat.co/projects/github-com-lukaselmer-sanhei-bills2-master)
 
 # SanheiBills2
 
