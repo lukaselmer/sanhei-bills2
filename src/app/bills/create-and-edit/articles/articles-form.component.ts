@@ -1,7 +1,3 @@
-// Remove this as soon as the rule is fixed (current version: 3.2.1),
-// see https://github.com/mgechev/codelyzer/releases
-/* tslint:disable:no-access-missing-member */
-
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
