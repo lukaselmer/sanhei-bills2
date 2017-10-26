@@ -13,7 +13,6 @@ import { Observable } from 'rxjs/Observable';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { DataStoreService } from '../store/data-store.service';
-import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
 import { BillPrintComponent } from './bill-print.component';
