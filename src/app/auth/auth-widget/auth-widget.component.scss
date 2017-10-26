@@ -9,6 +9,10 @@ section {
   text-align: right;
 
   background: mat-color($sb-app-primary);
+
+  @media print {
+    display: none;
+  }
 }
 
 mat-spinner {
