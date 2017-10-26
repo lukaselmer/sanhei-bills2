@@ -101,7 +101,7 @@ export class ArticlesFormComponent implements OnChanges {
       .distinctUntilChanged()
       .debounceTime(10)
       .distinctUntilChanged()
-      .map(filter => this.articlesService.uniqueDescriptions(filter))
+      .map(filter => this.articlesService.filterAutocompleteArticles(filter))
       .share();
   }
 
