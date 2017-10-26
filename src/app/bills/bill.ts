@@ -2,7 +2,10 @@ import { Article } from './article';
 
 export class Bill {
   static DEFAULTS = {
-    paymentDeadlineInDays: 30
+    paymentDeadlineInDays: 30,
+    vat: 8,
+    discount: 0,
+    cashback: 2
   };
 
   id: string;

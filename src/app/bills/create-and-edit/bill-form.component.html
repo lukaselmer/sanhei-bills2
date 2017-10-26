@@ -18,7 +18,7 @@
     <mat-form-field>
       <input matInput formControlName="title" placeholder="Titel Rechnung" [matAutocomplete]="titleAuto">
     </mat-form-field>
-    <mat-autocomplete #titleAuto="matAutocomplete">
+    <mat-autocomplete (optionSelected)="titleSelected($event)" #titleAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['title'] | async" [value]="option">
         {{ option }}
       </mat-option>
@@ -27,7 +27,7 @@
     <mat-form-field>
       <textarea matInput formControlName="address" matTextareaAutosize placeholder="Adresse" [matAutocomplete]="addressAuto"></textarea>
     </mat-form-field>
-    <mat-autocomplete #addressAuto="matAutocomplete">
+    <mat-autocomplete (optionSelected)="addressSelected($event)" #addressAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['address'] | async" [value]="option">
         {{ option }}
       </mat-option>
@@ -56,7 +56,7 @@
     <mat-form-field>
       <input matInput formControlName="descriptionTitle" placeholder="Titel Beschreibung" [matAutocomplete]="descriptionTitleAuto">
     </mat-form-field>
-    <mat-autocomplete #descriptionTitleAuto="matAutocomplete">
+    <mat-autocomplete (optionSelected)="descriptionTitleSelected($event)" #descriptionTitleAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['descriptionTitle'] | async" [value]="option">
         {{ option }}
       </mat-option>
