@@ -13,11 +13,11 @@ import {
   MatNativeDateModule,
   MatProgressBarModule
 } from '@angular/material';
-import { ArticlesService } from './articles.service';
 import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsRoutingModule } from './bills-routing.module';
 import { BillsService } from './bills.service';
-import { ArticlesFormComponent } from './create-and-edit/articles-form.component';
+import { ArticlesFormComponent } from './create-and-edit/articles/articles-form.component';
+import { ArticlesService } from './create-and-edit/articles/articles.service';
 import { BillAutocompleteService } from './create-and-edit/bill-autocomplete.service';
 import { BillEditComponent } from './create-and-edit/bill-edit.component';
 import { BillFormComponent } from './create-and-edit/bill-form.component';

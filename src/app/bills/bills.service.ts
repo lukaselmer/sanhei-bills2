@@ -16,7 +16,6 @@ import 'rxjs/add/operator/toArray';
 import { Observable } from 'rxjs/Observable';
 import { currentDateAsISO8601 } from '../shared/date-helper';
 import { Article } from './article';
-import { ArticlesService } from './articles.service';
 import { Bill } from './bill';
 import { EditedBill } from './edited-bill';
 import { NewBill } from './new-bill';

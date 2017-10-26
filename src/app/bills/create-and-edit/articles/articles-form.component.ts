@@ -6,18 +6,14 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
-import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper';
-import { Article } from './../article';
-import { ArticlesService } from './../articles.service';
-import { Bill } from './../bill';
-import { EditedBill } from './../edited-bill';
-import { NewBill } from './../new-bill';
-import { BillFormExtractor } from './bill-form-extractor';
+import { numberValidator } from '../validators/number-validator.directive';
+import { requiredIfOneSiblingHasContent } from '../validators/required-if-one-sibling-has-content.directive';
+import { Article } from './../../article';
+import { Bill } from './../../bill';
+import { EditedBill } from './../../edited-bill';
+import { NewBill } from './../../new-bill';
+import { ArticlesService } from './articles.service';
 import { FormArticle } from './form-article';
-import { dateValidator } from './validators/date-validator.directive';
-import { numberValidator } from './validators/number-validator.directive';
-import { requiredIfOneSiblingHasContent } from './validators/required-if-one-sibling-has-content.directive';
-import { workedAtValidator } from './validators/worked-at-validator.directive';
 
 @Component({
   selector: 'sb-articles-form',

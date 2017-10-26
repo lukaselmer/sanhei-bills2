@@ -12,7 +12,6 @@ import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
 import { BillFormExtractor } from './bill-form-extractor';
-import { FormArticle } from './form-article';
 import { dateValidator } from './validators/date-validator.directive';
 import { numberValidator } from './validators/number-validator.directive';
 import { requiredIfOneSiblingHasContent } from './validators/required-if-one-sibling-has-content.directive';
