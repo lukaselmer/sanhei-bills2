@@ -1,3 +1,4 @@
+import { BillAutocompleteService } from './bill-autocomplete.service';
 // Remove this as soon as the rule is fixed (current version: 3.2.1),
 // see https://github.com/mgechev/codelyzer/releases
 /* tslint:disable:no-access-missing-member */
@@ -7,7 +8,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper';
-import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
@@ -36,7 +36,7 @@ export class BillFormComponent implements OnChanges {
   form: FormGroup;
   autocompleteOptions: { [index: string]: Observable<string[]> } = {};
 
-  constructor(private articlesService: ArticlesService, private fb: FormBuilder) { }
+  constructor(private autocompleteService: BillAutocompleteService, private fb: FormBuilder) { }
 
   private createForm() {
     if (this.form) return;
@@ -115,7 +115,7 @@ export class BillFormComponent implements OnChanges {
         this.autocompleteOptions[field] = (this.form.get(field) as FormControl)
           .valueChanges
           .startWith('')
-          .map(v => this.articlesService.autocompleteOptions(field, v))
+          .map(v => this.autocompleteService.autocompleteOptions(field, v))
       );
   }
 

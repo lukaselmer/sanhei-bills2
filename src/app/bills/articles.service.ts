@@ -31,18 +31,4 @@ export class ArticlesService {
     }
     return this.articleDescriptionsCache;
   }
-
-  // TODO: move this method to another service (bills service or autocomplete service)
-  autocompleteOptions(field: string, filter: string): string[] {
-    const bills = this.dataStore.store().bills;
-    const uniqFieldValues: { [index: string]: boolean } = {};
-    Object.keys(bills).forEach(k =>
-      uniqFieldValues[(bills[k] as any)[field]] = true);
-
-    const lowerCaseFilter = filter.toLocaleLowerCase();
-    return Object.keys(uniqFieldValues)
-      .filter(fieldValue => fieldValue.toLocaleLowerCase().includes(lowerCaseFilter))
-      .slice(0, 20);
-  }
-
 }

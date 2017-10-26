@@ -18,6 +18,7 @@ import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsRoutingModule } from './bills-routing.module';
 import { BillsService } from './bills.service';
 import { ArticlesFormComponent } from './create-and-edit/articles-form.component';
+import { BillAutocompleteService } from './create-and-edit/bill-autocomplete.service';
 import { BillEditComponent } from './create-and-edit/bill-edit.component';
 import { BillFormComponent } from './create-and-edit/bill-form.component';
 import { BillNewComponent } from './create-and-edit/bill-new.component';
@@ -56,7 +57,8 @@ import { IDBStoreService } from './store/idb-store.service';
     BillsService,
     ArticlesService,
     DataStoreService,
-    IDBStoreService
+    IDBStoreService,
+    BillAutocompleteService
   ]
 })
 export class BillsModule { }
