@@ -12,7 +12,7 @@ export class ArticlesService {
 
   constructor(private dataStore: DataStoreService) { }
 
-  uniqueDescriptions(filter: string): AutocompleteArticle[] {
+  filterAutocompleteArticles(filter: string): AutocompleteArticle[] {
     this.ensureInitializedCache();
 
     const terms = filter.toLocaleLowerCase().split(' ');

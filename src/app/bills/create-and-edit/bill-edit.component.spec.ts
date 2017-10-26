@@ -59,7 +59,7 @@ describe('BillEditComponent', () => {
           }
         },
         { provide: BillAutocompleteService, useValue: { autocompleteOptions: () => [] } },
-        { provide: ArticlesService, useValue: { uniqueDescriptions: () => [] } },
+        { provide: ArticlesService, useValue: { filterAutocompleteArticles: () => [] } },
         {
           provide: ActivatedRoute, useValue: {
             snapshot: {

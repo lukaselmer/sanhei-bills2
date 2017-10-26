@@ -82,7 +82,7 @@ describe('BillNewComponent', () => {
           }
         },
         { provide: BillAutocompleteService, useValue: { autocompleteOptions: () => [] } },
-        { provide: ArticlesService, useValue: { uniqueDescriptions: () => [] } }
+        { provide: ArticlesService, useValue: { filterAutocompleteArticles: () => [] } }
       ],
       declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent]
     }).compileComponents();

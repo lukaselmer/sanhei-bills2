@@ -4,6 +4,9 @@ export class AutocompleteArticle {
   readonly stringToFilter: string;
 
   constructor(private article: Article) {
+    // This is initialized in the constructor for performance reasons. Otherwise,
+    // the article autocomplete would be too laggy. This string is used to filter
+    // articles, and to ensure only unique articles can be found.
     this.stringToFilter = this.calculateStringToFilter();
   }
 
