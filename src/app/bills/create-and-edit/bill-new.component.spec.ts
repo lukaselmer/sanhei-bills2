@@ -16,6 +16,7 @@ import { DataStoreService } from '../store/data-store.service';
 import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { NewBill } from './../new-bill';
+import { ArticlesFormComponent } from './articles-form.component';
 import { BillFormComponent } from './bill-form.component';
 import { BillNewComponent } from './bill-new.component';
 
@@ -85,7 +86,7 @@ describe('BillNewComponent', () => {
           }
         }
       ],
-      declarations: [BillNewComponent, BillFormComponent]
+      declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent]
     }).compileComponents();
   }));
 
