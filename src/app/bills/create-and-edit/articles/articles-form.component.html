@@ -13,9 +13,9 @@
             <input #articleDescription matInput (focus)="articleFocus(articleDescription.value)" formControlName="description" placeholder="Beschreibung"
               [matAutocomplete]="articleDescriptionAuto">
           </mat-form-field>
-          <mat-autocomplete #articleDescriptionAuto="matAutocomplete">
+          <mat-autocomplete (optionSelected)="autocompleteSelected(i, $event.option.value)" [displayWith]="displayDescription" #articleDescriptionAuto="matAutocomplete">
             <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">
-              {{ option }}
+              {{ option.displayValue }}
             </mat-option>
           </mat-autocomplete>
         </div>

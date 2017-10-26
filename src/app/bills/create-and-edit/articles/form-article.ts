@@ -1,19 +1,11 @@
 import { Article } from './../../article';
 
 export class FormArticle {
-  catalogId = '';
-  description = '';
-  dimension = '';
-  price = '';
-  amount = '';
+  constructor(private article?: Article) { }
 
-  constructor(article?: Article) {
-    if (!article) return;
-
-    this.catalogId = article.catalogId;
-    this.description = article.description;
-    this.dimension = article.dimension;
-    this.price = `${article.price}`;
-    this.amount = `${article.amount}`;
-  }
+  get catalogId() { return this.article ? this.article.catalogId : ''; }
+  get description() { return this.article ? this.article.description : ''; }
+  get dimension() { return this.article ? this.article.dimension : ''; }
+  get price() { return this.article ? this.article.price + '' : ''; }
+  get amount() { return this.article ? this.article.amount + '' : ''; }
 }
