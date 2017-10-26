@@ -3,7 +3,7 @@ import { Article } from '../article';
 import { Bill } from '../bill';
 import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
-import { FormArticle } from './form-article';
+import { FormArticle } from './articles/form-article';
 
 export abstract class BillFormExtractor {
   constructor(protected formValue: any) { }
