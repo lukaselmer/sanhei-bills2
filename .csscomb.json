@@ -1,9 +1,5 @@
 {
-  "exclude": [
-    ".git/**",
-    "node_modules/**",
-    "bower_components/**"
-  ],
+  "exclude": [".git/**", "node_modules/**", "bower_components/**"],
   "always-semicolon": true,
   "block-indent": "  ",
   "color-case": "lower",
@@ -29,9 +25,7 @@
   "sort-order-fallback": "abc",
   "tab-size": 2,
   "sort-order": [
-    [
-      "$include"
-    ],
+    ["$include"],
     [
       "font",
       "font-family",
@@ -48,14 +42,7 @@
       "font-smooth",
       "line-height"
     ],
-    [
-      "position",
-      "z-index",
-      "top",
-      "right",
-      "bottom",
-      "left"
-    ],
+    ["position", "z-index", "top", "right", "bottom", "left"],
     [
       "display",
       "visibility",

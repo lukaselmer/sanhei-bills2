@@ -4,7 +4,7 @@ import { DataStoreService } from './../store/data-store.service';
 
 @Injectable()
 export class BillAutocompleteService {
-  constructor(private dataStore: DataStoreService) { }
+  constructor(private dataStore: DataStoreService) {}
 
   autocompleteOptions<BillField extends keyof Bill>(field: BillField, filter: string): string[] {
     const lowerCaseFilter = filter.toLocaleLowerCase();
@@ -13,12 +13,20 @@ export class BillAutocompleteService {
       .slice(0, 20);
   }
 
-  private valuesMapFor<BillField extends keyof Bill>(field: BillField): { [index: string]: Bill | undefined } {
+  private valuesMapFor<BillField extends keyof Bill>(
+    field: BillField
+  ): {
+    [index: string]: Bill | undefined;
+  } {
     const bills = this.dataStore.getBills();
-    const fieldValuesMap: { [index: string]: Bill | undefined } = {};
+    const fieldValuesMap: {
+      [index: string]: Bill | undefined;
+    } = {};
     bills.forEach(bill => {
       const fieldValue = bill[field] as string;
-      if (!fieldValuesMap[fieldValue]) fieldValuesMap[fieldValue] = bill;
+      if (!fieldValuesMap[fieldValue]) {
+        fieldValuesMap[fieldValue] = bill;
+      }
     });
     return fieldValuesMap;
   }

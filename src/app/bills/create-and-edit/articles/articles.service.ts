@@ -10,7 +10,7 @@ import { AutocompleteArticle } from './autocomplete-article';
 export class ArticlesService {
   private autocompleteArticles: AutocompleteArticle[];
 
-  constructor(private dataStore: DataStoreService) { }
+  constructor(private dataStore: DataStoreService) {}
 
   filterAutocompleteArticles(filter: string): AutocompleteArticle[] {
     this.ensureInitializedCache();
@@ -21,12 +21,14 @@ export class ArticlesService {
       .filter(autocompleteArticle => autocompleteArticle.matchesAll(terms))
       .take(25)
       .toArray()
-      .subscribe(descriptionsHack => descriptions = descriptionsHack);
+      .subscribe(descriptionsHack => (descriptions = descriptionsHack));
     return descriptions;
   }
 
   private ensureInitializedCache() {
-    if (!this.autocompleteArticles) this.initArticleDescriptions();
+    if (!this.autocompleteArticles) {
+      this.initArticleDescriptions();
+    }
   }
 
   private initArticleDescriptions() {
@@ -36,14 +38,15 @@ export class ArticlesService {
     this.dataStore
       .getBills()
       .map(bill => bill.articles)
-      .forEach(articles =>
-        articles.forEach(article =>
-          this.handleArticle(article, uniqMap)
-        )
-      );
+      .forEach(articles => articles.forEach(article => this.handleArticle(article, uniqMap)));
   }
 
-  private handleArticle(article: Article, uniqMap: { [index: string]: boolean }) {
+  private handleArticle(
+    article: Article,
+    uniqMap: {
+      [index: string]: boolean;
+    }
+  ) {
     const autocompleteArticle = new AutocompleteArticle(article);
     const articleAlreadyInList = uniqMap[autocompleteArticle.stringToFilter];
     if (!articleAlreadyInList) {
@@ -51,5 +54,4 @@ export class ArticlesService {
       uniqMap[autocompleteArticle.stringToFilter] = true;
     }
   }
-
 }

@@ -30,9 +30,11 @@ export class BillFormComponent implements OnChanges {
   @Output() onAborted = new EventEmitter<void>();
 
   form: FormGroup;
-  autocompleteOptions: { [index: string]: Observable<string[]> } = {};
+  autocompleteOptions: {
+    [index: string]: Observable<string[]>;
+  } = {};
 
-  constructor(private autocompleteService: BillAutocompleteService, private fb: FormBuilder) { }
+  constructor(private autocompleteService: BillAutocompleteService, private fb: FormBuilder) {}
 
   private createForm() {
     if (this.form) return;
@@ -44,35 +46,19 @@ export class BillFormComponent implements OnChanges {
 
       cashback: [
         Bill.DEFAULTS.cashback + '',
-        Validators.compose([
-          Validators.required,
-          Validators.min(0),
-          Validators.max(100)]
-        )
+        Validators.compose([Validators.required, Validators.min(0), Validators.max(100)])
       ],
       vat: [
         Bill.DEFAULTS.vat + '',
-        Validators.compose([
-          Validators.required,
-          Validators.min(1),
-          Validators.max(100)]
-        )
+        Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])
       ],
       discount: [
         Bill.DEFAULTS.discount + '',
-        Validators.compose([
-          Validators.required,
-          Validators.min(0),
-          Validators.max(100)]
-        )
+        Validators.compose([Validators.required, Validators.min(0), Validators.max(100)])
       ],
       paymentDeadlineInDays: [
         Bill.DEFAULTS.paymentDeadlineInDays + '',
-        Validators.compose([
-          Validators.required,
-          Validators.min(1),
-          Validators.max(1000)]
-        )
+        Validators.compose([Validators.required, Validators.min(1), Validators.max(1000)])
       ],
 
       address: ['', Validators.required],
@@ -90,7 +76,11 @@ export class BillFormComponent implements OnChanges {
   }
 
   private editSpecificFormValues() {
-    return this.createNewBill ? {} : { humanId: ['', Validators.required] };
+    return this.createNewBill
+      ? {}
+      : {
+          humanId: ['', Validators.required]
+        };
   }
 
   private dateDefault(): string {
@@ -99,7 +89,9 @@ export class BillFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const validBillEditValue = changes.bill && changes.bill.currentValue;
-    if (!this.createNewBill && !validBillEditValue) return;
+    if (!this.createNewBill && !validBillEditValue) {
+      return;
+    }
 
     this.createForm();
     this.initBillAutocomplete();
@@ -107,15 +99,24 @@ export class BillFormComponent implements OnChanges {
   }
 
   private initBillAutocomplete() {
-    if (this.autocompleteOptions['title']) return;
+    if (this.autocompleteOptions['title']) {
+      return;
+    }
 
-    ['billType', 'address', 'title', 'descriptionTitle', 'ownerName', 'ordererName', 'description']
-      .forEach((field: 'billType' | 'address' | 'title' | 'descriptionTitle' | 'ownerName' | 'ordererName' | 'description') =>
-        this.autocompleteOptions[field] = (this.form.get(field) as FormControl)
-          .valueChanges
+    [
+      'billType' as 'billType',
+      'address' as 'address',
+      'title' as 'title',
+      'descriptionTitle' as 'descriptionTitle',
+      'ownerName' as 'ownerName',
+      'ordererName' as 'ordererName',
+      'description' as 'description'
+    ].forEach(
+      field =>
+        (this.autocompleteOptions[field] = (this.form.get(field) as FormControl).valueChanges
           .startWith('')
-          .map(v => this.autocompleteService.autocompleteOptions(field, v))
-      );
+          .map(v => this.autocompleteService.autocompleteOptions(field, v)))
+    );
   }
 
   private billChanged() {
@@ -157,7 +158,11 @@ export class BillFormComponent implements OnChanges {
   private scrollToAndFocus(query: string): boolean {
     const element = document.querySelector(query) as HTMLElement;
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center'
+      });
       setTimeout(() => element.focus(), 500);
     }
     return !!element;
@@ -171,7 +176,9 @@ export class BillFormComponent implements OnChanges {
 
   descriptionTitleSelected(event: MatAutocompleteSelectedEvent) {
     const descriptionControl = this.form.controls.description;
-    if (descriptionControl.value) return;
+    if (descriptionControl.value) {
+      return;
+    }
 
     const description = this.autocompleteService.descriptionForDescriptionTitle(event.option.value);
     descriptionControl.setValue(description);
@@ -185,7 +192,9 @@ export class BillFormComponent implements OnChanges {
     if (!bill) return;
 
     discountControl.setValue(bill.discount + '');
-    paymentDeadlineControl.setValue((bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + '');
+    paymentDeadlineControl.setValue(
+      (bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + ''
+    );
   }
 
   titleSelected(event: MatAutocompleteSelectedEvent) {
@@ -197,13 +206,19 @@ export class BillFormComponent implements OnChanges {
     const bill = this.autocompleteService.billForTitle(event.option.value);
     if (!bill) return;
 
-    if (!addressControl.value) addressControl.setValue(bill.address);
-    if (!ownerNameControl.value) ownerNameControl.setValue(bill.ownerName);
+    if (!addressControl.value) {
+      addressControl.setValue(bill.address);
+    }
+    if (!ownerNameControl.value) {
+      ownerNameControl.setValue(bill.ownerName);
+    }
     if (discountControl.value === Bill.DEFAULTS.discount + '') {
       discountControl.setValue(bill.discount + '');
     }
     if (paymentDeadlineControl.value === Bill.DEFAULTS.paymentDeadlineInDays + '') {
-      paymentDeadlineControl.setValue((bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + '');
+      paymentDeadlineControl.setValue(
+        (bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + ''
+      );
     }
   }
 }

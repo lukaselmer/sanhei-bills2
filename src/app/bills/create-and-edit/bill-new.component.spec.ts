@@ -1,8 +1,16 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatIconModule,
-  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatNativeDateModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,7 +33,9 @@ describe('BillNewComponent', () => {
   let component: BillNewComponent;
   let fixture: ComponentFixture<BillNewComponent>;
 
-  const newBill = newBillVariant({ articles: [] });
+  const newBill = newBillVariant({
+    articles: []
+  });
 
   function fillForm() {
     const compiled = fixture.debugElement.nativeElement;
@@ -58,42 +68,57 @@ describe('BillNewComponent', () => {
     fill(selectTextarea('description'), newBill.description);
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatCardModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatProgressBarModule,
-        MatNativeDateModule,
-        MatDatepickerModule,
-        MatAutocompleteModule,
-        NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      providers: [
-        {
-          provide: BillsService, useValue: {
-            createBill: (billToUpdate: NewBill): void => undefined
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          ReactiveFormsModule,
+          MatButtonModule,
+          MatCheckboxModule,
+          MatCardModule,
+          MatIconModule,
+          MatInputModule,
+          MatListModule,
+          MatProgressBarModule,
+          MatNativeDateModule,
+          MatDatepickerModule,
+          MatAutocompleteModule,
+          NoopAnimationsModule,
+          RouterTestingModule
+        ],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              createBill: (billToUpdate: NewBill): void => undefined
+            }
+          },
+          {
+            provide: BillAutocompleteService,
+            useValue: {
+              autocompleteOptions: () => []
+            }
+          },
+          {
+            provide: ArticlesService,
+            useValue: {
+              filterAutocompleteArticles: () => []
+            }
           }
-        },
-        { provide: BillAutocompleteService, useValue: { autocompleteOptions: () => [] } },
-        { provide: ArticlesService, useValue: { filterAutocompleteArticles: () => [] } }
-      ],
-      declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent]
-    }).compileComponents();
-  }));
+        ],
+        declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent]
+      }).compileComponents();
+    })
+  );
 
-  beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(BillNewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    tick(1);
-  }));
+  beforeEach(
+    fakeAsync(() => {
+      fixture = TestBed.createComponent(BillNewComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      tick(1);
+    })
+  );
 
   it('submits the form', () => {
     const service: BillsService = TestBed.get(BillsService);
@@ -114,12 +139,15 @@ describe('BillNewComponent', () => {
     expect(service.createBill).toHaveBeenCalledWith(newBill);
   });
 
-  it('aborts editing', fakeAsync(() => {
-    const router: Router = TestBed.get(Router);
-    fixture.detectChanges();
-    spyOn(router, 'navigate').and.returnValue('');
-    const compiled = fixture.debugElement.nativeElement;
-    component.navigateToIndex();
-    expect(router.navigate).toHaveBeenCalledWith(['bills']);
-  }));
+  it(
+    'aborts editing',
+    fakeAsync(() => {
+      const router: Router = TestBed.get(Router);
+      fixture.detectChanges();
+      spyOn(router, 'navigate').and.returnValue('');
+      const compiled = fixture.debugElement.nativeElement;
+      component.navigateToIndex();
+      expect(router.navigate).toHaveBeenCalledWith(['bills']);
+    })
+  );
 });

@@ -23,13 +23,13 @@ import { PageNotFoundComponent } from './not-found.component';
     BillsModule,
     AppRoutingModule
   ],
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent
-  ],
+  declarations: [AppComponent, PageNotFoundComponent],
   providers: [
-    { provide: LOCALE_ID, useValue: 'de-CH' }
+    {
+      provide: LOCALE_ID,
+      useValue: 'de-CH'
+    }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

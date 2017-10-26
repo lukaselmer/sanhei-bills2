@@ -36,11 +36,8 @@ export const updateBillIds = functions.database.ref('billing/bills/{billId}').on
         const lastVersionInDb = val[Object.keys(val)[0]].humanId;
         const nextHumanId = lastVersionInDb + 1;
         data.ref.child('humanId').set(nextHumanId);
-        Promise.all([
-          setIdPromise,
-          setHumanId(data, nextHumanId),
-          setUid(data, nextHumanId)
-        ]).then(() => resolve())
+        Promise.all([setIdPromise, setHumanId(data, nextHumanId), setUid(data, nextHumanId)])
+          .then(() => resolve())
           .catch(error => reject(error));
       });
   });

@@ -1,8 +1,16 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatIconModule,
-  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatNativeDateModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,55 +39,71 @@ describe('BillEditComponent', () => {
     descriptionTitle: 'Zusatz'
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatCardModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatProgressBarModule,
-        MatNativeDateModule,
-        MatDatepickerModule,
-        MatAutocompleteModule,
-        NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      providers: [
-        {
-          provide: BillsService, useValue: {
-            editBill: (id: string): Observable<Bill> => {
-              expect(id).toEqual(bill.id);
-              return Observable.of(bill);
-            },
-            updateBill: (billToUpdate: EditedBill): void => undefined
-          }
-        },
-        { provide: BillAutocompleteService, useValue: { autocompleteOptions: () => [] } },
-        { provide: ArticlesService, useValue: { filterAutocompleteArticles: () => [] } },
-        {
-          provide: ActivatedRoute, useValue: {
-            snapshot: {
-              params: {
-                id: bill.id
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          ReactiveFormsModule,
+          MatButtonModule,
+          MatCheckboxModule,
+          MatCardModule,
+          MatIconModule,
+          MatInputModule,
+          MatListModule,
+          MatProgressBarModule,
+          MatNativeDateModule,
+          MatDatepickerModule,
+          MatAutocompleteModule,
+          NoopAnimationsModule,
+          RouterTestingModule
+        ],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              editBill: (id: string): Observable<Bill> => {
+                expect(id).toEqual(bill.id);
+                return Observable.of(bill);
+              },
+              updateBill: (billToUpdate: EditedBill): void => undefined
+            }
+          },
+          {
+            provide: BillAutocompleteService,
+            useValue: {
+              autocompleteOptions: () => []
+            }
+          },
+          {
+            provide: ArticlesService,
+            useValue: {
+              filterAutocompleteArticles: () => []
+            }
+          },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                params: {
+                  id: bill.id
+                }
               }
             }
           }
-        }
-      ],
-      declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent]
-    }).compileComponents();
-  }));
+        ],
+        declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent]
+      }).compileComponents();
+    })
+  );
 
-  beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(BillEditComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    tick(1);
-  }));
+  beforeEach(
+    fakeAsync(() => {
+      fixture = TestBed.createComponent(BillEditComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      tick(1);
+    })
+  );
 
   it('submits the form', () => {
     const service: BillsService = TestBed.get(BillsService);
@@ -90,18 +114,23 @@ describe('BillEditComponent', () => {
     const element = compiled.querySelector('form');
     element.dispatchEvent(new Event('submit'));
 
-    const expectedEditedBill = { ...bill };
+    const expectedEditedBill = {
+      ...bill
+    };
     delete expectedEditedBill.updatedAt;
     expect(component.navigateToIndex).toHaveBeenCalled();
     expect(service.updateBill).toHaveBeenCalledWith(expectedEditedBill);
   });
 
-  it('aborts editing', fakeAsync(() => {
-    const router: Router = TestBed.get(Router);
-    fixture.detectChanges();
-    spyOn(router, 'navigate').and.returnValue('');
-    const compiled = fixture.debugElement.nativeElement;
-    component.navigateToIndex();
-    expect(router.navigate).toHaveBeenCalledWith(['bills']);
-  }));
+  it(
+    'aborts editing',
+    fakeAsync(() => {
+      const router: Router = TestBed.get(Router);
+      fixture.detectChanges();
+      spyOn(router, 'navigate').and.returnValue('');
+      const compiled = fixture.debugElement.nativeElement;
+      component.navigateToIndex();
+      expect(router.navigate).toHaveBeenCalledWith(['bills']);
+    })
+  );
 });

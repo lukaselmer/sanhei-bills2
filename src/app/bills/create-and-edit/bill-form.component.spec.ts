@@ -1,8 +1,16 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatIconModule,
-  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatNativeDateModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,55 +40,71 @@ describe('BillFormComponent', () => {
     descriptionTitle: 'Zusatz'
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatCardModule,
-        MatIconModule,
-        MatInputModule,
-        MatListModule,
-        MatProgressBarModule,
-        MatNativeDateModule,
-        MatDatepickerModule,
-        MatAutocompleteModule,
-        NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      providers: [
-        {
-          provide: BillsService, useValue: {
-            editBill: (id: string): Observable<Bill> => {
-              expect(id).toEqual(bill.id);
-              return Observable.of(bill);
-            },
-            updateBill: (billToUpdate: Bill): void => undefined
-          }
-        },
-        { provide: BillAutocompleteService, useValue: { autocompleteOptions: () => [] } },
-        { provide: ArticlesService, useValue: { filterAutocompleteArticles: () => [] } },
-        {
-          provide: ActivatedRoute, useValue: {
-            snapshot: {
-              params: {
-                id: bill.id
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          ReactiveFormsModule,
+          MatButtonModule,
+          MatCheckboxModule,
+          MatCardModule,
+          MatIconModule,
+          MatInputModule,
+          MatListModule,
+          MatProgressBarModule,
+          MatNativeDateModule,
+          MatDatepickerModule,
+          MatAutocompleteModule,
+          NoopAnimationsModule,
+          RouterTestingModule
+        ],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              editBill: (id: string): Observable<Bill> => {
+                expect(id).toEqual(bill.id);
+                return Observable.of(bill);
+              },
+              updateBill: (billToUpdate: Bill): void => undefined
+            }
+          },
+          {
+            provide: BillAutocompleteService,
+            useValue: {
+              autocompleteOptions: () => []
+            }
+          },
+          {
+            provide: ArticlesService,
+            useValue: {
+              filterAutocompleteArticles: () => []
+            }
+          },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                params: {
+                  id: bill.id
+                }
               }
             }
           }
-        }
-      ],
-      declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent]
-    }).compileComponents();
-  }));
+        ],
+        declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent]
+      }).compileComponents();
+    })
+  );
 
-  beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(BillEditComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    tick(1);
-  }));
+  beforeEach(
+    fakeAsync(() => {
+      fixture = TestBed.createComponent(BillEditComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      tick(1);
+    })
+  );
 
   it('renders the form fields and sets the values', () => {
     const compiled = fixture.debugElement.nativeElement;

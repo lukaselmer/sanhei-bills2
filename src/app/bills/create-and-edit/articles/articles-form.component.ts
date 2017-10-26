@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
@@ -25,10 +33,12 @@ export class ArticlesFormComponent implements OnChanges {
   autocompleteOptions: Observable<AutocompleteArticle[]>;
   articleDescriptionFocusStream = new Subject<string>();
 
-  constructor(private articlesService: ArticlesService, private fb: FormBuilder) { }
+  constructor(private articlesService: ArticlesService, private fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.articles) this.articlesChanged();
+    if (changes.articles) {
+      this.articlesChanged();
+    }
   }
 
   private articlesChanged() {
@@ -38,7 +48,9 @@ export class ArticlesFormComponent implements OnChanges {
   }
 
   addNewArticles(amount: number) {
-    for (let i = 0; i < amount; ++i) this.formArticles.push(new FormArticle());
+    for (let i = 0; i < amount; ++i) {
+      this.formArticles.push(new FormArticle());
+    }
     this.setArticles();
   }
 
@@ -54,19 +66,18 @@ export class ArticlesFormComponent implements OnChanges {
   }
 
   private setArticles() {
-    const articleFormGroups = this.formArticles.map(a => this.fb.group({
-      amount: [a.amount, Validators.compose([
-        requiredIfOneSiblingHasContent(),
-        numberValidator()
-      ])],
-      price: [a.price, Validators.compose([
-        requiredIfOneSiblingHasContent(),
-        numberValidator()
-      ])],
-      catalogId: a.catalogId,
-      description: [a.description, requiredIfOneSiblingHasContent()],
-      dimension: a.dimension
-    }));
+    const articleFormGroups = this.formArticles.map(a =>
+      this.fb.group({
+        amount: [
+          a.amount,
+          Validators.compose([requiredIfOneSiblingHasContent(), numberValidator()])
+        ],
+        price: [a.price, Validators.compose([requiredIfOneSiblingHasContent(), numberValidator()])],
+        catalogId: a.catalogId,
+        description: [a.description, requiredIfOneSiblingHasContent()],
+        dimension: a.dimension
+      })
+    );
     this.keepAricleValidationsUpdated(articleFormGroups);
     this.formGroup.setControl('articles', this.fb.array(articleFormGroups));
     this.initArticlesAutocomplete();
@@ -76,26 +87,29 @@ export class ArticlesFormComponent implements OnChanges {
     // automaticValueChangeInProgress avoids recursive value changes
     let automaticValueChangeInProgress = false;
     articleFormGroups.forEach(fg => {
-      fg.valueChanges.map(() => {
-        if (automaticValueChangeInProgress) return;
-        automaticValueChangeInProgress = true;
-        Object.keys(fg.controls).forEach(fieldKey => {
-          fg.controls[fieldKey].markAsTouched();
-          fg.controls[fieldKey].setValue(fg.controls[fieldKey].value);
-        }
-        );
-        automaticValueChangeInProgress = false;
-      }).subscribe();
+      fg.valueChanges
+        .map(() => {
+          if (automaticValueChangeInProgress) {
+            return;
+          }
+          automaticValueChangeInProgress = true;
+          Object.keys(fg.controls).forEach(fieldKey => {
+            fg.controls[fieldKey].markAsTouched();
+            fg.controls[fieldKey].setValue(fg.controls[fieldKey].value);
+          });
+          automaticValueChangeInProgress = false;
+        })
+        .subscribe();
     });
   }
 
   private initArticlesAutocomplete() {
-    this.autocompleteOptions = Observable.from(
-      [this.articleDescriptionFocusStream,
+    this.autocompleteOptions = Observable.from([
+      this.articleDescriptionFocusStream,
       ...this.articlesForm.controls.map(articleForm =>
         articleForm.valueChanges.map(article => article.description)
-      )]
-    )
+      )
+    ])
       .mergeAll()
       .filter(x => typeof x === 'string')
       .distinctUntilChanged()

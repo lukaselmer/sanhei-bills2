@@ -7,23 +7,38 @@ import { BillPrintComponent } from './print/bill-print.component';
 
 const routes: Routes = [
   {
-    path: 'bills', children: [
-      { path: '', component: BillsListComponent },
-      { path: 'new', component: BillNewComponent },
-      { path: '🆕', component: BillNewComponent },
-      { path: ':id', component: BillEditComponent },
-      { path: ':id/print', component: BillPrintComponent },
-      { path: ':id/🖨', component: BillPrintComponent }
+    path: 'bills',
+    children: [
+      {
+        path: '',
+        component: BillsListComponent
+      },
+      {
+        path: 'new',
+        component: BillNewComponent
+      },
+      {
+        path: '🆕',
+        component: BillNewComponent
+      },
+      {
+        path: ':id',
+        component: BillEditComponent
+      },
+      {
+        path: ':id/print',
+        component: BillPrintComponent
+      },
+      {
+        path: ':id/🖨',
+        component: BillPrintComponent
+      }
     ]
   }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class BillsRoutingModule { }
+export class BillsRoutingModule {}

@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class IDBStoreService {
   loadFromIDB<T>(table: string): Promise<{ [index: string]: T }> {
-    return new Promise<{ [index: string]: T }>((resolve, reject) => {
+    return new Promise<{
+      [index: string]: T;
+    }>((resolve, reject) => {
       const dbRequest = this.openDB(reject);
 
       dbRequest.onsuccess = (event: any) => {
@@ -66,7 +68,9 @@ export class IDBStoreService {
       if (event.oldVersion) {
         indexedDB.deleteDatabase('sanheiBilling').onsuccess = () => window.location.reload();
       } else {
-        db.createObjectStore('bills', { autoIncrement: true });
+        db.createObjectStore('bills', {
+          autoIncrement: true
+        });
       }
     };
     return dbRequest;
