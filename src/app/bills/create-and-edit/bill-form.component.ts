@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Rx';
 import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper';
@@ -41,21 +42,24 @@ export class BillFormComponent implements OnChanges {
 
       ...this.editSpecificFormValues(),
 
-      cashback: ['2',
+      cashback: [
+        Bill.DEFAULTS.cashback + '',
         Validators.compose([
           Validators.required,
           Validators.min(0),
           Validators.max(100)]
         )
       ],
-      vat: ['8',
+      vat: [
+        Bill.DEFAULTS.vat + '',
         Validators.compose([
           Validators.required,
           Validators.min(1),
           Validators.max(100)]
         )
       ],
-      discount: ['0',
+      discount: [
+        Bill.DEFAULTS.discount + '',
         Validators.compose([
           Validators.required,
           Validators.min(0),
@@ -63,7 +67,7 @@ export class BillFormComponent implements OnChanges {
         )
       ],
       paymentDeadlineInDays: [
-        Bill.DEFAULTS.paymentDeadlineInDays,
+        Bill.DEFAULTS.paymentDeadlineInDays + '',
         Validators.compose([
           Validators.required,
           Validators.min(1),
@@ -81,7 +85,7 @@ export class BillFormComponent implements OnChanges {
       descriptionTitle: ['', Validators.required],
 
       orderedAt: [this.dateDefault(), dateValidator()],
-      billedAt: [this.dateDefault(), dateValidator()]
+      billedAt: ['', dateValidator()]
     });
   }
 
@@ -106,7 +110,7 @@ export class BillFormComponent implements OnChanges {
     if (this.autocompleteOptions['title']) return;
 
     ['billType', 'address', 'title', 'descriptionTitle', 'ownerName', 'ordererName', 'description']
-      .forEach(field =>
+      .forEach((field: 'billType' | 'address' | 'title' | 'descriptionTitle' | 'ownerName' | 'ordererName' | 'description') =>
         this.autocompleteOptions[field] = (this.form.get(field) as FormControl)
           .valueChanges
           .startWith('')
@@ -163,5 +167,43 @@ export class BillFormComponent implements OnChanges {
     this.onAborted.emit();
     this.onAborted.complete();
     return false;
+  }
+
+  descriptionTitleSelected(event: MatAutocompleteSelectedEvent) {
+    const descriptionControl = this.form.controls.description;
+    if (descriptionControl.value) return;
+
+    const description = this.autocompleteService.descriptionForDescriptionTitle(event.option.value);
+    descriptionControl.setValue(description);
+  }
+
+  addressSelected(event: MatAutocompleteSelectedEvent) {
+    const discountControl = this.form.controls.discount;
+    const paymentDeadlineControl = this.form.controls.paymentDeadlineInDays;
+
+    const bill = this.autocompleteService.billForAddress(event.option.value);
+    if (!bill) return;
+
+    discountControl.setValue(bill.discount + '');
+    paymentDeadlineControl.setValue((bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + '');
+  }
+
+  titleSelected(event: MatAutocompleteSelectedEvent) {
+    const addressControl = this.form.controls.address;
+    const ownerNameControl = this.form.controls.ownerName;
+    const discountControl = this.form.controls.discount;
+    const paymentDeadlineControl = this.form.controls.paymentDeadlineInDays;
+
+    const bill = this.autocompleteService.billForTitle(event.option.value);
+    if (!bill) return;
+
+    if (!addressControl.value) addressControl.setValue(bill.address);
+    if (!ownerNameControl.value) ownerNameControl.setValue(bill.ownerName);
+    if (discountControl.value === Bill.DEFAULTS.discount + '') {
+      discountControl.setValue(bill.discount + '');
+    }
+    if (paymentDeadlineControl.value === Bill.DEFAULTS.paymentDeadlineInDays + '') {
+      paymentDeadlineControl.setValue((bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + '');
+    }
   }
 }
