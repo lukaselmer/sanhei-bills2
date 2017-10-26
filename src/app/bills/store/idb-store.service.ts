@@ -56,11 +56,18 @@ export class IDBStoreService {
   }
 
   private openDB(reject: (reason?: any) => void): IDBOpenDBRequest {
-    const dbRequest = indexedDB.open('sanheiBilling', 1);
-    dbRequest.onerror = event => reject(event);
+    const dbRequest = indexedDB.open('sanheiBilling', 2);
+    dbRequest.onerror = event => {
+      indexedDB.deleteDatabase('sanheiBilling').onsuccess = () => window.location.reload();
+      reject(event);
+    };
     dbRequest.onupgradeneeded = event => {
       const db: IDBDatabase = (event.target as any).result;
-      db.createObjectStore('bills', { autoIncrement: true });
+      if (event.oldVersion) {
+        indexedDB.deleteDatabase('sanheiBilling').onsuccess = () => window.location.reload();
+      } else {
+        db.createObjectStore('bills', { autoIncrement: true });
+      }
     };
     return dbRequest;
   }
