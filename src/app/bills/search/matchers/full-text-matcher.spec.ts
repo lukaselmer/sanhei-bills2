@@ -2,7 +2,10 @@ import { billVariant } from '../../bill.mock';
 import { Bill } from './../../bill';
 import { FullTextMatcher } from './full-text-matcher';
 
-const bill = billVariant({ humanId: 1000, uid: 3000 });
+const bill = billVariant({
+  humanId: 1000,
+  uid: 3000
+});
 
 function match(term: string, potentialMatchingBill: Bill) {
   return new FullTextMatcher(term).matches(potentialMatchingBill);
@@ -24,12 +27,17 @@ describe('FullTextMatcher', () => {
   });
 
   it('does not search within a field', () => {
-    const variant = billVariant({ address: 'A street' });
+    const variant = billVariant({
+      address: 'A street'
+    });
     expect(match('street', bill)).toBeFalsy();
   });
 
   it('matches the beginning of the id and uid', () => {
-    const variant = billVariant({ id: '7324', uid: 3324 });
+    const variant = billVariant({
+      id: '7324',
+      uid: 3324
+    });
     expect(match('7', variant)).toBeTruthy();
     expect(match('73', variant)).toBeTruthy();
     expect(match('732', variant)).toBeTruthy();

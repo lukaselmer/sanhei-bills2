@@ -1,8 +1,16 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  MatAutocompleteModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatIconModule,
-  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatNativeDateModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,47 +38,54 @@ describe('BillPrintComponent', () => {
     descriptionTitle: 'Zusatz'
   });
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatIconModule,
-        MatListModule,
-        MatNativeDateModule,
-        NoopAnimationsModule,
-        RouterTestingModule
-      ],
-      providers: [
-        {
-          provide: BillsService, useValue: {
-            editBill: (id: string): Observable<Bill> => {
-              expect(id).toEqual(bill.id);
-              return Observable.of(bill);
-            },
-            markAsPrinted: () => { }
-          }
-        }, {
-          provide: ActivatedRoute, useValue: {
-            snapshot: {
-              params: {
-                id: bill.id
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          ReactiveFormsModule,
+          MatButtonModule,
+          MatCardModule,
+          MatIconModule,
+          MatListModule,
+          MatNativeDateModule,
+          NoopAnimationsModule,
+          RouterTestingModule
+        ],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              editBill: (id: string): Observable<Bill> => {
+                expect(id).toEqual(bill.id);
+                return Observable.of(bill);
+              },
+              markAsPrinted: () => {}
+            }
+          },
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                params: {
+                  id: bill.id
+                }
               }
             }
           }
-        }
-      ],
-      declarations: [BillPrintComponent]
-    }).compileComponents();
-  }));
+        ],
+        declarations: [BillPrintComponent]
+      }).compileComponents();
+    })
+  );
 
-  beforeEach(fakeAsync(() => {
-    fixture = TestBed.createComponent(BillPrintComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-    tick(1);
-  }));
+  beforeEach(
+    fakeAsync(() => {
+      fixture = TestBed.createComponent(BillPrintComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      tick(1);
+    })
+  );
 
   it('renders the title', () => {
     const service: BillsService = TestBed.get(BillsService);

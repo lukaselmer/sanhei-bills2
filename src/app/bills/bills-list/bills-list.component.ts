@@ -23,10 +23,16 @@ export class BillsListComponent implements OnInit {
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
 
-  private searchTermStream = new BehaviorSubject<SearchOptions>(
-    { term: this.displayedSearchTerm, limit: 10 });
+  private searchTermStream = new BehaviorSubject<SearchOptions>({
+    term: this.displayedSearchTerm,
+    limit: 10
+  });
 
-  constructor(private billsService: BillsService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private billsService: BillsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     const billsSearch$ = this.searchTermStream
@@ -38,17 +44,22 @@ export class BillsListComponent implements OnInit {
     billsSearch$.subscribe(search => this.updateProgress(search));
     this.bills$ = billsSearch$.map(search => search.list.map(bill => new BillView(bill))).share();
 
-    this.route
-      .queryParamMap
+    this.route.queryParamMap
       .map(params => {
         const limit = parseInt(params.get('limit') || '10', 10);
         const term = params.get('q') || '';
-        this.searchTermStream.next({ term, limit });
-      }).subscribe();
+        this.searchTermStream.next({
+          term,
+          limit
+        });
+      })
+      .subscribe();
   }
 
   private reallyStartSearching(searchOptions: SearchOptions): Observable<SearchResult<Bill>> {
-    if (this.displayedSearchTerm !== searchOptions.term) this.loadStatus = 'loading';
+    if (this.displayedSearchTerm !== searchOptions.term) {
+      this.loadStatus = 'loading';
+    }
     return this.billsService.search(searchOptions);
   }
 
@@ -60,7 +71,9 @@ export class BillsListComponent implements OnInit {
   searchKeyup(searchTerm: string) {
     const cleanSearchTerm = searchTerm.toLowerCase().trim();
     const queryParams = cleanSearchTerm === '' ? {} : { q: cleanSearchTerm };
-    this.router.navigate(['/bills'], { queryParams });
+    this.router.navigate(['/bills'], {
+      queryParams
+    });
   }
 
   editBill(billView: BillView) {
@@ -70,15 +83,23 @@ export class BillsListComponent implements OnInit {
   }
 
   async removeBill(billView: BillView) {
-    if (!confirm('Wirklich löschen?')) return;
-    const bill = await this.billsService.editBill(billView.id).first().toPromise();
+    if (!confirm('Wirklich löschen?')) {
+      return;
+    }
+    const bill = await this.billsService
+      .editBill(billView.id)
+      .first()
+      .toPromise();
     await this.billsService.deleteBill(bill);
   }
 
   loadMore() {
     const searchQuery = this.searchTerm === '' ? {} : { q: this.searchTerm };
     this.router.navigate(['/bills'], {
-      queryParams: { ...searchQuery, limit: this.searchLimit + 20 }
+      queryParams: {
+        ...searchQuery,
+        limit: this.searchLimit + 20
+      }
     });
   }
 

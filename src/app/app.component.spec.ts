@@ -1,5 +1,10 @@
 import { async, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -10,34 +15,51 @@ import { BillsListComponent } from './bills/bills-list/bills-list.component';
 import { BillsService } from './bills/bills.service';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MatButtonModule,
-        MatCardModule,
-        MatInputModule,
-        MatProgressSpinnerModule,
-        RouterTestingModule
-      ],
-      providers: [
-        { provide: BillsService, useValue: { search: () => undefined } },
-        { provide: AngularFireDatabase, useValue: { list: () => undefined } },
-        { provide: AngularFireAuth, useValue: { authState: { subscribe: () => undefined } } }
-      ],
-      declarations: [
-        AuthWidgetComponent,
-        AccountInfoComponent,
-        AppComponent,
-        BillsListComponent
-      ]
-    }).compileComponents();
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          MatButtonModule,
+          MatCardModule,
+          MatInputModule,
+          MatProgressSpinnerModule,
+          RouterTestingModule
+        ],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              search: () => undefined
+            }
+          },
+          {
+            provide: AngularFireDatabase,
+            useValue: {
+              list: () => undefined
+            }
+          },
+          {
+            provide: AngularFireAuth,
+            useValue: {
+              authState: {
+                subscribe: () => undefined
+              }
+            }
+          }
+        ],
+        declarations: [AuthWidgetComponent, AccountInfoComponent, AppComponent, BillsListComponent]
+      }).compileComponents();
+    })
+  );
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+  it(
+    'should create the app',
+    async(() => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      expect(app).toBeTruthy();
+    })
+  );
 
   // it(`should have as title 'sb'`, async(() => {
   //   const fixture = TestBed.createComponent(AppComponent);

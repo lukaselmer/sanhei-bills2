@@ -11,7 +11,7 @@ export class AuthWidgetComponent implements OnInit {
   user: firebase.User | null;
   loginStatus: 'unknown' | 'signedIn' | 'signedOut' = 'unknown';
 
-  constructor(private auth: AngularFireAuth) { }
+  constructor(private auth: AngularFireAuth) {}
 
   ngOnInit() {
     this.auth.authState.subscribe(user => this.updateLoginStatus(user));

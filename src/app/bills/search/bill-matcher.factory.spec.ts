@@ -17,14 +17,20 @@ describe('DataStoreService', () => {
 
     it('creates an ID matcher', () => {
       spyOn(service, 'createIDTextMatcher').and.callThrough();
-      const instance = service.createBillMatcher({ term: 'id: 32523', limit: 10 });
+      const instance = service.createBillMatcher({
+        term: 'id: 32523',
+        limit: 10
+      });
       expect(instance instanceof IDMatcher).toBeTruthy();
       expect(service.createIDTextMatcher).toHaveBeenCalledWith(32523);
     });
 
     it('creates an amount matcher', () => {
       spyOn(service, 'createAmountTextMatcher').and.callThrough();
-      const instance = service.createBillMatcher({ term: 'betrag: 325.23', limit: 10 });
+      const instance = service.createBillMatcher({
+        term: 'betrag: 325.23',
+        limit: 10
+      });
       expect(instance instanceof AmountMatcher).toBeTruthy();
       expect(service.createAmountTextMatcher).toHaveBeenCalledWith(325.23);
     });

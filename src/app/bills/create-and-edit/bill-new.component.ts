@@ -11,7 +11,7 @@ import { BillNewFormExtractor } from './bill-new-form-extractor';
   styleUrls: ['./bill-new.component.scss']
 })
 export class BillNewComponent {
-  constructor(private router: Router, private billsService: BillsService) { }
+  constructor(private router: Router, private billsService: BillsService) {}
 
   createBill(validFormValue: any) {
     const extractor = new BillNewFormExtractor(validFormValue);

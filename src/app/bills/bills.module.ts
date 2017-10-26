@@ -51,9 +51,7 @@ import { IDBStoreService } from './store/idb-store.service';
     ArticlesFormComponent,
     BillPrintComponent
   ],
-  exports: [
-    BillsListComponent
-  ],
+  exports: [BillsListComponent],
   providers: [
     BillMatcherFactory,
     BillsService,
@@ -63,4 +61,4 @@ import { IDBStoreService } from './store/idb-store.service';
     BillAutocompleteService
   ]
 })
-export class BillsModule { }
+export class BillsModule {}

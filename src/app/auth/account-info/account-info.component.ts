@@ -8,12 +8,11 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./account-info.component.scss']
 })
 export class AccountInfoComponent {
-  @Input()
-  user: firebase.User;
+  @Input() user: firebase.User;
 
   showDetails = false;
 
-  constructor(private auth: AngularFireAuth) { }
+  constructor(private auth: AngularFireAuth) {}
 
   toggle() {
     this.showDetails = !this.showDetails;

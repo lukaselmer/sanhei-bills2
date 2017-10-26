@@ -16,7 +16,7 @@ mat-form-field {
     flex-grow: 0;
   }
 
-  @media(min-width: 1000px) {
+  @media (min-width: 1000px) {
     div {
       flex-basis: 1%;
       flex-grow: 1;
@@ -26,7 +26,7 @@ mat-form-field {
     }
   }
 
-  @media(min-width: 750px) and (max-width: 999px) {
+  @media (min-width: 750px) and (max-width: 999px) {
     div {
       flex-basis: 3%;
       flex-grow: 1;
@@ -36,7 +36,7 @@ mat-form-field {
     }
   }
 
-  @media(max-width: 749px) {
+  @media (max-width: 749px) {
     margin-bottom: 35px;
 
     flex-wrap: wrap;

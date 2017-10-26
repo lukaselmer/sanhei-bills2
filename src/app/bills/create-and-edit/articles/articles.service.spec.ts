@@ -15,7 +15,9 @@ describe('BillsService', () => {
     address: 'A street\nSomething',
     articles: [
       articleVariant(),
-      articleVariant({ description: 'Other' })
+      articleVariant({
+        description: 'Other'
+      })
     ]
   });
   const billMock2 = billVariant({

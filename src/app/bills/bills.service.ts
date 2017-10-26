@@ -26,16 +26,15 @@ import { DataStoreService } from './store/data-store.service';
 
 @Injectable()
 export class BillsService {
-  constructor(
-    private dataStore: DataStoreService,
-    private billMatcherFactory: BillMatcherFactory) {
+  constructor(private dataStore: DataStoreService, private billMatcherFactory: BillMatcherFactory) {
     this.dataStore.loadData();
   }
 
   search(options: SearchOptions): Observable<SearchResult<Bill>> {
     const billMatcher = this.billMatcherFactory.createBillMatcher(options);
 
-    return this.dataStore.getBillsStream()
+    return this.dataStore
+      .getBillsStream()
       .map(bills => {
         return Observable.from(bills)
           .filter(bill => billMatcher.matches(bill))
@@ -51,11 +50,16 @@ export class BillsService {
   }
 
   private wrapSearchResult(term: string, filteredBills: Bill[]) {
-    return { term, list: filteredBills, dbStatus: this.dataStore.status };
+    return {
+      term,
+      list: filteredBills,
+      dbStatus: this.dataStore.status
+    };
   }
 
   editBill(id: string): Observable<Bill> {
-    return this.dataStore.getBillsStream()
+    return this.dataStore
+      .getBillsStream()
       .map(bills => bills.find(bill => bill.id === id))
       .filter(bill => !!bill)
       .map((bill: Bill) => bill);

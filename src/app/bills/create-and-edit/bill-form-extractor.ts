@@ -6,22 +6,25 @@ import { NewBill } from './../new-bill';
 import { FormArticle } from './articles/form-article';
 
 export abstract class BillFormExtractor {
-  constructor(protected formValue: any) { }
+  constructor(protected formValue: any) {}
 
   protected extractArticles(): Article[] {
     const rawArticles: FormArticle[] = this.formValue.articles;
-    return rawArticles.filter(article =>
-      [article.description, article.price, article.amount]
-        .every(fieldValue => fieldValue.trim() !== '')
-    ).map(article => {
-      return {
-        amount: parseFloat(article.amount),
-        price: parseFloat(article.price),
-        description: article.description.trim(),
-        dimension: article.dimension.trim(),
-        catalogId: article.catalogId.trim()
-      };
-    });
+    return rawArticles
+      .filter(article =>
+        [article.description, article.price, article.amount].every(
+          fieldValue => fieldValue.trim() !== ''
+        )
+      )
+      .map(article => {
+        return {
+          amount: parseFloat(article.amount),
+          price: parseFloat(article.price),
+          description: article.description.trim(),
+          dimension: article.dimension.trim(),
+          catalogId: article.catalogId.trim()
+        };
+      });
   }
 
   protected extractStrings() {
@@ -75,6 +78,8 @@ export abstract class BillFormExtractor {
   }
 
   private extractworkedAt() {
-    return { workedAt: this.formValue.workedAt.trim() };
+    return {
+      workedAt: this.formValue.workedAt.trim()
+    };
   }
 }

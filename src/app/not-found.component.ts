@@ -4,4 +4,4 @@ import { Component } from '@angular/core';
   template: `<h1>Page not found</h1>
   <a href='/'>Home</a>`
 })
-export class PageNotFoundComponent { }
+export class PageNotFoundComponent {}
