@@ -16,6 +16,7 @@ import { DataStoreService } from '../store/data-store.service';
 import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { ArticlesFormComponent } from './articles-form.component';
+import { BillAutocompleteService } from './bill-autocomplete.service';
 import { BillEditComponent } from './bill-edit.component';
 import { BillFormComponent } from './bill-form.component';
 
@@ -57,12 +58,10 @@ describe('BillFormComponent', () => {
             },
             updateBill: (billToUpdate: Bill): void => undefined
           }
-        }, {
-          provide: ArticlesService, useValue: {
-            updateArticles: () => Promise.resolve(''),
-            autocompleteOptions: () => []
-          }
-        }, {
+        },
+        { provide: BillAutocompleteService, useValue: { autocompleteOptions: () => [] } },
+        { provide: ArticlesService, useValue: { uniqueDescriptions: () => [] } },
+        {
           provide: ActivatedRoute, useValue: {
             snapshot: {
               params: {

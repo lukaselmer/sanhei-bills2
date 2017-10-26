@@ -17,6 +17,7 @@ import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { NewBill } from './../new-bill';
 import { ArticlesFormComponent } from './articles-form.component';
+import { BillAutocompleteService } from './bill-autocomplete.service';
 import { BillFormComponent } from './bill-form.component';
 import { BillNewComponent } from './bill-new.component';
 
@@ -79,12 +80,9 @@ describe('BillNewComponent', () => {
           provide: BillsService, useValue: {
             createBill: (billToUpdate: NewBill): void => undefined
           }
-        }, {
-          provide: ArticlesService, useValue: {
-            updateArticles: () => Promise.resolve(''),
-            autocompleteOptions: () => []
-          }
-        }
+        },
+        { provide: BillAutocompleteService, useValue: { autocompleteOptions: () => [] } },
+        { provide: ArticlesService, useValue: { uniqueDescriptions: () => [] } }
       ],
       declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent]
     }).compileComponents();
