@@ -9,6 +9,7 @@ import { Bill } from './../../bill';
 import { EditedBill } from './../../edited-bill';
 import { NewBill } from './../../new-bill';
 import { ArticlesService } from './articles.service';
+import { AutocompleteArticle } from './autocomplete-article';
 import { FormArticle } from './form-article';
 
 @Component({
@@ -21,7 +22,7 @@ export class ArticlesFormComponent implements OnChanges {
   @Input() articles?: Article[];
 
   formArticles: FormArticle[] = [];
-  autocompleteOptions: Observable<string[]>;
+  autocompleteOptions: Observable<AutocompleteArticle[]>;
   articleDescriptionFocusStream = new Subject<string>();
 
   constructor(private articlesService: ArticlesService, private fb: FormBuilder) { }
@@ -78,8 +79,10 @@ export class ArticlesFormComponent implements OnChanges {
       fg.valueChanges.map(() => {
         if (automaticValueChangeInProgress) return;
         automaticValueChangeInProgress = true;
-        Object.keys(fg.controls).forEach(fieldKey =>
-          fg.controls[fieldKey].setValue(fg.controls[fieldKey].value)
+        Object.keys(fg.controls).forEach(fieldKey => {
+          fg.controls[fieldKey].markAsTouched();
+          fg.controls[fieldKey].setValue(fg.controls[fieldKey].value);
+        }
         );
         automaticValueChangeInProgress = false;
       }).subscribe();
@@ -92,8 +95,14 @@ export class ArticlesFormComponent implements OnChanges {
       ...this.articlesForm.controls.map(articleForm =>
         articleForm.valueChanges.map(article => article.description)
       )]
-    ).mergeAll()
-      .map(x => this.articlesService.uniqueDescriptions(x));
+    )
+      .mergeAll()
+      .filter(x => typeof x === 'string')
+      .distinctUntilChanged()
+      .debounceTime(10)
+      .distinctUntilChanged()
+      .map(filter => this.articlesService.uniqueDescriptions(filter))
+      .share();
   }
 
   articleFocus(value: string) {
@@ -102,5 +111,18 @@ export class ArticlesFormComponent implements OnChanges {
 
   get articlesForm(): FormArray {
     return this.formGroup.get('articles') as FormArray;
+  }
+
+  autocompleteSelected(index: number, option: AutocompleteArticle) {
+    const controls = (this.articlesForm.controls[index] as FormGroup).controls;
+    controls.catalogId.setValue(option.catalogId);
+    controls.description.setValue(option.description);
+    controls.dimension.setValue(option.dimension);
+    controls.price.setValue(option.price);
+    controls.amount.setValue(option.amount);
+  }
+
+  displayDescription(option: AutocompleteArticle | string) {
+    return typeof option === 'string' ? option : option.description;
   }
 }

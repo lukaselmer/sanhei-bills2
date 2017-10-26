@@ -1,34 +1,55 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
+import { Observable } from 'rxjs/Observable';
 import { Article } from '../../article';
 import { Bill } from '../../bill';
 import { DataStoreService } from '../../store/data-store.service';
+import { AutocompleteArticle } from './autocomplete-article';
 
 @Injectable()
 export class ArticlesService {
-  articleDescriptionsCache: string[];
+  private autocompleteArticles: AutocompleteArticle[];
 
   constructor(private dataStore: DataStoreService) { }
 
-  uniqueDescriptions(filter: string): string[] {
-    const lowerCaseFilter = filter.toLocaleLowerCase();
-    return this.articleDescriptions()
-      .filter(description => description.toLocaleLowerCase().includes(lowerCaseFilter))
-      .slice(0, 20);
+  uniqueDescriptions(filter: string): AutocompleteArticle[] {
+    this.ensureInitializedCache();
+
+    const terms = filter.toLocaleLowerCase().split(' ');
+    let descriptions: AutocompleteArticle[] = [];
+    Observable.from(this.autocompleteArticles)
+      .filter(autocompleteArticle => autocompleteArticle.matchesAll(terms))
+      .take(25)
+      .toArray()
+      .subscribe(descriptionsHack => descriptions = descriptionsHack);
+    return descriptions;
   }
 
-  private articleDescriptions(): string[] {
-    if (!this.articleDescriptionsCache) {
-      const bills = this.dataStore.store().bills;
-      const uniqDescriptionsMap: { [index: string]: boolean } = {};
-      const uniqDescriptionsList: string[] = [];
-      Object.keys(bills).reverse().forEach(k =>
-        bills[k].articles.forEach(article => {
-          if (!uniqDescriptionsMap[article.description]) uniqDescriptionsList.push(article.description);
-          uniqDescriptionsMap[article.description] = true;
-        }));
-      this.articleDescriptionsCache = uniqDescriptionsList;
-    }
-    return this.articleDescriptionsCache;
+  private ensureInitializedCache() {
+    if (!this.autocompleteArticles) this.initArticleDescriptions();
   }
+
+  private initArticleDescriptions() {
+    this.autocompleteArticles = [];
+
+    const uniqMap = {};
+    this.dataStore
+      .getBills()
+      .map(bill => bill.articles)
+      .forEach(articles =>
+        articles.forEach(article =>
+          this.handleArticle(article, uniqMap)
+        )
+      );
+  }
+
+  private handleArticle(article: Article, uniqMap: { [index: string]: boolean }) {
+    const autocompleteArticle = new AutocompleteArticle(article);
+    const articleAlreadyInList = uniqMap[autocompleteArticle.stringToFilter];
+    if (!articleAlreadyInList) {
+      this.autocompleteArticles.push(autocompleteArticle);
+      uniqMap[autocompleteArticle.stringToFilter] = true;
+    }
+  }
+
 }

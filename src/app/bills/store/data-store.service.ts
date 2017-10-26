@@ -24,10 +24,16 @@ export class DataStoreService {
     return this.storeStream.getValue();
   }
 
+  getBills(): Bill[] {
+    return this.convertBills(this.store());
+  }
+
   getBillsStream(): Observable<Bill[]> {
-    return this.storeStream.asObservable().map(stream =>
-      this.toArray(stream.bills).sort((a, b) => b.createdAt - a.createdAt)
-    );
+    return this.storeStream.asObservable().map(store => this.convertBills(store));
+  }
+
+  private convertBills(store: IBillingDatabase) {
+    return this.toArray(store.bills).sort((a, b) => b.createdAt - a.createdAt);
   }
 
   async loadData(): Promise<void> {
