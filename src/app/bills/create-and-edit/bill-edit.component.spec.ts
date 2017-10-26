@@ -16,6 +16,7 @@ import { DataStoreService } from '../store/data-store.service';
 import { ArticlesService } from './../articles.service';
 import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
+import { ArticlesFormComponent } from './articles-form.component';
 import { BillEditComponent } from './bill-edit.component';
 import { BillFormComponent } from './bill-form.component';
 
@@ -70,7 +71,7 @@ describe('BillEditComponent', () => {
           }
         }
       ],
-      declarations: [BillEditComponent, BillFormComponent]
+      declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent]
     }).compileComponents();
   }));
 
