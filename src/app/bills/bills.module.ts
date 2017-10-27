@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
@@ -53,6 +53,7 @@ import { IDBStoreService } from './store/idb-store.service';
   ],
   exports: [BillsListComponent],
   providers: [
+    DecimalPipe,
     BillMatcherFactory,
     BillsService,
     ArticlesService,

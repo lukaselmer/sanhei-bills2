@@ -17,9 +17,7 @@ mat-card {
 }
 
 .bill {
-  mat-card-title,
-  mat-card-subtitle,
-  mat-card-content {
+  mat-card-title, mat-card-subtitle, mat-card-content {
     cursor: pointer;
   }
 

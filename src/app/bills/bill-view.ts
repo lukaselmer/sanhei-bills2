@@ -59,6 +59,9 @@ export class BillView {
   get description() {
     return this.bill.description;
   }
+  get descriptionParagraphs() {
+    return this.bill.description.split('\n');
+  }
   get ordererName() {
     return this.bill.ordererName;
   }
