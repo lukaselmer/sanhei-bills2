@@ -1,9 +1,43 @@
 article {
-  width: 682px;
-  margin-top: 10%;
+  // A4 width x height = 210mm x 296mm
+  width: 210mm;
+}
+
+.address {
+  margin-top: 200px;
 }
 
 .address,
 .date {
   margin-left: 70%;
+}
+
+.subtotal-start,
+.subtotal-end {
+  display: flex;
+  :first-child {
+    margin-left: 620px;
+  }
+  :last-child {
+    text-align: right;
+  }
+  div {
+    flex-grow: 1;
+  }
+}
+
+.subtotal-end {
+  page-break-after: always;
+}
+
+.page-header {
+  margin-bottom: 10px;
+
+  span:last-child {
+    float: right;
+  }
+
+  div:last-child {
+    border-bottom: 1px solid #333;
+  }
 }

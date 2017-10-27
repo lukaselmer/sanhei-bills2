@@ -51,7 +51,7 @@
         <div></div>
         <div>Preis CHF</div>
       </div>
-      <div *ngFor="let articleView of billView.articles">
+      <div *ngFor="let articleView of billView.articles" class="article">
         <div>{{articleView.article.description}}</div>
         <div>{{articleView.article.dimension}}</div>
         <div>{{articleView.article.amount}}</div>

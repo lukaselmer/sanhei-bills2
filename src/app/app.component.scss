@@ -1,3 +1,5 @@
 main {
-  padding: 22px 20px 8px 20px;
+  @media screen {
+    padding: 22px 20px 8px 20px;
+  }
 }
