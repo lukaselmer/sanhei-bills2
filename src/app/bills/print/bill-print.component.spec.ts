@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
@@ -54,6 +55,7 @@ describe('BillPrintComponent', () => {
           RouterTestingModule
         ],
         providers: [
+          DecimalPipe,
           {
             provide: BillsService,
             useValue: {

@@ -1,3 +1,4 @@
+import { DecimalPipe } from '@angular/common';
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleView } from './../article-view';
@@ -12,7 +13,7 @@ import { BillsService } from './../bills.service';
 export class BillPrintComponent implements OnInit {
   private static readonly PAGE_BREAK_AFTER = 1150;
   private static readonly HEADER_AND_SUBTOTAL_HEIGHT = 170;
-  private static readonly TOTALS_HEIGHT = 350;
+  private static readonly TOTALS_HEIGHT = 300;
 
   currentPage = 0;
   currentPageOffset = 0;
@@ -24,7 +25,8 @@ export class BillPrintComponent implements OnInit {
     route: ActivatedRoute,
     private billsService: BillsService,
     private element: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private decimalPipe: DecimalPipe
   ) {
     this.id = route.snapshot.params['id'];
   }
@@ -84,9 +86,11 @@ export class BillPrintComponent implements OnInit {
     return subtotalEl;
   }
 
-  private calculateSubtotal(upToArticle: number): number {
+  private calculateSubtotal(upToArticle: number): string {
     const articles = this.billView.articles.slice(0, upToArticle);
-    return Math.round(20 * articles.reduce((sum, current) => sum + current.totalPrice, 0)) / 20;
+    const subtotal =
+      Math.round(20 * articles.reduce((sum, current) => sum + current.totalPrice, 0)) / 20;
+    return this.decimalPipe.transform(subtotal, '1.2-2') as string;
   }
 
   private createHeader(): HTMLDivElement {

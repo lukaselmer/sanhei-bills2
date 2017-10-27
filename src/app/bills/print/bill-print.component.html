@@ -1,4 +1,4 @@
-<article *ngIf="billView">
+<article *ngIf="billView" contenteditable>
   <section class="address">
     <div *ngFor="let addressLine of billView.addressLines">
       {{addressLine}}
@@ -6,7 +6,7 @@
   </section>
 
   <section class="date">
-    Zürich, {{billView.billedAtDate}}
+    Zürich, {{billView.billedAtDate | date:'longDate'}}
   </section>
 
   <section>
@@ -14,7 +14,7 @@
     <h2>{{billView.title}}</h2>
   </section>
 
-  <section>
+  <section class="contract-attributes">
     <div>
       <div>Rechnungsnummer:</div>
       <div>{{billView.uid}}</div>
@@ -34,62 +34,58 @@
   </section>
 
   <section>
-    <div>
-      {{billView.descriptionTitle}}
+    <h3>{{billView.descriptionTitle}}</h3>
+    <p *ngFor="let description of billView.descriptionParagraphs">{{description}}</p>
+  </section>
+
+  <section class="contents">
+    <header>
+      <div>Posten</div>
+      <div>Dimension</div>
+      <div>Anzahl</div>
+      <div>Preis CHF</div>
+    </header>
+    <div *ngFor="let articleView of billView.articles" class="article">
+      <div>{{articleView.article.description}}</div>
+      <div>{{articleView.article.dimension}}</div>
+      <div>{{articleView.article.amount}}</div>
+      <div>{{articleView.article.price | number:'1.2-2'}}</div>
+      <div>{{articleView.totalPrice | number:'1.2-2'}}</div>
     </div>
-    <div>
-      {{billView.description}}
+    <div class="totals gross">
+      <div>Brutto</div>
+      <div></div>
+      <div></div>
+      <div>{{billView.totalNet | number:'1.2-2'}}</div>
+    </div>
+    <div class="totals" *ngIf="billView.discount">
+      <div>Rabatt</div>
+      <div>-{{billView.discount | number:'1.1-1'}} %</div>
+      <div>-{{billView.totalNet | number:'1.2-2'}}</div>
+      <div>{{billView.totalDiscount | number:'1.2-2'}}</div>
+    </div>
+    <div class="totals" *ngIf="billView.cashback">
+      <div>Skonto</div>
+      <div>-{{billView.cashback | number:'1.1-1'}} %</div>
+      <div>-{{billView.totalAfterDiscount | number:'1.2-2'}}</div>
+      <div>{{billView.totalCashback | number:'1.2-2'}}</div>
+    </div>
+    <div class="totals vat">
+      <div>MWSt CHE-105.833.781</div>
+      <div>{{billView.vat | number:'1.1-1'}} %</div>
+      <div>{{billView.totalAfterCashback | number:'1.2-2'}}</div>
+      <div>{{billView.totalVat | number:'1.2-2'}}</div>
+    </div>
+    <div class="totals net">
+      <div>Total netto inkl. MWSt</div>
+      <div></div>
+      <div>Fr.</div>
+      <div>{{billView.totalGross | number:'1.2-2'}}</div>
     </div>
   </section>
 
-  <section>
-    <div>
-      <div>
-        <div>Posten</div>
-        <div>Dimension</div>
-        <div>Anzahl</div>
-        <div></div>
-        <div>Preis CHF</div>
-      </div>
-      <div *ngFor="let articleView of billView.articles" class="article">
-        <div>{{articleView.article.description}}</div>
-        <div>{{articleView.article.dimension}}</div>
-        <div>{{articleView.article.amount}}</div>
-        <div>{{articleView.article.price}}</div>
-        <div>{{articleView.totalPrice}}</div>
-      </div>
-      <div>
-        <div>Brutto</div>
-        <div>{{billView.totalNet}}</div>
-      </div>
-      <div>
-        <div>Rabatt</div>
-        <div>{{billView.discount}} %</div>
-        <div>{{billView.totalNet}}</div>
-        <div>{{billView.totalDiscount}}</div>
-      </div>
-      <div>
-        <div>Skonto</div>
-        <div>{{billView.cashback}} %</div>
-        <div>{{billView.totalAfterDiscount}}</div>
-        <div>{{billView.totalCashback}}</div>
-      </div>
-      <div>
-        <div>MWSt CHE-105.833.781</div>
-        <div>{{billView.vat}} %</div>
-        <div>{{billView.totalAfterCashback}}</div>
-        <div>{{billView.totalVat}}</div>
-      </div>
-      <div>
-        <div>Total netto inkl. MWSt</div>
-        <div>Fr.</div>
-        <div>{{billView.totalGross}}</div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div>Zahlungskonditionen: {{billView.paymentDeadlineInDays}} Tage netto.</div>
-    <div>Besten Dank für Ihren Auftrag.</div>
-  </section>
+  <footer>
+    <p>Zahlungskonditionen: {{billView.paymentDeadlineInDays}} Tage netto.</p>
+    <p>Besten Dank für Ihren Auftrag.</p>
+  </footer>
 </article>
