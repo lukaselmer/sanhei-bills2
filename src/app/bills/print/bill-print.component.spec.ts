@@ -18,6 +18,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import * as firebase from 'firebase/app';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { articleVariant } from '../article.mock';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { DataStoreService } from '../store/data-store.service';
@@ -35,7 +36,8 @@ describe('BillPrintComponent', () => {
     uid: 17071234,
     address: 'Adresszeile 1\nAdressezeile 2',
     title: 'Objekt: Adresse',
-    descriptionTitle: 'Zusatz'
+    descriptionTitle: 'Zusatz',
+    articles: Array.from(Array(50).keys()).map(() => articleVariant())
   });
 
   beforeEach(
@@ -82,17 +84,37 @@ describe('BillPrintComponent', () => {
     fakeAsync(() => {
       fixture = TestBed.createComponent(BillPrintComponent);
       component = fixture.componentInstance;
-      fixture.detectChanges();
-      tick(1);
     })
   );
 
-  it('renders the title', () => {
-    const service: BillsService = TestBed.get(BillsService);
+  it(
+    'renders the title and calls markAsPrinted',
+    fakeAsync(() => {
+      const service: BillsService = TestBed.get(BillsService);
+      spyOn(service, 'markAsPrinted');
 
-    const compiled = fixture.debugElement.nativeElement;
-    const element: HTMLHeadingElement = compiled.querySelector('h1');
+      fixture.detectChanges();
+      tick(11);
 
-    expect(element.innerText).toEqual('Rechnung 17071234');
-  });
+      const compiled = fixture.debugElement.nativeElement;
+      const element: HTMLHeadingElement = compiled.querySelector('h1');
+
+      expect(service.markAsPrinted).toHaveBeenCalled();
+      expect(element.innerText).toEqual('Rechnung 17071234');
+    })
+  );
+
+  it(
+    'renders page breaks',
+    fakeAsync(() => {
+      fixture.detectChanges();
+      const compiled: HTMLElement = fixture.debugElement.nativeElement;
+      const element: HTMLHeadingElement = compiled.querySelector('h1') as HTMLHeadingElement;
+      expect(compiled.innerText).not.toMatch('Übertrag');
+      tick(5);
+      expect(compiled.innerText).not.toMatch('Übertrag');
+      tick(6);
+      expect(compiled.innerText).toMatch('Übertrag');
+    })
+  );
 });
