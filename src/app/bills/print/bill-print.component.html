@@ -84,8 +84,13 @@
     </div>
   </section>
 
-  <footer>
+  <footer *ngIf="billView.billType === 'Rechnung'">
     <p>Zahlungskonditionen: {{billView.paymentDeadlineInDays}} Tage netto.</p>
     <p>Besten Dank für Ihren Auftrag.</p>
   </footer>
+  <footer #elseTemplate>
+    <p>Wir danken für Ihre Anfrage und freuen uns, wenn wir die offerierten Arbeiten ausführen dürfen.</p>
+    <p>Eine fachgerechte und speditive Arbeitsausführung sichern wir Ihnen schon heute zu.</p>
+  </footer>
+
 </article>
