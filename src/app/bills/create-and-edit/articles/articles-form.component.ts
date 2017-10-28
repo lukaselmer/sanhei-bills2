@@ -48,6 +48,7 @@ export class ArticlesFormComponent implements OnChanges {
   }
 
   addNewArticles(amount: number) {
+    this.formArticles = this.articlesForm.value;
     for (let i = 0; i < amount; ++i) {
       this.formArticles.push(new FormArticle());
     }
