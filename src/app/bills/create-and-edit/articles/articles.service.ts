@@ -3,14 +3,14 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { Article } from '../../article';
 import { Bill } from '../../bill';
-import { DataStoreService } from '../../store/data-store.service';
+import { BillsService } from './../../bills.service';
 import { AutocompleteArticle } from './autocomplete-article';
 
 @Injectable()
 export class ArticlesService {
   private autocompleteArticles: AutocompleteArticle[];
 
-  constructor(private dataStore: DataStoreService) {}
+  constructor(private billsService: BillsService) {}
 
   filterAutocompleteArticles(filter: string): AutocompleteArticle[] {
     this.ensureInitializedCache();
@@ -35,7 +35,7 @@ export class ArticlesService {
     this.autocompleteArticles = [];
 
     const uniqMap = {};
-    this.dataStore
+    this.billsService
       .getBills()
       .map(bill => bill.articles)
       .forEach(articles => articles.forEach(article => this.handleArticle(article, uniqMap)));

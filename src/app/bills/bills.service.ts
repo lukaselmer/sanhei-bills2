@@ -22,6 +22,7 @@ import { NewBill } from './new-bill';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { SearchOptions } from './search/search-options';
 import { SearchResult } from './search/search-result';
+import { IBillingDatabase } from './store/billing-database';
 import { DataStoreService } from './store/data-store.service';
 
 @Injectable()
@@ -30,11 +31,22 @@ export class BillsService {
     this.dataStore.loadData();
   }
 
+  getBills(): Bill[] {
+    return this.convertBills(this.dataStore.store());
+  }
+
+  getBillsStream(): Observable<Bill[]> {
+    return this.dataStore.getStoreStream().map(store => this.convertBills(store));
+  }
+
+  private convertBills(store: IBillingDatabase) {
+    return DataStoreService.toArray(store.bills).sort((a, b) => b.createdAt - a.createdAt);
+  }
+
   search(options: SearchOptions): Observable<SearchResult<Bill>> {
     const billMatcher = this.billMatcherFactory.createBillMatcher(options);
 
-    return this.dataStore
-      .getBillsStream()
+    return this.getBillsStream()
       .map(bills => {
         return Observable.from(bills)
           .filter(bill => billMatcher.matches(bill))
@@ -58,8 +70,7 @@ export class BillsService {
   }
 
   editBill(id: string): Observable<Bill> {
-    return this.dataStore
-      .getBillsStream()
+    return this.getBillsStream()
       .map(bills => bills.find(bill => bill.id === id))
       .filter(bill => !!bill)
       .map((bill: Bill) => bill);
