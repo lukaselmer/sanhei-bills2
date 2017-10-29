@@ -1,6 +1,8 @@
 import { async } from '@angular/core/testing';
 import { Observable } from 'rxjs/Observable';
 import { Bill } from './../bill';
+import { BillsService } from './../bills.service';
+import { BillMatcherFactory } from './../search/bill-matcher.factory';
 import { DataStoreService } from './data-store.service';
 
 function generateValueChangedEvent(objects: any) {
@@ -11,6 +13,7 @@ function generateValueChangedEvent(objects: any) {
 
 describe('DataStoreService', () => {
   let service: DataStoreService;
+  let billsService: BillsService;
   const billMock: Bill = {
     id: 1234,
     uid: '17071234',
@@ -30,6 +33,9 @@ describe('DataStoreService', () => {
 
   beforeEach(() => {
     service = new DataStoreService(angularFireMock, idbMock);
+    const spy = spyOn(service, 'loadData');
+    billsService = new BillsService(service, new BillMatcherFactory());
+    spy.and.callThrough();
   });
 
   describe('loadData', () => {
@@ -74,7 +80,7 @@ describe('DataStoreService', () => {
             }
           });
           expect(angularFireMock.list).toHaveBeenCalledTimes(1);
-          service
+          billsService
             .getBillsStream()
             .first()
             .subscribe(list => {
@@ -123,17 +129,11 @@ describe('DataStoreService', () => {
               articles: []
             }
           });
-          service
+          billsService
             .getBillsStream()
             .first()
             .subscribe(list => {
-              expect(list).toEqual([
-                {
-                  id: 1,
-                  name: 'B1',
-                  articles: []
-                }
-              ] as any);
+              expect(list).toEqual([{ id: 1, name: 'B1', articles: [] }] as any);
             });
         });
       })
@@ -193,7 +193,7 @@ describe('DataStoreService', () => {
             }
           });
           expect(angularFireMock.list).toHaveBeenCalledTimes(1);
-          service
+          billsService
             .getBillsStream()
             .first()
             .subscribe(list => {
@@ -261,17 +261,11 @@ describe('DataStoreService', () => {
             }
           });
           expect(angularFireMock.list).toHaveBeenCalledTimes(1);
-          service
+          billsService
             .getBillsStream()
             .first()
             .subscribe(list => {
-              expect(list).toEqual([
-                {
-                  id: 5,
-                  name: 'B5',
-                  articles: []
-                }
-              ] as any);
+              expect(list).toEqual([{ id: 5, name: 'B5', articles: [] }] as any);
             });
         });
       })
@@ -305,7 +299,7 @@ describe('DataStoreService', () => {
           });
 
           await service.loadData();
-          const bills = await service
+          const bills = await billsService
             .getBillsStream()
             .first()
             .toPromise();

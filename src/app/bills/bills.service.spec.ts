@@ -36,7 +36,7 @@ describe('BillsService', () => {
     updateBill: () => Promise.resolve(''),
     deleteBill: () => Promise.resolve(''),
     loadData: () => undefined,
-    getBillsStream: () => Observable.of(billsMock),
+    getStoreStream: () => Observable.of(db),
     status: 'loaded',
     store: () => db
   };
@@ -138,7 +138,7 @@ describe('BillsService', () => {
       async(() => {
         const a = billMock1;
         const b = billMock2;
-        spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(
+        spyOn(service, 'getBillsStream').and.returnValue(
           Observable.of([a, b, a, b, a, b, a, b, a, b, a, b])
         );
         service
@@ -158,7 +158,7 @@ describe('BillsService', () => {
       async(() => {
         const a = billMock1;
         const b = billMock2;
-        spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(
+        spyOn(service, 'getBillsStream').and.returnValue(
           Observable.of([a, b, a, b, a, b, a, b, a, b, a, b])
         );
         service
@@ -176,7 +176,7 @@ describe('BillsService', () => {
     it(
       'catches the error if there is one',
       async(() => {
-        spyOn(dataStoreServiceMock, 'getBillsStream').and.returnValue(
+        spyOn(service, 'getBillsStream').and.returnValue(
           Observable.of([null, billMock1, billMock2])
         );
         spyOn(console, 'error');

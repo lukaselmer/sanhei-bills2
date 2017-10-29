@@ -18,22 +18,18 @@ export class DataStoreService {
 
   status: DataStoreStatus = 'idle';
 
+  static toArray<T extends { id: string }>(items: { [index: string]: T }): T[] {
+    return Object.keys(items).map(key => items[key]);
+  }
+
   constructor(private db: AngularFireDatabase, private idbStoreService: IDBStoreService) {}
+
+  getStoreStream(): Observable<IBillingDatabase> {
+    return this.storeStream.asObservable();
+  }
 
   store(): IBillingDatabase {
     return this.storeStream.getValue();
-  }
-
-  getBills(): Bill[] {
-    return this.convertBills(this.store());
-  }
-
-  getBillsStream(): Observable<Bill[]> {
-    return this.storeStream.asObservable().map(store => this.convertBills(store));
-  }
-
-  private convertBills(store: IBillingDatabase) {
-    return this.toArray(store.bills).sort((a, b) => b.createdAt - a.createdAt);
   }
 
   async loadData(): Promise<void> {
@@ -44,6 +40,7 @@ export class DataStoreService {
     await this.loadCachedDataFromIDB();
     await this.initializeFirebaseSync();
   }
+
   private async loadCachedDataFromIDB(): Promise<void> {
     const bills = await this.idbStoreService.loadFromIDB<Bill>('bills');
     this.status = 'loadedFromIDB';
@@ -51,10 +48,6 @@ export class DataStoreService {
       this.status = 'loaded';
     }
     this.storeStream.next({ bills });
-  }
-
-  private toArray<T extends { id: string }>(items: { [index: string]: T }): T[] {
-    return Object.keys(items).map(key => items[key]);
   }
 
   private async initializeFirebaseSync() {
@@ -91,13 +84,13 @@ export class DataStoreService {
 
   private nextSyncTimestamp(): number {
     const currentMaxTimestamp = Math.max(
-      ...this.toArray(this.store().bills).map(el => el.updatedAt)
+      ...DataStoreService.toArray(this.store().bills).map(el => el.updatedAt)
     );
     return currentMaxTimestamp + 1;
   }
 
   private get bills(): Bill[] {
-    return this.toArray(this.storeStream.getValue().bills);
+    return DataStoreService.toArray(this.storeStream.getValue().bills);
   }
 
   private async downloadWholeDatabase() {
