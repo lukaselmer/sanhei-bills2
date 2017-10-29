@@ -89,10 +89,6 @@ export class DataStoreService {
     return currentMaxTimestamp + 1;
   }
 
-  private get bills(): Bill[] {
-    return DataStoreService.toArray(this.storeStream.getValue().bills);
-  }
-
   private async downloadWholeDatabase() {
     const data: IBillingDatabase = (await this.db
       .object('billing')
