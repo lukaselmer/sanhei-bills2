@@ -1,3 +1,4 @@
+import { stringToDate } from '../shared/date-helper';
 import { Article } from './article';
 import { ArticleView } from './article-view';
 import { Bill } from './bill';
@@ -117,14 +118,13 @@ export class BillView {
   // get workedAtDate() { return this.stringToDate(this.bill.workedAt); }
   // get orderedAtDate() { return this.stringToDate(this.bill.orderedAt); }
   get billedAtDate() {
-    return this.stringToDate(this.bill.billedAt);
+    return this.stringToDateOrEmpty(this.bill.billedAt);
   }
 
-  private stringToDate(str: string) {
+  private stringToDateOrEmpty(str: string): Date | undefined {
     if (!str) return;
 
-    const [y, m, d] = str.split('-').map(s => parseInt(s, 10));
-    return new Date(y, m, d);
+    return stringToDate(str);
   }
   // datetime format: '' or 2010-04-23 14:35:57 UTC
   // get createdAt() { return this.bill.createdAt ? new Date(this.bill.createdAt) : null; }
