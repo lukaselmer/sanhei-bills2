@@ -1,4 +1,5 @@
 import * as firebase from 'firebase/app';
+import { dateOrEmpty } from '../../shared/date-helper';
 import { Article } from '../article';
 import { Bill } from '../bill';
 import { EditedBill } from './../edited-bill';
@@ -58,23 +59,10 @@ export abstract class BillFormExtractor {
   protected extractDates() {
     const v = this.formValue;
     return {
-      orderedAt: this.dateOrEmpty(v.orderedAt.trim()),
-      billedAt: this.dateOrEmpty(v.billedAt.trim()),
+      orderedAt: dateOrEmpty(v.orderedAt.trim()),
+      billedAt: dateOrEmpty(v.billedAt.trim()),
       ...this.extractworkedAt()
     };
-  }
-
-  private dateOrEmpty(potentialDate: string) {
-    const dateRegexp = /^[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}$/;
-    return potentialDate.match(dateRegexp) ? this.cleanDate(potentialDate) : '';
-  }
-
-  private cleanDate(dateStr: string) {
-    let [y, m, d] = dateStr.split('-');
-    if (y.length === 2) y = `20${y}`;
-    if (m.length === 1) m = `0${m}`;
-    if (d.length === 1) d = `0${d}`;
-    return `${y}-${m}-${d}`;
   }
 
   private extractworkedAt() {

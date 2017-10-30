@@ -29,7 +29,8 @@
     </div>
     <div>
       <div>Ausgeführte Arbeiten am:</div>
-      <div>{{billView.workedAt}}</div>
+      <div *ngIf="isDate(billView.workedAt)">{{parseDate(billView.workedAt) | date:'longDate'}}</div>
+      <div *ngIf="!isDate(billView.workedAt)">{{billView.workedAt}}</div>
     </div>
   </section>
 
@@ -84,15 +85,12 @@
     </div>
   </section>
 
-  <footer>
-    <ng-container *ngIf="billView.billType === 'Rechnung'; else elseBlock">
-      <p>Zahlungskonditionen: {{billView.paymentDeadlineInDays}} Tage netto.</p>
-      <p>Besten Dank für Ihren Auftrag.</p>
-    </ng-container>
-    <ng-template #elseBlock>
-      <p>Wir danken für Ihre Anfrage und freuen uns, wenn wir die offerierten Arbeiten ausführen dürfen.</p>
-      <p>Eine fachgerechte und speditive Arbeitsausführung sichern wir Ihnen schon heute zu.</p>
-    </ng-template>
+  <footer *ngIf="billView.billType === 'Rechnung'">
+    <p>Zahlungskonditionen: {{billView.paymentDeadlineInDays}} Tage netto.</p>
+    <p>Besten Dank für Ihren Auftrag.</p>
   </footer>
-
+  <footer *ngIf="billView.billType !== 'Rechnung'">
+    <p>Wir danken für Ihre Anfrage und freuen uns, wenn wir die offerierten Arbeiten ausführen dürfen.</p>
+    <p>Eine fachgerechte und speditive Arbeitsausführung sichern wir Ihnen schon heute zu.</p>
+  </footer>
 </article>

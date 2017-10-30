@@ -57,3 +57,21 @@ function padWithZero(num: number): string {
   if (num < 10) return '0' + num;
   return '' + num;
 }
+
+export function dateOrEmpty(potentialDate: string): string {
+  const dateRegexp = /^[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}$/;
+  return potentialDate.match(dateRegexp) ? cleanDate(potentialDate) : '';
+}
+
+function cleanDate(dateStr: string): string {
+  let [y, m, d] = dateStr.split('-');
+  if (y.length === 2) y = `20${y}`;
+  if (m.length === 1) m = `0${m}`;
+  if (d.length === 1) d = `0${d}`;
+  return `${y}-${m}-${d}`;
+}
+
+export function stringToDate(str: string): Date {
+  const [y, m, d] = str.split('-').map(s => parseInt(s, 10));
+  return new Date(y, m, d);
+}
