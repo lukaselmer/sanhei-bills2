@@ -51,16 +51,21 @@ export class DataStoreService {
   }
 
   private async initializeFirebaseSync() {
+    firebase.database.enableLogging(false, false);
+    (firebase.database as any).INTERNAL.forceLongPolling();
+
     if (Object.keys(this.store().bills).length === 0) {
       await this.downloadWholeDatabase();
       await this.idbStoreService.storeInIDB('bills', this.store().bills);
     }
 
+    console.log('start');
     this.db
       .list('billing/bills', query => {
         return query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp());
       })
       .valueChanges()
+      .do(() => console.log('end'))
       .subscribe(async (bills: Bill[]) => {
         if (bills.length === 0) {
           return;
@@ -86,7 +91,7 @@ export class DataStoreService {
     const currentMaxTimestamp = Math.max(
       ...DataStoreService.toArray(this.store().bills).map(el => el.updatedAt)
     );
-    return currentMaxTimestamp + 1;
+    return 0; // currentMaxTimestamp + 1;
   }
 
   private async downloadWholeDatabase() {
