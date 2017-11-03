@@ -1,3 +1,5 @@
+import { registerLocaleData } from '@angular/common';
+import lcoaleDECH from '@angular/common/locales/de-CH';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,6 +13,8 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { BillsModule } from './bills/bills.module';
 import { PageNotFoundComponent } from './not-found.component';
+
+registerLocaleData(lcoaleDECH);
 
 @NgModule({
   imports: [
