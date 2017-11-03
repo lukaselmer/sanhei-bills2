@@ -26,8 +26,8 @@ export class BillFormComponent implements OnChanges {
   /**
    * Emits the valid form value once
    */
-  @Output() onSubmitted = new EventEmitter<any>();
-  @Output() onAborted = new EventEmitter<void>();
+  @Output() submitted = new EventEmitter<any>();
+  @Output() aborted = new EventEmitter<void>();
 
   form: FormGroup;
   autocompleteOptions: {
@@ -145,8 +145,8 @@ export class BillFormComponent implements OnChanges {
 
   onSubmit() {
     if (this.form.valid) {
-      this.onSubmitted.emit(this.form.value);
-      this.onSubmitted.complete();
+      this.submitted.emit(this.form.value);
+      this.submitted.complete();
     } else {
       // tslint:disable-next-line:no-unused-expression
       this.scrollToAndFocus('.mat-input-element.ng-touched.ng-invalid') ||
@@ -169,8 +169,8 @@ export class BillFormComponent implements OnChanges {
   }
 
   abort() {
-    this.onAborted.emit();
-    this.onAborted.complete();
+    this.aborted.emit();
+    this.aborted.complete();
     return false;
   }
 
