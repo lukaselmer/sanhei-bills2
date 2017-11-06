@@ -17,7 +17,7 @@
   "repository": "lukaselmer/sanhei-bills2",
   "dependencies": {
     "@angular/animations": "^5.0.1",
-    "@angular/cdk": "^2.0.0-beta.12",
+    "@angular/cdk": "^5.0.0-rc0",
     "@angular/common": "^5.0.1",
     "@angular/compiler": "^5.0.1",
     "@angular/core": "^5.0.1",
