@@ -1,18 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatDatepickerModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatNativeDateModule,
-  MatProgressBarModule
-} from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -23,6 +11,7 @@ import { articleVariant } from '../article.mock';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { DataStoreService } from '../store/data-store.service';
+import { MaterialModule } from './../../material/material.module';
 import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
 import { BillPrintComponent } from './bill-print.component';
@@ -44,16 +33,7 @@ describe('BillPrintComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          ReactiveFormsModule,
-          MatButtonModule,
-          MatCardModule,
-          MatIconModule,
-          MatListModule,
-          MatNativeDateModule,
-          NoopAnimationsModule,
-          RouterTestingModule
-        ],
+        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
         providers: [
           DecimalPipe,
           {
