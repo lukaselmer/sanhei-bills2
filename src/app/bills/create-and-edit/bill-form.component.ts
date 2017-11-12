@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper';
 import { Bill } from './../bill';
 import { EditedBill } from './../edited-bill';
