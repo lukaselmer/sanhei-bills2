@@ -1,17 +1,5 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatDatepickerModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatNativeDateModule,
-  MatProgressBarModule
-} from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { newBillVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { DataStoreService } from '../store/data-store.service';
+import { MaterialModule } from './../../material/material.module';
 import { Bill } from './../bill';
 import { NewBill } from './../new-bill';
 import { ArticlesFormComponent } from './articles/articles-form.component';
@@ -71,21 +60,7 @@ describe('BillNewComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          ReactiveFormsModule,
-          MatButtonModule,
-          MatCheckboxModule,
-          MatCardModule,
-          MatIconModule,
-          MatInputModule,
-          MatListModule,
-          MatProgressBarModule,
-          MatNativeDateModule,
-          MatDatepickerModule,
-          MatAutocompleteModule,
-          NoopAnimationsModule,
-          RouterTestingModule
-        ],
+        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
         providers: [
           {
             provide: BillsService,

@@ -1,18 +1,7 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatDatepickerModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatNativeDateModule,
-  MatProgressBarModule
-} from '@angular/material';
+import { MaterialModule } from './../material/material.module';
 import { BillsListComponent } from './bills-list/bills-list.component';
 import { BillsRoutingModule } from './bills-routing.module';
 import { BillsService } from './bills.service';
@@ -28,21 +17,7 @@ import { DataStoreService } from './store/data-store.service';
 import { IDBStoreService } from './store/idb-store.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatProgressBarModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatAutocompleteModule,
-    BillsRoutingModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, MaterialModule, BillsRoutingModule],
   declarations: [
     BillsListComponent,
     BillEditComponent,

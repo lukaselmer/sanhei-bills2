@@ -1,10 +1,4 @@
 import { async, TestBed } from '@angular/core/testing';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatInputModule,
-  MatProgressSpinnerModule
-} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -13,18 +7,13 @@ import { AccountInfoComponent } from './auth/account-info/account-info.component
 import { AuthWidgetComponent } from './auth/auth-widget/auth-widget.component';
 import { BillsListComponent } from './bills/bills-list/bills-list.component';
 import { BillsService } from './bills/bills.service';
+import { MaterialModule } from './material/material.module';
 
 describe('AppComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          MatButtonModule,
-          MatCardModule,
-          MatInputModule,
-          MatProgressSpinnerModule,
-          RouterTestingModule
-        ],
+        imports: [MaterialModule, RouterTestingModule],
         providers: [
           {
             provide: BillsService,

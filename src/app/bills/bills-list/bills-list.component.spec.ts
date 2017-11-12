@@ -1,10 +1,4 @@
 import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import {
-  MatCheckboxModule,
-  MatInputModule,
-  MatListModule,
-  MatProgressBarModule
-} from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { billVariant } from '../bill.mock';
 import { BillsService } from '../bills.service';
 import { SearchResult } from '../search/search-result';
+import { MaterialModule } from './../../material/material.module';
 import { Bill } from './../bill';
 import { BillView } from './../bill-view';
 import { BillsListComponent } from './bills-list.component';
@@ -37,10 +32,7 @@ describe('BillsListComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          MatCheckboxModule,
-          MatInputModule,
-          MatListModule,
-          MatProgressBarModule,
+          MaterialModule,
           NoopAnimationsModule,
           RouterTestingModule.withRoutes([
             {
