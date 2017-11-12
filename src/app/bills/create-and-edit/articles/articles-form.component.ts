@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 import { numberValidator } from '../validators/number-validator.directive';
 import { requiredIfOneSiblingHasContent } from '../validators/required-if-one-sibling-has-content.directive';
 import { Article } from './../../article';
