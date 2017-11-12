@@ -137,7 +137,7 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "no-implicit-dependencies": false, // is there a better way?
-    "no-output-on-prefix-name": true
+    "no-output-on-prefix": true
     // check https://github.com/ng-seed/angular-tslint-rules
   }
 }
