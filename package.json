@@ -8,7 +8,7 @@
     "build": "ng build",
     "build-prod": "ng build --prod --progress false",
     "test": "ng test",
-    "lint": "prettier --write '**/*.{ts,js,json}' && npm run csscomb && ng lint --fix true",
+    "lint": "prettier --write '**/*.{ts,js,json,md}' && npm run csscomb && ng lint --fix true",
     "csscomb": "csscomb src/app --tty-mode",
     "e2e": "ng e2e",
     "ci": "bin/fix && ng test --single-run --progress false --code-coverage"
