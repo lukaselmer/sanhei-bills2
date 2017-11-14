@@ -36,6 +36,15 @@ describe('BillView', () => {
         }).commaSeparatedAddress
       ).toEqual('1, 2, 3, 4, 5');
     });
+
+    it('gets the first, last, and middle address lines', () => {
+      const view = billView({
+        address: '1\n2\n3\n4\n5'
+      });
+      expect(view.firstAddressLine).toEqual('1');
+      expect(view.lastAddressLine).toEqual('5');
+      expect(view.middleAddressLines).toEqual(['2', '3', '4']);
+    });
   });
 
   describe('bill articles and articles', () => {

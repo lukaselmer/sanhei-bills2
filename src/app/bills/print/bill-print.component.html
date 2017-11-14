@@ -1,8 +1,10 @@
 <article *ngIf="billView" contenteditable>
   <section class="address">
-    <div *ngFor="let addressLine of billView.addressLines">
+    <b>{{billView.firstAddressLine}}</b>
+    <div *ngFor="let addressLine of billView.middleAddressLines">
       {{addressLine}}
     </div>
+    <b>{{billView.lastAddressLine}}</b>
   </section>
 
   <section class="date">

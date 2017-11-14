@@ -54,6 +54,19 @@ export class BillView {
     return this.addressLines.join(', ');
   }
 
+  get firstAddressLine() {
+    return this.addressLines[0];
+  }
+
+  get lastAddressLine() {
+    return this.addressLines[this.addressLines.length - 1];
+  }
+
+  get middleAddressLines() {
+    const lines = this.addressLines;
+    return lines.filter((value, index) => index !== 0 && index !== lines.length - 1);
+  }
+
   get billType() {
     return this.bill.billType;
   }
