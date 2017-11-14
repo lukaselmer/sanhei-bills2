@@ -3,15 +3,17 @@ $emphasized-font-weight: 500;
 article {
   // A4 width x height = 210mm x 296mm
   width: 210mm;
+  padding-left: 33px;
 }
 
-.address, .date {
-  margin-left: 63.5%;
+.date, .address {
+  margin-left: 500px;
 }
 
 .address {
+  position: absolute;
+
   margin-top: 180px;
-  margin-bottom: 41px;
 
   em {
     font-weight: $emphasized-font-weight;
@@ -21,6 +23,7 @@ article {
 
 .date {
   margin-bottom: 47px;
+  padding-top: 300px;
 }
 
 h1 {
