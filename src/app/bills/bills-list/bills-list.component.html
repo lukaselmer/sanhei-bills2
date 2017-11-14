@@ -14,7 +14,7 @@
       <mat-card-title (click)="editBill(bill)">{{bill.uid}} | {{ bill.humanId }}</mat-card-title>
       <mat-card-subtitle (click)="editBill(bill)">
         <div>{{ bill.title }}, {{ bill.descriptionTitle }}</div>
-        <div>{{ bill.commaSeparatedAddress }}</div>
+        <div>{{ bill.addressView.commaSeparated }}</div>
       </mat-card-subtitle>
       <mat-card-content (click)="editBill(bill)">
         <span *ngIf="bill.workedAt">Arbeiten am: {{ bill.workedAt }} | </span>

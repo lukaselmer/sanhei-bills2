@@ -1,4 +1,5 @@
 import { stringToDate } from '../shared/date-helper';
+import { AddressView } from './address-view';
 import { Article } from './article';
 import { ArticleView } from './article-view';
 import { Bill } from './bill';
@@ -42,29 +43,8 @@ export class BillView {
     return !!this.bill.deletedAt;
   }
 
-  get address() {
-    return this.bill.address;
-  }
-
-  get addressLines() {
-    return this.bill.address.split('\n').filter(line => line);
-  }
-
-  get commaSeparatedAddress() {
-    return this.addressLines.join(', ');
-  }
-
-  get firstAddressLine() {
-    return this.addressLines[0];
-  }
-
-  get lastAddressLine() {
-    return this.addressLines[this.addressLines.length - 1];
-  }
-
-  get middleAddressLines() {
-    const lines = this.addressLines;
-    return lines.filter((value, index) => index !== 0 && index !== lines.length - 1);
+  get addressView() {
+    return new AddressView(this.bill.address);
   }
 
   get billType() {
