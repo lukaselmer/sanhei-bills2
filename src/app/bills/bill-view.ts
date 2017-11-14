@@ -33,18 +33,15 @@ export class BillView {
     return this.bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays;
   }
 
+  // means finished editing
   get finished() {
     return this.bill.finished;
-  } // means finished editing
+  }
   get paid() {
     return this.bill.paid;
   }
   get deleted() {
     return !!this.bill.deletedAt;
-  }
-
-  get addressView() {
-    return new AddressView(this.bill.address);
   }
 
   get billType() {
@@ -79,6 +76,9 @@ export class BillView {
     return this.bill.billedAt;
   }
 
+  get addressView() {
+    return new AddressView(this.bill.address);
+  }
   get articles() {
     return this.pBillArticleViews;
   }
@@ -86,7 +86,6 @@ export class BillView {
   get totalNet() {
     return this.articles.map(bav => bav.totalPrice).reduce((sum, el) => sum + el, 0);
   }
-
   get totalDiscount() {
     return Math.round(20 * this.totalNet * this.discount / 100) / 20;
   }
@@ -107,19 +106,8 @@ export class BillView {
     return Math.round(20 * undroundedTotal) / 20;
   }
 
-  // date format: '' or 2017-05-30
-  // get workedAtDate() { return this.stringToDate(this.bill.workedAt); }
-  // get orderedAtDate() { return this.stringToDate(this.bill.orderedAt); }
   get billedAtDate() {
-    return this.stringToDateOrEmpty(this.bill.billedAt);
+    if (!this.bill.billedAt) return;
+    return stringToDate(this.bill.billedAt);
   }
-
-  private stringToDateOrEmpty(str: string): Date | undefined {
-    if (!str) return;
-
-    return stringToDate(str);
-  }
-  // datetime format: '' or 2010-04-23 14:35:57 UTC
-  // get createdAt() { return this.bill.createdAt ? new Date(this.bill.createdAt) : null; }
-  // get updatedAt() { return this.bill.updatedAt ? new Date(this.bill.updatedAt) : null; }
 }
