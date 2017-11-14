@@ -138,7 +138,7 @@ describe('BillsListComponent', () => {
           `${billView.title}, ${billView.descriptionTitle}`
         );
         expect(queryContent('mat-card-subtitle :last-child')).toEqual(
-          billView.commaSeparatedAddress
+          billView.addressView.commaSeparated
         );
         expect(queryContent('mat-card-content :nth-child(1)')).toEqual(`Arbeiten am: 2017-06-20 |`);
         expect(queryContent('mat-card-content :nth-child(2)')).toEqual(
