@@ -58,7 +58,7 @@ export class IDBStoreService {
   }
 
   private openDB(reject: (reason?: any) => void): IDBOpenDBRequest {
-    const dbRequest = indexedDB.open('sanheiBilling', 2);
+    const dbRequest = indexedDB.open('sanheiBilling', 3);
     dbRequest.onerror = event => {
       indexedDB.deleteDatabase('sanheiBilling').onsuccess = () => window.location.reload();
       reject(event);
