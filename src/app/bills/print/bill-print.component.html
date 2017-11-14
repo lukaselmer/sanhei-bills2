@@ -64,14 +64,14 @@
     <div class="totals" *ngIf="billView.discount">
       <div>Rabatt</div>
       <div>-{{billView.discount | number:'1.1-1'}} %</div>
-      <div>-{{billView.totalNet | number:'1.2-2'}}</div>
-      <div>{{billView.totalDiscount | number:'1.2-2'}}</div>
+      <div>{{billView.totalNet | number:'1.2-2'}}</div>
+      <div>-{{billView.totalDiscount | number:'1.2-2'}}</div>
     </div>
     <div class="totals" *ngIf="billView.cashback">
       <div>Skonto</div>
       <div>-{{billView.cashback | number:'1.1-1'}} %</div>
-      <div>-{{billView.totalAfterDiscount | number:'1.2-2'}}</div>
-      <div>{{billView.totalCashback | number:'1.2-2'}}</div>
+      <div>{{billView.totalAfterDiscount | number:'1.2-2'}}</div>
+      <div>-{{billView.totalCashback | number:'1.2-2'}}</div>
     </div>
     <div class="totals vat">
       <div>MWSt CHE-105.833.781</div>
