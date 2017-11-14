@@ -1,3 +1,5 @@
+$emphasized-font-weight: 500;
+
 article {
   // A4 width x height = 210mm x 296mm
   width: 210mm;
@@ -10,6 +12,11 @@ article {
 .address {
   margin-top: 180px;
   margin-bottom: 41px;
+
+  em {
+    font-weight: $emphasized-font-weight;
+    font-style: normal;
+  }
 }
 
 .date {
@@ -53,7 +60,7 @@ $col5: 118%;
     display: flex;
 
     div {
-      font-weight: 600;
+      font-weight: $emphasized-font-weight;
 
       flex-grow: 1;
     }
@@ -138,7 +145,7 @@ $col5: 118%;
   }
 
   .gross {
-    font-weight: 600;
+    font-weight: $emphasized-font-weight;
 
     :last-child {
       &:after {
@@ -172,7 +179,7 @@ $col5: 118%;
 
   .net {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: $emphasized-font-weight;
 
     margin-top: 2px;
     margin-bottom: 20px;
@@ -201,7 +208,7 @@ $col5: 118%;
       flex-basis: $col5;
     }
     div {
-      font-weight: 600;
+      font-weight: $emphasized-font-weight;
 
       text-align: right;
 

@@ -1,10 +1,10 @@
 <article *ngIf="billView" contenteditable>
   <section class="address">
-    <b>{{billView.addressView.firstLine}}</b>
+    <em>{{billView.addressView.firstLine}}</em>
     <div *ngFor="let addressLine of billView.addressView.middleLines">
       {{addressLine}}
     </div>
-    <b>{{billView.addressView.lastLine}}</b>
+    <em>{{billView.addressView.lastLine}}</em>
   </section>
 
   <section class="date">
@@ -18,19 +18,19 @@
 
   <section class="contract-attributes">
     <div>
-      <div>Rechnungsnummer:</div>
+      <div>Rechnungsnummer</div>
       <div>{{billView.uid}}</div>
     </div>
     <div>
-      <div>Auftraggeber/Nr.:</div>
+      <div>Auftraggeber/Nr.</div>
       <div>{{billView.ordererName}}</div>
     </div>
     <div>
-      <div>Eigentümer:</div>
+      <div>Eigentümer</div>
       <div>{{billView.ownerName}}</div>
     </div>
     <div>
-      <div>Ausgeführte Arbeiten am:</div>
+      <div>Ausgeführte Arbeiten am</div>
       <div *ngIf="isDate(billView.workedAt)">{{parseDate(billView.workedAt) | date:'longDate'}}</div>
       <div *ngIf="!isDate(billView.workedAt)">{{billView.workedAt}}</div>
     </div>
@@ -82,7 +82,7 @@
     <div class="totals net">
       <div>Total netto inkl. MWSt</div>
       <div></div>
-      <div>Fr.</div>
+      <div>CHF</div>
       <div>{{billView.totalGross | number:'1.2-2'}}</div>
     </div>
   </section>
