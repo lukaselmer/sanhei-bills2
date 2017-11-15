@@ -43,7 +43,7 @@ export class ArticlesFormComponent implements OnChanges {
 
   private articlesChanged() {
     this.formArticles = (this.articles || []).map(article => new FormArticle(article));
-    this.setArticles();
+    this.setArticlesWithoutTimeout();
     this.addNewArticles(Math.max(1, 5 - this.formArticles.length));
   }
 
@@ -55,18 +55,28 @@ export class ArticlesFormComponent implements OnChanges {
     this.setArticles();
   }
 
-  removeArticleAt(index: number) {
-    // The setTimeout workaround exists to blur the article description field, which
-    // closes the material autocomplete menu. Otherwise, en error would be raised when
-    // removing the open autocomplete element while it is still open.
-    setTimeout(() => {
-      const values: FormArticle[] = this.articlesForm.value;
-      this.formArticles = values.filter((_, i) => i !== index);
-      this.setArticles();
-    }, 0);
+  moveUp(index: number) {
+    const arr = this.articlesForm.value;
+    [arr[index], arr[index - 1]] = [arr[index - 1], arr[index]];
+    this.formArticles = arr;
+    this.setArticles();
+  }
+
+  removeAt(index: number) {
+    const values: FormArticle[] = this.articlesForm.value;
+    this.formArticles = values.filter((_, i) => i !== index);
+    this.setArticles();
   }
 
   private setArticles() {
+    // The setTimeout workaround exists to blur the article description field, which
+    // closes the material autocomplete menu. Otherwise, en error would be raised when
+    // removing / changing the autocomplete element while it is still open.
+    setTimeout(() => {
+      this.setArticlesWithoutTimeout();
+    }, 0);
+  }
+  private setArticlesWithoutTimeout() {
     const articleFormGroups = this.formArticles.map(a =>
       this.fb.group({
         amount: [

@@ -12,6 +12,9 @@ mat-form-field {
   margin-bottom: 10px;
 
   div:last-child {
+    min-width: 80px;
+    margin-right: -10px;
+
     flex-basis: 1%;
     flex-grow: 0;
   }
