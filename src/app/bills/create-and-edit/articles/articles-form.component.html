@@ -35,8 +35,11 @@
           </mat-form-field>
         </div>
         <div>
-          <button mat-icon-button type="button" (click)="removeArticleAt(i)">
+          <button mat-icon-button type="button" (click)="removeAt(i)">
             <i class="material-icons">delete</i>
+          </button>
+          <button *ngIf="i !== 0" mat-icon-button type="button" (click)="moveUp(i)">
+            <i class="material-icons">arrow_upward</i>
           </button>
         </div>
       </div>
