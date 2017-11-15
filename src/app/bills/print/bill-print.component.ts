@@ -12,9 +12,9 @@ import { BillsService } from './../bills.service';
   styleUrls: ['./bill-print.component.scss']
 })
 export class BillPrintComponent implements OnInit {
-  private static readonly PAGE_BREAK_AFTER = 1150;
+  private static readonly PAGE_BREAK_AFTER = 1180;
   private static readonly HEADER_AND_SUBTOTAL_HEIGHT = 170;
-  private static readonly TOTALS_HEIGHT = 300;
+  private static readonly TOTALS_HEIGHT = 165;
 
   currentPage = 0;
   currentPageOffset = 0;
