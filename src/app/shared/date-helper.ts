@@ -1,17 +1,11 @@
 export function validDateNumbers(value: string): boolean {
-  // tslint:disable-next-line:prefer-const
-  let [y, m, d] = value.split('-').map(x => parseInt(x, 10));
-  if (y < 100) y += 2000;
+  const [y, m, d] = value.split('-').map(x => parseInt(x, 10));
 
-  if (m < 1 || m > 12) return false;
-  if (y < 1990 || y > 2090) {
-    return false;
-  }
-  if (d < 1 || d > daysInMonth(m, y)) {
-    return false;
-  }
+  const validYear = y >= 1990 && y <= 2099;
+  const validMonth = m >= 1 && m <= 12;
+  const validDay = d >= 1 && d <= daysInMonth(m, y);
 
-  return true;
+  return validYear && validMonth && validDay;
 }
 
 function daysInMonth(m: number, y: number) {
@@ -60,7 +54,10 @@ function padWithZero(num: number): string {
 
 export function dateOrEmpty(potentialDate: string): string {
   const dateRegexp = /^[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}$/;
-  return potentialDate.match(dateRegexp) ? cleanDate(potentialDate) : '';
+  if (!potentialDate.match(dateRegexp)) return '';
+
+  const correctlyFormattedDate = cleanDate(potentialDate);
+  return validDateNumbers(correctlyFormattedDate) ? correctlyFormattedDate : '';
 }
 
 function cleanDate(dateStr: string): string {
@@ -73,5 +70,5 @@ function cleanDate(dateStr: string): string {
 
 export function stringToDate(str: string): Date {
   const [y, m, d] = str.split('-').map(s => parseInt(s, 10));
-  return new Date(y, m, d);
+  return new Date(y, m - 1, d);
 }
