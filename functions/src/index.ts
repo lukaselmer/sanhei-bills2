@@ -26,6 +26,8 @@ export const updateBillIds = functions.database.ref('billing/bills/{billId}').on
   const data = event.data;
   const setIdPromise = data.ref.child('id').set(data.key);
 
+  if (data.val().humanId) return setIdPromise;
+
   return new Promise((resolve, reject) => {
     db
       .ref('billing/bills')
