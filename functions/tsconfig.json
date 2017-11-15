@@ -5,9 +5,6 @@
     "module": "commonjs",
     "outDir": "./"
   },
-  "angularCompilerOptions": {
-    "preserveWhitespaces": false
-  },
   "include": ["src/**/*.ts"],
   "exclude": ["test.ts", "**/*.spec.ts"]
 }
