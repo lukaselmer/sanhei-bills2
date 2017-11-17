@@ -42,7 +42,7 @@
     "@types/jasmine": "^2.6.3",
     "@types/jasminewd2": "^2.0.3",
     "@types/node": "^8.0.51",
-    "angularfire2": "5.0.0-rc.3",
+    "angularfire2": "5.0.0-rc.4",
     "codelyzer": "^4.0.1",
     "csscomb": "^4.2.0",
     "jasmine-core": "~2.7.0",
