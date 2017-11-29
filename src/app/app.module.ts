@@ -3,6 +3,7 @@ import lcoaleDECH from '@angular/common/locales/de-CH';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -25,7 +26,8 @@ registerLocaleData(lcoaleDECH);
     BrowserAnimationsModule,
     AuthModule,
     BillsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
   ],
   declarations: [AppComponent, PageNotFoundComponent],
   providers: [
