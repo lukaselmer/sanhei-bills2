@@ -82,7 +82,7 @@ describe('BillPrintComponent', () => {
       const element: HTMLHeadingElement = compiled.querySelector('h1');
 
       expect(service.markAsPrinted).toHaveBeenCalled();
-      expect(element.innerText).toEqual('Rechnung 17071234');
+      expect(element.innerText).toEqual('billType 17071234');
     })
   );
 
