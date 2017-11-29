@@ -53,7 +53,16 @@ export class FullTextMatcher implements IBillMatcher {
       bill.address
         .toLowerCase()
         .split('\n')
-        .some(line => line.startsWith(this.term))
+        .some(line => line.startsWith(this.term)) ||
+      this.matchesTitleParts(bill)
     );
+  }
+
+  private matchesTitleParts(bill: Bill) {
+    const part1 = bill.title.toLowerCase();
+    const part2 = part1.substring(part1.indexOf(' ') + 1, part1.length);
+    const part3 = part2.substring(part2.indexOf(' ') + 1, part2.length);
+
+    return part2.startsWith(this.term) || part3.startsWith(this.term);
   }
 }
