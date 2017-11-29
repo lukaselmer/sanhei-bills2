@@ -82,6 +82,28 @@ describe('FullTextMatcher', () => {
     expect(match('2017-06-23', bill)).toBeTruthy();
   });
 
+  it('searches in the first 3 words of the bill title', () => {
+    const variant = billVariant({ title: 'Objekt: MFH Examplestreet 5, 8044 Zürich' });
+    expect(match('objekt: mfh examplestreet 5, 8044 zürich', variant)).toBeTruthy();
+    expect(match('objekt:', variant)).toBeTruthy();
+    expect(match('mfh', variant)).toBeTruthy();
+    expect(match('mfh examplestreet', variant)).toBeTruthy();
+    expect(match('mfh examplestreet 5, 8044 zürich', variant)).toBeTruthy();
+    expect(match('example', variant)).toBeTruthy();
+    expect(match('examplestreet 5', variant)).toBeTruthy();
+    expect(match('examplestreet 5, 8044 zürich', variant)).toBeTruthy();
+
+    const shorter = billVariant({ title: 'Objekt: Examplestreet' });
+    expect(match('objekt:', shorter)).toBeTruthy();
+    expect(match('examplestreet', shorter)).toBeTruthy();
+    expect(match('doesnotexist', shorter)).toBeFalsy();
+
+    const short = billVariant({ title: 'Objekt' });
+    expect(match('objekt', short)).toBeTruthy();
+    expect(match('examplestreet', short)).toBeFalsy();
+    expect(match('doesnotexist', short)).toBeFalsy();
+  });
+
   describe('performance', () => {
     const maxTime = 280; // ms
     const numBills = 20000;
