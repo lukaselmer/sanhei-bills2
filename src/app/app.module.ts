@@ -20,14 +20,14 @@ registerLocaleData(lcoaleDECH);
 @NgModule({
   imports: [
     BrowserModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     BrowserAnimationsModule,
     AuthModule,
     BillsModule,
-    AppRoutingModule,
-    environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : []
+    AppRoutingModule
   ],
   declarations: [AppComponent, PageNotFoundComponent],
   providers: [
