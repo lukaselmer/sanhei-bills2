@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 echo "make sure to run ssl/config.sh if you cannot start the server"
-ng serve --ssl --host sanhei-bills.dev --open
+ng serve --ssl --host sanhei-bills.test --open
