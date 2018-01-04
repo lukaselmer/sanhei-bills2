@@ -4,13 +4,16 @@
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
-        "files": ["/favicon.ico", "/index.html"],
+        "files": ["/favicon.ico", "/favicons/favicon.ico", "/index.html"],
         "versionedFiles": ["/*.bundle.css", "/*.bundle.js", "/*.chunk.js"]
       }
     },
     {
       "name": "fonts",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
       "resources": {
         "urls": ["https://fonts.googleapis.com/**"]
       }
@@ -20,7 +23,7 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "files": ["/assets/**", "/favicons/**"]
+        "files": ["/assets/**", "/favicons/*.png", "/favicons/*.svg"]
       }
     }
   ]
