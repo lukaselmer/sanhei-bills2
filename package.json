@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host sanhei-bills.dev --open",
+    "start": "ng serve --host sanhei-bills.test --open",
     "build": "ng build",
     "build-prod": "ng build --prod --progress false",
     "test": "ng test",
