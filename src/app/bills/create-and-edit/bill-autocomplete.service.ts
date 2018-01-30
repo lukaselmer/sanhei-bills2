@@ -4,7 +4,7 @@ import { BillsService } from './../bills.service';
 
 @Injectable()
 export class BillAutocompleteService {
-  constructor(private billsService: BillsService) {}
+  constructor(private readonly billsService: BillsService) {}
 
   autocompleteOptions<BillField extends keyof Bill>(field: BillField, filter: string): string[] {
     const lowerCaseFilter = filter.toLocaleLowerCase();

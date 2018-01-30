@@ -10,7 +10,7 @@ import { AutocompleteArticle } from './autocomplete-article';
 export class ArticlesService {
   private autocompleteArticles: AutocompleteArticle[];
 
-  constructor(private billsService: BillsService) {}
+  constructor(private readonly billsService: BillsService) {}
 
   filterAutocompleteArticles(filter: string): AutocompleteArticle[] {
     this.ensureInitializedCache();

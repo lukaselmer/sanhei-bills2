@@ -27,7 +27,10 @@ import { DataStoreService } from './store/data-store.service';
 
 @Injectable()
 export class BillsService {
-  constructor(private dataStore: DataStoreService, private billMatcherFactory: BillMatcherFactory) {
+  constructor(
+    private readonly dataStore: DataStoreService,
+    private readonly billMatcherFactory: BillMatcherFactory
+  ) {
     this.dataStore.loadData();
   }
 

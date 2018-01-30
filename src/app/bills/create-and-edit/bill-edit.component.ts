@@ -15,7 +15,11 @@ export class BillEditComponent implements OnInit {
   bill: Bill;
   submitted = false;
 
-  constructor(private router: Router, route: ActivatedRoute, private billsService: BillsService) {
+  constructor(
+    private readonly router: Router,
+    route: ActivatedRoute,
+    private readonly billsService: BillsService
+  ) {
     this.id = route.snapshot.params['id'];
   }
 

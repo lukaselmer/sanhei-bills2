@@ -23,15 +23,15 @@ export class BillsListComponent implements OnInit {
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
 
-  private searchTermStream = new BehaviorSubject<SearchOptions>({
+  private readonly searchTermStream = new BehaviorSubject<SearchOptions>({
     term: this.displayedSearchTerm,
     limit: 10
   });
 
   constructor(
-    private billsService: BillsService,
-    private router: Router,
-    private route: ActivatedRoute
+    private readonly billsService: BillsService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit() {

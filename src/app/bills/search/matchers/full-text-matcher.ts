@@ -2,7 +2,7 @@ import { Bill } from '../../bill';
 import { IBillMatcher } from './i-bill-matcher';
 
 export class FullTextMatcher implements IBillMatcher {
-  constructor(private term: string) {}
+  constructor(private readonly term: string) {}
 
   matches(bill: Bill): boolean {
     return (

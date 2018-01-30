@@ -5,9 +5,9 @@ import { ArticleView } from './article-view';
 import { Bill } from './bill';
 
 export class BillView {
-  private pBillArticleViews: ArticleView[];
+  private readonly pBillArticleViews: ArticleView[];
 
-  constructor(private bill: Bill) {
+  constructor(private readonly bill: Bill) {
     this.pBillArticleViews = bill.articles.map(article => new ArticleView(article));
   }
 

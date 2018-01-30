@@ -1,7 +1,7 @@
 import { Article } from './article';
 
 export class ArticleView {
-  constructor(private pArticle: Article) {}
+  constructor(private readonly pArticle: Article) {}
 
   get article(): Article {
     return this.pArticle;

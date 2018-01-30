@@ -1,7 +1,7 @@
 import { Article } from './../../article';
 
 export class FormArticle {
-  constructor(private article?: Article) {}
+  constructor(private readonly article?: Article) {}
 
   get catalogId() {
     return this.article ? this.article.catalogId : '';

@@ -22,12 +22,12 @@ export class BillPrintComponent implements OnInit {
   billView: BillView;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     route: ActivatedRoute,
-    private billsService: BillsService,
-    private element: ElementRef,
-    private renderer: Renderer2,
-    private decimalPipe: DecimalPipe
+    private readonly billsService: BillsService,
+    private readonly element: ElementRef,
+    private readonly renderer: Renderer2,
+    private readonly decimalPipe: DecimalPipe
   ) {
     this.id = route.snapshot.params['id'];
   }

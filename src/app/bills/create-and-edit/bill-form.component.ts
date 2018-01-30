@@ -34,7 +34,10 @@ export class BillFormComponent implements OnChanges {
     [index: string]: Observable<string[]>;
   } = {};
 
-  constructor(private autocompleteService: BillAutocompleteService, private fb: FormBuilder) {}
+  constructor(
+    private readonly autocompleteService: BillAutocompleteService,
+    private readonly fb: FormBuilder
+  ) {}
 
   private createForm() {
     if (this.form) return;

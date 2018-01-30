@@ -3,7 +3,7 @@ import { BillView } from './../../bill-view';
 import { IBillMatcher } from './i-bill-matcher';
 
 export class AmountMatcher implements IBillMatcher {
-  constructor(private amount: number) {}
+  constructor(private readonly amount: number) {}
 
   matches(bill: Bill): boolean {
     const view = new BillView(bill);
