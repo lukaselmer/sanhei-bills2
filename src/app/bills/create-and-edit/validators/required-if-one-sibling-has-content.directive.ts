@@ -14,7 +14,7 @@ export function requiredIfOneSiblingHasContent(): ValidatorFn {
     };
     const hasError = Object.keys(controlsMap)
       .map(k => controlsMap[k])
-      .some((c: FormControl) => c.value);
+      .some((c: AbstractControl) => c.value);
     return hasError
       ? {
           requiredIfOneSiblingHasContent: {

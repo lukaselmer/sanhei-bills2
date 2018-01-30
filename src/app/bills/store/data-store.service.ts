@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ThenableReference } from '@firebase/database-types';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import 'rxjs/add/operator/first';
@@ -57,7 +58,7 @@ export class DataStoreService {
     }
 
     this.db
-      .list('billing/bills', query => {
+      .list<Bill>('billing/bills', query => {
         return query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp());
       })
       .valueChanges()
@@ -117,9 +118,9 @@ export class DataStoreService {
     });
   }
 
-  async createBill(newBill: NewBill): Promise<void> {
+  createBill(newBill: NewBill): ThenableReference {
     this.setCreated(newBill);
-    return this.db.list(`billing/bills`).push(newBill);
+    return this.db.list<NewBill>(`billing/bills`).push(newBill);
   }
 
   async updateBill(bill: EditedBill | Bill) {
