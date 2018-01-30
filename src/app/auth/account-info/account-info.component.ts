@@ -12,7 +12,7 @@ export class AccountInfoComponent {
 
   showDetails = false;
 
-  constructor(private auth: AngularFireAuth) {}
+  constructor(private readonly auth: AngularFireAuth) {}
 
   toggle() {
     this.showDetails = !this.showDetails;

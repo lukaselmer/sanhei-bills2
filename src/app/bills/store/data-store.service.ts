@@ -15,7 +15,7 @@ import { IDBStoreService } from './idb-store.service';
 
 @Injectable()
 export class DataStoreService {
-  private storeStream = new BehaviorSubject<IBillingDatabase>({ bills: {} });
+  private readonly storeStream = new BehaviorSubject<IBillingDatabase>({ bills: {} });
 
   status: DataStoreStatus = 'idle';
 
@@ -23,7 +23,10 @@ export class DataStoreService {
     return Object.keys(items).map(key => items[key]);
   }
 
-  constructor(private db: AngularFireDatabase, private idbStoreService: IDBStoreService) {}
+  constructor(
+    private readonly db: AngularFireDatabase,
+    private readonly idbStoreService: IDBStoreService
+  ) {}
 
   getStoreStream(): Observable<IBillingDatabase> {
     return this.storeStream.asObservable();

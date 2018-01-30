@@ -1,5 +1,5 @@
 export class AddressView {
-  constructor(private address: string) {}
+  constructor(private readonly address: string) {}
 
   get lines() {
     return this.address.split('\n').filter(line => line);

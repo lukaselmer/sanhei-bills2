@@ -33,7 +33,10 @@ export class ArticlesFormComponent implements OnChanges {
   autocompleteOptions: Observable<AutocompleteArticle[]>;
   articleDescriptionFocusStream = new Subject<string>();
 
-  constructor(private articlesService: ArticlesService, private fb: FormBuilder) {}
+  constructor(
+    private readonly articlesService: ArticlesService,
+    private readonly fb: FormBuilder
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.articles) {
