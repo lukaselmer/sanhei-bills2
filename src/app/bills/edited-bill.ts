@@ -1,6 +1,6 @@
 import { Article } from './article';
 
-export class EditedBill {
+export interface EditedBill {
   id: string;
   humanId: number;
   cashback: number;

@@ -1,11 +1,11 @@
+
 import { Injectable } from '@angular/core';
 import { ThenableReference } from '@firebase/database-types';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
-import 'rxjs/add/operator/first';
-import 'rxjs/add/operator/toPromise';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { first } from 'rxjs/operators';
+
+import { BehaviorSubject ,  Observable } from 'rxjs';
 import { Bill } from '../bill';
 import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
@@ -96,8 +96,8 @@ export class DataStoreService {
   private async downloadWholeDatabase() {
     const data: IBillingDatabase = (await this.db
       .object('billing')
-      .valueChanges()
-      .first()
+      .valueChanges().pipe(
+      first())
       .toPromise()) as IBillingDatabase;
     this.status = 'loaded';
     this.correctArticles(data);

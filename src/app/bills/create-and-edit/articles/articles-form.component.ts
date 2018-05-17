@@ -8,8 +8,8 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject, from } from 'rxjs';
+import { mergeAll, filter, distinctUntilChanged, debounceTime, share } from 'rxjs/operators';
 import { numberValidator } from '../validators/number-validator.directive';
 import { requiredIfOneSiblingHasContent } from '../validators/required-if-one-sibling-has-content.directive';
 import { Article } from './../../article';
@@ -19,6 +19,7 @@ import { NewBill } from './../../new-bill';
 import { ArticlesService } from './articles.service';
 import { AutocompleteArticle } from './autocomplete-article';
 import { FormArticle } from './form-article';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-articles-form',
@@ -26,11 +27,12 @@ import { FormArticle } from './form-article';
   styleUrls: ['./articles-form.component.scss']
 })
 export class ArticlesFormComponent implements OnChanges {
-  @Input() formGroup: FormGroup;
+  // ts-ignore
+  @Input() formGroup: FormGroup | undefined;
   @Input() articles?: Article[];
 
   formArticles: FormArticle[] = [];
-  autocompleteOptions: Observable<AutocompleteArticle[]>;
+  autocompleteOptions: Observable<AutocompleteArticle[]> | undefined;
   articleDescriptionFocusStream = new Subject<string>();
 
   constructor(
@@ -93,7 +95,7 @@ export class ArticlesFormComponent implements OnChanges {
       })
     );
     this.keepAricleValidationsUpdated(articleFormGroups);
-    this.formGroup.setControl('articles', this.fb.array(articleFormGroups));
+    if (this.formGroup) this.formGroup.setControl('articles', this.fb.array(articleFormGroups));
     this.initArticlesAutocomplete();
   }
 
@@ -102,35 +104,38 @@ export class ArticlesFormComponent implements OnChanges {
     let automaticValueChangeInProgress = false;
     articleFormGroups.forEach(fg => {
       fg.valueChanges
-        .map(() => {
-          if (automaticValueChangeInProgress) {
-            return;
-          }
-          automaticValueChangeInProgress = true;
-          Object.keys(fg.controls).forEach(fieldKey => {
-            fg.controls[fieldKey].markAsTouched();
-            fg.controls[fieldKey].setValue(fg.controls[fieldKey].value);
-          });
-          automaticValueChangeInProgress = false;
-        })
+        .pipe(
+          map(() => {
+            if (automaticValueChangeInProgress) {
+              return;
+            }
+            automaticValueChangeInProgress = true;
+            Object.keys(fg.controls).forEach(fieldKey => {
+              fg.controls[fieldKey].markAsTouched();
+              fg.controls[fieldKey].setValue(fg.controls[fieldKey].value);
+            });
+            automaticValueChangeInProgress = false;
+          })
+        )
         .subscribe();
     });
   }
 
   private initArticlesAutocomplete() {
-    this.autocompleteOptions = Observable.from([
+    this.autocompleteOptions = from([
       this.articleDescriptionFocusStream,
       ...this.articlesForm.controls.map(articleForm =>
-        articleForm.valueChanges.map(article => article.description)
+        articleForm.valueChanges.pipe(map(article => article.description))
       )
-    ])
-      .mergeAll()
-      .filter(x => typeof x === 'string')
-      .distinctUntilChanged()
-      .debounceTime(10)
-      .distinctUntilChanged()
-      .map(filter => this.articlesService.filterAutocompleteArticles(filter))
-      .share();
+    ]).pipe(
+      mergeAll(),
+      filter<string>(x => typeof x === 'string'),
+      distinctUntilChanged(),
+      debounceTime(10),
+      distinctUntilChanged(),
+      map(filter => this.articlesService.filterAutocompleteArticles(filter)),
+      share()
+    );
   }
 
   articleFocus(value: string) {
@@ -138,6 +143,7 @@ export class ArticlesFormComponent implements OnChanges {
   }
 
   get articlesForm(): FormArray {
+    if (!this.formGroup) throw new Error('this.formGroup is not defined');
     return this.formGroup.get('articles') as FormArray;
   }
 

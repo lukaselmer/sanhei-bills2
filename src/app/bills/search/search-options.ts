@@ -1,4 +1,4 @@
-export class SearchOptions {
+export interface SearchOptions {
   term: string;
   limit: number;
 }

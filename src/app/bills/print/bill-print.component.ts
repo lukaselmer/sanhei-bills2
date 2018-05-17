@@ -19,7 +19,7 @@ export class BillPrintComponent implements OnInit {
   currentPage = 0;
   currentPageOffset = 0;
   id: string;
-  billView: BillView;
+  billView: BillView | undefined;
 
   constructor(
     private readonly router: Router,
@@ -88,6 +88,7 @@ export class BillPrintComponent implements OnInit {
   }
 
   private calculateSubtotal(upToArticle: number): string {
+    if (!this.billView) throw new Error('this.billView is not initilized');
     const articles = this.billView.articles.slice(0, upToArticle);
     const subtotal =
       Math.round(20 * articles.reduce((sum, current) => sum + current.totalPrice, 0)) / 20;
@@ -95,6 +96,8 @@ export class BillPrintComponent implements OnInit {
   }
 
   private createHeader(): HTMLDivElement {
+    if (!this.billView) throw new Error('this.billView is not initilized');
+
     const headerEl: HTMLDivElement = this.renderer.createElement('div');
     this.renderer.addClass(headerEl, 'page-header');
     this.renderer.appendChild(

@@ -1,7 +1,7 @@
 import * as firebase from 'firebase/app';
 import { Article } from './article';
 
-export class NewBill {
+export interface NewBill {
   cashback: number;
   vat: number;
   discount: number;

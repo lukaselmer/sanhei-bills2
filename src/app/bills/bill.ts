@@ -1,13 +1,13 @@
 import { Article } from './article';
 
-export class Bill {
-  static DEFAULTS = {
-    paymentDeadlineInDays: 30,
-    vat: 8,
-    discount: 0,
-    cashback: 2
-  };
+export const billDefaults = {
+  paymentDeadlineInDays: 30,
+  vat: 8,
+  discount: 0,
+  cashback: 2
+};
 
+export interface Bill {
   id: string;
   humanId: number;
   cashback: number;
@@ -29,10 +29,10 @@ export class Bill {
   title: string;
   descriptionTitle: string;
 
-  // date format: '' or free text or 2017-05-30 or 2017-05-20, 2017-05-21, 2017-05-22
+  // date format!: '' or free text or 2017-05-30 or 2017-05-20, 2017-05-21, 2017-05-22
   workedAt: string;
 
-  // date format: '' or 2017-05-30
+  // date format!: '' or 2017-05-30
   orderedAt: string;
   billedAt: string;
 

@@ -6,8 +6,7 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
-        "files": ["/favicon.ico", "/favicons/favicon.ico", "/index.html"],
-        "versionedFiles": ["/*.bundle.css", "/*.bundle.js", "/*.chunk.js"]
+        "files": ["/favicon.ico", "/index.html", "/*.css", "/*.js"]
       }
     },
     {

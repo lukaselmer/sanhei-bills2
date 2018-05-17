@@ -1,7 +1,7 @@
 import * as firebase from 'firebase/app';
 import { dateOrEmpty } from '../../shared/date-helper';
 import { Article } from '../article';
-import { Bill } from '../bill';
+import { Bill, billDefaults } from '../bill';
 import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
 import { FormArticle } from './articles/form-article';
@@ -53,7 +53,7 @@ export abstract class BillFormExtractor {
 
   private extractPaymentDeadline() {
     const days = parseInt(this.formValue.paymentDeadlineInDays, 10);
-    return days === Bill.DEFAULTS.paymentDeadlineInDays ? {} : { paymentDeadlineInDays: days };
+    return days === billDefaults.paymentDeadlineInDays ? {} : { paymentDeadlineInDays: days };
   }
 
   protected extractDates() {

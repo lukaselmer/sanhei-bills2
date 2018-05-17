@@ -9,7 +9,7 @@ export class BillEditFormExtractor extends BillFormExtractor {
   }
 
   extractBill(): EditedBill {
-    return {
+    const bill = {
       ...this.extractStrings(),
       ...this.extractNumbers(),
       ...this.extractDates(),
@@ -17,6 +17,7 @@ export class BillEditFormExtractor extends BillFormExtractor {
       ...this.applyValuesForExistingBill(),
       ...this.extractIds()
     };
+    return bill;
   }
 
   private applyValuesForExistingBill() {

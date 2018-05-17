@@ -8,7 +8,7 @@ import * as firebase from 'firebase/app';
   styleUrls: ['./account-info.component.scss']
 })
 export class AccountInfoComponent {
-  @Input() user: firebase.User;
+  @Input() user: firebase.User | undefined;
 
   showDetails = false;
 

@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper';
-import { Bill } from './../bill';
+import { Bill, billDefaults } from './../bill';
 import { EditedBill } from './../edited-bill';
 import { NewBill } from './../new-bill';
 import { BillAutocompleteService } from './bill-autocomplete.service';
@@ -13,6 +12,7 @@ import { dateValidator } from './validators/date-validator.directive';
 import { numberValidator } from './validators/number-validator.directive';
 import { requiredIfOneSiblingHasContent } from './validators/required-if-one-sibling-has-content.directive';
 import { workedAtValidator } from './validators/worked-at-validator.directive';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'sb-bill-form',
@@ -20,8 +20,8 @@ import { workedAtValidator } from './validators/worked-at-validator.directive';
   styleUrls: ['./bill-form.component.scss']
 })
 export class BillFormComponent implements OnChanges {
-  @Input() bill: Bill;
-  @Input() createNewBill: boolean;
+  @Input() bill: Bill | undefined;
+  @Input() createNewBill: boolean | undefined;
 
   /**
    * Emits the valid form value once
@@ -29,10 +29,15 @@ export class BillFormComponent implements OnChanges {
   @Output() submitted = new EventEmitter<any>();
   @Output() aborted = new EventEmitter<void>();
 
-  form: FormGroup;
+  form: FormGroup | undefined;
   autocompleteOptions: {
     [index: string]: Observable<string[]>;
   } = {};
+
+  private get initializedForm(): FormGroup {
+    if (!this.form) throw new Error('this.form is not initilized');
+    return this.form;
+  }
 
   constructor(
     private readonly autocompleteService: BillAutocompleteService,
@@ -48,19 +53,19 @@ export class BillFormComponent implements OnChanges {
       ...this.editSpecificFormValues(),
 
       cashback: [
-        Bill.DEFAULTS.cashback + '',
+        billDefaults.cashback + '',
         Validators.compose([Validators.required, Validators.min(0), Validators.max(100)])
       ],
       vat: [
-        Bill.DEFAULTS.vat + '',
+        billDefaults.vat + '',
         Validators.compose([Validators.required, Validators.min(1), Validators.max(100)])
       ],
       discount: [
-        Bill.DEFAULTS.discount + '',
+        billDefaults.discount + '',
         Validators.compose([Validators.required, Validators.min(0), Validators.max(100)])
       ],
       paymentDeadlineInDays: [
-        Bill.DEFAULTS.paymentDeadlineInDays + '',
+        billDefaults.paymentDeadlineInDays + '',
         Validators.compose([Validators.required, Validators.min(1), Validators.max(1000)])
       ],
 
@@ -102,9 +107,7 @@ export class BillFormComponent implements OnChanges {
   }
 
   private initBillAutocomplete() {
-    if (this.autocompleteOptions['title']) {
-      return;
-    }
+    if (this.autocompleteOptions['title']) return;
 
     [
       'billType' as 'billType',
@@ -116,9 +119,12 @@ export class BillFormComponent implements OnChanges {
       'description' as 'description'
     ].forEach(
       field =>
-        (this.autocompleteOptions[field] = (this.form.get(field) as FormControl).valueChanges
-          .startWith('')
-          .map(v => this.autocompleteService.autocompleteOptions(field, v)))
+        (this.autocompleteOptions[field] = (this.initializedForm.get(
+          field
+        ) as FormControl).valueChanges.pipe(
+          startWith(''),
+          map(v => this.autocompleteService.autocompleteOptions(field, v))
+        ))
     );
   }
 
@@ -131,7 +137,7 @@ export class BillFormComponent implements OnChanges {
       cashback: this.bill.cashback,
       vat: this.bill.vat,
       discount: this.bill.discount,
-      paymentDeadlineInDays: this.bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays,
+      paymentDeadlineInDays: this.bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays,
       address: this.bill.address,
       billType: this.bill.billType,
       description: this.bill.description,
@@ -143,12 +149,12 @@ export class BillFormComponent implements OnChanges {
       orderedAt: this.bill.orderedAt,
       billedAt: this.bill.billedAt
     };
-    this.form.setValue(billFormValue);
+    this.initializedForm.setValue(billFormValue);
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.submitted.emit(this.form.value);
+    if (this.initializedForm.valid) {
+      this.submitted.emit(this.initializedForm.value);
       this.submitted.complete();
     } else {
       // tslint:disable-next-line:no-unused-expression
@@ -178,7 +184,7 @@ export class BillFormComponent implements OnChanges {
   }
 
   descriptionTitleSelected(event: MatAutocompleteSelectedEvent) {
-    const descriptionControl = this.form.controls.description;
+    const descriptionControl = this.initializedForm.controls.description;
     if (descriptionControl.value) {
       return;
     }
@@ -188,23 +194,23 @@ export class BillFormComponent implements OnChanges {
   }
 
   addressSelected(event: MatAutocompleteSelectedEvent) {
-    const discountControl = this.form.controls.discount;
-    const paymentDeadlineControl = this.form.controls.paymentDeadlineInDays;
+    const discountControl = this.initializedForm.controls.discount;
+    const paymentDeadlineControl = this.initializedForm.controls.paymentDeadlineInDays;
 
     const bill = this.autocompleteService.billForAddress(event.option.value);
     if (!bill) return;
 
     discountControl.setValue(bill.discount + '');
     paymentDeadlineControl.setValue(
-      (bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + ''
+      (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + ''
     );
   }
 
   titleSelected(event: MatAutocompleteSelectedEvent) {
-    const addressControl = this.form.controls.address;
-    const ownerNameControl = this.form.controls.ownerName;
-    const discountControl = this.form.controls.discount;
-    const paymentDeadlineControl = this.form.controls.paymentDeadlineInDays;
+    const addressControl = this.initializedForm.controls.address;
+    const ownerNameControl = this.initializedForm.controls.ownerName;
+    const discountControl = this.initializedForm.controls.discount;
+    const paymentDeadlineControl = this.initializedForm.controls.paymentDeadlineInDays;
 
     const bill = this.autocompleteService.billForTitle(event.option.value);
     if (!bill) return;
@@ -215,12 +221,12 @@ export class BillFormComponent implements OnChanges {
     if (!ownerNameControl.value) {
       ownerNameControl.setValue(bill.ownerName);
     }
-    if (discountControl.value === Bill.DEFAULTS.discount + '') {
+    if (discountControl.value === billDefaults.discount + '') {
       discountControl.setValue(bill.discount + '');
     }
-    if (paymentDeadlineControl.value === Bill.DEFAULTS.paymentDeadlineInDays + '') {
+    if (paymentDeadlineControl.value === billDefaults.paymentDeadlineInDays + '') {
       paymentDeadlineControl.setValue(
-        (bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays) + ''
+        (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + ''
       );
     }
   }

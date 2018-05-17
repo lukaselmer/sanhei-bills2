@@ -4,6 +4,7 @@ import { Bill } from './../bill';
 import { BillsService } from './../bills.service';
 import { BillMatcherFactory } from './../search/bill-matcher.factory';
 import { DataStoreService } from './data-store.service';
+import { first } from 'rxjs/operators';
 
 function generateValueChangedEvent(objects: any) {
   return {
@@ -82,7 +83,7 @@ describe('DataStoreService', () => {
           expect(angularFireMock.list).toHaveBeenCalledTimes(1);
           billsService
             .getBillsStream()
-            .first()
+            .pipe(first())
             .subscribe(list => {
               expect(list).toEqual([
                 {
@@ -131,7 +132,7 @@ describe('DataStoreService', () => {
           });
           billsService
             .getBillsStream()
-            .first()
+            .pipe(first())
             .subscribe(list => {
               expect(list).toEqual([{ id: 1, name: 'B1', articles: [] }] as any);
             });
@@ -195,7 +196,7 @@ describe('DataStoreService', () => {
           expect(angularFireMock.list).toHaveBeenCalledTimes(1);
           billsService
             .getBillsStream()
-            .first()
+            .pipe(first())
             .subscribe(list => {
               expect(list).toEqual([
                 {
@@ -263,7 +264,7 @@ describe('DataStoreService', () => {
           expect(angularFireMock.list).toHaveBeenCalledTimes(1);
           billsService
             .getBillsStream()
-            .first()
+            .pipe(first())
             .subscribe(list => {
               expect(list).toEqual([{ id: 5, name: 'B5', articles: [] }] as any);
             });
@@ -301,7 +302,7 @@ describe('DataStoreService', () => {
           await service.loadData();
           const bills = await billsService
             .getBillsStream()
-            .first()
+            .pipe(first())
             .toPromise();
           const latestBill: Bill = {
             ...bills[0],

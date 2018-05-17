@@ -1,19 +1,8 @@
+
+import {from as observableFrom, Observable,  of as observableOf } from 'rxjs';
+
 import { Injectable } from '@angular/core';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/concatAll';
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeAll';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/operator/toArray';
-import { Observable } from 'rxjs/Observable';
+import { catchError, concatAll, filter, map, take, toArray } from 'rxjs/operators';
 import { currentDateAsISO8601 } from '../shared/date-helper';
 import { Article } from './article';
 import { Bill } from './bill';
@@ -39,7 +28,7 @@ export class BillsService {
   }
 
   getBillsStream(): Observable<Bill[]> {
-    return this.dataStore.getStoreStream().map(store => this.convertBills(store));
+    return this.dataStore.getStoreStream().pipe(map(store => this.convertBills(store)));
   }
 
   private convertBills(store: IBillingDatabase) {
@@ -49,19 +38,19 @@ export class BillsService {
   search(options: SearchOptions): Observable<SearchResult<Bill>> {
     const billMatcher = this.billMatcherFactory.createBillMatcher(options);
 
-    return this.getBillsStream()
-      .map(bills => {
-        return Observable.from(bills)
-          .filter(bill => billMatcher.matches(bill))
-          .take(options.limit)
-          .toArray();
-      })
-      .concatAll()
-      .catch(e => {
+    return this.getBillsStream().pipe(
+      map(bills => {
+        return observableFrom(bills).pipe(
+          filter(bill => billMatcher.matches(bill)),
+          take(options.limit),
+          toArray());
+      }),
+      concatAll(),
+      catchError(e => {
         console.error(e);
-        return Observable.of([]);
-      })
-      .map(filteredBills => this.wrapSearchResult(options.term, filteredBills));
+        return observableOf([]);
+      }),
+      map(filteredBills => this.wrapSearchResult(options.term, filteredBills)));
   }
 
   private wrapSearchResult(term: string, filteredBills: Bill[]) {
@@ -73,9 +62,9 @@ export class BillsService {
   }
 
   editBill(id: string): Observable<Bill> {
-    return this.getBillsStream()
-      .map(bills => bills.find(bill => bill.id === id))
-      .filter(bill => !!bill) as Observable<Bill>;
+    return this.getBillsStream().pipe(
+      map(bills => bills.find(bill => bill.id === id)),
+      filter(bill => !!bill)) as Observable<Bill>;
   }
 
   async updateBill(bill: EditedBill) {

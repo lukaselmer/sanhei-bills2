@@ -2,7 +2,7 @@ import { stringToDate } from '../shared/date-helper';
 import { AddressView } from './address-view';
 import { Article } from './article';
 import { ArticleView } from './article-view';
-import { Bill } from './bill';
+import { Bill, billDefaults } from './bill';
 
 export class BillView {
   private readonly pBillArticleViews: ArticleView[];
@@ -30,7 +30,7 @@ export class BillView {
     return this.bill.discount;
   }
   get paymentDeadlineInDays() {
-    return this.bill.paymentDeadlineInDays || Bill.DEFAULTS.paymentDeadlineInDays;
+    return this.bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays;
   }
 
   // means finished editing

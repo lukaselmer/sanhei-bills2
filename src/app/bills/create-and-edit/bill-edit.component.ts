@@ -12,7 +12,7 @@ import { BillEditFormExtractor } from './bill-edit-form-extractor';
 })
 export class BillEditComponent implements OnInit {
   id: string;
-  bill: Bill;
+  bill: Bill | undefined;
   submitted = false;
 
   constructor(
@@ -33,6 +33,7 @@ export class BillEditComponent implements OnInit {
   }
 
   saveBill(validFormValue: any) {
+    if (!this.bill) throw new Error('this.bill is not initilized');
     const extractor = new BillEditFormExtractor(validFormValue, this.bill);
     this.submitted = true;
     this.billsService.updateBill(extractor.extractBill());

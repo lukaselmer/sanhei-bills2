@@ -7,6 +7,7 @@ import { BillsService } from './bills.service';
 import { EditedBill } from './edited-bill';
 import { BillMatcherFactory } from './search/bill-matcher.factory';
 import { IBillingDatabase } from './store/billing-database';
+import { first } from 'rxjs/operators';
 
 describe('BillsService', () => {
   let service: BillsService;
@@ -62,7 +63,7 @@ describe('BillsService', () => {
             term: '',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list).toEqual(billsMock);
             expect(searchResult.term).toEqual('');
@@ -79,7 +80,7 @@ describe('BillsService', () => {
             term: 'some',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list).toEqual(billsMock);
             expect(searchResult.term).toEqual('some');
@@ -95,7 +96,7 @@ describe('BillsService', () => {
             term: 'a stre',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list).toEqual([billMock1]);
             expect(searchResult.term).toEqual('a stre');
@@ -111,7 +112,7 @@ describe('BillsService', () => {
             term: 'world',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list).toEqual([billMock2]);
           });
@@ -126,7 +127,7 @@ describe('BillsService', () => {
             term: 'bla',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list).toEqual([]);
           });
@@ -146,7 +147,7 @@ describe('BillsService', () => {
             term: '',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list.length).toEqual(10);
           });
@@ -166,7 +167,7 @@ describe('BillsService', () => {
             term: 'world',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list.length).toEqual(6);
           });
@@ -185,7 +186,7 @@ describe('BillsService', () => {
             term: 'world',
             limit: 10
           })
-          .first()
+          .pipe(first())
           .subscribe(searchResult => {
             expect(searchResult.list).toEqual([]);
             expect(console.error).toHaveBeenCalled();
@@ -198,7 +199,7 @@ describe('BillsService', () => {
     it('returns a bill form when a bill is edited', () => {
       service
         .editBill('2')
-        .first()
+        .pipe(first())
         .subscribe(bill => expect(bill).toEqual(billMock2));
     });
 

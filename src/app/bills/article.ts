@@ -1,4 +1,4 @@
-export class Article {
+export interface Article {
   amount: number;
   price: number;
   catalogId: string;

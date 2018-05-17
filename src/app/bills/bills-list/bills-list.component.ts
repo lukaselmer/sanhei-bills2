@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/switchMap';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { debounceTime, distinctUntilChanged, share, switchMap, map, first } from 'rxjs/operators';
+
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BillsService } from '../bills.service';
 import { DataStoreStatus } from '../store/data-store-status';
 import { Bill } from './../bill';
@@ -19,7 +16,7 @@ import { SearchResult } from './../search/search-result';
   styleUrls: ['./bills-list.component.scss']
 })
 export class BillsListComponent implements OnInit {
-  bills$: Observable<BillView[]>;
+  bills$: Observable<BillView[]> | undefined;
   displayedSearchTerm = '';
   loadStatus: DataStoreStatus = 'loading';
 
@@ -35,24 +32,30 @@ export class BillsListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const billsSearch$ = this.searchTermStream
-      .distinctUntilChanged()
-      .debounceTime(10)
-      .distinctUntilChanged()
-      .switchMap(term => this.reallyStartSearching(term))
-      .share();
+    const billsSearch$ = this.searchTermStream.pipe(
+      distinctUntilChanged(),
+      debounceTime(10),
+      distinctUntilChanged(),
+      switchMap(term => this.reallyStartSearching(term)),
+      share()
+    );
     billsSearch$.subscribe(search => this.updateProgress(search));
-    this.bills$ = billsSearch$.map(search => search.list.map(bill => new BillView(bill))).share();
+    this.bills$ = billsSearch$.pipe(
+      map(search => search.list.map(bill => new BillView(bill))),
+      share()
+    );
 
     this.route.queryParamMap
-      .map(params => {
-        const limit = parseInt(params.get('limit') || '10', 10);
-        const term = params.get('q') || '';
-        this.searchTermStream.next({
-          term,
-          limit
-        });
-      })
+      .pipe(
+        map(params => {
+          const limit = parseInt(params.get('limit') || '10', 10);
+          const term = params.get('q') || '';
+          this.searchTermStream.next({
+            term,
+            limit
+          });
+        })
+      )
       .subscribe();
   }
 
@@ -88,7 +91,7 @@ export class BillsListComponent implements OnInit {
     }
     const bill = await this.billsService
       .editBill(billView.id)
-      .first()
+      .pipe(first())
       .toPromise();
     await this.billsService.deleteBill(bill);
   }
