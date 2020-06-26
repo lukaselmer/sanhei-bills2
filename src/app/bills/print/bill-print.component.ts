@@ -102,7 +102,7 @@ export class BillPrintComponent implements OnInit {
     this.renderer.addClass(headerEl, 'page-header');
     this.renderer.appendChild(
       headerEl,
-      this.createHeaderLine(`Rechnung ${this.billView.uid}`, '15. August 2017')
+      this.createHeaderLine(`Rechnung ${this.billView.uid}`, billView.billedAtDate.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }))
     );
     this.renderer.appendChild(
       headerEl,
