@@ -10,6 +10,7 @@ import { NewBill } from './../new-bill'
 import { IBillingDatabase } from './billing-database'
 import { DataStoreStatus } from './data-store-status'
 import { IDBStoreService } from './idb-store.service'
+import { AngularFireAuth } from '@angular/fire/auth'
 
 @Injectable()
 export class DataStoreService {
@@ -22,6 +23,7 @@ export class DataStoreService {
   }
 
   constructor(
+    private readonly auth: AngularFireAuth,
     private readonly db: AngularFireDatabase,
     private readonly idbStoreService: IDBStoreService
   ) {}
@@ -35,6 +37,8 @@ export class DataStoreService {
   }
 
   async loadData(): Promise<void> {
+    await this.waitForUserLogin()
+
     if (this.status !== 'idle') return Promise.resolve(undefined)
 
     this.status = 'loading'
@@ -88,9 +92,16 @@ export class DataStoreService {
       .pipe(first())
       .toPromise()) as IBillingDatabase
     this.status = 'loaded'
+    this.correctBills(data)
     this.correctArticles(data)
     this.removeDeleted(data)
     this.storeStream.next(data)
+  }
+
+  private correctBills(data: IBillingDatabase) {
+    Object.keys(data.bills).forEach((id) => {
+      if (!data.bills[id].id) data.bills[id].id = id
+    })
   }
 
   private correctArticles(data: IBillingDatabase) {
@@ -105,12 +116,14 @@ export class DataStoreService {
     })
   }
 
-  createBill(newBill: NewBill): firebase.database.ThenableReference {
+  async createBill(newBill: NewBill): Promise<void> {
+    await this.waitForUserLogin()
     this.setCreated(newBill)
-    return this.db.list<NewBill>(`billing/bills`).push(newBill)
+    await this.db.list<NewBill>(`billing/bills`).push(newBill)
   }
 
   async updateBill(bill: EditedBill | Bill) {
+    await this.waitForUserLogin()
     this.setUpdated(bill)
     const billAttributes = {
       ...bill,
@@ -122,6 +135,7 @@ export class DataStoreService {
   }
 
   async deleteBill(bill: Bill) {
+    await this.waitForUserLogin()
     this.setDeleted(bill)
     await this.db.object(`billing/bills/${bill.id}`).set(bill)
   }
@@ -138,5 +152,14 @@ export class DataStoreService {
 
   private setUpdated(bill: Bill | NewBill | EditedBill) {
     bill.updatedAt = firebase.database.ServerValue.TIMESTAMP
+  }
+
+  private async waitForUserLogin() {
+    while (await this.waitingForUserLogin()) {}
+  }
+
+  private async waitingForUserLogin(): Promise<boolean> {
+    const user = await this.auth.currentUser
+    return new Promise((res) => setTimeout(() => res(!user), 100))
   }
 }
