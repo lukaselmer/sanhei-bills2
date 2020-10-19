@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core'
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Observable, Subject, from } from 'rxjs'
-import { mergeAll, filter, distinctUntilChanged, debounceTime, share } from 'rxjs/operators'
+import { mergeAll, filter, distinctUntilChanged, debounceTime, share, map } from 'rxjs/operators'
 import { numberValidator } from '../validators/number-validator.directive'
 import { requiredIfOneSiblingHasContent } from '../validators/required-if-one-sibling-has-content.directive'
 import { Article } from './../../article'
@@ -11,7 +11,6 @@ import { NewBill } from './../../new-bill'
 import { ArticlesService } from './articles.service'
 import { AutocompleteArticle } from './autocomplete-article'
 import { FormArticle } from './form-article'
-import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'sb-articles-form',

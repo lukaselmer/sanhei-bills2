@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core'
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { MatAutocompleteSelectedEvent } from '@angular/material'
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { Observable, Subject } from 'rxjs'
 import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper'
 import { Bill, billDefaults } from './../bill'
@@ -109,7 +109,7 @@ export class BillFormComponent implements OnChanges {
   private initBillAutocomplete() {
     if (this.autocompleteOptions['title']) return
 
-    [
+    ;[
       'billType' as 'billType',
       'address' as 'address',
       'title' as 'title',

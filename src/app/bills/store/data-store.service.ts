@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { ThenableReference } from '@firebase/database-types'
-import { AngularFireDatabase } from 'angularfire2/database'
+import { AngularFireDatabase } from '@angular/fire/database'
 import * as firebase from 'firebase/app'
 import { first } from 'rxjs/operators'
 
