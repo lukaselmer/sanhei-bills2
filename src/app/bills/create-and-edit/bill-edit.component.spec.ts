@@ -85,9 +85,7 @@ describe('BillEditComponent', () => {
     const element = compiled.querySelector('form')
     element.dispatchEvent(new Event('submit'))
 
-    const expectedEditedBill = {
-      ...bill,
-    }
+    const expectedEditedBill = { ...bill } as any
     delete expectedEditedBill.updatedAt
     expect(component.navigateToIndex).toHaveBeenCalled()
     expect(service.updateBill).toHaveBeenCalledWith(expectedEditedBill)
