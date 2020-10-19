@@ -23,6 +23,7 @@ describe('DataStoreService', () => {
     descriptionTitle: 'Zusatz',
   } as any
   const billsMock = [billMock, billMock]
+  const authMock: any = { currentUser: () => Promise.resolve({ a: 'mock user' }) }
   const angularFireMock: any = {
     list: () => generateValueChangedEvent([]),
     object: () => generateValueChangedEvent({}),
@@ -33,7 +34,7 @@ describe('DataStoreService', () => {
   }
 
   beforeEach(() => {
-    service = new DataStoreService(angularFireMock, idbMock)
+    service = new DataStoreService(authMock, angularFireMock, idbMock)
     const spy = spyOn(service, 'loadData')
     billsService = new BillsService(service, new BillMatcherFactory())
     spy.and.callThrough()
