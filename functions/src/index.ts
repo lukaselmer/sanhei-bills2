@@ -13,20 +13,10 @@ const db = admin.database()
  * However, if this happens, the user can manually change the bill id in the UI.
  */
 
-async function setHumanId(data: functions.database.DeltaSnapshot, nextHumanId: number) {
-  data.ref.child('humanId').set(nextHumanId)
-}
-
-async function setUid(data: functions.database.DeltaSnapshot, nextHumanId: number) {
-  const uidStr = `${dateForUID()}${nextHumanId}`
-  data.ref.child('uid').set(+uidStr)
-}
-
 export const updateBillIds = functions.database.ref('billing/bills/{billId}').onCreate((event) => {
-  const data = event.data
-  const setIdPromise = data.ref.child('id').set(data.key)
+  const setIdPromise = event.ref.child('id').set(event.key)
 
-  if (data.val().humanId) return setIdPromise
+  if (event.val().humanId) return setIdPromise
 
   return new Promise((resolve, reject) => {
     db.ref('billing/bills')
@@ -36,10 +26,19 @@ export const updateBillIds = functions.database.ref('billing/bills/{billId}').on
         const val = snapshot.val()
         const lastVersionInDb = val[Object.keys(val)[0]].humanId
         const nextHumanId = lastVersionInDb + 1
-        data.ref.child('humanId').set(nextHumanId)
-        Promise.all([setIdPromise, setHumanId(data, nextHumanId), setUid(data, nextHumanId)])
+        event.ref.child('humanId').set(nextHumanId)
+        Promise.all([setIdPromise, setHumanId(event, nextHumanId), setUid(event, nextHumanId)])
           .then(() => resolve())
           .catch((error) => reject(error))
       })
   })
 })
+
+async function setHumanId(data: functions.database.DataSnapshot, nextHumanId: number) {
+  data.ref.child('humanId').set(nextHumanId)
+}
+
+async function setUid(data: functions.database.DataSnapshot, nextHumanId: number) {
+  const uidStr = `${dateForUID()}${nextHumanId}`
+  data.ref.child('uid').set(+uidStr)
+}
