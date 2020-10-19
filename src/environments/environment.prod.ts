@@ -6,6 +6,6 @@ export const environment = {
     storageBucket: 'sanhei-bills.appspot.com',
     authDomain: 'sanhei-bills.firebaseapp.com',
     messagingSenderId: '1051872822136',
-    projectId: 'sanhei-bills'
-  }
-};
+    projectId: 'sanhei-bills',
+  },
+}

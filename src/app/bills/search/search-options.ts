@@ -1,4 +1,4 @@
 export interface SearchOptions {
-  term: string;
-  limit: number;
+  term: string
+  limit: number
 }

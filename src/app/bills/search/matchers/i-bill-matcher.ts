@@ -1,5 +1,5 @@
-import { Bill } from './../../bill';
+import { Bill } from './../../bill'
 
 export interface IBillMatcher {
-  matches(bill: Bill): boolean;
+  matches(bill: Bill): boolean
 }

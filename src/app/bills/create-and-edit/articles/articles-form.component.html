@@ -2,18 +2,32 @@
   <mat-card formArrayName="articles">
     <mat-card-title>Artikel</mat-card-title>
     <mat-card-content>
-      <div *ngFor="let article of articlesForm.controls; let i=index" [formGroupName]="i" class="article">
+      <div
+        *ngFor="let article of articlesForm.controls; let i = index"
+        [formGroupName]="i"
+        class="article"
+      >
         <div>
           <mat-form-field>
-            <input matInput formControlName="catalogId" placeholder="Katalognr.">
+            <input matInput formControlName="catalogId" placeholder="Katalognr." />
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <input #articleDescription matInput (focus)="articleFocus(articleDescription.value)" formControlName="description" placeholder="Beschreibung"
-              [matAutocomplete]="articleDescriptionAuto">
+            <input
+              #articleDescription
+              matInput
+              (focus)="articleFocus(articleDescription.value)"
+              formControlName="description"
+              placeholder="Beschreibung"
+              [matAutocomplete]="articleDescriptionAuto"
+            />
           </mat-form-field>
-          <mat-autocomplete (optionSelected)="autocompleteSelected(i, $event.option.value)" [displayWith]="displayDescription" #articleDescriptionAuto="matAutocomplete">
+          <mat-autocomplete
+            (optionSelected)="autocompleteSelected(i, $event.option.value)"
+            [displayWith]="displayDescription"
+            #articleDescriptionAuto="matAutocomplete"
+          >
             <mat-option *ngFor="let option of autocompleteOptions | async" [value]="option">
               {{ option.displayValue }}
             </mat-option>
@@ -21,17 +35,17 @@
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="dimension" placeholder="Dimension">
+            <input matInput formControlName="dimension" placeholder="Dimension" />
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="price" placeholder="Preis">
+            <input matInput formControlName="price" placeholder="Preis" />
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="amount" placeholder="Anzahl">
+            <input matInput formControlName="amount" placeholder="Anzahl" />
           </mat-form-field>
         </div>
         <div>

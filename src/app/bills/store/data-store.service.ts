@@ -1,26 +1,25 @@
+import { Injectable } from '@angular/core'
+import { ThenableReference } from '@firebase/database-types'
+import { AngularFireDatabase } from 'angularfire2/database'
+import * as firebase from 'firebase/app'
+import { first } from 'rxjs/operators'
 
-import { Injectable } from '@angular/core';
-import { ThenableReference } from '@firebase/database-types';
-import { AngularFireDatabase } from 'angularfire2/database';
-import * as firebase from 'firebase/app';
-import { first } from 'rxjs/operators';
-
-import { BehaviorSubject ,  Observable } from 'rxjs';
-import { Bill } from '../bill';
-import { EditedBill } from './../edited-bill';
-import { NewBill } from './../new-bill';
-import { IBillingDatabase } from './billing-database';
-import { DataStoreStatus } from './data-store-status';
-import { IDBStoreService } from './idb-store.service';
+import { BehaviorSubject, Observable } from 'rxjs'
+import { Bill } from '../bill'
+import { EditedBill } from './../edited-bill'
+import { NewBill } from './../new-bill'
+import { IBillingDatabase } from './billing-database'
+import { DataStoreStatus } from './data-store-status'
+import { IDBStoreService } from './idb-store.service'
 
 @Injectable()
 export class DataStoreService {
-  private readonly storeStream = new BehaviorSubject<IBillingDatabase>({ bills: {} });
+  private readonly storeStream = new BehaviorSubject<IBillingDatabase>({ bills: {} })
 
-  status: DataStoreStatus = 'idle';
+  status: DataStoreStatus = 'idle'
 
   static toArray<T extends { id: string }>(items: { [index: string]: T }): T[] {
-    return Object.keys(items).map(key => items[key]);
+    return Object.keys(items).map((key) => items[key])
   }
 
   constructor(
@@ -29,132 +28,132 @@ export class DataStoreService {
   ) {}
 
   getStoreStream(): Observable<IBillingDatabase> {
-    return this.storeStream.asObservable();
+    return this.storeStream.asObservable()
   }
 
   store(): IBillingDatabase {
-    return this.storeStream.getValue();
+    return this.storeStream.getValue()
   }
 
   async loadData(): Promise<void> {
     if (this.status !== 'idle') {
-      return Promise.resolve(undefined);
+      return Promise.resolve(undefined)
     }
-    this.status = 'loading';
-    await this.loadCachedDataFromIDB();
-    await this.initializeFirebaseSync();
+    this.status = 'loading'
+    await this.loadCachedDataFromIDB()
+    await this.initializeFirebaseSync()
   }
 
   private async loadCachedDataFromIDB(): Promise<void> {
-    const bills = await this.idbStoreService.loadFromIDB<Bill>('bills');
-    this.status = 'loadedFromIDB';
+    const bills = await this.idbStoreService.loadFromIDB<Bill>('bills')
+    this.status = 'loadedFromIDB'
     if (Object.keys(bills).length > 0) {
-      this.status = 'loaded';
+      this.status = 'loaded'
     }
-    this.storeStream.next({ bills });
+    this.storeStream.next({ bills })
   }
 
   private async initializeFirebaseSync() {
     if (Object.keys(this.store().bills).length === 0) {
-      await this.downloadWholeDatabase();
-      await this.idbStoreService.storeInIDB('bills', this.store().bills);
+      await this.downloadWholeDatabase()
+      await this.idbStoreService.storeInIDB('bills', this.store().bills)
     }
 
     this.db
-      .list<Bill>('billing/bills', query => {
-        return query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp());
+      .list<Bill>('billing/bills', (query) => {
+        return query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp())
       })
       .valueChanges()
       .subscribe(async (bills: Bill[]) => {
         if (bills.length === 0) {
-          return;
+          return
         }
-        const store = this.store();
-        bills.forEach(bill => {
+        const store = this.store()
+        bills.forEach((bill) => {
           if (!bill.articles) {
-            bill.articles = [];
+            bill.articles = []
           }
           if (bill.id) {
-            store.bills[bill.id] = bill;
+            store.bills[bill.id] = bill
           }
           if (bill.deletedAt) {
-            delete store.bills[bill.id];
+            delete store.bills[bill.id]
           }
-        });
-        this.storeStream.next(store);
-        await this.idbStoreService.storeInIDB('bills', store.bills);
-      });
+        })
+        this.storeStream.next(store)
+        await this.idbStoreService.storeInIDB('bills', store.bills)
+      })
   }
 
   private nextSyncTimestamp(): number {
     const currentMaxTimestamp = Math.max(
-      ...DataStoreService.toArray(this.store().bills).map(el => el.updatedAt)
-    );
-    return currentMaxTimestamp + 1;
+      ...DataStoreService.toArray(this.store().bills).map((el) => el.updatedAt)
+    )
+    return currentMaxTimestamp + 1
   }
 
   private async downloadWholeDatabase() {
     const data: IBillingDatabase = (await this.db
       .object('billing')
-      .valueChanges().pipe(
-      first())
-      .toPromise()) as IBillingDatabase;
-    this.status = 'loaded';
-    this.correctArticles(data);
-    this.removeDeleted(data);
-    this.storeStream.next(data);
+      .valueChanges()
+      .pipe(first())
+      .toPromise()) as IBillingDatabase
+    this.status = 'loaded'
+    this.correctArticles(data)
+    this.removeDeleted(data)
+    this.storeStream.next(data)
   }
 
   private correctArticles(data: IBillingDatabase) {
-    Object.keys(data.bills).forEach(id => {
+    Object.keys(data.bills).forEach((id) => {
       if (!data.bills[id].articles) {
-        data.bills[id].articles = [];
+        data.bills[id].articles = []
       }
-    });
+    })
   }
 
   private removeDeleted(data: IBillingDatabase) {
-    Object.keys(data.bills).forEach(id => {
+    Object.keys(data.bills).forEach((id) => {
       if (data.bills[id].deletedAt) {
-        delete data.bills[id];
+        delete data.bills[id]
       }
-    });
+    })
   }
 
   createBill(newBill: NewBill): ThenableReference {
-    this.setCreated(newBill);
-    return this.db.list<NewBill>(`billing/bills`).push(newBill);
+    this.setCreated(newBill)
+    return this.db.list<NewBill>(`billing/bills`).push(newBill)
   }
 
   async updateBill(bill: EditedBill | Bill) {
-    this.setUpdated(bill);
+    this.setUpdated(bill)
     const billAttributes = {
-      ...bill
-    } as any;
-    Object.keys(billAttributes).forEach(k => {
+      ...bill,
+    } as any
+    Object.keys(billAttributes).forEach((k) => {
       if (billAttributes[k] === undefined) {
-        delete billAttributes[k];
+        delete billAttributes[k]
       }
-    });
-    await this.db.object(`billing/bills/${bill.id}`).set(billAttributes);
+    })
+    await this.db.object(`billing/bills/${bill.id}`).set(billAttributes)
   }
 
   async deleteBill(bill: Bill) {
-    this.setDeleted(bill);
-    await this.db.object(`billing/bills/${bill.id}`).set(bill);
+    this.setDeleted(bill)
+    await this.db.object(`billing/bills/${bill.id}`).set(bill)
   }
 
   private setCreated(newBill: NewBill) {
-    newBill.createdAt = firebase.database.ServerValue.TIMESTAMP;
-    this.setUpdated(newBill);
+    newBill.createdAt = firebase.database.ServerValue.TIMESTAMP
+    this.setUpdated(newBill)
   }
 
   private setDeleted(dbObject: Bill) {
-    dbObject.deletedAt = firebase.database.ServerValue.TIMESTAMP as number;
-    this.setUpdated(dbObject);
+    dbObject.deletedAt = firebase.database.ServerValue.TIMESTAMP as number
+    this.setUpdated(dbObject)
   }
 
   private setUpdated(bill: Bill | NewBill | EditedBill) {
-    bill.updatedAt = firebase.database.ServerValue.TIMESTAMP;
+    bill.updatedAt = firebase.database.ServerValue.TIMESTAMP
   }
 }

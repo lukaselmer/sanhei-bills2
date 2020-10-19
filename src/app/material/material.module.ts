@@ -1,6 +1,6 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, DecimalPipe } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { ReactiveFormsModule } from '@angular/forms'
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -11,9 +11,9 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
-  MatProgressBarModule
-} from '@angular/material';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+  MatProgressBarModule,
+} from '@angular/material'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 const materialModules = [
   MatAutocompleteModule,
@@ -26,11 +26,11 @@ const materialModules = [
   MatListModule,
   MatNativeDateModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule
-];
+  MatProgressSpinnerModule,
+]
 
 @NgModule({
   imports: materialModules,
-  exports: materialModules
+  exports: materialModules,
 })
 export class MaterialModule {}

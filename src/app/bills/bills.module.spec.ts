@@ -1,13 +1,13 @@
-import { BillsModule } from './bills.module';
+import { BillsModule } from './bills.module'
 
 describe('BillsModule', () => {
-  let billsModule: BillsModule;
+  let billsModule: BillsModule
 
   beforeEach(() => {
-    billsModule = new BillsModule();
-  });
+    billsModule = new BillsModule()
+  })
 
   it('should create an instance', () => {
-    expect(billsModule).toBeTruthy();
-  });
-});
+    expect(billsModule).toBeTruthy()
+  })
+})

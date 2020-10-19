@@ -4,6 +4,6 @@
     <button mat-raised-button (click)="login()">Sign in</button>
   </div>
   <div *ngSwitchCase="'signedIn'">
-    <sb-account-info [user]='user'></sb-account-info>
+    <sb-account-info [user]="user"></sb-account-info>
   </div>
 </section>

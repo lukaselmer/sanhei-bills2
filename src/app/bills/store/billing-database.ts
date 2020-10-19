@@ -1,5 +1,5 @@
-import { Bill } from './../bill';
+import { Bill } from './../bill'
 
 export interface IBillingDatabase {
-  bills: { [index: string]: Bill };
+  bills: { [index: string]: Bill }
 }

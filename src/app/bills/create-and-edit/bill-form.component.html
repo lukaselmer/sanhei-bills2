@@ -3,11 +3,16 @@
 
   <mat-card>
     <mat-form-field *ngIf="!createNewBill">
-      <input matInput formControlName="humanId" placeholder="ID">
+      <input matInput formControlName="humanId" placeholder="ID" />
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput formControlName="billType" placeholder="Art (Rechnung / Offerte / Spezial)" [matAutocomplete]="billTypeAuto">
+      <input
+        matInput
+        formControlName="billType"
+        placeholder="Art (Rechnung / Offerte / Spezial)"
+        [matAutocomplete]="billTypeAuto"
+      />
     </mat-form-field>
     <mat-autocomplete #billTypeAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['billType'] | async" [value]="option">
@@ -16,7 +21,12 @@
     </mat-autocomplete>
 
     <mat-form-field>
-      <input matInput formControlName="title" placeholder="Titel Rechnung" [matAutocomplete]="titleAuto">
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Titel Rechnung"
+        [matAutocomplete]="titleAuto"
+      />
     </mat-form-field>
     <mat-autocomplete (optionSelected)="titleSelected($event)" #titleAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['title'] | async" [value]="option">
@@ -25,7 +35,13 @@
     </mat-autocomplete>
 
     <mat-form-field>
-      <textarea matInput formControlName="address" matTextareaAutosize placeholder="Adresse" [matAutocomplete]="addressAuto"></textarea>
+      <textarea
+        matInput
+        formControlName="address"
+        matTextareaAutosize
+        placeholder="Adresse"
+        [matAutocomplete]="addressAuto"
+      ></textarea>
     </mat-form-field>
     <mat-autocomplete (optionSelected)="addressSelected($event)" #addressAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['address'] | async" [value]="option">
@@ -34,7 +50,12 @@
     </mat-autocomplete>
 
     <mat-form-field>
-      <input matInput formControlName="ownerName" placeholder="Eigentümer" [matAutocomplete]="ownerNameAuto">
+      <input
+        matInput
+        formControlName="ownerName"
+        placeholder="Eigentümer"
+        [matAutocomplete]="ownerNameAuto"
+      />
     </mat-form-field>
     <mat-autocomplete #ownerNameAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['ownerName'] | async" [value]="option">
@@ -43,7 +64,12 @@
     </mat-autocomplete>
 
     <mat-form-field>
-      <input matInput formControlName="ordererName" placeholder="Auftraggeber/Nr" [matAutocomplete]="ordererNameAuto">
+      <input
+        matInput
+        formControlName="ordererName"
+        placeholder="Auftraggeber/Nr"
+        [matAutocomplete]="ordererNameAuto"
+      />
     </mat-form-field>
     <mat-autocomplete #ordererNameAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['ordererName'] | async" [value]="option">
@@ -54,16 +80,33 @@
 
   <mat-card>
     <mat-form-field>
-      <input matInput formControlName="descriptionTitle" placeholder="Titel Beschreibung" [matAutocomplete]="descriptionTitleAuto">
+      <input
+        matInput
+        formControlName="descriptionTitle"
+        placeholder="Titel Beschreibung"
+        [matAutocomplete]="descriptionTitleAuto"
+      />
     </mat-form-field>
-    <mat-autocomplete (optionSelected)="descriptionTitleSelected($event)" #descriptionTitleAuto="matAutocomplete">
-      <mat-option *ngFor="let option of autocompleteOptions['descriptionTitle'] | async" [value]="option">
+    <mat-autocomplete
+      (optionSelected)="descriptionTitleSelected($event)"
+      #descriptionTitleAuto="matAutocomplete"
+    >
+      <mat-option
+        *ngFor="let option of autocompleteOptions['descriptionTitle'] | async"
+        [value]="option"
+      >
         {{ option }}
       </mat-option>
     </mat-autocomplete>
 
     <mat-form-field>
-      <textarea matInput formControlName="description" matTextareaAutosize placeholder="Arbeitsbeschreibung" [matAutocomplete]="descriptionAuto"></textarea>
+      <textarea
+        matInput
+        formControlName="description"
+        matTextareaAutosize
+        placeholder="Arbeitsbeschreibung"
+        [matAutocomplete]="descriptionAuto"
+      ></textarea>
     </mat-form-field>
     <mat-autocomplete #descriptionAuto="matAutocomplete">
       <mat-option *ngFor="let option of autocompleteOptions['description'] | async" [value]="option">
@@ -74,28 +117,36 @@
 
   <mat-card>
     <mat-form-field>
-      <input matInput formControlName="workedAt" placeholder="Ausgeführte Arbeiten am (Freitext oder yyyy-mm-dd, yyyy-mm-dd, ... als Datum)">
+      <input
+        matInput
+        formControlName="workedAt"
+        placeholder="Ausgeführte Arbeiten am (Freitext oder yyyy-mm-dd, yyyy-mm-dd, ... als Datum)"
+      />
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="orderedAt" placeholder="Auftragsdatum (yyyy-mm-dd)">
+      <input matInput formControlName="orderedAt" placeholder="Auftragsdatum (yyyy-mm-dd)" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="billedAt" placeholder="Verrechnet am (yyyy-mm-dd), wird beim Drucken automatisch gesetzt falls leer">
+      <input
+        matInput
+        formControlName="billedAt"
+        placeholder="Verrechnet am (yyyy-mm-dd), wird beim Drucken automatisch gesetzt falls leer"
+      />
     </mat-form-field>
   </mat-card>
 
   <mat-card>
     <mat-form-field>
-      <input matInput formControlName="cashback" placeholder="Skonto in %">
+      <input matInput formControlName="cashback" placeholder="Skonto in %" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="vat" placeholder="MWST in %">
+      <input matInput formControlName="vat" placeholder="MWST in %" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="discount" placeholder="Rabatt">
+      <input matInput formControlName="discount" placeholder="Rabatt" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="paymentDeadlineInDays" placeholder="Zahlbar innert ... Tagen">
+      <input matInput formControlName="paymentDeadlineInDays" placeholder="Zahlbar innert ... Tagen" />
     </mat-form-field>
   </mat-card>
 

@@ -1,10 +1,10 @@
-'use strict';
-var nodeExternals = require('webpack-node-externals');
+'use strict'
+var nodeExternals = require('webpack-node-externals')
 module.exports = {
   entry: './src/index.ts',
   output: {
     filename: 'index.js',
-    libraryTarget: 'this'
+    libraryTarget: 'this',
   },
   target: 'node',
   module: {
@@ -13,13 +13,13 @@ module.exports = {
         test: /\.tsx?$/,
         loader: 'ts-loader',
         options: {
-          transpileOnly: true
-        }
-      }
-    ]
+          transpileOnly: true,
+        },
+      },
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
-  externals: [nodeExternals()]
-};
+  externals: [nodeExternals()],
+}

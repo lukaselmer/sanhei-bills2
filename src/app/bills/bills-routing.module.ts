@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BillsListComponent } from './bills-list/bills-list.component';
-import { BillEditComponent } from './create-and-edit/bill-edit.component';
-import { BillNewComponent } from './create-and-edit/bill-new.component';
-import { BillPrintComponent } from './print/bill-print.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { BillsListComponent } from './bills-list/bills-list.component'
+import { BillEditComponent } from './create-and-edit/bill-edit.component'
+import { BillNewComponent } from './create-and-edit/bill-new.component'
+import { BillPrintComponent } from './print/bill-print.component'
 
 const routes: Routes = [
   {
@@ -11,34 +11,34 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: BillsListComponent
+        component: BillsListComponent,
       },
       {
         path: 'new',
-        component: BillNewComponent
+        component: BillNewComponent,
       },
       {
         path: '🆕',
-        component: BillNewComponent
+        component: BillNewComponent,
       },
       {
         path: ':id',
-        component: BillEditComponent
+        component: BillEditComponent,
       },
       {
         path: ':id/print',
-        component: BillPrintComponent
+        component: BillPrintComponent,
       },
       {
         path: ':id/🖨',
-        component: BillPrintComponent
-      }
-    ]
-  }
-];
+        component: BillPrintComponent,
+      },
+    ],
+  },
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class BillsRoutingModule {}

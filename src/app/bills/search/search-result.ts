@@ -1,7 +1,7 @@
-import { DataStoreStatus } from '../store/data-store-status';
+import { DataStoreStatus } from '../store/data-store-status'
 
 export interface SearchResult<T> {
-  term: string;
-  list: T[];
-  dbStatus: DataStoreStatus;
+  term: string
+  list: T[]
+  dbStatus: DataStoreStatus
 }

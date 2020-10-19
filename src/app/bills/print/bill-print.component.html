@@ -1,44 +1,44 @@
 <article *ngIf="billView" contenteditable>
   <section class="address">
-    <em>{{billView.addressView.firstLine}}</em>
+    <em>{{ billView.addressView.firstLine }}</em>
     <div *ngFor="let addressLine of billView.addressView.middleLines">
-      {{addressLine}}
+      {{ addressLine }}
     </div>
-    <em>{{billView.addressView.lastLine}}</em>
+    <em>{{ billView.addressView.lastLine }}</em>
   </section>
 
-  <section class="date">
-    Zürich, {{billView.billedAtDate | date:'longDate'}}
-  </section>
+  <section class="date">Zürich, {{ billView.billedAtDate | date: 'longDate' }}</section>
 
   <section>
-    <h1>{{billView.billType}} {{billView.uid}}</h1>
-    <h2>{{billView.title}}</h2>
+    <h1>{{ billView.billType }} {{ billView.uid }}</h1>
+    <h2>{{ billView.title }}</h2>
   </section>
 
   <section class="contract-attributes">
     <div>
       <div>Rechnungsnummer</div>
-      <div>{{billView.uid}}</div>
+      <div>{{ billView.uid }}</div>
     </div>
     <div>
       <div>Auftraggeber/Nr.</div>
-      <div>{{billView.ordererName}}</div>
+      <div>{{ billView.ordererName }}</div>
     </div>
     <div>
       <div>Eigentümer</div>
-      <div>{{billView.ownerName}}</div>
+      <div>{{ billView.ownerName }}</div>
     </div>
     <div>
       <div>Ausgeführte Arbeiten am</div>
-      <div *ngIf="isDate(billView.workedAt)">{{parseDate(billView.workedAt) | date:'longDate'}}</div>
-      <div *ngIf="!isDate(billView.workedAt)">{{billView.workedAt}}</div>
+      <div *ngIf="isDate(billView.workedAt)">
+        {{ parseDate(billView.workedAt) | date: 'longDate' }}
+      </div>
+      <div *ngIf="!isDate(billView.workedAt)">{{ billView.workedAt }}</div>
     </div>
   </section>
 
   <section>
-    <h3>{{billView.descriptionTitle}}</h3>
-    <p *ngFor="let description of billView.descriptionParagraphs">{{description}}</p>
+    <h3>{{ billView.descriptionTitle }}</h3>
+    <p *ngFor="let description of billView.descriptionParagraphs">{{ description }}</p>
   </section>
 
   <section class="contents">
@@ -49,50 +49,52 @@
       <div>Preis CHF</div>
     </header>
     <div *ngFor="let articleView of billView.articles" class="article">
-      <div>{{articleView.article.description}}</div>
-      <div>{{articleView.article.dimension}}</div>
-      <div>{{articleView.article.amount}}</div>
-      <div>{{articleView.article.price | number:'1.2-2'}}</div>
-      <div>{{articleView.totalPrice | number:'1.2-2'}}</div>
+      <div>{{ articleView.article.description }}</div>
+      <div>{{ articleView.article.dimension }}</div>
+      <div>{{ articleView.article.amount }}</div>
+      <div>{{ articleView.article.price | number: '1.2-2' }}</div>
+      <div>{{ articleView.totalPrice | number: '1.2-2' }}</div>
     </div>
     <div class="totals gross">
       <div>Brutto</div>
       <div></div>
       <div></div>
-      <div>{{billView.totalNet | number:'1.2-2'}}</div>
+      <div>{{ billView.totalNet | number: '1.2-2' }}</div>
     </div>
     <div class="totals" *ngIf="billView.discount">
       <div>Rabatt</div>
-      <div>-{{billView.discount | number:'1.1-1'}} %</div>
-      <div>{{billView.totalNet | number:'1.2-2'}}</div>
-      <div>-{{billView.totalDiscount | number:'1.2-2'}}</div>
+      <div>-{{ billView.discount | number: '1.1-1' }} %</div>
+      <div>{{ billView.totalNet | number: '1.2-2' }}</div>
+      <div>-{{ billView.totalDiscount | number: '1.2-2' }}</div>
     </div>
     <div class="totals" *ngIf="billView.cashback">
       <div>Skonto</div>
-      <div>-{{billView.cashback | number:'1.1-1'}} %</div>
-      <div>{{billView.totalAfterDiscount | number:'1.2-2'}}</div>
-      <div>-{{billView.totalCashback | number:'1.2-2'}}</div>
+      <div>-{{ billView.cashback | number: '1.1-1' }} %</div>
+      <div>{{ billView.totalAfterDiscount | number: '1.2-2' }}</div>
+      <div>-{{ billView.totalCashback | number: '1.2-2' }}</div>
     </div>
     <div class="totals vat">
       <div>MWSt CHE-105.833.781</div>
-      <div>{{billView.vat | number:'1.1-1'}} %</div>
-      <div>{{billView.totalAfterCashback | number:'1.2-2'}}</div>
-      <div>{{billView.totalVat | number:'1.2-2'}}</div>
+      <div>{{ billView.vat | number: '1.1-1' }} %</div>
+      <div>{{ billView.totalAfterCashback | number: '1.2-2' }}</div>
+      <div>{{ billView.totalVat | number: '1.2-2' }}</div>
     </div>
     <div class="totals net">
       <div>Total netto inkl. MWSt</div>
       <div></div>
       <div>CHF</div>
-      <div>{{billView.totalGross | number:'1.2-2'}}</div>
+      <div>{{ billView.totalGross | number: '1.2-2' }}</div>
     </div>
   </section>
 
   <footer *ngIf="billView.billType === 'Rechnung'">
-    <p>Zahlungskonditionen: {{billView.paymentDeadlineInDays}} Tage netto.</p>
+    <p>Zahlungskonditionen: {{ billView.paymentDeadlineInDays }} Tage netto.</p>
     <p>Besten Dank für Ihren Auftrag.</p>
   </footer>
   <footer *ngIf="billView.billType !== 'Rechnung'">
-    <p>Wir danken für Ihre Anfrage und freuen uns, wenn wir die offerierten Arbeiten ausführen dürfen.</p>
+    <p>
+      Wir danken für Ihre Anfrage und freuen uns, wenn wir die offerierten Arbeiten ausführen dürfen.
+    </p>
     <p>Eine fachgerechte und speditive Arbeitsausführung sichern wir Ihnen schon heute zu.</p>
   </footer>
 </article>

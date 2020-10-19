@@ -1,5 +1,5 @@
-import { Bill } from './../bill';
-import { IDBStoreService } from './idb-store.service';
+import { Bill } from './../bill'
+import { IDBStoreService } from './idb-store.service'
 
 describe('IDBStoreService', () => {
   const billMock: Bill = {
@@ -7,32 +7,32 @@ describe('IDBStoreService', () => {
     uid: '17071234',
     address1: 'Adresszeile 1\nAdressezeile 2',
     title: 'Objekt: Adresse',
-    descriptionTitle: 'Zusatz'
-  } as any;
+    descriptionTitle: 'Zusatz',
+  } as any
   const billsMock = {
     1: billMock,
-    2: billMock
-  };
+    2: billMock,
+  }
 
   beforeEach(() => {
-    indexedDB.deleteDatabase('sanheiBilling');
-  });
+    indexedDB.deleteDatabase('sanheiBilling')
+  })
 
   it('should store and read bills in the db', (done: any) => {
-    new IDBStoreService().loadFromIDB('bills').then(billsBeforeStore => {
-      expect(billsBeforeStore).toEqual({});
+    new IDBStoreService().loadFromIDB('bills').then((billsBeforeStore) => {
+      expect(billsBeforeStore).toEqual({})
       new IDBStoreService()
         .storeInIDB('bills', billsMock)
         .then(() => {
           new IDBStoreService()
             .loadFromIDB('bills')
-            .then(bills => {
-              expect(bills).toEqual(billsMock);
-              done();
+            .then((bills) => {
+              expect(bills).toEqual(billsMock)
+              done()
             })
-            .catch(e => fail(e) || done());
+            .catch((e) => fail(e) || done())
         })
-        .catch(e => fail(e) || done());
-    });
-  });
-});
+        .catch((e) => fail(e) || done())
+    })
+  })
+})

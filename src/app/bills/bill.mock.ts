@@ -1,6 +1,6 @@
-import { articleVariant } from './article.mock';
-import { Bill } from './bill';
-import { NewBill } from './new-bill';
+import { articleVariant } from './article.mock'
+import { Bill } from './bill'
+import { NewBill } from './new-bill'
 
 const newBill: NewBill = {
   cashback: 2.5,
@@ -19,8 +19,8 @@ const newBill: NewBill = {
   workedAt: '2017-06-20',
   orderedAt: '2017-06-19',
 
-  articles: [articleVariant()]
-};
+  articles: [articleVariant()],
+}
 
 const bill = {
   id: 'RaNdOm1000',
@@ -47,13 +47,13 @@ const bill = {
   workedAt: newBill.workedAt,
   orderedAt: newBill.orderedAt,
 
-  articles: newBill.articles
-};
+  articles: newBill.articles,
+}
 
 export function billVariant(attributes: Partial<Bill> = {}): Bill {
-  return { ...bill, ...attributes };
+  return { ...bill, ...attributes }
 }
 
 export function newBillVariant(attributes: Partial<NewBill> = {}): NewBill {
-  return { ...newBill, ...attributes };
+  return { ...newBill, ...attributes }
 }

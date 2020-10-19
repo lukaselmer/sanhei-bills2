@@ -1,21 +1,21 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from './not-found.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { PageNotFoundComponent } from './not-found.component'
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: '/bills',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '**',
-    component: PageNotFoundComponent
-  }
-];
+    component: PageNotFoundComponent,
+  },
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

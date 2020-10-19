@@ -1,10 +1,10 @@
-import * as admin from 'firebase-admin';
-import * as functions from 'firebase-functions';
-import { dateForUID } from '../../src/app/shared/date-helper';
-import { Bill } from './../../src/app/bills/bill';
+import * as admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
+import { dateForUID } from '../../src/app/shared/date-helper'
+import { Bill } from './../../src/app/bills/bill'
 
-admin.initializeApp(functions.config().firebase);
-const db = admin.database();
+admin.initializeApp(functions.config().firebase)
+const db = admin.database()
 
 /**
  * There is a race condition in updateBillIds: it can happen that the same bill
@@ -14,33 +14,32 @@ const db = admin.database();
  */
 
 async function setHumanId(data: functions.database.DeltaSnapshot, nextHumanId: number) {
-  data.ref.child('humanId').set(nextHumanId);
+  data.ref.child('humanId').set(nextHumanId)
 }
 
 async function setUid(data: functions.database.DeltaSnapshot, nextHumanId: number) {
-  const uidStr = `${dateForUID()}${nextHumanId}`;
-  data.ref.child('uid').set(+uidStr);
+  const uidStr = `${dateForUID()}${nextHumanId}`
+  data.ref.child('uid').set(+uidStr)
 }
 
-export const updateBillIds = functions.database.ref('billing/bills/{billId}').onCreate(event => {
-  const data = event.data;
-  const setIdPromise = data.ref.child('id').set(data.key);
+export const updateBillIds = functions.database.ref('billing/bills/{billId}').onCreate((event) => {
+  const data = event.data
+  const setIdPromise = data.ref.child('id').set(data.key)
 
-  if (data.val().humanId) return setIdPromise;
+  if (data.val().humanId) return setIdPromise
 
   return new Promise((resolve, reject) => {
-    db
-      .ref('billing/bills')
+    db.ref('billing/bills')
       .orderByChild('humanId')
       .limitToLast(1)
-      .once('value', snapshot => {
-        const val = snapshot.val();
-        const lastVersionInDb = val[Object.keys(val)[0]].humanId;
-        const nextHumanId = lastVersionInDb + 1;
-        data.ref.child('humanId').set(nextHumanId);
+      .once('value', (snapshot) => {
+        const val = snapshot.val()
+        const lastVersionInDb = val[Object.keys(val)[0]].humanId
+        const nextHumanId = lastVersionInDb + 1
+        data.ref.child('humanId').set(nextHumanId)
         Promise.all([setIdPromise, setHumanId(data, nextHumanId), setUid(data, nextHumanId)])
           .then(() => resolve())
-          .catch(error => reject(error));
-      });
-  });
-});
+          .catch((error) => reject(error))
+      })
+  })
+})

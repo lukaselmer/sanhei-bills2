@@ -1,17 +1,26 @@
 <mat-progress-bar *ngIf="loadStatus === 'loading'" mode="query" color="accent"></mat-progress-bar>
-<mat-progress-bar *ngIf="loadStatus === 'loadedFromIDB' || loadStatus === 'shortListLoaded'" mode="indeterminate" color="accent"></mat-progress-bar>
+<mat-progress-bar
+  *ngIf="loadStatus === 'loadedFromIDB' || loadStatus === 'shortListLoaded'"
+  mode="indeterminate"
+  color="accent"
+></mat-progress-bar>
 
 <h1>Rechnungen</h1>
 
 <mat-form-field>
-  <input matInput placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"' [value]="searchTerm" #searchTermInput
-    (keyup)="searchKeyup(searchTermInput.value)">
+  <input
+    matInput
+    placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"'
+    [value]="searchTerm"
+    #searchTermInput
+    (keyup)="searchKeyup(searchTermInput.value)"
+  />
 </mat-form-field>
 
 <ng-container *ngIf="bills$ | async; let bills">
   <section>
     <mat-card class="bill" *ngFor="let bill of bills">
-      <mat-card-title (click)="editBill(bill)">{{bill.uid}} | {{ bill.humanId }}</mat-card-title>
+      <mat-card-title (click)="editBill(bill)">{{ bill.uid }} | {{ bill.humanId }}</mat-card-title>
       <mat-card-subtitle (click)="editBill(bill)">
         <div>{{ bill.title }}, {{ bill.descriptionTitle }}</div>
         <div>{{ bill.addressView.commaSeparated }}</div>
@@ -19,11 +28,14 @@
       <mat-card-content (click)="editBill(bill)">
         <span *ngIf="bill.workedAt">Arbeiten am: {{ bill.workedAt }} | </span>
         <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }} | </span>
-        <span>{{ bill.totalNet | currency:'CHF' }} netto | {{ bill.totalGross | currency:'CHF' }} brutto</span>
+        <span
+          >{{ bill.totalNet | currency: 'CHF' }} netto |
+          {{ bill.totalGross | currency: 'CHF' }} brutto</span
+        >
         <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-icon-button type="button" routerLink="{{bill.id}}/🖨">
+        <button mat-icon-button type="button" routerLink="{{ bill.id }}/🖨">
           <i class="material-icons">print</i>
         </button>
         <button mat-icon-button type="button" (click)="removeBill(bill)">
@@ -35,12 +47,14 @@
 
   <mat-card>
     <mat-card-subtitle *ngIf="bills.length === 0">KEINE RECHNUNGEN GEFUNDEN</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="bills.length === 1">{{bills.length}} RECHNUNG</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="bills.length >= 2">{{bills.length}} RECHNUNGEN</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="bills.length === 1">{{ bills.length }} RECHNUNG</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="bills.length >= 2">{{ bills.length }} RECHNUNGEN</mat-card-subtitle>
   </mat-card>
 
   <section class="load-more">
-    <button *ngIf="bills.length >= searchLimit" mat-button type="button" (click)="loadMore()">MEHR LADEN</button>
+    <button *ngIf="bills.length >= searchLimit" mat-button type="button" (click)="loadMore()">
+      MEHR LADEN
+    </button>
   </section>
 </ng-container>
 

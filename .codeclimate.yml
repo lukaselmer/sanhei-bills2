@@ -8,18 +8,18 @@ engines:
     enabled: true
     config:
       languages:
-      - javascript:
+        - javascript:
   fixme:
     enabled: true
 ratings:
   paths:
-  - "src/**"
-  - "e2e/**"
-  - "bin/**"
-  - "karma.conf.js"
-  - "protractor.conf.js"
+    - 'src/**'
+    - 'e2e/**'
+    - 'bin/**'
+    - 'karma.conf.js'
+    - 'protractor.conf.js'
 exclude_paths:
-- node_modules
-- coverage
-- dist
-- ssl
+  - node_modules
+  - coverage
+  - dist
+  - ssl

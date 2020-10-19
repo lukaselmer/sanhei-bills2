@@ -19,8 +19,11 @@ env:
     - secure: iK1I0Nqt2hvzWLY2mf9Lo6j0MRy8BvEgIXxg3zc6ZANGq08IIuuUT5K9aoGuIVk5zYD6rrJ3Es24nGh1sWf9nZtyDwTOnjzGv2hs2fPpSjblUWhq8fwflHwOzUZddsYyGGV4i8p7BMkekfDi8uKmfXsb84S1qzhXmStlWRZ+sfv5vzAAJr8IFZ30a0Sy2ao/Q2vZz2VKjeEH6BRzm5n7IShwAK0zTsYYduNrGu/f90934WJPH4ojQoz0sLV1OvtYEty2Xyl3IqYFi0X1ftabnzVkFrLQbEA20s7DbzaZqzNY9BCYkohiMPNy7+uiNW/5UDoCchTGFEOuR2Y3KJrNBsA1VgQlvXcHeQBnpxJE/C2Bi/X4TBZbbU/y+M1j3W87O2/NUDjd9zWb4LFz1tcanzWoE92OgSUXNu1UXTV74aJGjfYweEpfDNK0IcyreIayFeAxIJKTAzPRW5E6sCNIUqVxT4rSlDw+iToSgutu09H2ZJNdMEOWg8vtPNEzBCKV33siGgIyc+AlU2RyVBs+HvTiUBUQxPoL1KZrubXNkEgPUVGB5XZUaz+wF7KgsfAF+Xfgs7E3qzdw+/8lR8vT6m5aa3b80h+nfLbvYkxKLZUXqAqjYioTc2JdM2JnI4RB1ozEY6DiNhv97MK41Fq0nZhNUoTm41sqJczVQyvtrfE=
 after_success:
   - npm install -g codeclimate-test-reporter
-  - CODECLIMATE_REPO_TOKEN=55944955a9f4d206eb7530d523e0abf2956fe916ebcad96c6d11aa751731e3f7 codeclimate-test-reporter < coverage/lcov.info
-  - CODECLIMATE_API_HOST=https://codebeat.co/webhooks/code_coverage CODECLIMATE_REPO_TOKEN=7684be16-7c66-4f2d-b366-4410018d7326 codeclimate-test-reporter < coverage/lcov.info
+  - CODECLIMATE_REPO_TOKEN=55944955a9f4d206eb7530d523e0abf2956fe916ebcad96c6d11aa751731e3f7
+    codeclimate-test-reporter < coverage/lcov.info
+  - CODECLIMATE_API_HOST=https://codebeat.co/webhooks/code_coverage
+    CODECLIMATE_REPO_TOKEN=7684be16-7c66-4f2d-b366-4410018d7326 codeclimate-test-reporter <
+    coverage/lcov.info
   - npm install -g codacy-coverage
   - cat coverage/lcov.info | codacy-coverage
   - npm install -g codecov
