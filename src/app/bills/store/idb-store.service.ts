@@ -20,9 +20,7 @@ export class IDBStoreService {
             if (cursor) {
               resolve(cursor.value)
               cursor.continue()
-            } else {
-              resolve({})
-            }
+            } else resolve({})
           }
         } catch (ex) {
           reject(ex)
@@ -65,13 +63,12 @@ export class IDBStoreService {
     }
     dbRequest.onupgradeneeded = (event) => {
       const db: IDBDatabase = (event.target as any).result
-      if (event.oldVersion) {
+      if (event.oldVersion)
         indexedDB.deleteDatabase('sanheiBilling').onsuccess = () => window.location.reload()
-      } else {
+      else
         db.createObjectStore('bills', {
           autoIncrement: true,
         })
-      }
     }
     return dbRequest
   }

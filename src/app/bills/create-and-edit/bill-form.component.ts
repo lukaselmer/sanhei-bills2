@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { Observable, Subject } from 'rxjs'
+import { map, startWith } from 'rxjs/operators'
 import { currentDateAsISO8601WithoutDays } from '../../shared/date-helper'
 import { Bill, billDefaults } from './../bill'
 import { EditedBill } from './../edited-bill'
@@ -12,7 +13,6 @@ import { dateValidator } from './validators/date-validator.directive'
 import { numberValidator } from './validators/number-validator.directive'
 import { requiredIfOneSiblingHasContent } from './validators/required-if-one-sibling-has-content.directive'
 import { workedAtValidator } from './validators/worked-at-validator.directive'
-import { startWith, map } from 'rxjs/operators'
 
 @Component({
   selector: 'sb-bill-form',
@@ -84,11 +84,7 @@ export class BillFormComponent implements OnChanges {
   }
 
   private editSpecificFormValues() {
-    return this.createNewBill
-      ? {}
-      : {
-          humanId: ['', Validators.required],
-        }
+    return this.createNewBill ? {} : { humanId: ['', Validators.required] }
   }
 
   private dateDefault(): string {
@@ -97,9 +93,7 @@ export class BillFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const validBillEditValue = changes.bill && changes.bill.currentValue
-    if (!this.createNewBill && !validBillEditValue) {
-      return
-    }
+    if (!this.createNewBill && !validBillEditValue) return
 
     this.createForm()
     this.initBillAutocomplete()
@@ -109,15 +103,16 @@ export class BillFormComponent implements OnChanges {
   private initBillAutocomplete() {
     if (this.autocompleteOptions['title']) return
 
-    ;[
-      'billType' as 'billType',
-      'address' as 'address',
-      'title' as 'title',
-      'descriptionTitle' as 'descriptionTitle',
-      'ownerName' as 'ownerName',
-      'ordererName' as 'ordererName',
-      'description' as 'description',
-    ].forEach(
+    const fields = [
+      'billType',
+      'address',
+      'title',
+      'descriptionTitle',
+      'ownerName',
+      'ordererName',
+      'description',
+    ] as const
+    fields.forEach(
       (field) =>
         (this.autocompleteOptions[field] = (this.initializedForm.get(
           field
@@ -156,12 +151,14 @@ export class BillFormComponent implements OnChanges {
     if (this.initializedForm.valid) {
       this.submitted.emit(this.initializedForm.value)
       this.submitted.complete()
-    } else {
-      // tslint:disable-next-line:no-unused-expression
-      this.scrollToAndFocus('.mat-input-element.ng-touched.ng-invalid') ||
-        this.scrollToAndFocus('.mat-input-element.ng-invalid') ||
-        window.scrollTo(0, 0)
-    }
+    } else this.resetScrollPosition()
+  }
+
+  private resetScrollPosition() {
+    // tslint:disable-next-line:no-unused-expression
+    this.scrollToAndFocus('.mat-input-element.ng-touched.ng-invalid') ||
+      this.scrollToAndFocus('.mat-input-element.ng-invalid') ||
+      window.scrollTo(0, 0)
   }
 
   private scrollToAndFocus(query: string): boolean {
@@ -185,9 +182,7 @@ export class BillFormComponent implements OnChanges {
 
   descriptionTitleSelected(event: MatAutocompleteSelectedEvent) {
     const descriptionControl = this.initializedForm.controls.description
-    if (descriptionControl.value) {
-      return
-    }
+    if (descriptionControl.value) return
 
     const description = this.autocompleteService.descriptionForDescriptionTitle(event.option.value)
     descriptionControl.setValue(description)
@@ -214,20 +209,13 @@ export class BillFormComponent implements OnChanges {
 
     const bill = this.autocompleteService.billForTitle(event.option.value)
     if (!bill) return
-
-    if (!addressControl.value) {
-      addressControl.setValue(bill.address)
-    }
-    if (!ownerNameControl.value) {
-      ownerNameControl.setValue(bill.ownerName)
-    }
-    if (discountControl.value === billDefaults.discount + '') {
+    if (!addressControl.value) addressControl.setValue(bill.address)
+    if (!ownerNameControl.value) ownerNameControl.setValue(bill.ownerName)
+    if (discountControl.value === billDefaults.discount + '')
       discountControl.setValue(bill.discount + '')
-    }
-    if (paymentDeadlineControl.value === billDefaults.paymentDeadlineInDays + '') {
+    if (paymentDeadlineControl.value === billDefaults.paymentDeadlineInDays + '')
       paymentDeadlineControl.setValue(
         (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + ''
       )
-    }
   }
 }

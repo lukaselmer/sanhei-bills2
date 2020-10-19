@@ -112,9 +112,7 @@ describe('FullTextMatcher', () => {
       const start = Date.now()
       const matcher = new FullTextMatcher('address will not be found')
 
-      for (let i = 0; i < numBills; ++i) {
-        matcher.matches(bill)
-      }
+      for (let i = 0; i < numBills; ++i) matcher.matches(bill)
 
       const difference = Date.now() - start
       // console.log(`It took ${(difference)}ms`);

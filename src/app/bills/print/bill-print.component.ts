@@ -60,9 +60,7 @@ export class BillPrintComponent implements OnInit {
           isLastArticle &&
           spaceUsed > BillPrintComponent.PAGE_BREAK_AFTER - BillPrintComponent.TOTALS_HEIGHT
 
-        if (notEnoughSpaceForArticles || notEnoughSpaceForTotals) {
-          this.handlePageBreak(articleEl, index)
-        }
+        if (notEnoughSpaceForArticles || notEnoughSpaceForTotals) this.handlePageBreak(articleEl, index)
       })
     }, 10)
   }
@@ -103,11 +101,11 @@ export class BillPrintComponent implements OnInit {
       headerEl,
       this.createHeaderLine(
         `Rechnung ${this.billView.uid}`,
-        billView.billedAtDate.toLocaleDateString('de-DE', {
+        this.billView.billedAtDate?.toLocaleDateString?.('de-DE', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
-        })
+        }) ?? ''
       )
     )
     this.renderer.appendChild(

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { ThenableReference } from '@firebase/database-types'
 import { AngularFireDatabase } from '@angular/fire/database'
 import * as firebase from 'firebase/app'
 import { first } from 'rxjs/operators'
@@ -36,9 +35,8 @@ export class DataStoreService {
   }
 
   async loadData(): Promise<void> {
-    if (this.status !== 'idle') {
-      return Promise.resolve(undefined)
-    }
+    if (this.status !== 'idle') return Promise.resolve(undefined)
+
     this.status = 'loading'
     await this.loadCachedDataFromIDB()
     await this.initializeFirebaseSync()
@@ -47,9 +45,7 @@ export class DataStoreService {
   private async loadCachedDataFromIDB(): Promise<void> {
     const bills = await this.idbStoreService.loadFromIDB<Bill>('bills')
     this.status = 'loadedFromIDB'
-    if (Object.keys(bills).length > 0) {
-      this.status = 'loaded'
-    }
+    if (Object.keys(bills).length > 0) this.status = 'loaded'
     this.storeStream.next({ bills })
   }
 
@@ -60,25 +56,18 @@ export class DataStoreService {
     }
 
     this.db
-      .list<Bill>('billing/bills', (query) => {
-        return query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp())
-      })
+      .list<Bill>('billing/bills', (query) =>
+        query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp())
+      )
       .valueChanges()
       .subscribe(async (bills: Bill[]) => {
-        if (bills.length === 0) {
-          return
-        }
+        if (bills.length === 0) return
+
         const store = this.store()
         bills.forEach((bill) => {
-          if (!bill.articles) {
-            bill.articles = []
-          }
-          if (bill.id) {
-            store.bills[bill.id] = bill
-          }
-          if (bill.deletedAt) {
-            delete store.bills[bill.id]
-          }
+          if (!bill.articles) bill.articles = []
+          if (bill.id) store.bills[bill.id] = bill
+          if (bill.deletedAt) delete store.bills[bill.id]
         })
         this.storeStream.next(store)
         await this.idbStoreService.storeInIDB('bills', store.bills)
@@ -106,21 +95,17 @@ export class DataStoreService {
 
   private correctArticles(data: IBillingDatabase) {
     Object.keys(data.bills).forEach((id) => {
-      if (!data.bills[id].articles) {
-        data.bills[id].articles = []
-      }
+      if (!data.bills[id].articles) data.bills[id].articles = []
     })
   }
 
   private removeDeleted(data: IBillingDatabase) {
     Object.keys(data.bills).forEach((id) => {
-      if (data.bills[id].deletedAt) {
-        delete data.bills[id]
-      }
+      if (data.bills[id].deletedAt) delete data.bills[id]
     })
   }
 
-  createBill(newBill: NewBill): ThenableReference {
+  createBill(newBill: NewBill): firebase.database.ThenableReference {
     this.setCreated(newBill)
     return this.db.list<NewBill>(`billing/bills`).push(newBill)
   }
@@ -131,9 +116,7 @@ export class DataStoreService {
       ...bill,
     } as any
     Object.keys(billAttributes).forEach((k) => {
-      if (billAttributes[k] === undefined) {
-        delete billAttributes[k]
-      }
+      if (billAttributes[k] === undefined) delete billAttributes[k]
     })
     await this.db.object(`billing/bills/${bill.id}`).set(billAttributes)
   }

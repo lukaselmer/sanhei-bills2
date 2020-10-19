@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core'
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
-import { Observable, Subject, from } from 'rxjs'
-import { mergeAll, filter, distinctUntilChanged, debounceTime, share, map } from 'rxjs/operators'
+import { from, Observable, Subject } from 'rxjs'
+import { debounceTime, distinctUntilChanged, filter, map, mergeAll, share } from 'rxjs/operators'
 import { numberValidator } from '../validators/number-validator.directive'
 import { requiredIfOneSiblingHasContent } from '../validators/required-if-one-sibling-has-content.directive'
 import { Article } from './../../article'
@@ -29,9 +29,7 @@ export class ArticlesFormComponent implements OnChanges {
   constructor(private readonly articlesService: ArticlesService, private readonly fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.articles) {
-      this.articlesChanged()
-    }
+    if (changes.articles) this.articlesChanged()
   }
 
   private articlesChanged() {
@@ -42,14 +40,13 @@ export class ArticlesFormComponent implements OnChanges {
 
   addNewArticles(amount: number) {
     this.formArticles = this.articlesForm.value
-    for (let i = 0; i < amount; ++i) {
-      this.formArticles.push(new FormArticle())
-    }
+    for (let i = 0; i < amount; ++i) this.formArticles.push(new FormArticle())
     this.setArticles()
   }
 
   moveUp(index: number) {
     const arr = this.articlesForm.value
+    // tslint:disable-next-line:align
     ;[arr[index], arr[index - 1]] = [arr[index - 1], arr[index]]
     this.formArticles = arr
     this.setArticles()
@@ -65,9 +62,7 @@ export class ArticlesFormComponent implements OnChanges {
     // The setTimeout workaround exists to blur the article description field, which
     // closes the material autocomplete menu. Otherwise, en error would be raised when
     // removing / changing the autocomplete element while it is still open.
-    setTimeout(() => {
-      this.setArticlesWithoutTimeout()
-    }, 0)
+    setTimeout(() => this.setArticlesWithoutTimeout(), 0)
   }
   private setArticlesWithoutTimeout() {
     const articleFormGroups = this.formArticles.map((a) =>
@@ -91,9 +86,7 @@ export class ArticlesFormComponent implements OnChanges {
       fg.valueChanges
         .pipe(
           map(() => {
-            if (automaticValueChangeInProgress) {
-              return
-            }
+            if (automaticValueChangeInProgress) return
             automaticValueChangeInProgress = true
             Object.keys(fg.controls).forEach((fieldKey) => {
               fg.controls[fieldKey].markAsTouched()
@@ -118,7 +111,7 @@ export class ArticlesFormComponent implements OnChanges {
       distinctUntilChanged(),
       debounceTime(10),
       distinctUntilChanged(),
-      map((filter) => this.articlesService.filterAutocompleteArticles(filter)),
+      map((currentFilter) => this.articlesService.filterAutocompleteArticles(currentFilter)),
       share()
     )
   }

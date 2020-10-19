@@ -16,9 +16,7 @@ export class FullTextMatcher implements IBillMatcher {
 
   private matchesNumber(bill: Bill) {
     const termAsNumber = +this.term
-    if (termAsNumber.toString() !== this.term) {
-      return false
-    }
+    if (termAsNumber.toString() !== this.term) return false
 
     return bill.cashback === termAsNumber || bill.vat === termAsNumber || bill.discount === termAsNumber
   }

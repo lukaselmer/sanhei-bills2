@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
-import { debounceTime, distinctUntilChanged, share, switchMap, map, first } from 'rxjs/operators'
+import { debounceTime, distinctUntilChanged, first, map, share, switchMap } from 'rxjs/operators'
 
 import { BehaviorSubject, Observable } from 'rxjs'
 import { BillsService } from '../bills.service'
@@ -60,9 +60,8 @@ export class BillsListComponent implements OnInit {
   }
 
   private reallyStartSearching(searchOptions: SearchOptions): Observable<SearchResult<Bill>> {
-    if (this.displayedSearchTerm !== searchOptions.term) {
-      this.loadStatus = 'loading'
-    }
+    if (this.displayedSearchTerm !== searchOptions.term) this.loadStatus = 'loading'
+
     return this.billsService.search(searchOptions)
   }
 
@@ -86,9 +85,8 @@ export class BillsListComponent implements OnInit {
   }
 
   async removeBill(billView: BillView) {
-    if (!confirm('Wirklich löschen?')) {
-      return
-    }
+    if (!confirm('Wirklich löschen?')) return
+
     const bill = await this.billsService.editBill(billView.id).pipe(first()).toPromise()
     await this.billsService.deleteBill(bill)
   }
@@ -96,10 +94,7 @@ export class BillsListComponent implements OnInit {
   loadMore() {
     const searchQuery = this.searchTerm === '' ? {} : { q: this.searchTerm }
     this.router.navigate(['/bills'], {
-      queryParams: {
-        ...searchQuery,
-        limit: this.searchLimit + 20,
-      },
+      queryParams: { ...searchQuery, limit: this.searchLimit + 20 },
     })
   }
 

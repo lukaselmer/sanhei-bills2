@@ -16,9 +16,6 @@ export class BillNewFormExtractor extends BillFormExtractor {
   }
 
   private applyValuesForNewBill() {
-    return {
-      finished: false as false,
-      paid: false as false,
-    }
+    return { finished: false, paid: false } as const
   }
 }

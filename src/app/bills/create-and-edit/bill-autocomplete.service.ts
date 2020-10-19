@@ -24,9 +24,7 @@ export class BillAutocompleteService {
     } = {}
     bills.forEach((bill) => {
       const fieldValue = bill[field] as string
-      if (!fieldValuesMap[fieldValue]) {
-        fieldValuesMap[fieldValue] = bill
-      }
+      if (!fieldValuesMap[fieldValue]) fieldValuesMap[fieldValue] = bill
     })
     return fieldValuesMap
   }

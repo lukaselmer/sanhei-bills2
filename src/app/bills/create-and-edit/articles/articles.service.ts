@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
 import * as firebase from 'firebase/app'
-import { Observable, from } from 'rxjs'
+import { from, Observable } from 'rxjs'
+import { filter, take, toArray } from 'rxjs/operators'
 import { Article } from '../../article'
 import { Bill } from '../../bill'
 import { BillsService } from './../../bills.service'
 import { AutocompleteArticle } from './autocomplete-article'
-import { filter, take, toArray } from 'rxjs/operators'
 
 @Injectable()
 export class ArticlesService {
@@ -34,9 +34,7 @@ export class ArticlesService {
   }
 
   private ensureInitializedCache() {
-    if (!this.autocompleteArticles) {
-      this.initArticleDescriptions()
-    }
+    if (!this.autocompleteArticles) this.initArticleDescriptions()
   }
 
   private initArticleDescriptions() {

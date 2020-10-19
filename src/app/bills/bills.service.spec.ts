@@ -1,13 +1,13 @@
 import { async } from '@angular/core/testing'
 import 'rxjs/add/operator/count'
 import { Observable } from 'rxjs/Observable'
+import { first } from 'rxjs/operators'
 import { articleVariant } from './article.mock'
 import { billVariant } from './bill.mock'
 import { BillsService } from './bills.service'
 import { EditedBill } from './edited-bill'
 import { BillMatcherFactory } from './search/bill-matcher.factory'
 import { IBillingDatabase } from './store/billing-database'
-import { first } from 'rxjs/operators'
 
 describe('BillsService', () => {
   let service: BillsService

@@ -1,10 +1,10 @@
 import { async } from '@angular/core/testing'
 import { Observable } from 'rxjs/Observable'
+import { first } from 'rxjs/operators'
 import { Bill } from './../bill'
 import { BillsService } from './../bills.service'
 import { BillMatcherFactory } from './../search/bill-matcher.factory'
 import { DataStoreService } from './data-store.service'
-import { first } from 'rxjs/operators'
 
 function generateValueChangedEvent(objects: any) {
   return {
