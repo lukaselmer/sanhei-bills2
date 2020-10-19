@@ -23,10 +23,10 @@ export class AuthWidgetComponent implements OnInit {
   }
 
   login() {
-    this.auth.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+    this.auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
   }
 
   logout() {
-    this.auth.auth.signOut()
+    this.auth.signOut()
   }
 }

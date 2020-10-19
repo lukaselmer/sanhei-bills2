@@ -19,6 +19,6 @@ export class AccountInfoComponent {
   }
 
   logout() {
-    this.auth.auth.signOut()
+    this.auth.signOut()
   }
 }

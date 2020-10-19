@@ -5,8 +5,8 @@
       ".write": false
     },
     "billing": {
-      ".read": "root.child('admins/'+auth.uid).exists()",
-      ".write": "root.child('admins/'+auth.uid).exists()",
+      ".read": "root.child('/admins/'+auth.uid).exists()",
+      ".write": "root.child('/admins/'+auth.uid).exists()",
       "bills": {
         ".indexOn": ["id", "humanId", "updatedAt"]
       }
