@@ -3,12 +3,13 @@
     "rules": "database.rules.json"
   },
   "hosting": {
+    "cleanUrls": true,
+    "trailingSlash": false,
     "public": "dist",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+    "headers": [
+      { "source": "/service-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+    ],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  },
+  "functions": { "runtime": "nodejs12" }
 }
