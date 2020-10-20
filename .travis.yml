@@ -31,7 +31,7 @@ after_success:
   - codecov
 before_deploy:
   - npm run build-prod
-  - cd functions && yarn i && yarn build && cd ..
+  - cd functions && yarn install && yarn build && cd ..
 deploy:
   skip_cleanup: true
   on:
