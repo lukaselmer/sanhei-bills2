@@ -1,5 +1,5 @@
 <mat-card *ngIf="showDetails">
-  <mat-card-header>
+  <mat-card-header *ngIf="user">
     <img mat-card-avatar (click)="toggle()" [src]="user.photoURL" alt="Profile Image" />
     <mat-card-title>{{ user.displayName }}</mat-card-title>
     <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
@@ -10,5 +10,11 @@
 </mat-card>
 
 <div class="preview">
-  <img (click)="toggle()" [src]="user.photoURL" class="mat-card-image" alt="Profile Image" />
+  <img
+    *ngIf="user"
+    (click)="toggle()"
+    [src]="user.photoURL"
+    class="mat-card-image"
+    alt="Profile Image"
+  />
 </div>
