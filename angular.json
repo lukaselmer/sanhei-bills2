@@ -18,7 +18,14 @@
             "polyfills": "src/polyfills.ts",
             "assets": ["src/assets", "src/favicons", "src/favicon.ico"],
             "styles": ["src/scss/global.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "firebase",
+              "@firebase/app",
+              "firebase/app",
+              "@firebase/database",
+              "@firebase/auth"
+            ]
           },
           "configurations": {
             "production": {
@@ -30,7 +37,7 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
