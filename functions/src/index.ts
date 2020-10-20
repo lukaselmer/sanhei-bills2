@@ -2,6 +2,8 @@ import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 import { dateForUID } from './date-helper'
 
+admin.initializeApp(functions.config().firebase)
+
 /**
  * There is a race condition in updateBillIds: it can happen that the same bill
  * number is assigned to multiple bills by the system. It is very unlikely, since
@@ -13,8 +15,6 @@ export const updateBillIds = functions
   .region('europe-west6')
   .database.ref('billing/bills/{billId}')
   .onCreate(async (data) => {
-    admin.initializeApp(functions.config().firebase)
-
     if (data.val().humanId) return data.ref.update({ id: data.key })
 
     const snapshot = await admin

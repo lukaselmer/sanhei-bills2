@@ -53,3 +53,5 @@ ssl/*.crt
 ssl/*.pem
 ssl/*.srl
 ssl/*.csr
+
+.firebase
