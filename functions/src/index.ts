@@ -1,10 +1,6 @@
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
-import { dateForUID } from '../../src/app/shared/date-helper'
-import { Bill } from './../../src/app/bills/bill'
-
-admin.initializeApp(functions.config().firebase)
-const db = admin.database()
+import { dateForUID } from './date-helper'
 
 /**
  * There is a race condition in updateBillIds: it can happen that the same bill
@@ -13,32 +9,23 @@ const db = admin.database()
  * However, if this happens, the user can manually change the bill id in the UI.
  */
 
-export const updateBillIds = functions.database.ref('billing/bills/{billId}').onCreate((event) => {
-  const setIdPromise = event.ref.child('id').set(event.key)
+export const updateBillIds = functions
+  .region('europe-west6')
+  .database.ref('billing/bills/{billId}')
+  .onCreate(async (data) => {
+    admin.initializeApp(functions.config().firebase)
 
-  if (event.val().humanId) return setIdPromise
+    if (data.val().humanId) return data.ref.update({ id: data.key })
 
-  return new Promise((resolve, reject) => {
-    db.ref('billing/bills')
+    const snapshot = await admin
+      .database()
+      .ref('billing/bills')
       .orderByChild('humanId')
       .limitToLast(1)
-      .once('value', (snapshot) => {
-        const val = snapshot.val()
-        const lastVersionInDb = val[Object.keys(val)[0]].humanId
-        const nextHumanId = lastVersionInDb + 1
-        event.ref.child('humanId').set(nextHumanId)
-        Promise.all([setIdPromise, setHumanId(event, nextHumanId), setUid(event, nextHumanId)])
-          .then(() => resolve())
-          .catch((error) => reject(error))
-      })
+      .once('value')
+    const val = snapshot.val()
+    const lastVersionInDb = val[Object.keys(val)[0]].humanId
+    const nextHumanId = lastVersionInDb + 1
+    const uidStr = `${dateForUID()}${nextHumanId}`
+    await data.ref.update({ id: data.key, humanId: nextHumanId, uid: +uidStr })
   })
-})
-
-async function setHumanId(data: functions.database.DataSnapshot, nextHumanId: number) {
-  data.ref.child('humanId').set(nextHumanId)
-}
-
-async function setUid(data: functions.database.DataSnapshot, nextHumanId: number) {
-  const uidStr = `${dateForUID()}${nextHumanId}`
-  data.ref.child('uid').set(+uidStr)
-}
