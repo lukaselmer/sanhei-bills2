@@ -13,6 +13,6 @@
   },
   "functions": {
     "runtime": "nodejs12",
-    "predeploy": ["cd functions && yarn install && yarn build && cd .."]
+    "predeploy__example": ["cd functions && yarn install && yarn build && cd .."]
   }
 }
