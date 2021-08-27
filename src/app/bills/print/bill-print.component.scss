@@ -6,8 +6,7 @@ article {
   padding-left: 33px;
 }
 
-.date,
-.address {
+.date, .address {
   margin-left: 500px;
 }
 
@@ -203,8 +202,7 @@ $col5: 118%;
     }
   }
 
-  .subtotal-start,
-  .subtotal-end {
+  .subtotal-start, .subtotal-end {
     display: flex;
     :first-child {
       flex-basis: $col1 + $col2 + $col3 + $col4;
