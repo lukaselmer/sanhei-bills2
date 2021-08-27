@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing'
+import { waitForAsync } from '@angular/core/testing'
 import { Observable } from 'rxjs/Observable'
 import { first } from 'rxjs/operators'
 import { Bill } from './../bill'
@@ -41,7 +41,7 @@ describe('DataStoreService', () => {
   })
 
   describe('loadData', () => {
-    it('should load data from firebase if there is no cache', async(() => {
+    it('should load data from firebase if there is no cache', waitForAsync(() => {
       const db = {
         bills: {
           1: {
@@ -102,7 +102,7 @@ describe('DataStoreService', () => {
       })
     }))
 
-    it('should not store deleted entries if there is no cache', async(() => {
+    it('should not store deleted entries if there is no cache', waitForAsync(() => {
       const db = {
         bills: {
           1: { id: 1, name: 'B1' },
@@ -135,7 +135,7 @@ describe('DataStoreService', () => {
       })
     }))
 
-    it('should not load partial data from firebase if there is a cache', async(() => {
+    it('should not load partial data from firebase if there is a cache', waitForAsync(() => {
       spyOn(idbMock, 'loadFromIDB').and.returnValues(
         Promise.resolve({
           1: {
@@ -215,7 +215,7 @@ describe('DataStoreService', () => {
       })
     }))
 
-    it('should delete entries marked as deleted', async(() => {
+    it('should delete entries marked as deleted', waitForAsync(() => {
       spyOn(idbMock, 'loadFromIDB').and.returnValues(
         Promise.resolve({
           1: {
@@ -264,7 +264,7 @@ describe('DataStoreService', () => {
 
   describe('updateBill', () => {
     describe('when online', () => {
-      it('updates the bill in firebase', async(async () => {
+      it('updates the bill in firebase', waitForAsync(async () => {
         spyOn(idbMock, 'loadFromIDB').and.returnValues(
           Promise.resolve({
             1: {

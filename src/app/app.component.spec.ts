@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing'
+import { TestBed, waitForAsync } from '@angular/core/testing'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFireDatabase } from '@angular/fire/database'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -10,7 +10,7 @@ import { BillsService } from './bills/bills.service'
 import { MaterialModule } from './material/material.module'
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [MaterialModule, RouterTestingModule],
       providers: [
@@ -39,7 +39,7 @@ describe('AppComponent', () => {
     }).compileComponents()
   }))
 
-  it('should create the app', async(() => {
+  it('should create the app', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.debugElement.componentInstance
     expect(app).toBeTruthy()

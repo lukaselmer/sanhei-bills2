@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing'
+import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
@@ -28,7 +28,7 @@ describe('BillsListComponent', () => {
     dbStatus: 'loaded' as 'loaded',
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         MaterialModule,
@@ -92,7 +92,7 @@ describe('BillsListComponent', () => {
       expect(component).toBeTruthy()
     })
 
-    it('should render the search field', async(() => {
+    it('should render the search field', waitForAsync(() => {
       fixture.detectChanges()
       const compiled = fixture.debugElement.nativeElement
       expect(compiled.querySelector('mat-form-field')).not.toBe(null)

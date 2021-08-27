@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing'
+import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -57,7 +57,7 @@ describe('BillNewComponent', () => {
     fill(selectTextarea('description'), newBill.description)
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
       providers: [

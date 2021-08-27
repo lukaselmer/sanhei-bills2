@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing'
+import { waitForAsync } from '@angular/core/testing'
 import 'rxjs/add/operator/count'
 import { Observable } from 'rxjs/Observable'
 import { first } from 'rxjs/operators'
@@ -46,11 +46,11 @@ describe('BillsService', () => {
   })
 
   describe('loading and searching bills', () => {
-    it('loads the data when constructed', async(() => {
+    it('loads the data when constructed', waitForAsync(() => {
       expect(dataStoreServiceMock.loadData).toHaveBeenCalled()
     }))
 
-    it('does not filter if the filter is empty', async(() => {
+    it('does not filter if the filter is empty', waitForAsync(() => {
       service
         .search({
           term: '',
@@ -64,7 +64,7 @@ describe('BillsService', () => {
         })
     }))
 
-    it('does not filter if the filter is "some"', async(() => {
+    it('does not filter if the filter is "some"', waitForAsync(() => {
       service
         .search({
           term: 'some',
@@ -77,7 +77,7 @@ describe('BillsService', () => {
         })
     }))
 
-    it('shows the first if the filter is "a stre"', async(() => {
+    it('shows the first if the filter is "a stre"', waitForAsync(() => {
       service
         .search({
           term: 'a stre',
@@ -90,7 +90,7 @@ describe('BillsService', () => {
         })
     }))
 
-    it('shows the second if the filter is "world"', async(() => {
+    it('shows the second if the filter is "world"', waitForAsync(() => {
       service
         .search({
           term: 'world',
@@ -102,7 +102,7 @@ describe('BillsService', () => {
         })
     }))
 
-    it('shows nothing if the filter is "bla"', async(() => {
+    it('shows nothing if the filter is "bla"', waitForAsync(() => {
       service
         .search({
           term: 'bla',
@@ -114,7 +114,7 @@ describe('BillsService', () => {
         })
     }))
 
-    it('limits the entries to 10', async(() => {
+    it('limits the entries to 10', waitForAsync(() => {
       const a = billMock1
       const b = billMock2
       spyOn(service, 'getBillsStream').and.returnValue(
@@ -131,7 +131,7 @@ describe('BillsService', () => {
         })
     }))
 
-    it('searches in all entries', async(() => {
+    it('searches in all entries', waitForAsync(() => {
       const a = billMock1
       const b = billMock2
       spyOn(service, 'getBillsStream').and.returnValue(
@@ -148,7 +148,7 @@ describe('BillsService', () => {
         })
     }))
 
-    it('catches the error if there is one', async(() => {
+    it('catches the error if there is one', waitForAsync(() => {
       spyOn(service, 'getBillsStream').and.returnValue(Observable.of([null, billMock1, billMock2]))
       spyOn(console, 'error')
       service

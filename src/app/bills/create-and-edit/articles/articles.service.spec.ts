@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing'
+import { waitForAsync } from '@angular/core/testing'
 import 'rxjs/add/operator/count'
 import { Observable } from 'rxjs/Observable'
 import { articleVariant } from '../../article.mock'

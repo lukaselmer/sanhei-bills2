@@ -1,4 +1,4 @@
-import { async } from '@angular/core/testing'
+import { waitForAsync } from '@angular/core/testing'
 import { BillMatcherFactory } from './bill-matcher.factory'
 import { AmountMatcher } from './matchers/amount-matcher'
 import { FullTextMatcher } from './matchers/full-text-matcher'
