@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, ValidatorFn } from '@angular/forms'
 export function requiredIfOneSiblingHasContent(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const value: string | object = control.value
-    const parent = control.parent!
+    const parent = control.parent
 
     if (!parent || typeof value === 'object' || value.trim()) return null
 

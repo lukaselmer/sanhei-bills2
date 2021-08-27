@@ -114,9 +114,9 @@ export class BillFormComponent implements OnChanges {
     ] as const
     fields.forEach(
       (field) =>
-        (this.autocompleteOptions[field] = (this.initializedForm.get(
-          field
-        ) as FormControl).valueChanges.pipe(
+        (this.autocompleteOptions[field] = (
+          this.initializedForm.get(field) as FormControl
+        ).valueChanges.pipe(
           startWith(''),
           map((v) => this.autocompleteService.autocompleteOptions(field, v))
         ))
