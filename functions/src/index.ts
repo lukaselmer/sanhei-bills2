@@ -14,7 +14,7 @@ admin.initializeApp(functions.config().firebase)
 export const updateBillIds = functions
   .region('europe-west6')
   .database.ref('billing/bills/{billId}')
-  .onCreate(async (data) => {
+  .onCreate(async (data: any) => {
     if (data.val().humanId) return data.ref.update({ id: data.key })
 
     const snapshot = await admin

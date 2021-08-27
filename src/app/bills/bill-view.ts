@@ -15,13 +15,13 @@ export class BillView {
     return this.bill.id
   }
   get humanId() {
-    return this.bill.humanId
+    return this.bill.humanId || 0
   }
   get cashback() {
     return this.bill.cashback
   }
   get uid() {
-    return this.bill.uid
+    return this.bill.uid || ''
   }
   get vat() {
     return this.bill.vat

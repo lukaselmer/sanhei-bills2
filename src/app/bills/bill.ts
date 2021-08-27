@@ -9,9 +9,9 @@ export const billDefaults = {
 
 export interface Bill {
   id: string
-  humanId: number
+  humanId: number | undefined
   cashback: number
-  uid: number
+  uid: number | undefined
   vat: number
   discount: number
   paymentDeadlineInDays?: number

@@ -1,14 +1,12 @@
 import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import * as firebase from 'firebase/compat/app'
 import 'rxjs/add/observable/of'
 import { Observable } from 'rxjs/Observable'
 import { billVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
-import { DataStoreService } from '../store/data-store.service'
 import { MaterialModule } from './../../material/material.module'
 import { Bill } from './../bill'
 import { ArticlesFormComponent } from './articles/articles-form.component'
@@ -29,46 +27,48 @@ describe('BillFormComponent', () => {
     descriptionTitle: 'Zusatz',
   })
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
-      providers: [
-        {
-          provide: BillsService,
-          useValue: {
-            editBill: (id: string): Observable<Bill> => {
-              expect(id).toEqual(bill.id)
-              return Observable.of(bill)
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              editBill: (id: string): Observable<Bill> => {
+                expect(id).toEqual(bill.id)
+                return Observable.of(bill)
+              },
+              updateBill: (billToUpdate: Bill): void => undefined,
             },
-            updateBill: (billToUpdate: Bill): void => undefined,
           },
-        },
-        {
-          provide: BillAutocompleteService,
-          useValue: {
-            autocompleteOptions: () => [],
+          {
+            provide: BillAutocompleteService,
+            useValue: {
+              autocompleteOptions: () => [],
+            },
           },
-        },
-        {
-          provide: ArticlesService,
-          useValue: {
-            filterAutocompleteArticles: () => [],
+          {
+            provide: ArticlesService,
+            useValue: {
+              filterAutocompleteArticles: () => [],
+            },
           },
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              params: {
-                id: bill.id,
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                params: {
+                  id: bill.id,
+                },
               },
             },
           },
-        },
-      ],
-      declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent],
-    }).compileComponents()
-  }))
+        ],
+        declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent],
+      }).compileComponents()
+    })
+  )
 
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(BillEditComponent)

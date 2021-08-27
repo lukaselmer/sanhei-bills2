@@ -28,30 +28,32 @@ describe('BillsListComponent', () => {
     dbStatus: 'loaded' as 'loaded',
   }
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        MaterialModule,
-        NoopAnimationsModule,
-        RouterTestingModule.withRoutes([
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          MaterialModule,
+          NoopAnimationsModule,
+          RouterTestingModule.withRoutes([
+            {
+              path: 'bills',
+              component: BillsListComponent,
+            },
+          ]),
+        ],
+        providers: [
           {
-            path: 'bills',
-            component: BillsListComponent,
+            provide: BillsService,
+            useValue: {
+              search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch),
+              editBill: (): Observable<Bill> => Observable.of(bill),
+            },
           },
-        ]),
-      ],
-      providers: [
-        {
-          provide: BillsService,
-          useValue: {
-            search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch),
-            editBill: (): Observable<Bill> => Observable.of(bill),
-          },
-        },
-      ],
-      declarations: [BillsListComponent],
-    }).compileComponents()
-  }))
+        ],
+        declarations: [BillsListComponent],
+      }).compileComponents()
+    })
+  )
 
   describe('construction', () => {
     it('reads the params from the activated route', fakeAsync(() => {
@@ -80,7 +82,7 @@ describe('BillsListComponent', () => {
     }))
   })
 
-  describe('bahaviour', () => {
+  describe('behaviour', () => {
     beforeEach(fakeAsync(() => {
       fixture = TestBed.createComponent(BillsListComponent)
       component = fixture.componentInstance
@@ -92,11 +94,14 @@ describe('BillsListComponent', () => {
       expect(component).toBeTruthy()
     })
 
-    it('should render the search field', waitForAsync(() => {
-      fixture.detectChanges()
-      const compiled = fixture.debugElement.nativeElement
-      expect(compiled.querySelector('mat-form-field')).not.toBe(null)
-    }))
+    it(
+      'should render the search field',
+      waitForAsync(() => {
+        fixture.detectChanges()
+        const compiled = fixture.debugElement.nativeElement
+        expect(compiled.querySelector('mat-form-field')).not.toBe(null)
+      })
+    )
 
     it('should render a row for each bill', fakeAsync(() => {
       fixture.detectChanges()
@@ -140,7 +145,7 @@ describe('BillsListComponent', () => {
         term: '',
         limit: 10,
       })
-      spyOn(router, 'navigate').and.returnValue('')
+      spyOn(router, 'navigate').and.returnValue(Promise.resolve(true))
       const compiled = fixture.debugElement.nativeElement
       const element = compiled.querySelector('input')
       element.value = 'Some'
@@ -153,7 +158,7 @@ describe('BillsListComponent', () => {
     it('should load more bills', fakeAsync(() => {
       fixture.detectChanges()
       const router: Router = TestBed.get(Router)
-      spyOn(router, 'navigate').and.returnValue('')
+      spyOn(router, 'navigate').and.returnValue(Promise.resolve(true))
       const compiled = fixture.debugElement.nativeElement
       const element = compiled.querySelector('.load-more button')
       element.dispatchEvent(new Event('click'))
@@ -165,7 +170,7 @@ describe('BillsListComponent', () => {
     it('should edit the bills', fakeAsync(() => {
       const router: Router = TestBed.get(Router)
       fixture.detectChanges()
-      spyOn(router, 'navigate').and.returnValue('')
+      spyOn(router, 'navigate').and.returnValue(Promise.resolve(true))
       const compiled = fixture.debugElement.nativeElement
       const element = compiled.querySelector('.bill mat-card-title')
       element.dispatchEvent(new Event('click'))

@@ -36,6 +36,7 @@
     "@angular/router": "^12.2.3",
     "@angular/service-worker": "^12.2.3",
     "@firebase/app": "^0.7.0",
+    "@firebase/app-types": "^0.7.0",
     "@lukaselmer/prettier-config": "^2.0.1",
     "@schematics/angular": "^8",
     "core-js": "^2.6.11",

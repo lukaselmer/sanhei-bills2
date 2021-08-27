@@ -24,8 +24,8 @@ export class FullTextMatcher implements IBillMatcher {
   private matchesIdOrUid(bill: Bill) {
     return (
       bill.id.startsWith(this.term) ||
-      bill.uid.toString().startsWith(this.term) ||
-      bill.humanId.toString().startsWith(this.term)
+      (bill.uid || '').toString().startsWith(this.term) ||
+      (bill.humanId || '').toString().startsWith(this.term)
     )
   }
 

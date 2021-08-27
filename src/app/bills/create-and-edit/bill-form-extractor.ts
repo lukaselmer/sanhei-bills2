@@ -1,9 +1,6 @@
-import * as firebase from 'firebase/compat/app'
 import { dateOrEmpty } from '../../shared/date-helper'
 import { Article } from '../article'
-import { Bill, billDefaults } from '../bill'
-import { EditedBill } from './../edited-bill'
-import { NewBill } from './../new-bill'
+import { billDefaults } from '../bill'
 import { FormArticle } from './articles/form-article'
 
 export abstract class BillFormExtractor {

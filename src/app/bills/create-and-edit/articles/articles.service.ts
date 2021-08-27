@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core'
-import * as firebase from 'firebase/compat/app'
-import { from, Observable } from 'rxjs'
+import { from } from 'rxjs'
 import { filter, take, toArray } from 'rxjs/operators'
 import { Article } from '../../article'
-import { Bill } from '../../bill'
 import { BillsService } from './../../bills.service'
 import { AutocompleteArticle } from './autocomplete-article'
 

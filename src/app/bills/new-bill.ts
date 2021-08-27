@@ -1,4 +1,3 @@
-import * as firebase from 'firebase/compat/app'
 import { Article } from './article'
 
 export interface NewBill {

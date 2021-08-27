@@ -4,16 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import * as firebase from 'firebase/compat/app'
 import 'rxjs/add/observable/of'
 import { Observable } from 'rxjs/Observable'
 import { articleVariant } from '../article.mock'
 import { billVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
-import { DataStoreService } from '../store/data-store.service'
 import { MaterialModule } from './../../material/material.module'
 import { Bill } from './../bill'
-import { EditedBill } from './../edited-bill'
 import { BillPrintComponent } from './bill-print.component'
 
 describe('BillPrintComponent', () => {
@@ -30,35 +27,37 @@ describe('BillPrintComponent', () => {
     articles: Array.from(Array(50).keys()).map(() => articleVariant()),
   })
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
-      providers: [
-        DecimalPipe,
-        {
-          provide: BillsService,
-          useValue: {
-            editBill: (id: string): Observable<Bill> => {
-              expect(id).toEqual(bill.id)
-              return Observable.of(bill)
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
+        providers: [
+          DecimalPipe,
+          {
+            provide: BillsService,
+            useValue: {
+              editBill: (id: string): Observable<Bill> => {
+                expect(id).toEqual(bill.id)
+                return Observable.of(bill)
+              },
+              markAsPrinted: () => {},
             },
-            markAsPrinted: () => {},
           },
-        },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              params: {
-                id: bill.id,
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              snapshot: {
+                params: {
+                  id: bill.id,
+                },
               },
             },
           },
-        },
-      ],
-      declarations: [BillPrintComponent],
-    }).compileComponents()
-  }))
+        ],
+        declarations: [BillPrintComponent],
+      }).compileComponents()
+    })
+  )
 
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(BillPrintComponent)

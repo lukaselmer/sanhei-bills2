@@ -1,16 +1,12 @@
 import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import * as firebase from 'firebase/compat/app'
 import 'rxjs/add/observable/of'
-import { Observable } from 'rxjs/Observable'
 import { newBillVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
-import { DataStoreService } from '../store/data-store.service'
 import { MaterialModule } from './../../material/material.module'
-import { Bill } from './../bill'
 import { NewBill } from './../new-bill'
 import { ArticlesFormComponent } from './articles/articles-form.component'
 import { ArticlesService } from './articles/articles.service'
@@ -57,32 +53,34 @@ describe('BillNewComponent', () => {
     fill(selectTextarea('description'), newBill.description)
   }
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
-      providers: [
-        {
-          provide: BillsService,
-          useValue: {
-            createBill: (billToUpdate: NewBill): void => undefined,
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              createBill: (billToUpdate: NewBill): void => undefined,
+            },
           },
-        },
-        {
-          provide: BillAutocompleteService,
-          useValue: {
-            autocompleteOptions: () => [],
+          {
+            provide: BillAutocompleteService,
+            useValue: {
+              autocompleteOptions: () => [],
+            },
           },
-        },
-        {
-          provide: ArticlesService,
-          useValue: {
-            filterAutocompleteArticles: () => [],
+          {
+            provide: ArticlesService,
+            useValue: {
+              filterAutocompleteArticles: () => [],
+            },
           },
-        },
-      ],
-      declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent],
-    }).compileComponents()
-  }))
+        ],
+        declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent],
+      }).compileComponents()
+    })
+  )
 
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(BillNewComponent)
@@ -94,7 +92,7 @@ describe('BillNewComponent', () => {
   it('submits the form', () => {
     const service: BillsService = TestBed.get(BillsService)
     spyOn(service, 'createBill')
-    const abortSpy = spyOn(component, 'navigateToIndex').and.returnValue(false)
+    const abortSpy = spyOn(component, 'navigateToIndex').and.returnValue()
 
     const compiled = fixture.debugElement.nativeElement
     const element = compiled.querySelector('form')
@@ -113,7 +111,7 @@ describe('BillNewComponent', () => {
   it('aborts editing', fakeAsync(() => {
     const router: Router = TestBed.get(Router)
     fixture.detectChanges()
-    spyOn(router, 'navigate').and.returnValue('')
+    spyOn(router, 'navigate').and.returnValue(Promise.resolve(true))
     const compiled = fixture.debugElement.nativeElement
     component.navigateToIndex()
     expect(router.navigate).toHaveBeenCalledWith(['bills'])

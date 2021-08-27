@@ -10,40 +10,45 @@ import { BillsService } from './bills/bills.service'
 import { MaterialModule } from './material/material.module'
 
 describe('AppComponent', () => {
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [MaterialModule, RouterTestingModule],
-      providers: [
-        {
-          provide: BillsService,
-          useValue: {
-            search: () => undefined,
-          },
-        },
-        {
-          provide: AngularFireDatabase,
-          useValue: {
-            list: () => undefined,
-          },
-        },
-        {
-          provide: AngularFireAuth,
-          useValue: {
-            authState: {
-              subscribe: () => undefined,
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [MaterialModule, RouterTestingModule],
+        providers: [
+          {
+            provide: BillsService,
+            useValue: {
+              search: () => undefined,
             },
           },
-        },
-      ],
-      declarations: [AuthWidgetComponent, AccountInfoComponent, AppComponent, BillsListComponent],
-    }).compileComponents()
-  }))
+          {
+            provide: AngularFireDatabase,
+            useValue: {
+              list: () => undefined,
+            },
+          },
+          {
+            provide: AngularFireAuth,
+            useValue: {
+              authState: {
+                subscribe: () => undefined,
+              },
+            },
+          },
+        ],
+        declarations: [AuthWidgetComponent, AccountInfoComponent, AppComponent, BillsListComponent],
+      }).compileComponents()
+    })
+  )
 
-  it('should create the app', waitForAsync(() => {
-    const fixture = TestBed.createComponent(AppComponent)
-    const app = fixture.debugElement.componentInstance
-    expect(app).toBeTruthy()
-  }))
+  it(
+    'should create the app',
+    waitForAsync(() => {
+      const fixture = TestBed.createComponent(AppComponent)
+      const app = fixture.debugElement.componentInstance
+      expect(app).toBeTruthy()
+    })
+  )
 
   // it(`should have as title 'sb'`, async(() => {
   //   const fixture = TestBed.createComponent(AppComponent);
