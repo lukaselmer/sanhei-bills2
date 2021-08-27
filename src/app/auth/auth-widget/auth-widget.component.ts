@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-import { AngularFireAuth } from '@angular/fire/compat/auth'
-import firebase from 'firebase/compat/app'
+import { AngularFireAuth } from '@angular/fire/auth'
+import firebase from 'firebase/app'
 @Component({
   selector: 'sb-auth-widget',
   templateUrl: './auth-widget.component.html',
@@ -13,7 +13,7 @@ export class AuthWidgetComponent implements OnInit {
   constructor(private readonly auth: AngularFireAuth) {}
 
   ngOnInit() {
-    this.auth.authState.subscribe((user) => this.updateLoginStatus(user))
+    this.auth.authState.subscribe((user: any) => this.updateLoginStatus(user))
   }
 
   updateLoginStatus(user: firebase.User | null) {

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
-import { AngularFireAuth } from '@angular/fire/compat/auth'
-import firebase from 'firebase/compat/app'
+import { AngularFireAuth } from '@angular/fire/auth'
+import firebase from 'firebase/app'
 
 @Component({
   selector: 'sb-account-info',

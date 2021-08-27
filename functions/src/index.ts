@@ -1,5 +1,5 @@
-import * as admin from 'firebase/compat-admin'
-import * as functions from 'firebase/compat-functions'
+import * as admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
 import { dateForUID } from './date-helper'
 
 admin.initializeApp(functions.config().firebase)

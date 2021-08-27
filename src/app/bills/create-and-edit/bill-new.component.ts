@@ -8,7 +8,6 @@ import { BillNewFormExtractor } from './bill-new-form-extractor'
 @Component({
   selector: 'sb-bill-new',
   templateUrl: './bill-new.component.html',
-  styleUrls: ['./bill-new.component.scss'],
 })
 export class BillNewComponent {
   constructor(private readonly router: Router, private readonly billsService: BillsService) {}

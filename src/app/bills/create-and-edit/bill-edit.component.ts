@@ -8,7 +8,6 @@ import { BillEditFormExtractor } from './bill-edit-form-extractor'
 @Component({
   selector: 'sb-bill-edit',
   templateUrl: './bill-edit.component.html',
-  styleUrls: ['./bill-edit.component.scss'],
 })
 export class BillEditComponent implements OnInit {
   id: string
