@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app'
+import * as firebase from 'firebase/compat/app'
 import { dateOrEmpty } from '../../shared/date-helper'
 import { Article } from '../article'
 import { Bill, billDefaults } from '../bill'

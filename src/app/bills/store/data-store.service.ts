@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { AngularFireDatabase } from '@angular/fire/database'
-import * as firebase from 'firebase/app'
+import { AngularFireDatabase } from '@angular/fire/compat/database'
+import * as firebase from 'firebase/compat/app'
 import { first } from 'rxjs/operators'
 
 import { BehaviorSubject, Observable } from 'rxjs'
@@ -10,7 +10,7 @@ import { NewBill } from './../new-bill'
 import { IBillingDatabase } from './billing-database'
 import { DataStoreStatus } from './data-store-status'
 import { IDBStoreService } from './idb-store.service'
-import { AngularFireAuth } from '@angular/fire/auth'
+import { AngularFireAuth } from '@angular/fire/compat/auth'
 
 @Injectable()
 export class DataStoreService {

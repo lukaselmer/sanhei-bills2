@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import * as firebase from 'firebase/app'
+import * as firebase from 'firebase/compat/app'
 import { from, Observable } from 'rxjs'
 import { filter, take, toArray } from 'rxjs/operators'
 import { Article } from '../../article'
