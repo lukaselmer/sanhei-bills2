@@ -1,5 +1,3 @@
-import { Bill } from './../bill'
-import { EditedBill } from './../edited-bill'
 import { NewBill } from './../new-bill'
 import { BillFormExtractor } from './bill-form-extractor'
 

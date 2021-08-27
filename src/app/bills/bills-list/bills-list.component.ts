@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { debounceTime, distinctUntilChanged, first, map, share, switchMap } from 'rxjs/operators'
 
 import { BehaviorSubject, Observable } from 'rxjs'

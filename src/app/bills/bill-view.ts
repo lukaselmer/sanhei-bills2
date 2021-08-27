@@ -1,6 +1,5 @@
 import { stringToDate } from '../shared/date-helper'
 import { AddressView } from './address-view'
-import { Article } from './article'
 import { ArticleView } from './article-view'
 import { Bill, billDefaults } from './bill'
 

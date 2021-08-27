@@ -1,8 +1,6 @@
 import { Component } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
-import { Bill } from './../bill'
+import { Router } from '@angular/router'
 import { BillsService } from './../bills.service'
-import { NewBill } from './../new-bill'
 import { BillNewFormExtractor } from './bill-new-form-extractor'
 
 @Component({

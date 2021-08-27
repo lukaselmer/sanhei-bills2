@@ -1,9 +1,7 @@
 import { from as observableFrom, Observable, of as observableOf } from 'rxjs'
-
 import { Injectable } from '@angular/core'
 import { catchError, concatAll, filter, map, take, toArray } from 'rxjs/operators'
 import { currentDateAsISO8601 } from '../shared/date-helper'
-import { Article } from './article'
 import { Bill } from './bill'
 import { EditedBill } from './edited-bill'
 import { NewBill } from './new-bill'

@@ -2,7 +2,6 @@ import { DecimalPipe } from '@angular/common'
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { dateOrEmpty, stringToDate } from '../../shared/date-helper'
-import { ArticleView } from './../article-view'
 import { BillView } from './../bill-view'
 import { BillsService } from './../bills.service'
 

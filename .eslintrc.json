@@ -30,7 +30,6 @@
         "eslint-plugin-prefer-arrow"
       ],
       "rules": {
-        "indent": ["error", 2],
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -99,8 +98,12 @@
         "quotes": ["error", "single"],
         "semi": "off",
         "space-in-parens": ["error", "never"],
-        "unicorn/prefer-ternary": "error",
-
+        "unicorn/prefer-ternary": "error"
+      }
+    },
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
         "@typescript-eslint/no-unused-vars": "off"
       }
     },

@@ -11,8 +11,9 @@
     "build": "ng build",
     "build-prod": "ng build --configuration production --progress false",
     "test": "ng test",
-    "lint": "ng lint --fix true && npm run prettier",
-    "prettier": "prettier --write '**/*.{ts,js,json,md,scss}'",
+    "lint": "npm run ng-lint && npm run prettier",
+    "ng-lint": "ng lint --fix true",
+    "prettier": "prettier --list-different --write '**/*.{ts,js,json,md,scss}'",
     "e2e": "ng e2e",
     "ci": "bin/fix && ng test --watch=false --progress false --code-coverage"
   },

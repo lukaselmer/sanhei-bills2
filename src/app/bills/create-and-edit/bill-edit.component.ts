@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Bill } from './../bill'
 import { BillsService } from './../bills.service'
-import { EditedBill } from './../edited-bill'
 import { BillEditFormExtractor } from './bill-edit-form-extractor'
 
 @Component({

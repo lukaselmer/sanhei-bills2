@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core'
-import { Bill } from '../bill'
 import { AmountMatcher } from './matchers/amount-matcher'
 import { FullTextMatcher } from './matchers/full-text-matcher'
 import { IBillMatcher } from './matchers/i-bill-matcher'
