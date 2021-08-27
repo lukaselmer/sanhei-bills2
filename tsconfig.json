@@ -15,7 +15,6 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "target": "es2015",
