@@ -1,14 +1,15 @@
+@use '~@angular/material' as mat;
 @import '../../../scss/sb-theme';
 
 section {
-  @include mat-elevation(2);
+  @include mat.elevation(2);
 
   height: 40px;
   padding: 8px;
 
   text-align: right;
 
-  background: mat-color($sb-app-primary);
+  background: mat.get-color-from-palette($sb-app-primary);
 
   @media print {
     display: none;

@@ -1,14 +1,14 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 // Plus imports for other components in your app.
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$sb-app-primary: mat-palette($mat-blue);
-$sb-app-accent: mat-palette($mat-red);
+$sb-app-primary: mat.define-palette(mat.$blue-palette);
+$sb-app-accent: mat.define-palette(mat.$red-palette);
 
 // The warn palette is optional (defaults to red).
-$sb-app-warn: mat-palette($mat-amber);
+$sb-app-warn: mat.define-palette(mat.$amber-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$sb-app-theme: mat-light-theme($sb-app-primary, $sb-app-accent, $sb-app-warn);
+$sb-app-theme: mat.define-light-theme($sb-app-primary, $sb-app-accent, $sb-app-warn);
