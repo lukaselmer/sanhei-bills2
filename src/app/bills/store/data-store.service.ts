@@ -118,7 +118,7 @@ export class DataStoreService {
   async createBill(newBill: NewBill): Promise<void> {
     await this.waitForUserLogin()
     this.setCreated(newBill)
-    await this.db.list<NewBill>(`billing/bills`).push(newBill)
+    await this.db.list<NewBill>('billing/bills').push(newBill)
   }
 
   async updateBill(bill: EditedBill | Bill) {
@@ -154,6 +154,7 @@ export class DataStoreService {
   }
 
   private async waitForUserLogin() {
+    // eslint-disable-next-line no-empty
     while (await this.waitingForUserLogin()) {}
   }
 

@@ -101,7 +101,7 @@ export class BillFormComponent implements OnChanges {
   }
 
   private initBillAutocomplete() {
-    if (this.autocompleteOptions['title']) return
+    if (this.autocompleteOptions.title) return
 
     const fields = [
       'billType',
@@ -155,7 +155,7 @@ export class BillFormComponent implements OnChanges {
   }
 
   private resetScrollPosition() {
-    // tslint:disable-next-line:no-unused-expression
+    // eslint-disable-next-line no-unused-expressions, @typescript-eslint/no-unused-expressions
     this.scrollToAndFocus('.mat-input-element.ng-touched.ng-invalid') ||
       this.scrollToAndFocus('.mat-input-element.ng-invalid') ||
       window.scrollTo(0, 0)
@@ -213,9 +213,11 @@ export class BillFormComponent implements OnChanges {
     if (!ownerNameControl.value) ownerNameControl.setValue(bill.ownerName)
     if (discountControl.value === billDefaults.discount + '')
       discountControl.setValue(bill.discount + '')
-    if (paymentDeadlineControl.value === billDefaults.paymentDeadlineInDays + '')
+
+    if (paymentDeadlineControl.value === billDefaults.paymentDeadlineInDays + '') {
       paymentDeadlineControl.setValue(
         (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + ''
       )
+    }
   }
 }

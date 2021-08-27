@@ -10,13 +10,13 @@ export class IDBStoreService {
     }>((resolve, reject) => {
       const dbRequest = this.openDB(reject)
 
-      dbRequest.onsuccess = (event: any) => {
+      dbRequest.onsuccess = (event: Event) => {
         try {
           const db: IDBDatabase = (event.target as IDBRequest).result
           const objectStore = db.transaction(table).objectStore(table)
 
           objectStore.openCursor().onsuccess = (cursorEvent) => {
-            const cursor: IDBCursorWithValue = (cursorEvent.target as any).result
+            const cursor: IDBCursorWithValue = (cursorEvent.target as any)?.result
             if (cursor) {
               resolve(cursor.value)
               cursor.continue()
@@ -65,10 +65,11 @@ export class IDBStoreService {
       const db: IDBDatabase = (event.target as any).result
       if (event.oldVersion)
         indexedDB.deleteDatabase('sanheiBilling').onsuccess = () => window.location.reload()
-      else
+      else {
         db.createObjectStore('bills', {
           autoIncrement: true,
         })
+      }
     }
     return dbRequest
   }

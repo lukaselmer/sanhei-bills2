@@ -1,3 +1,4 @@
+import type firebase from 'firebase/app'
 import { Article } from './article'
 
 export interface EditedBill {
@@ -32,6 +33,6 @@ export interface EditedBill {
   // see https://firebase.google.com/docs/database/web/offline-capabilities
   // firebase.database.ServerValue.TIMESTAMP
   createdAt: number
-  updatedAt?: object
+  updatedAt?: typeof firebase.database.ServerValue.TIMESTAMP
   deletedAt: number | undefined
 }

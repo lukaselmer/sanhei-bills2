@@ -14,15 +14,13 @@ export abstract class BillFormExtractor {
           (fieldValue) => fieldValue.trim() !== ''
         )
       )
-      .map((article) => {
-        return {
-          amount: parseFloat(article.amount),
-          price: parseFloat(article.price),
-          description: article.description.trim(),
-          dimension: article.dimension.trim(),
-          catalogId: article.catalogId.trim(),
-        }
-      })
+      .map((article) => ({
+        amount: parseFloat(article.amount),
+        price: parseFloat(article.price),
+        description: article.description.trim(),
+        dimension: article.dimension.trim(),
+        catalogId: article.catalogId.trim(),
+      }))
   }
 
   protected extractStrings() {

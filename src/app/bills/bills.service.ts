@@ -38,13 +38,13 @@ export class BillsService {
     const billMatcher = this.billMatcherFactory.createBillMatcher(options)
 
     return this.getBillsStream().pipe(
-      map((bills) => {
-        return observableFrom(bills).pipe(
+      map((bills) =>
+        observableFrom(bills).pipe(
           filter((bill) => billMatcher.matches(bill)),
           take(options.limit),
           toArray()
         )
-      }),
+      ),
       concatAll(),
       catchError((e) => {
         console.error(e)

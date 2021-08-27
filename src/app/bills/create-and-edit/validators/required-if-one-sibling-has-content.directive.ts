@@ -1,8 +1,8 @@
-import { AbstractControl, FormControl, ValidatorFn } from '@angular/forms'
+import { AbstractControl, ValidatorFn } from '@angular/forms'
 
 export function requiredIfOneSiblingHasContent(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    const value: string | object = control.value
+    const value: string | Record<string, any> = control.value
     const parent = control.parent
 
     if (!parent || typeof value === 'object' || value.trim()) return null

@@ -29,7 +29,7 @@ export class BillPrintComponent implements OnInit {
     private readonly renderer: Renderer2,
     private readonly decimalPipe: DecimalPipe
   ) {
-    this.id = route.snapshot.params['id']
+    this.id = route.snapshot.params.id
   }
 
   ngOnInit(): void {

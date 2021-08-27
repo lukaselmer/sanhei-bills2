@@ -1,3 +1,4 @@
+import type firebase from 'firebase/app'
 import { Article } from './article'
 
 export interface NewBill {
@@ -28,6 +29,6 @@ export interface NewBill {
   // timestamp * 1000 format: 1272033357000 (for 2010-04-23 14:35:57 UTC)
   // see https://firebase.google.com/docs/database/web/offline-capabilities
   // firebase.database.ServerValue.TIMESTAMP
-  createdAt?: object
-  updatedAt?: object
+  createdAt?: typeof firebase.database.ServerValue.TIMESTAMP
+  updatedAt?: typeof firebase.database.ServerValue.TIMESTAMP
 }

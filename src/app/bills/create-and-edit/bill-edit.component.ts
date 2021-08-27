@@ -19,7 +19,7 @@ export class BillEditComponent implements OnInit {
     route: ActivatedRoute,
     private readonly billsService: BillsService
   ) {
-    this.id = route.snapshot.params['id']
+    this.id = route.snapshot.params.id
   }
 
   ngOnInit(): void {

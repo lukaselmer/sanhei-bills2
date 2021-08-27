@@ -40,6 +40,7 @@ describe('BillPrintComponent', () => {
                 expect(id).toEqual(bill.id)
                 return Observable.of(bill)
               },
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
               markAsPrinted: () => {},
             },
           },
