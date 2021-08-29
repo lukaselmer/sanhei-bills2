@@ -15,7 +15,6 @@ import { FormArticle } from './form-article'
   styleUrls: ['./articles-form.component.scss'],
 })
 export class ArticlesFormComponent implements OnChanges {
-  // ts-ignore
   @Input() formGroup: FormGroup | undefined
   @Input() articles?: Article[]
 

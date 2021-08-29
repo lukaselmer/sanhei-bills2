@@ -7,18 +7,19 @@ import firebase from 'firebase/app'
   styleUrls: ['./auth-widget.component.scss'],
 })
 export class AuthWidgetComponent implements OnInit {
-  user: firebase.User | null | undefined
-  loginStatus: 'unknown' | 'signedIn' | 'signedOut' = 'unknown'
+  userSession:
+    | { status: 'unknown' }
+    | { status: 'signedIn'; user: firebase.User }
+    | { status: 'signedOut' } = { status: 'unknown' }
 
   constructor(private readonly auth: AngularFireAuth) {}
 
   ngOnInit() {
-    this.auth.authState.subscribe((user: any) => this.updateLoginStatus(user))
+    this.auth.authState.subscribe((user) => this.updateSignInState(user))
   }
 
-  updateLoginStatus(user: firebase.User | null) {
-    this.user = user
-    this.loginStatus = user ? 'signedIn' : 'signedOut'
+  updateSignInState(user: firebase.User | null) {
+    this.userSession = user ? { status: 'signedIn', user } : { status: 'signedOut' }
   }
 
   login() {

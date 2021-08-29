@@ -1,4 +1,4 @@
-<ng-container [formGroup]="formGroup">
+<ng-container *ngIf="formGroup" [formGroup]="formGroup">
   <mat-card formArrayName="articles">
     <mat-card-title>Artikel</mat-card-title>
     <mat-card-content>
