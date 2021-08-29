@@ -56,20 +56,29 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "sanhei-bills2:build"
-          },
           "configurations": {
             "production": {
               "browserTarget": "sanhei-bills2:build:production"
+            },
+            "development": {
+              "browserTarget": "sanhei-bills2:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -95,6 +104,18 @@
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "prefix": "sb",
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        },
+        "@schematics/angular:directive": {
+          "prefix": "sb"
+        }
       }
     },
     "sanhei-bills2-e2e": {
@@ -119,15 +140,6 @@
     }
   },
   "defaultProject": "sanhei-bills2",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "sb",
-      "styleext": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "sb"
-    }
-  },
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }

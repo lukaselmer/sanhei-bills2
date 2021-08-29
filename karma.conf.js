@@ -9,21 +9,32 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
+      require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma'),
     ],
     client: {
+      jasmine: {
+        // you can add configuration options for Jasmine here
+        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
+        // for example, you can disable the random execution with `random: false`
+        // or set a specific seed with `seed: 4321`
+      },
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
     },
-    coverageIstanbulReporter: {
+    jasmineHtmlReporter: {
+      suppressAll: true, // removes the duplicated traces
+    },
+    coverageReporter: {
       dir: require('path').join(__dirname, 'coverage'),
-      reports: process.env.TRAVIS ? ['lcovonly'] : ['html', 'lcovonly'],
+      reporters: process.env.TRAVIS
+        ? [{ type: 'text-summary' }, { type: 'lcovonly' }]
+        : [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly' }],
       fixWebpackSourcePaths: true,
     },
     angularCli: {
       environment: 'dev',
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml'], // 'coverage'
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -35,7 +46,8 @@ module.exports = function (config) {
         flags: ['--no-sandbox'],
       },
     },
-    files: [{ pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css' }],
+    // files: [{ pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css' }],
     singleRun: false,
+    restartOnFileChange: true,
   })
 }
