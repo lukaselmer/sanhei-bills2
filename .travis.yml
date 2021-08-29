@@ -2,7 +2,7 @@ dist: trusty
 addons:
   chrome: stable
 language: node_js
-node_js: 12
+node_js: 14
 before_install:
   - export TZ=Europe/Zurich
   - export CHROME_BIN=google-chrome-stable

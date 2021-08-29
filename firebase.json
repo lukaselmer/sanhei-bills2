@@ -12,7 +12,7 @@
     "rewrites": [{ "source": "**", "destination": "/index.html" }]
   },
   "functions": {
-    "runtime": "nodejs12",
+    "runtime": "nodejs14",
     "predeploy": ["cd functions && yarn install && yarn build && cd .."]
   }
 }
