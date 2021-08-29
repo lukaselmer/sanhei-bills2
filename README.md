@@ -7,9 +7,9 @@
 [![codecov](https://codecov.io/gh/lukaselmer/sanhei-bills2/branch/main/graph/badge.svg)](https://codecov.io/gh/lukaselmer/sanhei-bills2)
 [![codebeat badge](https://codebeat.co/badges/7684be16-7c66-4f2d-b366-4410018d7326)](https://codebeat.co/projects/github-com-lukaselmer-sanhei-bills2-master)
 
-# SanheiBills2
+# Sanhei Bills 2
 
-The new Sanhei Bills Tool
+The Sanhei Bills Tool
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
 
