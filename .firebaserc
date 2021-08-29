@@ -1,7 +1,7 @@
 {
   "projects": {
     "default": "sanhei-bills",
-    "master": "sanhei-bills",
+    "main": "sanhei-bills",
     "development": "sanhei-bills-development"
   }
 }
