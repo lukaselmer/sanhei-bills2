@@ -31,10 +31,11 @@ before_deploy:
   - npm run build-prod
   - cd functions && yarn install && yarn build && cd ..
 deploy:
-  skip_cleanup: true
+  cleanup: false
   on:
     branch: main
   provider: firebase
+  edge: true
   token:
     secure: Z5bes5ca3VFRBzJ0wc4/Ly7sIMy2HDidf+d5hKspf7yETmKrxmWRt8I3ru9apxthWCn0GPWGG9UbaFJmrkCk3ZCmtBxwQcjSvXVxrs6clqyTVvOw3nQ3mJ+5i8J4d4Tyv31qvUBXG5W9cJMVzG2zcm772TZ4ml/GHW8Pb0pOSVK/v5kg/qvmOrXYtXE114rowYN+3l26lQnZxWPhSIfG+haaQbrYLZ79lJSWfQszFbwk/0gbPhAgXskq/+OPH8uarNc+qMLZ+/jfetRKJMSKmE4uR/WdRPoW67M3D5j/A+uXev12Yb2c1HZJiyXcb3Kr3lnFrRUBZk3gfO7bQT9/nOHCVeTdVf48b/GfwUwuPyZCspUQDAgupslJRF50ByArwEFHom4EJ6r6Iq2hShOEhQqwIBH6nMLToV8ENKDiQuTxcMFHaKiu9xBPwzkcffD41jrbO6VakQ5OyDuvxhFgAxyZ6ZEZMEtmkOt5BgfXE+sPu0fNf7/v719Wqnjf0OBamraGUkXx7qomjpWoAMQB6pePyd9ja51HCx6ubad0IJSA4AeoB7oesqj6KPeCE83zX5glQlOLflwg8Ai+V5X88BiOGTHK3eZtdnRIhMQ5obG1gzskxrK48WXP9f7QVGbUz08XtV9Mn0WBcdwU/LDYkqv4vNMs/z6uumcwKypoayA=
   project: sanhei-bills
