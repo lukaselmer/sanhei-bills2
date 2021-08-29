@@ -6,5 +6,5 @@ import { environment } from './environments/environment'
 if (environment.production) enableProdMode()
 
 platformBrowserDynamic()
-  .bootstrapModule(AppModule, { preserveWhitespaces: false })
+  .bootstrapModule(AppModule)
   .catch((err) => console.log(err))
