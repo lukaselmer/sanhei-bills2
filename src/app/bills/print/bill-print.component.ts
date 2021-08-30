@@ -11,9 +11,9 @@ import { BillsService } from './../bills.service'
   styleUrls: ['./bill-print.component.scss'],
 })
 export class BillPrintComponent implements OnInit {
-  private static readonly PAGE_BREAK_AFTER = 1180
+  private static readonly PAGE_BREAK_AFTER = 1270
   private static readonly HEADER_AND_SUBTOTAL_HEIGHT = 170
-  private static readonly TOTALS_HEIGHT = 165
+  private static readonly TOTALS_HEIGHT = 145
 
   currentPage = 0
   currentPageOffset = 0
@@ -99,7 +99,7 @@ export class BillPrintComponent implements OnInit {
     this.renderer.appendChild(
       headerEl,
       this.createHeaderLine(
-        `Rechnung ${this.billView.uid}`,
+        `${this.billView.billType} ${this.billView.uid}`,
         this.billView.billedAtDate?.toLocaleDateString?.('de-DE', {
           year: 'numeric',
           month: 'long',
