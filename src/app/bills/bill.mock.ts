@@ -27,8 +27,8 @@ const bill = {
   humanId: 1234,
   uid: 17061234,
 
-  createdAt: new Date(2017, 5, 22).getTime(),
-  updatedAt: new Date(2017, 5, 24).getTime(),
+  createdAt: new Date(2017, 5, 21, 10).getTime(),
+  updatedAt: new Date(2017, 5, 23, 10).getTime(),
   deletedAt: undefined,
 
   cashback: newBill.cashback,
