@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 DIFF_BEFORE=`git diff | shasum -a 256`
-npm run lint
+yarn run lint
 DIFF_AFTER=`git diff | shasum -a 256`
 if [[ ! $DIFF_BEFORE == $DIFF_AFTER ]]; then
-  echo 'npm run lint has rearranged some of your ts that has to be reviewed manually, commit aborted'
+  echo 'yarn run lint has rearranged some of your ts that has to be reviewed manually, commit aborted'
 fi
 
 mdl .

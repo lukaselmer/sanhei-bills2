@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-npm i
+yarn install
 
 echo 'Checking if sanhei-bills.test is in /etc/hosts'
 grep 'sanhei-bills.test' /etc/hosts || echo '127.0.0.1 sanhei-bills.test' | sudo tee -a /etc/hosts

@@ -55,3 +55,4 @@ ssl/*.srl
 ssl/*.csr
 
 .firebase
+firebase-debug.log

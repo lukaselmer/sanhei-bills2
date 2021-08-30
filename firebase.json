@@ -6,12 +6,15 @@
     "cleanUrls": true,
     "trailingSlash": false,
     "public": "dist",
+    "predeploy": ["yarn install && yarn run update-browserlist && yarn run build-prod"],
     "headers": [
-      { "source": "/service-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+      { "source": "/service-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
     ],
     "rewrites": [{ "source": "**", "destination": "/index.html" }]
   },
   "functions": {
-    "predeploy": ["cd functions && yarn install && yarn build && cd .."]
+    "predeploy": ["cd functions && yarn install && yarn build && cd .."],
+    "source": "functions"
   }
 }
