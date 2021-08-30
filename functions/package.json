@@ -2,7 +2,8 @@
   "name": "sanhei-bills-functions",
   "private": true,
   "scripts": {
-    "ci": "yarn run lint && yarn run build",
+    "ci": "yarn run ci-before-build && yarn run build",
+    "ci-before-build": "yarn run lint",
     "lint": "eslint --resolve-plugins-relative-to . \"src/**/*\"",
     "build": "tsc",
     "serve": "yarn run build && firebase emulators:start --only functions",

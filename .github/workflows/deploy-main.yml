@@ -16,8 +16,8 @@ jobs:
       - run: yarn install
       - run: cd functions && yarn install && cd ..
 
-      - run: cd functions && yarn run ci && cd ..
-      - run: yarn run ci
+      - run: cd functions && yarn run ci-before-build && cd ..
+      - run: yarn run ci-before-build
 
       - run: yarn run deploy-main
         env:
