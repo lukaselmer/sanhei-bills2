@@ -15,19 +15,19 @@
   </section>
 
   <section class="contract-attributes">
-    <div>
+    <div *ngIf="billView.billType === 'Rechnung'">
       <div>Rechnungsnummer</div>
       <div>{{ billView.uid }}</div>
     </div>
-    <div>
+    <div *ngIf="billView.ordererName">
       <div>Auftraggeber/Nr.</div>
       <div>{{ billView.ordererName }}</div>
     </div>
-    <div>
+    <div *ngIf="billView.ownerName">
       <div>Eigentümer</div>
       <div>{{ billView.ownerName }}</div>
     </div>
-    <div>
+    <div *ngIf="billView.workedAt">
       <div>Ausgeführte Arbeiten am</div>
       <div *ngIf="isDate(billView.workedAt)">
         {{ parseDate(billView.workedAt) | date: 'longDate' }}
@@ -93,8 +93,13 @@
   </footer>
   <footer *ngIf="billView.billType !== 'Rechnung'">
     <p>
-      Wir danken für Ihre Anfrage und freuen uns, wenn wir die offerierten Arbeiten ausführen dürfen.
+      Unvorhergesehene Arbeiten werden mit Ihnen besprochen und allenfalls in Regie ausgeführt.
+      Minderleistungen werden selbstverständlich in Abzug gebracht.
     </p>
-    <p>Eine fachgerechte und speditive Arbeitsausführung sichern wir Ihnen schon heute zu.</p>
+    <p>
+      Wir danken für Ihre Anfrage und freuen uns, wenn wir die offerierten Arbeiten ausführen dürfen.
+      Eine fachgerechte und speditive Arbeitsausführung sichern wir Ihnen schon heute zu.
+    </p>
+    <p>Freundliche Grüsse</p>
   </footer>
 </article>

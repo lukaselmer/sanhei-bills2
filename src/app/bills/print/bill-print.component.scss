@@ -155,8 +155,8 @@ $col5: 118%;
       &:after {
         position: absolute;
 
-        width: 79px;
-        margin-left: -69px;
+        width: 76px;
+        margin-left: -76px;
 
         content: '';
 
@@ -170,9 +170,9 @@ $col5: 118%;
       &:after {
         position: absolute;
 
-        width: 79px;
+        width: 76px;
         margin-top: 20px;
-        margin-left: -69px;
+        margin-left: -76px;
 
         content: '';
 
@@ -192,9 +192,9 @@ $col5: 118%;
       &:after {
         position: absolute;
 
-        width: 79px;
+        width: 76px;
         margin-top: 20px;
-        margin-left: -69px;
+        margin-left: -76px;
 
         content: '';
 
@@ -232,9 +232,9 @@ $col5: 118%;
       &:after {
         position: absolute;
 
-        width: 79px;
+        width: 76px;
         margin-top: -16px;
-        margin-left: -69px;
+        margin-left: -76px;
 
         content: '';
 
@@ -270,6 +270,6 @@ $col5: 118%;
 footer {
   margin-top: 26px;
   :last-child {
-    margin-top: 30px;
+    margin-top: 0;
   }
 }
