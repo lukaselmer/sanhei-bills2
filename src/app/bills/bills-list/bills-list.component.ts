@@ -9,6 +9,7 @@ import { Bill } from './../bill'
 import { BillView } from './../bill-view'
 import { SearchOptions } from './../search/search-options'
 import { SearchResult } from './../search/search-result'
+import { generatePDFBill } from '../../bills/qr-bill/pdf-bill-service'
 
 @Component({
   selector: 'sb-bills-list',
@@ -104,5 +105,9 @@ export class BillsListComponent implements OnInit {
 
   get searchLimit() {
     return this.searchTermStream.getValue().limit
+  }
+
+  async generateQRBill(bill: BillView) {
+    await generatePDFBill(bill)
   }
 }
