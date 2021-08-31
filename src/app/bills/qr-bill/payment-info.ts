@@ -37,4 +37,4 @@ async function calculateReferenceNumber(billView: BillView) {
   return `${referenceWithoutChecksum}${checksum}`
 }
 
-const sanheiIBAN = 'CH4606830016041690010'
+const sanheiIBAN = 'CH2730047016041690010'
