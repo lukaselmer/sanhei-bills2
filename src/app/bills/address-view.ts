@@ -10,7 +10,7 @@ export class AddressView {
   }
 
   get billZip() {
-    return this.zipAndCity[1]
+    return this.zipAndCity[0]
   }
 
   get billCity() {
