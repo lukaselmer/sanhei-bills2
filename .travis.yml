@@ -2,7 +2,7 @@ dist: focal
 addons:
   chrome: stable
 language: node_js
-node_js: 14
+node_js: 22
 before_install:
   - export TZ=Europe/Zurich
   - export CHROME_BIN=google-chrome-stable

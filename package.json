@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "engines": {
-    "node": "14"
+    "node": "22"
   },
   "scripts": {
     "deploy-main": "firebase use main && firebase deploy",
@@ -78,7 +78,6 @@
     "@typescript-eslint/parser": "^4.30.0",
     "eslint": "^7.26.0",
     "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-jsdoc": "latest",
     "eslint-plugin-prefer-arrow": "latest",
     "eslint-plugin-unicorn": "latest",
     "firebase-tools": "^9.16.6",
