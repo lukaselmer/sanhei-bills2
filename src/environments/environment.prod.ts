@@ -2,7 +2,8 @@ export const environment = {
   production: true,
   firebase: {
     apiKey: 'AIzaSyBRJRYWoOxSOXEoXO4fxiPzaWXGmoaIeJI',
-    authDomain: 'sanhei-bills.firebaseapp.com',
+    // authDomain: 'sanhei-bills.firebaseapp.com',
+    authDomain: 'bills.sanhei.ch',
     databaseURL: 'https://sanhei-bills.firebaseio.com',
     projectId: 'sanhei-bills',
     storageBucket: 'sanhei-bills.appspot.com',
