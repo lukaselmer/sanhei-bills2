@@ -12,6 +12,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import'],
   rules: {
+    'max-len': 'off',
+    'no-shadow': 'off',
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/no-empty-function': 'error',
     '@typescript-eslint/no-empty-interface': 'warn',
@@ -41,12 +43,6 @@ module.exports = {
     'no-param-reassign': 'error',
     'no-redeclare': 'error',
     'no-sequences': 'error',
-    'no-shadow': [
-      'error',
-      {
-        hoist: 'all',
-      },
-    ],
     'no-throw-literal': 'error',
     'no-unsafe-finally': 'error',
     'no-unused-labels': 'error',
