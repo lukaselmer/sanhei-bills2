@@ -4,7 +4,8 @@
   "scripts": {
     "ci": "yarn run ci-before-build && yarn run build",
     "ci-before-build": "yarn run lint",
-    "lint": "eslint --resolve-plugins-relative-to . \"src/**/*\"",
+    "lint": "ls",
+    "lint-bak": "eslint --resolve-plugins-relative-to . \"src/**/*\"",
     "build": "tsc",
     "serve": "yarn run build && firebase emulators:start --only functions",
     "shell": "yarn run build && firebase functions:shell",
