@@ -1,11 +1,18 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "parserOptions": {
-        "project": ["tsconfig.json", "e2e/tsconfig.json"],
+        "project": [
+          "tsconfig.json",
+          "e2e/tsconfig.json"
+        ],
         "createDefaultProgram": true
       },
       "extends": [
@@ -16,8 +23,6 @@
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        // "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-        // "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
         "plugin:@angular-eslint/template/process-inline-templates",
         "prettier"
       ],
@@ -25,7 +30,6 @@
         "eslint-plugin-import",
         "eslint-plugin-unicorn",
         "@typescript-eslint",
-        // "eslint-plugin-jsdoc",
         "@angular-eslint",
         "eslint-plugin-prefer-arrow"
       ],
@@ -63,15 +67,27 @@
         "@typescript-eslint/no-this-alias": "error",
         "@typescript-eslint/no-var-requires": "error",
         "@typescript-eslint/prefer-readonly": "error",
-        "arrow-parens": ["off", "always"],
-        "brace-style": ["error", "1tbs"],
-        "curly": ["error", "multi-or-nest"],
+        "arrow-parens": [
+          "off",
+          "always"
+        ],
+        "brace-style": [
+          "error",
+          "1tbs"
+        ],
+        "curly": [
+          "error",
+          "multi-or-nest"
+        ],
         "dot-notation": "off",
         "id-blacklist": "error",
         "import/no-extraneous-dependencies": "off",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
-        "max-classes-per-file": ["error", 1],
+        "max-classes-per-file": [
+          "error",
+          1
+        ],
         "typescript-eslint/explicit-module-boundary-types": "off",
         "max-len": [
           "error",
@@ -95,21 +111,33 @@
         "no-unused-expressions": "error",
         "no-use-before-define": "off",
         "prefer-object-spread": "error",
-        "quotes": ["error", "single"],
+        "quotes": [
+          "error",
+          "single"
+        ],
         "semi": "off",
-        "space-in-parens": ["error", "never"],
+        "space-in-parens": [
+          "error",
+          "never"
+        ],
         "unicorn/prefer-ternary": "error"
       }
     },
     {
-      "files": ["*.spec.ts"],
+      "files": [
+        "*.spec.ts"
+      ],
       "rules": {
         "@typescript-eslint/no-unused-vars": "off"
       }
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
       "rules": {}
     }
   ]
