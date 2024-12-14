@@ -1,17 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Auth } from '@angular/fire/auth'
-import {
-  serverTimestamp,
-  Database,
-  ref,
-  query,
-  listVal,
-  orderByChild,
-  startAt,
-  push,
-  set,
-  get,
-} from '@angular/fire/database'
+import { serverTimestamp, Database } from '@angular/fire/database'
 import { BehaviorSubject, type Observable } from 'rxjs'
 import { Bill } from '../bill'
 import { EditedBill } from './../edited-bill'
@@ -19,6 +8,7 @@ import { NewBill } from './../new-bill'
 import { IBillingDatabase } from './billing-database'
 import { DataStoreStatus } from './data-store-status'
 import { IDBStoreService } from './idb-store.service'
+import { FirebaseDbService } from './firebase-db.service'
 
 @Injectable()
 export class DataStoreService {
@@ -34,6 +24,7 @@ export class DataStoreService {
     private readonly auth: Auth,
     private readonly db: Database,
     private readonly idbStoreService: IDBStoreService,
+    private readonly dbService: FirebaseDbService,
   ) {}
 
   getStoreStream(): Observable<IBillingDatabase> {
@@ -67,9 +58,7 @@ export class DataStoreService {
       await this.idbStoreService.storeInIDB('bills', this.store().bills)
     }
 
-    listVal<Bill>(
-      query(ref(this.db, 'billing/bills'), orderByChild('updatedAt'), startAt(this.nextSyncTimestamp())),
-    ).subscribe(async (bills: Bill[]) => {
+    this.dbService.dbObserveBills(this.db, this.nextSyncTimestamp()).subscribe(async (bills: Bill[]) => {
       if (bills.length === 0) return
 
       const store = this.store()
@@ -91,7 +80,7 @@ export class DataStoreService {
   }
 
   private async downloadWholeDatabase() {
-    const snapshot = await get(ref(this.db, 'billing'))
+    const snapshot = await this.dbService.dbDownloadAllBills(this.db)
     if (!snapshot.exists()) throw new Error('No data found')
     const data: IBillingDatabase = await snapshot.val()
     if (!data) throw new Error('No data found')
@@ -123,25 +112,22 @@ export class DataStoreService {
   async createBill(newBill: NewBill): Promise<void> {
     await this.waitForUserLogin()
     this.setCreated(newBill)
-    await push(ref(this.db, 'billing/bills'), newBill)
+    await this.dbService.dbStoreBill(this.db, newBill)
   }
 
   async updateBill(bill: EditedBill | Bill) {
     await this.waitForUserLogin()
     this.setUpdated(bill)
-    const billAttributes = {
-      ...bill,
-    } as any
+    const billAttributes = { ...bill } as any
     Object.keys(billAttributes).forEach((k) => {
       if (billAttributes[k] === undefined) delete billAttributes[k]
     })
-    await set(ref(this.db, `billing/bills/${bill.id}`), billAttributes)
+    await this.dbService.dbUpdateBill(this.db, { id: bill.id }, billAttributes)
   }
 
   async deleteBill(bill: Bill) {
     await this.waitForUserLogin()
-    this.setDeleted(bill)
-    await set(ref(this.db, `billing/bills/${bill.id}`), bill)
+    await this.dbService.dbUpdateBill(this.db, { id: bill.id }, bill)
   }
 
   private setCreated(newBill: NewBill) {

@@ -15,6 +15,7 @@ import { BillPrintComponent } from './print/bill-print.component'
 import { BillMatcherFactory } from './search/bill-matcher.factory'
 import { DataStoreService } from './store/data-store.service'
 import { IDBStoreService } from './store/idb-store.service'
+import { FirebaseDbService } from './store/firebase-db.service'
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, MaterialModule, BillsRoutingModule],
@@ -34,6 +35,7 @@ import { IDBStoreService } from './store/idb-store.service'
     ArticlesService,
     DataStoreService,
     IDBStoreService,
+    FirebaseDbService,
     BillAutocompleteService,
   ],
 })

@@ -1,4 +1,3 @@
-import 'rxjs/add/operator/count'
 import { articleVariant } from '../../article.mock'
 import { billVariant } from '../../bill.mock'
 import { IBillingDatabase } from '../../store/billing-database'

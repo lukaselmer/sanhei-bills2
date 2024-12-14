@@ -2,7 +2,6 @@ import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import 'rxjs/add/observable/of'
 import { billVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
 import { SearchResult } from '../search/search-result'

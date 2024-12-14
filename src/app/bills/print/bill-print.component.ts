@@ -53,7 +53,6 @@ export class BillPrintComponent implements OnInit {
       ) as HTMLDivElement[]
 
       articleElements.forEach((articleEl, index) => {
-        console.log('articleEl.offsetTop', articleEl.offsetTop)
         const spaceUsed = articleEl.offsetTop - this.currentPageOffset
         const isLastArticle = index === articleElements.length - 1
         const notEnoughSpaceForArticles = spaceUsed > BillPrintComponent.PAGE_BREAK_AFTER

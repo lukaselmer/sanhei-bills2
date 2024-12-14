@@ -1,5 +1,4 @@
 import { waitForAsync } from '@angular/core/testing'
-import 'rxjs/add/operator/count'
 import { count, first } from 'rxjs/operators'
 import { billVariant } from './bill.mock'
 import { BillsService } from './bills.service'
