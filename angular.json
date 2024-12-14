@@ -16,8 +16,14 @@
             "main": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": ["src/assets", "src/favicons", "src/favicon.ico"],
-            "styles": ["src/scss/global.scss"],
+            "assets": [
+              "src/assets",
+              "src/favicons",
+              "src/favicon.ico"
+            ],
+            "styles": [
+              "src/scss/global.scss"
+            ],
             "scripts": [],
             "allowedCommonJsDependencies": [
               "firebase",
@@ -94,14 +100,23 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "scripts": [],
-            "styles": ["src/scss/global.scss"],
-            "assets": ["src/assets", "src/favicons", "src/favicon.ico"]
+            "styles": [
+              "src/scss/global.scss"
+            ],
+            "assets": [
+              "src/assets",
+              "src/favicons",
+              "src/favicon.ico"
+            ]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       },
@@ -133,7 +148,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -141,7 +159,9 @@
   },
   "defaultProject": "sanhei-bills2",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics",
-    "packageManager": "yarn"
+    "packageManager": "yarn",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
