@@ -1,4 +1,4 @@
-<mat-card *ngIf="showDetails">
+<mat-card appearance="outlined" *ngIf="showDetails">
   <mat-card-header *ngIf="user">
     <img mat-card-avatar (click)="toggle()" [src]="user.photoURL" alt="Profile Image" />
     <mat-card-title>{{ user.displayName }}</mat-card-title>

@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@include mat.typography-hierarchy();
 @import '../../../scss/sb-theme';
 
 section {

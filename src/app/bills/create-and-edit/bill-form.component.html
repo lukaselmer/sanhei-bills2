@@ -1,7 +1,7 @@
 <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
   <sb-articles-form [formGroup]="form" [articles]="bill?.articles"></sb-articles-form>
 
-  <mat-card>
+  <mat-card appearance="outlined">
     <mat-form-field *ngIf="!createNewBill">
       <input matInput formControlName="humanId" placeholder="ID" />
     </mat-form-field>
@@ -78,7 +78,7 @@
     </mat-autocomplete>
   </mat-card>
 
-  <mat-card>
+  <mat-card appearance="outlined">
     <mat-form-field>
       <input
         matInput
@@ -115,7 +115,7 @@
     </mat-autocomplete>
   </mat-card>
 
-  <mat-card>
+  <mat-card appearance="outlined">
     <mat-form-field>
       <input
         matInput
@@ -135,7 +135,7 @@
     </mat-form-field>
   </mat-card>
 
-  <mat-card>
+  <mat-card appearance="outlined">
     <mat-form-field>
       <input matInput formControlName="cashback" placeholder="Skonto in %" />
     </mat-form-field>

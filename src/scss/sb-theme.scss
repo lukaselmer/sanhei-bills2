@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@include mat.typography-hierarchy();
 // Plus imports for other components in your app.
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
