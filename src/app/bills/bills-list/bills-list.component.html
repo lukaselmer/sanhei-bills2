@@ -49,9 +49,9 @@
   </section>
 
   <mat-card appearance="outlined">
-    <mat-card-subtitle *ngIf="bills.length === 0">KEINE RECHNUNGEN GEFUNDEN</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="bills.length === 1">{{ bills.length }} RECHNUNG</mat-card-subtitle>
-    <mat-card-subtitle *ngIf="bills.length >= 2">{{ bills.length }} RECHNUNGEN</mat-card-subtitle>
+    <mat-card-content *ngIf="bills.length === 0">KEINE RECHNUNGEN GEFUNDEN</mat-card-content>
+    <mat-card-content *ngIf="bills.length === 1">{{ bills.length }} RECHNUNG</mat-card-content>
+    <mat-card-content *ngIf="bills.length >= 2">{{ bills.length }} RECHNUNGEN</mat-card-content>
   </mat-card>
 
   <section class="load-more">
