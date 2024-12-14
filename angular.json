@@ -157,7 +157,6 @@
       }
     }
   },
-  "defaultProject": "sanhei-bills2",
   "cli": {
     "packageManager": "yarn",
     "schematicCollections": [
