@@ -14,6 +14,7 @@ import { generatePDFBill } from '../../bills/qr-bill/pdf-bill-service'
   selector: 'sb-bills-list',
   templateUrl: './bills-list.component.html',
   styleUrls: ['./bills-list.component.scss'],
+  standalone: false,
 })
 export class BillsListComponent implements OnInit {
   bills$: Observable<BillView[]> | undefined

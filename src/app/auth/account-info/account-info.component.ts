@@ -6,6 +6,7 @@ import { type UserInfo } from '@firebase/auth'
   selector: 'sb-account-info',
   templateUrl: './account-info.component.html',
   styleUrls: ['./account-info.component.scss'],
+  standalone: false,
 })
 export class AccountInfoComponent {
   @Input() user: UserInfo | undefined

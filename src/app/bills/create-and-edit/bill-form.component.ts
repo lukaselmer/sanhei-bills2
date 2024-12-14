@@ -13,6 +13,7 @@ import { workedAtValidator } from './validators/worked-at-validator.directive'
   selector: 'sb-bill-form',
   templateUrl: './bill-form.component.html',
   styleUrls: ['./bill-form.component.scss'],
+  standalone: false,
 })
 export class BillFormComponent implements OnChanges {
   @Input() bill: Bill | undefined

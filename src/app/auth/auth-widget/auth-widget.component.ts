@@ -6,6 +6,7 @@ import { Unsubscribe, type UserInfo } from '@firebase/auth'
   selector: 'sb-auth-widget',
   templateUrl: './auth-widget.component.html',
   styleUrls: ['./auth-widget.component.scss'],
+  standalone: false,
 })
 export class AuthWidgetComponent implements OnInit {
   private unsubscribe: Unsubscribe | undefined
