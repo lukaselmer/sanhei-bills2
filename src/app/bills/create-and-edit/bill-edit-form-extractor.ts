@@ -4,7 +4,10 @@ import { EditedBill } from './../edited-bill'
 import { BillFormExtractor } from './bill-form-extractor'
 
 export class BillEditFormExtractor extends BillFormExtractor {
-  constructor(formValue: any, private readonly bill: Bill) {
+  constructor(
+    formValue: any,
+    private readonly bill: Bill,
+  ) {
     super(formValue)
   }
 

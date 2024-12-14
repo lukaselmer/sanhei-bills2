@@ -31,7 +31,7 @@ describe('BillView', () => {
                 price: 100,
               }),
             ],
-          }).totalNet
+          }).totalNet,
         ).toEqual(10 * 20 + 3 * 100)
         expect(billView({ articles: [] }).totalNet).toEqual(0)
       })
@@ -57,12 +57,12 @@ describe('BillView', () => {
           expect(
             billView({
               discount: 4.002,
-            }).totalDiscount
+            }).totalDiscount,
           ).toEqual(30)
           expect(
             billView({
               discount: 3.998,
-            }).totalDiscount
+            }).totalDiscount,
           ).toEqual(30)
         })
 
@@ -70,17 +70,17 @@ describe('BillView', () => {
           expect(
             billView({
               cashback: 3.409722222,
-            }).totalCashback
+            }).totalCashback,
           ).toEqual(24.55)
           expect(
             billView({
               cashback: 3.4131943,
-            }).totalCashback
+            }).totalCashback,
           ).toEqual(24.55)
           expect(
             billView({
               cashback: 3.4131945,
-            }).totalCashback
+            }).totalCashback,
           ).toEqual(24.6)
         })
 
@@ -88,12 +88,12 @@ describe('BillView', () => {
           expect(
             billView({
               vat: 6.413675214,
-            }).totalVat
+            }).totalVat,
           ).toEqual(45)
           expect(
             billView({
               vat: 6.406837607,
-            }).totalVat
+            }).totalVat,
           ).toEqual(45)
         })
       })
@@ -104,7 +104,7 @@ describe('BillView', () => {
             cashback: 3.409999,
             discount: 3.5302633,
             vat: 3.67,
-          }).totalGross
+          }).totalGross,
         ).toEqual(724.5 /* rounded 750 - 25.55 - 25.55 + 25.60 */)
       })
     })

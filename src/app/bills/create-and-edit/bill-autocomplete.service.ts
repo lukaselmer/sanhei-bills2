@@ -14,7 +14,7 @@ export class BillAutocompleteService {
   }
 
   private valuesMapFor<BillField extends keyof Bill>(
-    field: BillField
+    field: BillField,
   ): {
     [index: string]: Bill | undefined
   } {

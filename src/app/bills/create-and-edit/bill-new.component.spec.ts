@@ -53,34 +53,32 @@ describe('BillNewComponent', () => {
     fill(selectTextarea('description'), newBill.description)
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
-        providers: [
-          {
-            provide: BillsService,
-            useValue: {
-              createBill: (billToUpdate: NewBill): void => undefined,
-            },
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
+      providers: [
+        {
+          provide: BillsService,
+          useValue: {
+            createBill: (billToUpdate: NewBill): void => undefined,
           },
-          {
-            provide: BillAutocompleteService,
-            useValue: {
-              autocompleteOptions: () => [],
-            },
+        },
+        {
+          provide: BillAutocompleteService,
+          useValue: {
+            autocompleteOptions: () => [],
           },
-          {
-            provide: ArticlesService,
-            useValue: {
-              filterAutocompleteArticles: () => [],
-            },
+        },
+        {
+          provide: ArticlesService,
+          useValue: {
+            filterAutocompleteArticles: () => [],
           },
-        ],
-        declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent],
-      }).compileComponents()
-    })
-  )
+        },
+      ],
+      declarations: [BillNewComponent, BillFormComponent, ArticlesFormComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(BillNewComponent)

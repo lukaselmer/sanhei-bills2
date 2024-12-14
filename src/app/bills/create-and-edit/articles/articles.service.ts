@@ -25,7 +25,7 @@ export class ArticlesService {
       .pipe(
         filter((autocompleteArticle) => autocompleteArticle.matchesAll(terms)),
         take(25),
-        toArray()
+        toArray(),
       )
       .subscribe((descriptionsHack) => (descriptions = descriptionsHack))
     return descriptions
@@ -49,7 +49,7 @@ export class ArticlesService {
     article: Article,
     uniqMap: {
       [index: string]: boolean
-    }
+    },
   ) {
     const autocompleteArticle = new AutocompleteArticle(article)
     const articleAlreadyInList = uniqMap[autocompleteArticle.stringToFilter]

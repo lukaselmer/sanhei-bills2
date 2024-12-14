@@ -11,8 +11,8 @@ export abstract class BillFormExtractor {
     return rawArticles
       .filter((article) =>
         [article.description, article.price, article.amount].every(
-          (fieldValue) => fieldValue.trim() !== ''
-        )
+          (fieldValue) => fieldValue.trim() !== '',
+        ),
       )
       .map((article) => ({
         amount: parseFloat(article.amount),

@@ -26,8 +26,9 @@ module.exports = function (config) {
     },
     coverageReporter: {
       dir: require('path').join(__dirname, 'coverage'),
-      reporters: process.env.TRAVIS
-        ? [{ type: 'text-summary' }, { type: 'lcovonly' }]
+      reporters:
+        process.env.TRAVIS ?
+          [{ type: 'text-summary' }, { type: 'lcovonly' }]
         : [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly' }],
       fixWebpackSourcePaths: true,
     },

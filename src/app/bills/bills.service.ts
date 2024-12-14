@@ -15,7 +15,7 @@ import { DataStoreService } from './store/data-store.service'
 export class BillsService {
   constructor(
     private readonly dataStore: DataStoreService,
-    private readonly billMatcherFactory: BillMatcherFactory
+    private readonly billMatcherFactory: BillMatcherFactory,
   ) {
     this.dataStore.loadData()
   }
@@ -40,15 +40,15 @@ export class BillsService {
         observableFrom(bills).pipe(
           filter((bill) => billMatcher.matches(bill)),
           take(options.limit),
-          toArray()
-        )
+          toArray(),
+        ),
       ),
       concatAll(),
       catchError((e) => {
         console.error(e)
         return observableOf([])
       }),
-      map((filteredBills) => this.wrapSearchResult(options.term, filteredBills))
+      map((filteredBills) => this.wrapSearchResult(options.term, filteredBills)),
     )
   }
 
@@ -63,7 +63,7 @@ export class BillsService {
   editBill(id: string): Observable<Bill> {
     return this.getBillsStream().pipe(
       map((bills) => bills.find((bill) => bill.id === id)),
-      filter((bill) => !!bill)
+      filter((bill) => !!bill),
     )
   }
 

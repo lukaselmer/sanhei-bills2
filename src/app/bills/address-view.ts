@@ -40,7 +40,7 @@ export class AddressView {
 
   get firstLinesWithoutLastTwo() {
     return this.lines.filter(
-      (_, index) => index !== this.lines.length - 2 && index !== this.lines.length - 1
+      (_, index) => index !== this.lines.length - 2 && index !== this.lines.length - 1,
     )
   }
 
