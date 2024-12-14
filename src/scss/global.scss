@@ -6,7 +6,8 @@
 @include mat.app-background();
 
 html {
-  color-scheme: light dark;
+  color-scheme: light;
+  // color-scheme: light dark;
 
   // Apply the light theme by default
 
@@ -19,10 +20,10 @@ html {
   // @media (prefers-color-scheme: dark) {
   //   // Use the `-color` mixins to only apply color styles without reapplying the same
   //   // typography and density styles.
-  //   // @include mat.all-component-themes(sb-theme.$dark-theme);
-  //   // @include mat.typography-hierarchy(sb-theme.$dark-theme);
-  //   // @include mat.system-level-colors(sb-theme.$dark-theme);
-  //   // @include mat.system-level-typography(sb-theme.$dark-theme);
+  //   @include mat.all-component-themes(sb-theme.$dark-theme);
+  //   @include mat.typography-hierarchy(sb-theme.$dark-theme);
+  //   @include mat.system-level-colors(sb-theme.$dark-theme);
+  //   @include mat.system-level-typography(sb-theme.$dark-theme);
   // }
 }
 

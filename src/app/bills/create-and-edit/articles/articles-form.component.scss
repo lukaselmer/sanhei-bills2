@@ -1,4 +1,5 @@
-/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
+@use '@angular/material' as mat;
+
 mat-card {
   margin-bottom: 20px;
 }
@@ -9,57 +10,140 @@ mat-card-header {
 
 mat-form-field {
   width: 100%;
+  // @include mat.all-component-densities(0);
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    padding-right: 4px;
+    padding-left: 4px;
+  }
 }
 
+$breakpoint-sm: 520px;
+$breakpoint-md-from: $breakpoint-sm + 1px;
+$breakpoint-md-to: 800px;
+$breakpoint-lg: $breakpoint-md-to + 1px;
+
 .article {
-  display: flex;
+  display: grid;
+  align-items: center;
+  width: 100%;
 
-  margin-bottom: 10px;
-
-  > div {
-    margin-right: 4px;
+  @media (min-width: $breakpoint-lg) {
+    grid-template-areas: 'a b c d e f';
+    grid-template-columns:
+      minmax(100px, 3fr) minmax(100px, 4fr) minmax(100px, 3fr) minmax(100px, 2fr)
+      minmax(100px, 2fr) 80px;
   }
 
-  div:last-child {
-    min-width: 80px;
-    margin-right: -10px;
+  @media (min-width: $breakpoint-md-from) and (max-width: $breakpoint-md-to) {
+    margin-bottom: 25px;
 
-    flex-basis: 1%;
-    flex-grow: 0;
+    grid-template-columns:
+      minmax(60px, 1fr) minmax(60px, 1fr) minmax(60px, 1fr) minmax(60px, 1fr)
+      minmax(60px, 1fr) minmax(60px, 1fr) 40px;
+
+    grid-template-areas:
+      'a a b b b b f'
+      'c c d d e e f';
   }
 
-  @media (min-width: 1000px) {
-    div {
-      flex-basis: 1%;
-      flex-grow: 1;
-    }
-    div:nth-child(2) {
-      flex-grow: 15;
-    }
-  }
-
-  @media (min-width: 750px) and (max-width: 999px) {
-    div {
-      flex-basis: 3%;
-      flex-grow: 1;
-    }
-    div:nth-child(2) {
-      flex-grow: 10;
-    }
-  }
-
-  @media (max-width: 749px) {
+  @media (max-width: $breakpoint-sm) {
     margin-bottom: 35px;
 
-    flex-wrap: wrap;
-    div {
-      flex-basis: 20%;
-      flex-grow: 1;
-    }
-    div:nth-child(2) {
-      flex-basis: 90%;
-      flex-grow: 10;
-      order: -1;
-    }
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'a'
+      'b'
+      'c'
+      'd'
+      'e'
+      'f';
   }
+
+  .form-field-wrapper.actions {
+    margin-right: -10px;
+    margin-bottom: 20px;
+  }
+
+  // grid-template-areas:
+  //   'a a a'
+  //   'b c c'
+  //   'b c c';
+  // grid-auto-flow: row dense;
+
+  // @media (min-width: 1000px) {
+  //   div {
+  //     flex-basis: 1%;
+  //     flex-grow: 1;
+  //   }
+  //   div:nth-child(2) {
+  //     flex-grow: 15;
+  //   }
+  // }
+
+  .form-field-wrapper {
+    margin-right: 2px;
+  }
+
+  .form-field-wrapper.catalogId {
+    grid-area: a;
+  }
+  .form-field-wrapper.description {
+    grid-area: b;
+  }
+  .form-field-wrapper.dimension {
+    grid-area: c;
+  }
+  .form-field-wrapper.price {
+    grid-area: d;
+  }
+  .form-field-wrapper.amount {
+    grid-area: e;
+  }
+  .form-field-wrapper.actions {
+    grid-area: f;
+  }
+
+  // div:last-child {
+  //   min-width: 80px;
+  //   margin-right: -10px;
+
+  //   flex-basis: 1%;
+  //   flex-grow: 0;
+  // }
+
+  // @media (min-width: 1000px) {
+  //   div {
+  //     flex-basis: 1%;
+  //     flex-grow: 1;
+  //   }
+  //   div:nth-child(2) {
+  //     flex-grow: 15;
+  //   }
+  // }
+
+  // @media (min-width: 950px) and (max-width: 999px) {
+  //   div {
+  //     flex-basis: 3%;
+  //     flex-grow: 1;
+  //   }
+  //   div:nth-child(2) {
+  //     flex-grow: 10;
+  //   }
+  // }
+
+  // @media (max-width: 949px) {
+  //   margin-bottom: 35px;
+
+  //   flex-wrap: wrap;
+  //   div {
+  //     flex-basis: 20%;
+  //     flex-grow: 1;
+  //   }
+  //   div:nth-child(2) {
+  //     flex-basis: 90%;
+  //     flex-grow: 10;
+  //     order: -1;
+  //   }
+  // }
 }

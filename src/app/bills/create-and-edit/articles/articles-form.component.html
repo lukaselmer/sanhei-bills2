@@ -9,13 +9,13 @@
         [formGroupName]="i"
         class="article"
       >
-        <div>
+        <div class="form-field-wrapper catalogId">
           <mat-form-field>
             <mat-label>Katalognr.</mat-label>
             <input matInput formControlName="catalogId" />
           </mat-form-field>
         </div>
-        <div>
+        <div class="form-field-wrapper description">
           <mat-form-field>
             <mat-label>Beschreibung</mat-label>
             <input
@@ -36,25 +36,25 @@
             </mat-option>
           </mat-autocomplete>
         </div>
-        <div>
+        <div class="form-field-wrapper dimension">
           <mat-form-field>
             <mat-label>Dimension</mat-label>
             <input matInput formControlName="dimension" />
           </mat-form-field>
         </div>
-        <div>
+        <div class="form-field-wrapper price">
           <mat-form-field>
             <mat-label>Preis</mat-label>
             <input matInput formControlName="price" />
           </mat-form-field>
         </div>
-        <div>
+        <div class="form-field-wrapper amount">
           <mat-form-field>
             <mat-label>Anzahl</mat-label>
             <input matInput formControlName="amount" />
           </mat-form-field>
         </div>
-        <div>
+        <div class="form-field-wrapper actions">
           <button mat-icon-button type="button" (click)="removeAt(i)">
             <i class="material-icons">delete</i>
           </button>
