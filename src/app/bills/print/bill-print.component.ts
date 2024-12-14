@@ -6,10 +6,9 @@ import { BillView } from './../bill-view'
 import { BillsService } from './../bills.service'
 
 @Component({
-    selector: 'sb-bill-print',
-    templateUrl: './bill-print.component.html',
-    styleUrls: ['./bill-print.component.scss'],
-    standalone: false
+  selector: 'sb-bill-print',
+  templateUrl: './bill-print.component.html',
+  styleUrls: ['./bill-print.component.scss'],
 })
 export class BillPrintComponent implements OnInit {
   private static readonly PAGE_BREAK_AFTER = 1270
@@ -27,7 +26,7 @@ export class BillPrintComponent implements OnInit {
     private readonly billsService: BillsService,
     private readonly element: ElementRef,
     private readonly renderer: Renderer2,
-    private readonly decimalPipe: DecimalPipe
+    private readonly decimalPipe: DecimalPipe,
   ) {
     this.id = route.snapshot.params.id
   }
@@ -49,7 +48,7 @@ export class BillPrintComponent implements OnInit {
       this.currentPageOffset = 0
       this.currentPage = 1
       const articleElements = Array.from(
-        this.element.nativeElement.querySelectorAll('.article')
+        this.element.nativeElement.querySelectorAll('.article'),
       ) as HTMLDivElement[]
 
       articleElements.forEach((articleEl, index) => {
@@ -105,12 +104,12 @@ export class BillPrintComponent implements OnInit {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
-        }) ?? ''
-      )
+        }) ?? '',
+      ),
     )
     this.renderer.appendChild(
       headerEl,
-      this.createHeaderLine(this.billView.title, `Seite ${this.currentPage}`)
+      this.createHeaderLine(this.billView.title, `Seite ${this.currentPage}`),
     )
     return headerEl
   }

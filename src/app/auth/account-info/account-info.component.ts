@@ -1,19 +1,18 @@
 import { Component, Input } from '@angular/core'
-import { AngularFireAuth } from '@angular/fire/compat/auth'
+import { Auth } from '@angular/fire/auth'
 import { type UserInfo } from '@firebase/auth'
 
 @Component({
-    selector: 'sb-account-info',
-    templateUrl: './account-info.component.html',
-    styleUrls: ['./account-info.component.scss'],
-    standalone: false
+  selector: 'sb-account-info',
+  templateUrl: './account-info.component.html',
+  styleUrls: ['./account-info.component.scss'],
 })
 export class AccountInfoComponent {
   @Input() user: UserInfo | undefined
 
   showDetails = false
 
-  constructor(private readonly auth: AngularFireAuth) {}
+  constructor(private readonly auth: Auth) {}
 
   toggle() {
     this.showDetails = !this.showDetails

@@ -12,10 +12,9 @@ import { SearchResult } from './../search/search-result'
 import { generatePDFBill } from '../../bills/qr-bill/pdf-bill-service'
 
 @Component({
-    selector: 'sb-bills-list',
-    templateUrl: './bills-list.component.html',
-    styleUrls: ['./bills-list.component.scss'],
-    standalone: false
+  selector: 'sb-bills-list',
+  templateUrl: './bills-list.component.html',
+  styleUrls: ['./bills-list.component.scss'],
 })
 export class BillsListComponent implements OnInit {
   bills$: Observable<BillView[]> | undefined
@@ -30,7 +29,7 @@ export class BillsListComponent implements OnInit {
   constructor(
     private readonly billsService: BillsService,
     private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -39,12 +38,12 @@ export class BillsListComponent implements OnInit {
       debounceTime(10),
       distinctUntilChanged(),
       switchMap((term) => this.reallyStartSearching(term)),
-      share()
+      share(),
     )
     billsSearch$.subscribe((search) => this.updateProgress(search))
     this.bills$ = billsSearch$.pipe(
       map((search) => search.list.map((bill) => new BillView(bill))),
-      share()
+      share(),
     )
 
     this.route.queryParamMap
@@ -56,7 +55,7 @@ export class BillsListComponent implements OnInit {
             term,
             limit,
           })
-        })
+        }),
       )
       .subscribe()
   }

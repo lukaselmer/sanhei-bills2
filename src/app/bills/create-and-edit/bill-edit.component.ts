@@ -5,9 +5,8 @@ import { BillsService } from './../bills.service'
 import { BillEditFormExtractor } from './bill-edit-form-extractor'
 
 @Component({
-    selector: 'sb-bill-edit',
-    templateUrl: './bill-edit.component.html',
-    standalone: false
+  selector: 'sb-bill-edit',
+  templateUrl: './bill-edit.component.html',
 })
 export class BillEditComponent implements OnInit {
   id: string
@@ -17,7 +16,7 @@ export class BillEditComponent implements OnInit {
   constructor(
     private readonly router: Router,
     route: ActivatedRoute,
-    private readonly billsService: BillsService
+    private readonly billsService: BillsService,
   ) {
     this.id = route.snapshot.params.id
   }

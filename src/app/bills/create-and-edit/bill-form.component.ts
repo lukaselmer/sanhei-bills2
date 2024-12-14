@@ -10,10 +10,9 @@ import { dateValidator } from './validators/date-validator.directive'
 import { workedAtValidator } from './validators/worked-at-validator.directive'
 
 @Component({
-    selector: 'sb-bill-form',
-    templateUrl: './bill-form.component.html',
-    styleUrls: ['./bill-form.component.scss'],
-    standalone: false
+  selector: 'sb-bill-form',
+  templateUrl: './bill-form.component.html',
+  styleUrls: ['./bill-form.component.scss'],
 })
 export class BillFormComponent implements OnChanges {
   @Input() bill: Bill | undefined
@@ -37,7 +36,7 @@ export class BillFormComponent implements OnChanges {
 
   constructor(
     private readonly autocompleteService: BillAutocompleteService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
   ) {}
 
   private createForm() {
@@ -114,8 +113,8 @@ export class BillFormComponent implements OnChanges {
           this.initializedForm.get(field) as FormControl
         ).valueChanges.pipe(
           startWith(''),
-          map((v) => this.autocompleteService.autocompleteOptions(field, v))
-        ))
+          map((v) => this.autocompleteService.autocompleteOptions(field, v)),
+        )),
     )
   }
 
@@ -193,7 +192,7 @@ export class BillFormComponent implements OnChanges {
 
     discountControl.setValue(bill.discount + '')
     paymentDeadlineControl.setValue(
-      (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + ''
+      (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + '',
     )
   }
 
@@ -212,7 +211,7 @@ export class BillFormComponent implements OnChanges {
 
     if (paymentDeadlineControl.value === billDefaults.paymentDeadlineInDays + '') {
       paymentDeadlineControl.setValue(
-        (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + ''
+        (bill.paymentDeadlineInDays || billDefaults.paymentDeadlineInDays) + '',
       )
     }
   }

@@ -10,10 +10,9 @@ import { AutocompleteArticle } from './autocomplete-article'
 import { FormArticle } from './form-article'
 
 @Component({
-    selector: 'sb-articles-form',
-    templateUrl: './articles-form.component.html',
-    styleUrls: ['./articles-form.component.scss'],
-    standalone: false
+  selector: 'sb-articles-form',
+  templateUrl: './articles-form.component.html',
+  styleUrls: ['./articles-form.component.scss'],
 })
 export class ArticlesFormComponent implements OnChanges {
   @Input() formGroup: FormGroup | undefined
@@ -23,7 +22,10 @@ export class ArticlesFormComponent implements OnChanges {
   autocompleteOptions: Observable<AutocompleteArticle[]> | undefined
   articleDescriptionFocusStream = new Subject<string>()
 
-  constructor(private readonly articlesService: ArticlesService, private readonly fb: FormBuilder) {}
+  constructor(
+    private readonly articlesService: ArticlesService,
+    private readonly fb: FormBuilder,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.articles) this.articlesChanged()
@@ -69,7 +71,7 @@ export class ArticlesFormComponent implements OnChanges {
         catalogId: a.catalogId,
         description: [a.description, requiredIfOneSiblingHasContent()],
         dimension: a.dimension,
-      })
+      }),
     )
     this.keepAricleValidationsUpdated(articleFormGroups)
     if (this.formGroup) this.formGroup.setControl('articles', this.fb.array(articleFormGroups))
@@ -90,7 +92,7 @@ export class ArticlesFormComponent implements OnChanges {
               fg.controls[fieldKey].setValue(fg.controls[fieldKey].value)
             })
             automaticValueChangeInProgress = false
-          })
+          }),
         )
         .subscribe()
     })
@@ -100,7 +102,7 @@ export class ArticlesFormComponent implements OnChanges {
     this.autocompleteOptions = from([
       this.articleDescriptionFocusStream,
       ...this.articlesForm.controls.map((articleForm) =>
-        articleForm.valueChanges.pipe(map((article) => article.description))
+        articleForm.valueChanges.pipe(map((article) => article.description)),
       ),
     ]).pipe(
       mergeAll(),
@@ -109,7 +111,7 @@ export class ArticlesFormComponent implements OnChanges {
       debounceTime(10),
       distinctUntilChanged(),
       map((currentFilter) => this.articlesService.filterAutocompleteArticles(currentFilter)),
-      share()
+      share(),
     )
   }
 

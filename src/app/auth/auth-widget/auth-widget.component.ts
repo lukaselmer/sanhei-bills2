@@ -1,22 +1,26 @@
 import { Component, OnInit } from '@angular/core'
-import { GoogleAuthProvider } from '@angular/fire/auth'
-import { type UserInfo } from '@firebase/auth'
-import { AngularFireAuth } from '@angular/fire/compat/auth'
+import { GoogleAuthProvider, Auth, signInWithRedirect } from '@angular/fire/auth'
+import { Unsubscribe, type UserInfo } from '@firebase/auth'
 
 @Component({
-    selector: 'sb-auth-widget',
-    templateUrl: './auth-widget.component.html',
-    styleUrls: ['./auth-widget.component.scss'],
-    standalone: false
+  selector: 'sb-auth-widget',
+  templateUrl: './auth-widget.component.html',
+  styleUrls: ['./auth-widget.component.scss'],
 })
 export class AuthWidgetComponent implements OnInit {
+  private unsubscribe: Unsubscribe | undefined
+
   userSession: { status: 'unknown' } | { status: 'signedIn'; user: UserInfo } | { status: 'signedOut' } =
     { status: 'unknown' }
 
-  constructor(private readonly auth: AngularFireAuth) {}
+  constructor(private readonly auth: Auth) {}
 
   ngOnInit() {
-    this.auth.authState.subscribe((user) => this.updateSignInState(user))
+    this.unsubscribe = this.auth.onAuthStateChanged((user) => this.updateSignInState(user))
+  }
+
+  ngOnDestory() {
+    this.unsubscribe?.()
   }
 
   updateSignInState(user: UserInfo | null) {
@@ -24,7 +28,7 @@ export class AuthWidgetComponent implements OnInit {
   }
 
   login() {
-    this.auth.signInWithRedirect(new GoogleAuthProvider())
+    signInWithRedirect(this.auth, new GoogleAuthProvider())
   }
 
   logout() {

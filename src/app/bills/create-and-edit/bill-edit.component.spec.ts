@@ -15,6 +15,7 @@ import { ArticlesService } from './articles/articles.service'
 import { BillAutocompleteService } from './bill-autocomplete.service'
 import { BillEditComponent } from './bill-edit.component'
 import { BillFormComponent } from './bill-form.component'
+import { of } from 'rxjs'
 
 describe('BillEditComponent', () => {
   let component: BillEditComponent
@@ -26,48 +27,46 @@ describe('BillEditComponent', () => {
     descriptionTitle: 'Zusatz',
   })
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
-        providers: [
-          {
-            provide: BillsService,
-            useValue: {
-              editBill: (id: string): Observable<Bill> => {
-                expect(id).toEqual(bill.id)
-                return Observable.of(bill)
-              },
-              updateBill: (billToUpdate: EditedBill): void => undefined,
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
+      providers: [
+        {
+          provide: BillsService,
+          useValue: {
+            editBill: (id: string): Observable<Bill> => {
+              expect(id).toEqual(bill.id)
+              return of(bill)
             },
+            updateBill: (billToUpdate: EditedBill): void => undefined,
           },
-          {
-            provide: BillAutocompleteService,
-            useValue: {
-              autocompleteOptions: () => [],
-            },
+        },
+        {
+          provide: BillAutocompleteService,
+          useValue: {
+            autocompleteOptions: () => [],
           },
-          {
-            provide: ArticlesService,
-            useValue: {
-              filterAutocompleteArticles: () => [],
-            },
+        },
+        {
+          provide: ArticlesService,
+          useValue: {
+            filterAutocompleteArticles: () => [],
           },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                params: {
-                  id: bill.id,
-                },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: {
+                id: bill.id,
               },
             },
           },
-        ],
-        declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent],
-      }).compileComponents()
-    })
-  )
+        },
+      ],
+      declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(BillEditComponent)

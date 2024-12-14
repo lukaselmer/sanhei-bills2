@@ -5,6 +5,7 @@ import { articleVariant } from '../../article.mock'
 import { billVariant } from '../../bill.mock'
 import { IBillingDatabase } from '../../store/billing-database'
 import { ArticlesService } from './articles.service'
+import { of } from 'rxjs'
 
 describe('BillsService', () => {
   let service: ArticlesService
@@ -33,7 +34,7 @@ describe('BillsService', () => {
   }
   const dataStoreServiceMock: any = {
     loadData: () => undefined,
-    getBillsStream: () => Observable.of(billsMock),
+    getBillsStream: () => of(billsMock),
     status: 'loaded',
     store: () => db,
   }

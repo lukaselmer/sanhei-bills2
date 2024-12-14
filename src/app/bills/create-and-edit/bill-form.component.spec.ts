@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import 'rxjs/add/observable/of'
 import { Observable } from 'rxjs/Observable'
 import { billVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
@@ -14,6 +13,7 @@ import { ArticlesService } from './articles/articles.service'
 import { BillAutocompleteService } from './bill-autocomplete.service'
 import { BillEditComponent } from './bill-edit.component'
 import { BillFormComponent } from './bill-form.component'
+import { of } from 'rxjs'
 
 describe('BillFormComponent', () => {
   let component: BillEditComponent
@@ -27,48 +27,46 @@ describe('BillFormComponent', () => {
     descriptionTitle: 'Zusatz',
   })
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
-        providers: [
-          {
-            provide: BillsService,
-            useValue: {
-              editBill: (id: string): Observable<Bill> => {
-                expect(id).toEqual(bill.id)
-                return Observable.of(bill)
-              },
-              updateBill: (billToUpdate: Bill): void => undefined,
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
+      providers: [
+        {
+          provide: BillsService,
+          useValue: {
+            editBill: (id: string): Observable<Bill> => {
+              expect(id).toEqual(bill.id)
+              return of(bill)
             },
+            updateBill: (billToUpdate: Bill): void => undefined,
           },
-          {
-            provide: BillAutocompleteService,
-            useValue: {
-              autocompleteOptions: () => [],
-            },
+        },
+        {
+          provide: BillAutocompleteService,
+          useValue: {
+            autocompleteOptions: () => [],
           },
-          {
-            provide: ArticlesService,
-            useValue: {
-              filterAutocompleteArticles: () => [],
-            },
+        },
+        {
+          provide: ArticlesService,
+          useValue: {
+            filterAutocompleteArticles: () => [],
           },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                params: {
-                  id: bill.id,
-                },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: {
+                id: bill.id,
               },
             },
           },
-        ],
-        declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent],
-      }).compileComponents()
-    })
-  )
+        },
+      ],
+      declarations: [BillEditComponent, BillFormComponent, ArticlesFormComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(BillEditComponent)

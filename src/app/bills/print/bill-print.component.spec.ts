@@ -12,6 +12,7 @@ import { BillsService } from '../bills.service'
 import { MaterialModule } from './../../material/material.module'
 import { Bill } from './../bill'
 import { BillPrintComponent } from './bill-print.component'
+import { of } from 'rxjs'
 
 describe('BillPrintComponent', () => {
   let component: BillPrintComponent
@@ -27,38 +28,36 @@ describe('BillPrintComponent', () => {
     articles: Array.from(Array(50).keys()).map(() => articleVariant()),
   })
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
-        providers: [
-          DecimalPipe,
-          {
-            provide: BillsService,
-            useValue: {
-              editBill: (id: string): Observable<Bill> => {
-                expect(id).toEqual(bill.id)
-                return Observable.of(bill)
-              },
-              // eslint-disable-next-line @typescript-eslint/no-empty-function
-              markAsPrinted: () => {},
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, MaterialModule, NoopAnimationsModule, RouterTestingModule],
+      providers: [
+        DecimalPipe,
+        {
+          provide: BillsService,
+          useValue: {
+            editBill: (id: string): Observable<Bill> => {
+              expect(id).toEqual(bill.id)
+              return of(bill)
             },
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            markAsPrinted: () => {},
           },
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                params: {
-                  id: bill.id,
-                },
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: {
+                id: bill.id,
               },
             },
           },
-        ],
-        declarations: [BillPrintComponent],
-      }).compileComponents()
-    })
-  )
+        },
+      ],
+      declarations: [BillPrintComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(fakeAsync(() => {
     fixture = TestBed.createComponent(BillPrintComponent)
