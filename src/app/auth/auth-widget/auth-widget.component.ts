@@ -4,9 +4,10 @@ import { type UserInfo } from '@firebase/auth'
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 
 @Component({
-  selector: 'sb-auth-widget',
-  templateUrl: './auth-widget.component.html',
-  styleUrls: ['./auth-widget.component.scss'],
+    selector: 'sb-auth-widget',
+    templateUrl: './auth-widget.component.html',
+    styleUrls: ['./auth-widget.component.scss'],
+    standalone: false
 })
 export class AuthWidgetComponent implements OnInit {
   userSession: { status: 'unknown' } | { status: 'signedIn'; user: UserInfo } | { status: 'signedOut' } =

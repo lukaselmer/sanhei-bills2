@@ -4,8 +4,9 @@ import { BillsService } from './../bills.service'
 import { BillNewFormExtractor } from './bill-new-form-extractor'
 
 @Component({
-  selector: 'sb-bill-new',
-  templateUrl: './bill-new.component.html',
+    selector: 'sb-bill-new',
+    templateUrl: './bill-new.component.html',
+    standalone: false
 })
 export class BillNewComponent {
   constructor(private readonly router: Router, private readonly billsService: BillsService) {}

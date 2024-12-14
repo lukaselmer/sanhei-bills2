@@ -10,9 +10,10 @@ import { AutocompleteArticle } from './autocomplete-article'
 import { FormArticle } from './form-article'
 
 @Component({
-  selector: 'sb-articles-form',
-  templateUrl: './articles-form.component.html',
-  styleUrls: ['./articles-form.component.scss'],
+    selector: 'sb-articles-form',
+    templateUrl: './articles-form.component.html',
+    styleUrls: ['./articles-form.component.scss'],
+    standalone: false
 })
 export class ArticlesFormComponent implements OnChanges {
   @Input() formGroup: FormGroup | undefined

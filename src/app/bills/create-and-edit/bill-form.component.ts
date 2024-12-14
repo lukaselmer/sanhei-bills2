@@ -10,9 +10,10 @@ import { dateValidator } from './validators/date-validator.directive'
 import { workedAtValidator } from './validators/worked-at-validator.directive'
 
 @Component({
-  selector: 'sb-bill-form',
-  templateUrl: './bill-form.component.html',
-  styleUrls: ['./bill-form.component.scss'],
+    selector: 'sb-bill-form',
+    templateUrl: './bill-form.component.html',
+    styleUrls: ['./bill-form.component.scss'],
+    standalone: false
 })
 export class BillFormComponent implements OnChanges {
   @Input() bill: Bill | undefined

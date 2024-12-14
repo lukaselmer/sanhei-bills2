@@ -12,9 +12,10 @@ import { SearchResult } from './../search/search-result'
 import { generatePDFBill } from '../../bills/qr-bill/pdf-bill-service'
 
 @Component({
-  selector: 'sb-bills-list',
-  templateUrl: './bills-list.component.html',
-  styleUrls: ['./bills-list.component.scss'],
+    selector: 'sb-bills-list',
+    templateUrl: './bills-list.component.html',
+    styleUrls: ['./bills-list.component.scss'],
+    standalone: false
 })
 export class BillsListComponent implements OnInit {
   bills$: Observable<BillView[]> | undefined

@@ -6,9 +6,10 @@ import { BillView } from './../bill-view'
 import { BillsService } from './../bills.service'
 
 @Component({
-  selector: 'sb-bill-print',
-  templateUrl: './bill-print.component.html',
-  styleUrls: ['./bill-print.component.scss'],
+    selector: 'sb-bill-print',
+    templateUrl: './bill-print.component.html',
+    styleUrls: ['./bill-print.component.scss'],
+    standalone: false
 })
 export class BillPrintComponent implements OnInit {
   private static readonly PAGE_BREAK_AFTER = 1270
