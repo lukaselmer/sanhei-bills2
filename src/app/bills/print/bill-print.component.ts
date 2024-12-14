@@ -12,8 +12,8 @@ import { BillsService } from './../bills.service'
   standalone: false,
 })
 export class BillPrintComponent implements OnInit {
-  private static readonly PAGE_BREAK_AFTER = 1270
-  private static readonly HEADER_AND_SUBTOTAL_HEIGHT = 170
+  private static readonly PAGE_BREAK_AFTER = 1220
+  private static readonly HEADER_AND_SUBTOTAL_HEIGHT = 270
   private static readonly TOTALS_HEIGHT = 145
 
   currentPage = 0
@@ -53,6 +53,7 @@ export class BillPrintComponent implements OnInit {
       ) as HTMLDivElement[]
 
       articleElements.forEach((articleEl, index) => {
+        console.log('articleEl.offsetTop', articleEl.offsetTop)
         const spaceUsed = articleEl.offsetTop - this.currentPageOffset
         const isLastArticle = index === articleElements.length - 1
         const notEnoughSpaceForArticles = spaceUsed > BillPrintComponent.PAGE_BREAK_AFTER
