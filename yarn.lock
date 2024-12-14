@@ -2266,10 +2266,10 @@
   resolved "https://registry.yarnpkg.com/@lmdb/lmdb-win32-x64/-/lmdb-win32-x64-3.1.5.tgz#d748edd97f62cace4f716395cc1b8807616ecdae"
   integrity sha512-KYar6W8nraZfSJspcK7Kp7hdj238X/FNauYbZyrqPBrtsXI1hvI4/KcRcRGP50aQoV7fkKDyJERlrQGMGTZUsA==
 
-"@lukaselmer/prettier-config@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lukaselmer/prettier-config/-/prettier-config-2.0.1.tgz#0b6d59de269a584f50a5cda727256bd978f07516"
-  integrity sha512-dK9vNUUlHjAhOWUUB/2gQaSOZQe76Stdr+qb100JadWjRSenBOlnsXt2A0/iSh2T1M64KvI49aEkSrzH3ymFHg==
+"@lukaselmer/prettier-config@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lukaselmer/prettier-config/-/prettier-config-2.1.0.tgz#807396eadc4b6bc4750a5b7545db22e75a258637"
+  integrity sha512-bqE5ME8xe51Q2LRVdsQGKzBSW6N86wVz4qk/c/QSfQ/0WS5gwx8SmGlHiZ0E/V3ElkHDXD2sdSTuW+BYgdJ7Rg==
 
 "@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.3":
   version "3.0.3"
