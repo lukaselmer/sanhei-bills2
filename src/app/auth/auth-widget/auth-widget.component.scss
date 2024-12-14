@@ -10,7 +10,7 @@ section {
 
   text-align: right;
 
-  background: mat.get-color-from-palette($sb-app-primary);
+  background: mat.m2-get-color-from-palette($sb-app-primary);
 
   @media print {
     display: none;
