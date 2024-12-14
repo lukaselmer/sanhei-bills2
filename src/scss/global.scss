@@ -5,12 +5,30 @@
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.all-component-typographies();
+@include mat.typography-hierarchy();
 @include mat.core();
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($sb-app-theme);
+// @include mat.all-component-themes($sb-app-theme);
+// @include mat.all-component-themes(m3-theme.$light-theme);
+
+html {
+  // Apply the light theme by default
+  // @include mat.core-theme(m3-theme.$light-theme);
+  // @include mat.button-theme(m3-theme.$light-theme);
+  @include mat.all-component-themes(m3-theme.$light-theme);
+
+  // Apply the dark theme only when the user prefers dark themes.
+  // @media (prefers-color-scheme: dark) {
+  //   // Use the `-color` mixins to only apply color styles without reapplying the same
+  //   // typography and density styles.
+  //   @include mat.core-color(m3-theme.$dark-theme);
+  //   @include mat.button-color(m3-theme.$dark-theme);
+  @include mat.all-component-themes(m3-theme.$dark-theme);
+  // }
+}
 
 body {
   margin: 0;

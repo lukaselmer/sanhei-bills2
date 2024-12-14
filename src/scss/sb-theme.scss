@@ -1,15 +1,25 @@
 @use '@angular/material' as mat;
-@include mat.typography-hierarchy();
+@import 'm3-theme';
+// @include mat.typography-hierarchy();
 // Plus imports for other components in your app.
+
+$sb-sanhei-blue: #0a79ba;
+
+// primary: #0a79ba (sanhei blue)
+// secondary: #e5352d (sanhei red)
+// purple: #9575cd (tertiary)
+// error: #ffd54f (yellow/orange)
+// neutral: #ffffff (white)
+// neutral variant: #D9DDE5 (light grey)
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$sb-app-primary: mat.m2-define-palette(mat.$m2-blue-palette);
-$sb-app-accent: mat.m2-define-palette(mat.$m2-red-palette);
+// $sb-app-primary: mat.m2-define-palette(mat.$m2-blue-palette);
+// $sb-app-accent: mat.m2-define-palette(mat.$m2-red-palette);
 
 // The warn palette is optional (defaults to red).
-$sb-app-warn: mat.m2-define-palette(mat.$m2-amber-palette);
+// $sb-app-warn: mat.m2-define-palette(mat.$m2-amber-palette);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$sb-app-theme: mat.m2-define-light-theme($sb-app-primary, $sb-app-accent, $sb-app-warn);
+// $sb-app-theme: mat.m2-define-light-theme($sb-app-primary, $sb-app-accent, $sb-app-warn);
