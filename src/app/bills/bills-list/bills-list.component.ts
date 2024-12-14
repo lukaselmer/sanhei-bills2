@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { debounceTime, distinctUntilChanged, first, map, share, switchMap } from 'rxjs/operators'
-
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs'
+import { BehaviorSubject, lastValueFrom, type Observable } from 'rxjs'
 import { BillsService } from '../bills.service'
 import { DataStoreStatus } from '../store/data-store-status'
 import { Bill } from './../bill'

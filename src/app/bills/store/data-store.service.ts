@@ -12,7 +12,7 @@ import {
   set,
   get,
 } from '@angular/fire/database'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, type Observable } from 'rxjs'
 import { Bill } from '../bill'
 import { EditedBill } from './../edited-bill'
 import { NewBill } from './../new-bill'

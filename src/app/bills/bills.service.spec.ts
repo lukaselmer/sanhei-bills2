@@ -1,7 +1,6 @@
 import { waitForAsync } from '@angular/core/testing'
 import 'rxjs/add/operator/count'
-import { Observable } from 'rxjs/Observable'
-import { first } from 'rxjs/operators'
+import { count, first } from 'rxjs/operators'
 import { billVariant } from './bill.mock'
 import { BillsService } from './bills.service'
 import { BillMatcherFactory } from './search/bill-matcher.factory'
@@ -173,7 +172,7 @@ describe('BillsService', () => {
       expect(
         service
           .editBill('20')
-          .count()
+          .pipe(count())
           .subscribe((count) => expect(count).toBe(0)),
       )
     })

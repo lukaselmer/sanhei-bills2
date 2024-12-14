@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import { Observable } from 'rxjs/Observable'
 import { billVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
 import { MaterialModule } from './../../material/material.module'
@@ -13,7 +12,7 @@ import { ArticlesService } from './articles/articles.service'
 import { BillAutocompleteService } from './bill-autocomplete.service'
 import { BillEditComponent } from './bill-edit.component'
 import { BillFormComponent } from './bill-form.component'
-import { of } from 'rxjs'
+import { of, type Observable } from 'rxjs'
 
 describe('BillFormComponent', () => {
   let component: BillEditComponent

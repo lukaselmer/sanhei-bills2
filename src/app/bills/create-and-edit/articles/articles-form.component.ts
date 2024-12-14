@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { from, Observable, Subject } from 'rxjs'
+import { from, type Observable, Subject } from 'rxjs'
 import { debounceTime, distinctUntilChanged, filter, map, mergeAll, share } from 'rxjs/operators'
 import { numberValidator } from '../validators/number-validator.directive'
 import { requiredIfOneSiblingHasContent } from '../validators/required-if-one-sibling-has-content.directive'

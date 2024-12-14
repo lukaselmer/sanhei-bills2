@@ -1,9 +1,8 @@
 import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import 'rxjs/add/observable/of'
-import { Observable } from 'rxjs/Observable'
 import { billVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
 import { SearchResult } from '../search/search-result'
@@ -11,7 +10,7 @@ import { MaterialModule } from './../../material/material.module'
 import { Bill } from './../bill'
 import { BillView } from './../bill-view'
 import { BillsListComponent } from './bills-list.component'
-import { of } from 'rxjs'
+import { of, type Observable } from 'rxjs'
 
 describe('BillsListComponent', () => {
   let component: BillsListComponent

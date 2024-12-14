@@ -5,14 +5,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { ActivatedRoute, Router } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
 import 'rxjs/add/observable/of'
-import { Observable } from 'rxjs/Observable'
 import { articleVariant } from '../article.mock'
 import { billVariant } from '../bill.mock'
 import { BillsService } from '../bills.service'
 import { MaterialModule } from './../../material/material.module'
 import { Bill } from './../bill'
 import { BillPrintComponent } from './bill-print.component'
-import { of } from 'rxjs'
+import { of, type Observable } from 'rxjs'
 
 describe('BillPrintComponent', () => {
   let component: BillPrintComponent
