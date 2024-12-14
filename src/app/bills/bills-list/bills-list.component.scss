@@ -1,4 +1,3 @@
-/* TODO(mdc-migration): The following rule targets internal classes of progress-bar that may no longer apply for the MDC version.*/
 mat-progress-bar {
   position: fixed;
   top: 0;
@@ -24,12 +23,12 @@ mat-card {
   mat-card-content {
     cursor: pointer;
   }
-  /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
   mat-card-actions {
     position: absolute;
     top: 0;
-    right: 27px;
+    right: 0;
   }
+  padding-bottom: 10px;
 }
 
 .load-more {

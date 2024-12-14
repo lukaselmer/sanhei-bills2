@@ -10,14 +10,15 @@
   }
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card {
   position: absolute;
   z-index: 10;
   top: 55px;
   right: 20px;
 
-  width: 250px;
+  min-width: 250px;
+  max-width: 400px;
+  word-break: break-all;
 
   text-align: left;
 
@@ -29,7 +30,6 @@ mat-card {
   }
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card-actions {
-  text-align: right;
+  align-self: flex-end;
 }

@@ -15,11 +15,13 @@
 <ng-container *ngIf="bills$ | async; let bills">
   <section>
     <mat-card appearance="outlined" class="bill" *ngFor="let bill of bills">
-      <mat-card-title (click)="editBill(bill)">{{ bill.uid }} | {{ bill.humanId }}</mat-card-title>
-      <mat-card-subtitle (click)="editBill(bill)">
-        <div>{{ bill.title }}, {{ bill.descriptionTitle }}</div>
-        <div>{{ bill.addressView.commaSeparated }}</div>
-      </mat-card-subtitle>
+      <mat-card-header>
+        <mat-card-title (click)="editBill(bill)">{{ bill.uid }} | {{ bill.humanId }}</mat-card-title>
+        <mat-card-subtitle (click)="editBill(bill)">
+          <div>{{ bill.title }}, {{ bill.descriptionTitle }}</div>
+          <div>{{ bill.addressView.commaSeparated }}</div>
+        </mat-card-subtitle>
+      </mat-card-header>
       <mat-card-content (click)="editBill(bill)">
         <span *ngIf="bill.workedAt">Arbeiten am: {{ bill.workedAt }} | </span>
         <span *ngIf="bill.billedAt">Verrechnet am: {{ bill.billedAt }} | </span>
