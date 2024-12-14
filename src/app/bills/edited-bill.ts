@@ -1,5 +1,5 @@
-import type firebase from 'firebase/app'
 import { Article } from './article'
+import { type serverTimestamp } from '@angular/fire/database'
 
 export interface EditedBill {
   id: string
@@ -33,6 +33,6 @@ export interface EditedBill {
   // see https://firebase.google.com/docs/database/web/offline-capabilities
   // firebase.database.ServerValue.TIMESTAMP
   createdAt: number
-  updatedAt?: typeof firebase.database.ServerValue.TIMESTAMP
+  updatedAt?: ReturnType<typeof serverTimestamp>
   deletedAt: number | undefined
 }

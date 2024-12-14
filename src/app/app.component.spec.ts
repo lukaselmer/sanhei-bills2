@@ -1,6 +1,6 @@
 import { TestBed, waitForAsync } from '@angular/core/testing'
-import { AngularFireAuth } from '@angular/fire/compat/auth'
-import { AngularFireDatabase } from '@angular/fire/compat/database'
+import { Auth } from '@angular/fire/auth'
+import { Database } from '@angular/fire/database'
 import { RouterTestingModule } from '@angular/router/testing'
 import { AppComponent } from './app.component'
 import { AccountInfoComponent } from './auth/account-info/account-info.component'
@@ -10,45 +10,40 @@ import { BillsService } from './bills/bills.service'
 import { MaterialModule } from './material/material.module'
 
 describe('AppComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [MaterialModule, RouterTestingModule],
-        providers: [
-          {
-            provide: BillsService,
-            useValue: {
-              search: () => undefined,
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [MaterialModule, RouterTestingModule],
+      providers: [
+        {
+          provide: BillsService,
+          useValue: {
+            search: () => undefined,
+          },
+        },
+        {
+          provide: Database,
+          useValue: {
+            list: () => undefined,
+          },
+        },
+        {
+          provide: Auth,
+          useValue: {
+            authState: {
+              subscribe: () => undefined,
             },
           },
-          {
-            provide: AngularFireDatabase,
-            useValue: {
-              list: () => undefined,
-            },
-          },
-          {
-            provide: AngularFireAuth,
-            useValue: {
-              authState: {
-                subscribe: () => undefined,
-              },
-            },
-          },
-        ],
-        declarations: [AuthWidgetComponent, AccountInfoComponent, AppComponent, BillsListComponent],
-      }).compileComponents()
-    })
-  )
+        },
+      ],
+      declarations: [AuthWidgetComponent, AccountInfoComponent, AppComponent, BillsListComponent],
+    }).compileComponents()
+  }))
 
-  it(
-    'should create the app',
-    waitForAsync(() => {
-      const fixture = TestBed.createComponent(AppComponent)
-      const app = fixture.debugElement.componentInstance
-      expect(app).toBeTruthy()
-    })
-  )
+  it('should create the app', waitForAsync(() => {
+    const fixture = TestBed.createComponent(AppComponent)
+    const app = fixture.debugElement.componentInstance
+    expect(app).toBeTruthy()
+  }))
 
   // it(`should have as title 'sb'`, async(() => {
   //   const fixture = TestBed.createComponent(AppComponent);

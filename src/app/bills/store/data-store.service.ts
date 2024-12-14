@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
-import { AngularFireAuth } from '@angular/fire/compat/auth'
-import { AngularFireDatabase } from '@angular/fire/compat/database'
-import firebase from 'firebase/app'
+import { Auth } from '@angular/fire/auth'
+import { serverTimestamp, Database } from '@angular/fire/database'
 import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs'
 import { first } from 'rxjs/operators'
 import { Bill } from '../bill'
@@ -22,8 +21,8 @@ export class DataStoreService {
   }
 
   constructor(
-    private readonly auth: AngularFireAuth,
-    private readonly db: AngularFireDatabase,
+    private readonly auth: Auth,
+    private readonly db: Database,
     private readonly idbStoreService: IDBStoreService
   ) {}
 
@@ -139,17 +138,17 @@ export class DataStoreService {
   }
 
   private setCreated(newBill: NewBill) {
-    newBill.createdAt = firebase.database.ServerValue.TIMESTAMP
+    newBill.createdAt = serverTimestamp()
     this.setUpdated(newBill)
   }
 
   private setDeleted(dbObject: Bill) {
-    dbObject.deletedAt = firebase.database.ServerValue.TIMESTAMP as number
+    dbObject.deletedAt = serverTimestamp() as unknown as number
     this.setUpdated(dbObject)
   }
 
   private setUpdated(bill: Bill | NewBill | EditedBill) {
-    bill.updatedAt = firebase.database.ServerValue.TIMESTAMP
+    bill.updatedAt = serverTimestamp()
   }
 
   private async waitForUserLogin() {

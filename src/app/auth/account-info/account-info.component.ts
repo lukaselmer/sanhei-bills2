@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/compat/auth'
-import firebase from 'firebase/app'
+import { type UserInfo } from '@firebase/auth'
 
 @Component({
   selector: 'sb-account-info',
@@ -8,7 +8,7 @@ import firebase from 'firebase/app'
   styleUrls: ['./account-info.component.scss'],
 })
 export class AccountInfoComponent {
-  @Input() user: firebase.User | undefined
+  @Input() user: UserInfo | undefined
 
   showDetails = false
 

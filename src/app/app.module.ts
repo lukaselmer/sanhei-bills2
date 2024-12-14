@@ -1,9 +1,6 @@
 import { registerLocaleData } from '@angular/common'
 import lcoaleDECH from '@angular/common/locales/de-CH'
 import { LOCALE_ID, NgModule } from '@angular/core'
-import { AngularFireModule } from '@angular/fire/compat'
-import { AngularFireAuthModule } from '@angular/fire/compat/auth'
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ServiceWorkerModule } from '@angular/service-worker'
@@ -13,6 +10,9 @@ import { AppComponent } from './app.component'
 import { AuthModule } from './auth/auth.module'
 import { BillsModule } from './bills/bills.module'
 import { PageNotFoundComponent } from './not-found.component'
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app'
+import { getDatabase, provideDatabase } from '@angular/fire/database'
+import { getAuth, provideAuth } from '@angular/fire/auth'
 
 registerLocaleData(lcoaleDECH)
 
@@ -20,9 +20,6 @@ registerLocaleData(lcoaleDECH)
   imports: [
     BrowserModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
     BrowserAnimationsModule,
     AuthModule,
     BillsModule,
@@ -30,10 +27,10 @@ registerLocaleData(lcoaleDECH)
   ],
   declarations: [AppComponent, PageNotFoundComponent],
   providers: [
-    {
-      provide: LOCALE_ID,
-      useValue: 'de-CH',
-    },
+    { provide: LOCALE_ID, useValue: 'de-CH' },
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideDatabase(() => getDatabase()),
+    provideAuth(() => getAuth()),
   ],
   bootstrap: [AppComponent],
 })
