@@ -1,12 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "noEmitOnError": true,
+    "esModuleInterop": true,
     "noImplicitReturns": true,
     "pretty": true,
     "strict": true,
@@ -14,7 +14,6 @@
     "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "experimentalDecorators": true,

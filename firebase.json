@@ -5,7 +5,7 @@
   "hosting": {
     "cleanUrls": true,
     "trailingSlash": false,
-    "public": "dist",
+    "public": "dist/browser",
     "predeploy": ["yarn install && yarn run update-browserlist && yarn run build-prod"],
     "headers": [
       { "source": "/service-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
