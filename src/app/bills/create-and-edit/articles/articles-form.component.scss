@@ -3,6 +3,10 @@ mat-card {
   margin-bottom: 20px;
 }
 
+mat-card-header {
+  margin-bottom: 10px;
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -11,6 +15,10 @@ mat-form-field {
   display: flex;
 
   margin-bottom: 10px;
+
+  > div {
+    margin-right: 4px;
+  }
 
   div:last-child {
     min-width: 80px;

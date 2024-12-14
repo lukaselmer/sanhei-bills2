@@ -8,13 +8,8 @@
 <h1>Rechnungen</h1>
 
 <mat-form-field>
-  <input
-    matInput
-    placeholder='Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"'
-    [value]="searchTerm"
-    #searchTermInput
-    (keyup)="searchKeyup(searchTermInput.value)"
-  />
+  <mat-label>Finden - Beispiele: "Spülkasten", "Betrag: 324.3", "ID: 5554", "ID: 16125554"</mat-label>
+  <input matInput [value]="searchTerm" #searchTermInput (keyup)="searchKeyup(searchTermInput.value)" />
 </mat-form-field>
 
 <ng-container *ngIf="bills$ | async; let bills">

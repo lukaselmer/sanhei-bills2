@@ -1,6 +1,8 @@
 <ng-container *ngIf="formGroup" [formGroup]="formGroup">
   <mat-card appearance="outlined" formArrayName="articles">
-    <mat-card-title>Artikel</mat-card-title>
+    <mat-card-header>
+      <mat-card-title>Artikel</mat-card-title>
+    </mat-card-header>
     <mat-card-content>
       <div
         *ngFor="let article of articlesForm.controls; let i = index"
@@ -9,17 +11,18 @@
       >
         <div>
           <mat-form-field>
-            <input matInput formControlName="catalogId" placeholder="Katalognr." />
+            <mat-label>Katalognr.</mat-label>
+            <input matInput formControlName="catalogId" />
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
+            <mat-label>Beschreibung</mat-label>
             <input
               #articleDescription
               matInput
               (focus)="articleFocus(articleDescription.value)"
               formControlName="description"
-              placeholder="Beschreibung"
               [matAutocomplete]="articleDescriptionAuto"
             />
           </mat-form-field>
@@ -35,17 +38,20 @@
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="dimension" placeholder="Dimension" />
+            <mat-label>Dimension</mat-label>
+            <input matInput formControlName="dimension" />
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="price" placeholder="Preis" />
+            <mat-label>Preis</mat-label>
+            <input matInput formControlName="price" />
           </mat-form-field>
         </div>
         <div>
           <mat-form-field>
-            <input matInput formControlName="amount" placeholder="Anzahl" />
+            <mat-label>Anzahl</mat-label>
+            <input matInput formControlName="amount" />
           </mat-form-field>
         </div>
         <div>
