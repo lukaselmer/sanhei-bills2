@@ -8,7 +8,7 @@
   "scripts": {
     "deploy-main": "firebase use main && firebase deploy",
     "ng": "ng",
-    "start": "ng serve --host sanhei-bills.test --open",
+    "start": "ng serve --host sanhei-bills.localhost --open",
     "ci": "yarn run ci-before-build && yarn run build-prod",
     "ci-before-build": "yarn run lint && yarn run ci-test",
     "build": "ng build",

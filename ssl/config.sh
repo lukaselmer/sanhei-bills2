@@ -11,8 +11,8 @@ rm rootCA.key
 rm rootCA.srl
 rm server.csr
 
-echo 'Checking if sanhei-bills.test is in /etc/hosts'
-grep 'sanhei-bills.test' /etc/hosts || echo '127.0.0.1 sanhei-bills.test' | sudo tee -a /etc/hosts
+echo 'Checking if sanhei-bills.localhost is in /etc/hosts'
+grep 'sanhei-bills.localhost' /etc/hosts || echo '127.0.0.1 sanhei-bills.localhost' | sudo tee -a /etc/hosts
 
 echo 'Installing certificate'
 sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain rootCA.pem
