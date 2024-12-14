@@ -1,8 +1,18 @@
 import { Injectable } from '@angular/core'
 import { Auth } from '@angular/fire/auth'
-import { serverTimestamp, Database } from '@angular/fire/database'
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs'
-import { first } from 'rxjs/operators'
+import {
+  serverTimestamp,
+  Database,
+  ref,
+  query,
+  listVal,
+  orderByChild,
+  startAt,
+  push,
+  set,
+  get,
+} from '@angular/fire/database'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { Bill } from '../bill'
 import { EditedBill } from './../edited-bill'
 import { NewBill } from './../new-bill'
@@ -23,7 +33,7 @@ export class DataStoreService {
   constructor(
     private readonly auth: Auth,
     private readonly db: Database,
-    private readonly idbStoreService: IDBStoreService
+    private readonly idbStoreService: IDBStoreService,
   ) {}
 
   getStoreStream(): Observable<IBillingDatabase> {
@@ -57,36 +67,33 @@ export class DataStoreService {
       await this.idbStoreService.storeInIDB('bills', this.store().bills)
     }
 
-    this.db
-      .list<Bill>('billing/bills', (query) =>
-        query.orderByChild('updatedAt').startAt(this.nextSyncTimestamp())
-      )
-      .valueChanges()
-      .subscribe(async (bills: Bill[]) => {
-        if (bills.length === 0) return
+    listVal<Bill>(
+      query(ref(this.db, 'billing/bills'), orderByChild('updatedAt'), startAt(this.nextSyncTimestamp())),
+    ).subscribe(async (bills: Bill[]) => {
+      if (bills.length === 0) return
 
-        const store = this.store()
-        bills.forEach((bill) => {
-          if (!bill.articles) bill.articles = []
-          if (bill.id) store.bills[bill.id] = bill
-          if (bill.deletedAt) delete store.bills[bill.id]
-        })
-        this.storeStream.next(store)
-        await this.idbStoreService.storeInIDB('bills', store.bills)
+      const store = this.store()
+      bills.forEach((bill) => {
+        if (!bill.articles) bill.articles = []
+        if (bill.id) store.bills[bill.id] = bill
+        if (bill.deletedAt) delete store.bills[bill.id]
       })
+      this.storeStream.next(store)
+      await this.idbStoreService.storeInIDB('bills', store.bills)
+    })
   }
 
   private nextSyncTimestamp(): number {
     const currentMaxTimestamp = Math.max(
-      ...DataStoreService.toArray(this.store().bills).map((el) => el.updatedAt)
+      ...DataStoreService.toArray(this.store().bills).map((el) => el.updatedAt),
     )
     return currentMaxTimestamp + 1
   }
 
   private async downloadWholeDatabase() {
-    const data: IBillingDatabase | null = await lastValueFrom(
-      this.db.object<IBillingDatabase>('billing').valueChanges().pipe(first())
-    )
+    const snapshot = await get(ref(this.db, 'billing'))
+    if (!snapshot.exists()) throw new Error('No data found')
+    const data: IBillingDatabase = await snapshot.val()
     if (!data) throw new Error('No data found')
     this.status = 'loaded'
     this.correctBills(data)
@@ -116,7 +123,7 @@ export class DataStoreService {
   async createBill(newBill: NewBill): Promise<void> {
     await this.waitForUserLogin()
     this.setCreated(newBill)
-    await this.db.list<NewBill>('billing/bills').push(newBill)
+    await push(ref(this.db, 'billing/bills'), newBill)
   }
 
   async updateBill(bill: EditedBill | Bill) {
@@ -128,13 +135,13 @@ export class DataStoreService {
     Object.keys(billAttributes).forEach((k) => {
       if (billAttributes[k] === undefined) delete billAttributes[k]
     })
-    await this.db.object(`billing/bills/${bill.id}`).set(billAttributes)
+    await set(ref(this.db, `billing/bills/${bill.id}`), billAttributes)
   }
 
   async deleteBill(bill: Bill) {
     await this.waitForUserLogin()
     this.setDeleted(bill)
-    await this.db.object(`billing/bills/${bill.id}`).set(bill)
+    await set(ref(this.db, `billing/bills/${bill.id}`), bill)
   }
 
   private setCreated(newBill: NewBill) {

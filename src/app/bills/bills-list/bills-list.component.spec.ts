@@ -11,6 +11,7 @@ import { MaterialModule } from './../../material/material.module'
 import { Bill } from './../bill'
 import { BillView } from './../bill-view'
 import { BillsListComponent } from './bills-list.component'
+import { of } from 'rxjs'
 
 describe('BillsListComponent', () => {
   let component: BillsListComponent
@@ -28,32 +29,30 @@ describe('BillsListComponent', () => {
     dbStatus: 'loaded' as const,
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          MaterialModule,
-          NoopAnimationsModule,
-          RouterTestingModule.withRoutes([
-            {
-              path: 'bills',
-              component: BillsListComponent,
-            },
-          ]),
-        ],
-        providers: [
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        MaterialModule,
+        NoopAnimationsModule,
+        RouterTestingModule.withRoutes([
           {
-            provide: BillsService,
-            useValue: {
-              search: (): Observable<SearchResult<Bill>> => Observable.of(billsSearch),
-              editBill: (): Observable<Bill> => Observable.of(bill),
-            },
+            path: 'bills',
+            component: BillsListComponent,
           },
-        ],
-        declarations: [BillsListComponent],
-      }).compileComponents()
-    })
-  )
+        ]),
+      ],
+      providers: [
+        {
+          provide: BillsService,
+          useValue: {
+            search: (): Observable<SearchResult<Bill>> => of(billsSearch),
+            editBill: (): Observable<Bill> => of(bill),
+          },
+        },
+      ],
+      declarations: [BillsListComponent],
+    }).compileComponents()
+  }))
 
   describe('construction', () => {
     it('reads the params from the activated route', fakeAsync(() => {
@@ -94,14 +93,11 @@ describe('BillsListComponent', () => {
       expect(component).toBeTruthy()
     })
 
-    it(
-      'should render the search field',
-      waitForAsync(() => {
-        fixture.detectChanges()
-        const compiled = fixture.debugElement.nativeElement
-        expect(compiled.querySelector('mat-form-field')).not.toBe(null)
-      })
-    )
+    it('should render the search field', waitForAsync(() => {
+      fixture.detectChanges()
+      const compiled = fixture.debugElement.nativeElement
+      expect(compiled.querySelector('mat-form-field')).not.toBe(null)
+    }))
 
     it('should render a row for each bill', fakeAsync(() => {
       fixture.detectChanges()
@@ -125,16 +121,16 @@ describe('BillsListComponent', () => {
 
       expect(queryContent('mat-card-title')).toEqual(`${bill.uid} | ${bill.humanId}`)
       expect(queryContent('mat-card-subtitle :first-child')).toEqual(
-        `${billView.title}, ${billView.descriptionTitle}`
+        `${billView.title}, ${billView.descriptionTitle}`,
       )
       expect(queryContent('mat-card-subtitle :last-child')).toEqual(billView.addressView.commaSeparated)
       expect(queryContent('mat-card-content :nth-child(1)')).toEqual('Arbeiten am: 2017-06-20 |')
       expect(queryContent('mat-card-content :nth-child(2)')).toEqual('Verrechnet am: 2017-06-22 |')
       expect(queryContent('mat-card-content :nth-child(3)')).toEqual(
-        'CHF750.00 netto | CHF733.65 brutto'
+        'CHF750.00 netto | CHF733.65 brutto',
       )
       expect(queryContent('mat-card-content :nth-child(4)')).toEqual(
-        `${bill.ownerName}, ${bill.ordererName}`
+        `${bill.ownerName}, ${bill.ordererName}`,
       )
     }))
 
