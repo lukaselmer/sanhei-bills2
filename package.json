@@ -74,6 +74,8 @@
     "@types/pdfkit": "^0.13.7",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "@typescript-eslint/types": "^8.18.0",
+    "@typescript-eslint/utils": "^8.18.0",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-prefer-arrow": "latest",
@@ -93,7 +95,8 @@
     "prettier": "^2.3.2",
     "protractor": "^7.0.0",
     "ts-node": "^10.2.1",
-    "typescript": "~5.5.4"
+    "typescript": "~5.6.3",
+    "vite": "^5.4.11"
   },
   "greenkeeper": {
     "ignore": [
