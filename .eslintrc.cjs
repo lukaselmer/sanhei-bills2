@@ -31,6 +31,7 @@ module.exports = {
         'eslint-plugin-prefer-arrow',
       ],
       rules: {
+        '@angular-eslint/prefer-standalone': 'off',
         'max-len': 'off',
         'no-shadow': 'off',
         '@typescript-eslint/await-thenable': 'off',

@@ -46,7 +46,6 @@ export class ArticlesFormComponent implements OnChanges {
 
   moveUp(index: number) {
     const arr = this.articlesForm.value
-    // eslint-disable-next-line indent, @typescript-eslint/indent
     ;[arr[index], arr[index - 1]] = [arr[index - 1], arr[index]]
     this.formArticles = arr
     this.setArticles()

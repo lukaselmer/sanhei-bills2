@@ -24,7 +24,7 @@ export class FirebaseDbService {
   }
 
   async dbDownloadAllBills(db: Database) {
-    return await get(ref(db, 'billing'))
+    return get(ref(db, 'billing'))
   }
 
   dbObserveBills(db: Database, timestamp: number) {

@@ -48,9 +48,9 @@ export class BillPrintComponent implements OnInit {
     setTimeout(() => {
       this.currentPageOffset = 0
       this.currentPage = 1
-      const articleElements = Array.from(
+      const articleElements: HTMLDivElement[] = Array.from(
         this.element.nativeElement.querySelectorAll('.article'),
-      ) as HTMLDivElement[]
+      )
 
       articleElements.forEach((articleEl, index) => {
         const spaceUsed = articleEl.offsetTop - this.currentPageOffset
