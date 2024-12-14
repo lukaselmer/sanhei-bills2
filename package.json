@@ -16,7 +16,7 @@
     "build-watch": "ng build --watch",
     "lint": "yarn run ng-lint && yarn run prettier",
     "ng-lint": "ng lint --fix true",
-    "prettier": "prettier --list-different --write '**/*.{ts,js,json,md,scss}'",
+    "prettier": "prettier --list-different --write '**/*.{ts,js,json,md,scss,html}'",
     "e2e": "ng e2e",
     "test": "ng test",
     "ci-test": "ng test --watch=false --progress false --code-coverage",
