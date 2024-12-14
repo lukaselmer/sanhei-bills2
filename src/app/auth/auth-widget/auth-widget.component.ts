@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { GoogleAuthProvider, Auth, signInWithRedirect } from '@angular/fire/auth'
+import { GoogleAuthProvider, Auth, signInWithPopup } from '@angular/fire/auth'
 import { Unsubscribe, type UserInfo } from '@firebase/auth'
 
 @Component({
@@ -29,7 +29,7 @@ export class AuthWidgetComponent implements OnInit {
   }
 
   login() {
-    signInWithRedirect(this.auth, new GoogleAuthProvider())
+    signInWithPopup(this.auth, new GoogleAuthProvider())
   }
 
   logout() {
