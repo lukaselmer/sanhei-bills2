@@ -16,25 +16,11 @@
             },
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
-            "assets": [
-              "src/assets",
-              "src/favicons",
-              "src/favicon.ico"
-            ],
-            "styles": [
-              "src/scss/global.scss"
-            ],
+            "polyfills": ["src/polyfills.ts"],
+            "assets": ["src/assets", "src/favicons", "src/favicon.ico"],
+            "styles": ["src/scss/global.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "firebase",
-              "@firebase/app",
-              "firebase/app",
-              "@firebase/database",
-              "@firebase/auth"
-            ],
+            "allowedCommonJsDependencies": ["firebase", "firebase/app"],
             "aot": false,
             "extractLicenses": false,
             "sourceMap": true,
@@ -98,23 +84,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "scripts": [],
-            "styles": [
-              "src/scss/global.scss"
-            ],
-            "assets": [
-              "src/assets",
-              "src/favicons",
-              "src/favicon.ico"
-            ]
+            "styles": ["src/scss/global.scss"],
+            "assets": ["src/assets", "src/favicons", "src/favicon.ico"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       },
@@ -146,10 +123,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -157,9 +131,7 @@
   },
   "cli": {
     "packageManager": "yarn",
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ],
+    "schematicCollections": ["@angular-eslint/schematics"],
     "analytics": false
   },
   "schematics": {

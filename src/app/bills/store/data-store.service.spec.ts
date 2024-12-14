@@ -5,6 +5,7 @@ import { Bill } from './../bill'
 import { BillsService } from './../bills.service'
 import { BillMatcherFactory } from './../search/bill-matcher.factory'
 import { DataStoreService } from './data-store.service'
+import { lastValueFrom } from 'rxjs'
 
 function generateValueChangedEvent(objects: any) {
   return {
@@ -301,11 +302,8 @@ describe('DataStoreService', () => {
           })
 
           await service.loadData()
-          const bills = await billsService.getBillsStream().pipe(first()).toPromise()
-          const latestBill: Bill = {
-            ...bills[0],
-            title: 'newTitle',
-          }
+          const bills = await lastValueFrom(billsService.getBillsStream().pipe(first()))
+          const latestBill: Bill = { ...bills[0], title: 'newTitle' }
           await service.updateBill(latestBill as any)
           expect(angularFireMock.object).toHaveBeenCalledWith(`billing/bills/${latestBill.id}`)
           expect(latestUpdatedBill).toEqual(latestBill)

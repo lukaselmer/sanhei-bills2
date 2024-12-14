@@ -64,7 +64,7 @@ export class BillsService {
     return this.getBillsStream().pipe(
       map((bills) => bills.find((bill) => bill.id === id)),
       filter((bill) => !!bill)
-    ) as Observable<Bill>
+    )
   }
 
   async updateBill(bill: EditedBill) {

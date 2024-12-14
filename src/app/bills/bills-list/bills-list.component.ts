@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { debounceTime, distinctUntilChanged, first, map, share, switchMap } from 'rxjs/operators'
 
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs'
 import { BillsService } from '../bills.service'
 import { DataStoreStatus } from '../store/data-store-status'
 import { Bill } from './../bill'
@@ -88,7 +88,7 @@ export class BillsListComponent implements OnInit {
   async removeBill(billView: BillView) {
     if (!confirm('Wirklich löschen?')) return
 
-    const bill = await this.billsService.editBill(billView.id).pipe(first()).toPromise()
+    const bill = await lastValueFrom(this.billsService.editBill(billView.id).pipe(first()))
     await this.billsService.deleteBill(bill)
   }
 

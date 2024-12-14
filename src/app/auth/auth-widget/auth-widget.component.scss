@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-// @import '../../../scss/sb-theme';
+@use '../../../scss/sb-colors';
 
 section {
   @include mat.elevation(2);
@@ -9,8 +9,7 @@ section {
 
   text-align: right;
 
-  background: sb-theme.$sb-sanhei-blue;
-  // background: mat.m2-get-color-from-palette($sb-app-primary);
+  background: sb-colors.$sb-sanhei-blue;
 
   @media print {
     display: none;

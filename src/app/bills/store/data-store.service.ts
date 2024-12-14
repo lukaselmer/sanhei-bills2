@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { AngularFireDatabase } from '@angular/fire/compat/database'
 import firebase from 'firebase/app'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs'
 import { first } from 'rxjs/operators'
 import { Bill } from '../bill'
 import { EditedBill } from './../edited-bill'
@@ -85,11 +85,10 @@ export class DataStoreService {
   }
 
   private async downloadWholeDatabase() {
-    const data: IBillingDatabase = (await this.db
-      .object('billing')
-      .valueChanges()
-      .pipe(first())
-      .toPromise()) as IBillingDatabase
+    const data: IBillingDatabase | null = await lastValueFrom(
+      this.db.object<IBillingDatabase>('billing').valueChanges().pipe(first())
+    )
+    if (!data) throw new Error('No data found')
     this.status = 'loaded'
     this.correctBills(data)
     this.correctArticles(data)
