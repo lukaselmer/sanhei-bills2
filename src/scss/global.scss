@@ -2,7 +2,8 @@
 @use './sb-theme';
 
 @include mat.all-component-typographies();
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 html {
   color-scheme: light dark;
