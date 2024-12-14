@@ -4,7 +4,7 @@ import { IBillingDatabase } from '../../store/billing-database'
 import { ArticlesService } from './articles.service'
 import { of } from 'rxjs'
 
-describe('BillsService', () => {
+describe('ArticlesService', () => {
   let service: ArticlesService
   const billMock1 = billVariant({
     id: '1',
@@ -39,5 +39,9 @@ describe('BillsService', () => {
   beforeEach(() => {
     spyOn(dataStoreServiceMock, 'loadData')
     service = new ArticlesService(dataStoreServiceMock)
+  })
+
+  it('runs but does nothing', () => {
+    expect(true).toBeTruthy()
   })
 })
