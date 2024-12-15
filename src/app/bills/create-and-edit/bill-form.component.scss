@@ -23,6 +23,7 @@ form {
 
 mat-card.numbers {
   display: grid;
+  grid-gap: 5px;
 
   @media (min-width: 350px) {
     grid-template-columns: 1fr 1fr;
@@ -31,6 +32,4 @@ mat-card.numbers {
   @media (min-width: 700px) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-
-  grid-gap: 5px;
 }
