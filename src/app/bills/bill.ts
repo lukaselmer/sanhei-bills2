@@ -2,7 +2,7 @@ import { Article } from './article'
 
 export const billDefaults = {
   paymentDeadlineInDays: 30,
-  vat: 7.7,
+  vat: 8.1,
   discount: 0,
   cashback: 2,
 }
