@@ -2,7 +2,8 @@ import * as admin from 'firebase-admin'
 import { dateForUID } from './date-helper'
 import { onValueCreated } from 'firebase-functions/database'
 
-admin.initializeApp({ credential: admin.credential.applicationDefault() })
+admin.initializeApp()
+// admin.initializeApp({ credential: admin.credential.applicationDefault() })
 
 /**
  * There is a race condition in updateBillIds: it can happen that the same bill
