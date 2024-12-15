@@ -10,6 +10,7 @@ import { SearchOptions } from './search/search-options'
 import { SearchResult } from './search/search-result'
 import { IBillingDatabase } from './store/billing-database'
 import { DataStoreService } from './store/data-store.service'
+import { serverTimestamp } from '@angular/fire/database'
 
 @Injectable()
 export class BillsService {
@@ -58,6 +59,31 @@ export class BillsService {
       list: filteredBills,
       dbStatus: this.dataStore.status,
     }
+  }
+
+  async copyBill(bill: Bill): Promise<void> {
+    const clone = structuredClone(bill)
+    const newBill: NewBill = {
+      address: clone.address,
+      articles: clone.articles,
+      billedAt: clone.billedAt,
+      billType: clone.billType,
+      cashback: clone.cashback,
+      description: clone.description,
+      descriptionTitle: clone.descriptionTitle,
+      discount: clone.discount,
+      finished: false,
+      orderedAt: clone.orderedAt,
+      ordererName: clone.ordererName,
+      ownerName: clone.ownerName,
+      paid: false,
+      title: clone.title,
+      vat: clone.vat,
+      workedAt: clone.workedAt,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    }
+    await this.dataStore.createBill(newBill)
   }
 
   editBill(id: string): Observable<Bill> {

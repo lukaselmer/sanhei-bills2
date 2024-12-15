@@ -79,7 +79,13 @@ export class BillsListComponent implements OnInit {
     })
   }
 
-  editBill(billView: BillView) {
+  async copyBill(billView: BillView) {
+    const bill = await lastValueFrom(this.billsService.editBill(billView.id).pipe(first()))
+    await this.billsService.copyBill(bill)
+    return false
+  }
+
+  editBill(billView: BillView | Bill) {
     this.router.navigate(['bills', billView.id])
     window.scrollTo(0, 0)
     return false

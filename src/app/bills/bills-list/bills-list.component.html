@@ -32,15 +32,28 @@
         <div>{{ bill.ownerName }}, {{ bill.ordererName }}</div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-icon-button type="button" (click)="generateQRBill(bill)">
-          <i class="material-icons">paid</i>
+        <button mat-icon-button type="button" (click)="editBill(bill)">
+          <i class="material-icons">edit</i>
         </button>
         <button mat-icon-button type="button" routerLink="{{ bill.id }}/🖨">
           <i class="material-icons">print</i>
         </button>
-        <button mat-icon-button type="button" (click)="removeBill(bill)">
-          <i class="material-icons">delete</i>
+        <button mat-icon-button type="button" (click)="generateQRBill(bill)">
+          <i class="material-icons">qr_code_2</i>
         </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <i class="material-icons">more_vert</i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="copyBill(bill)">
+            <mat-icon>file_copy</mat-icon>
+            <span>Kopieren</span>
+          </button>
+          <button mat-menu-item (click)="removeBill(bill)">
+            <mat-icon>delete</mat-icon>
+            <span>Löschen</span>
+          </button>
+        </mat-menu>
       </mat-card-actions>
     </mat-card>
   </section>

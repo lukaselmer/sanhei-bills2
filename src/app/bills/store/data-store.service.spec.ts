@@ -5,8 +5,7 @@ import { BillsService } from './../bills.service'
 import { BillMatcherFactory } from './../search/bill-matcher.factory'
 import { DataStoreService } from './data-store.service'
 import { lastValueFrom, of } from 'rxjs'
-import { FirebaseDbService } from 'app/bills/store/firebase-db.service'
-import { DataSnapshot } from 'firebase/database'
+import { type DataSnapshot } from 'firebase/database'
 
 describe('DataStoreService', () => {
   let service: DataStoreService

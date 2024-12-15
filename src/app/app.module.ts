@@ -1,4 +1,4 @@
-import { registerLocaleData } from '@angular/common'
+import { AsyncPipe, JsonPipe, registerLocaleData } from '@angular/common'
 import lcoaleDECH from '@angular/common/locales/de-CH'
 import { LOCALE_ID, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
@@ -24,6 +24,8 @@ registerLocaleData(lcoaleDECH)
     AuthModule,
     BillsModule,
     AppRoutingModule,
+    JsonPipe,
+    AsyncPipe,
   ],
   declarations: [AppComponent, PageNotFoundComponent],
   providers: [

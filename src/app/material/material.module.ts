@@ -3,6 +3,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatMenuModule } from '@angular/material/menu'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatIconModule } from '@angular/material/icon'
@@ -23,6 +24,7 @@ const materialModules = [
   MatNativeDateModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
+  MatMenuModule,
 ]
 
 @NgModule({
