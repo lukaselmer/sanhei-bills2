@@ -1,5 +1,6 @@
 import { BillView } from '../bill-view'
 import { data } from 'swissqrbill/lib/swissqrbill'
+import swissqrbillUtils from 'swissqrbill/lib/utils'
 import { exactLen } from '../../utils/string'
 
 export async function paymentInfo(bill: BillView): Promise<data> {
@@ -28,7 +29,8 @@ export async function paymentInfo(bill: BillView): Promise<data> {
 }
 
 async function calculateReferenceNumber(billView: BillView) {
-  const swissqrbillUtils = await import('swissqrbill/lib/utils')
+  // lazy loading currently disabled, because it broke with Angular 19
+  // const swissqrbillUtils = await import('swissqrbill/lib/utils')
 
   if (!swissqrbillUtils.isQRIBAN(sanheiIBAN)) return undefined
 
