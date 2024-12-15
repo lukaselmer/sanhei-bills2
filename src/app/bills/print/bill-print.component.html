@@ -50,7 +50,7 @@
     </header>
     @for (articleView of billView.articles; track articleView) {
       @if (articleView.isGap) {
-        <div class="gap" [style.height.px]="articleView.gap"></div>
+        <div class="gap" [style.marginTop.px]="articleView.gap"></div>
       } @else {
         <div class="article">
           <div>{{ articleView.article.description }}</div>
