@@ -34,6 +34,7 @@ module.exports = {
         '@angular-eslint/prefer-standalone': 'off',
         'max-len': 'off',
         'no-shadow': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
         '@typescript-eslint/await-thenable': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
         '@typescript-eslint/no-unsafe-argument': 'off',

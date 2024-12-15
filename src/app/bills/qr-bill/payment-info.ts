@@ -1,5 +1,5 @@
 import { BillView } from '../bill-view'
-import { data } from 'swissqrbill/lib/swissqrbill'
+import type { data } from 'swissqrbill/lib/swissqrbill'
 import { isQRIBAN, calculateQRReferenceChecksum } from 'swissqrbill/lib/utils'
 import { exactLen } from '../../utils/string'
 
