@@ -6,7 +6,7 @@
     "node": "22"
   },
   "scripts": {
-    "deploy-main": "GOOGLE_APPLICATION_CREDENTIALS=\"./googleServiceAccountKey.json\" firebase list && GOOGLE_APPLICATION_CREDENTIALS=\"./googleServiceAccountKey.json\" firebase use main && GOOGLE_APPLICATION_CREDENTIALS=\"./googleServiceAccountKey.json\" firebase deploy",
+    "deploy-main": "GOOGLE_APPLICATION_CREDENTIALS=\"./googleServiceAccountKey.json\" firebase apps:list && GOOGLE_APPLICATION_CREDENTIALS=\"./googleServiceAccountKey.json\" firebase use main && GOOGLE_APPLICATION_CREDENTIALS=\"./googleServiceAccountKey.json\" firebase deploy",
     "ng": "ng",
     "start": "ng serve --host sanhei-bills.localhost --open",
     "ci": "yarn run ci-before-build && yarn run build-prod",
