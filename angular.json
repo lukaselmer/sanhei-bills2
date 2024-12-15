@@ -20,7 +20,14 @@
             "assets": ["src/assets", "src/favicons", "src/favicon.ico"],
             "styles": ["src/scss/global.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["firebase", "firebase/app"],
+            "allowedCommonJsDependencies": [
+              "firebase",
+              "firebase/app",
+              "diacritics",
+              "swissqrbill/lib/utils",
+              "swissqrbill/lib/browser",
+              "file-saver"
+            ],
             "aot": false,
             "extractLicenses": false,
             "sourceMap": true,
