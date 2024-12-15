@@ -6,7 +6,7 @@
     "node": "22"
   },
   "scripts": {
-    "deploy-main": "firebase use main && firebase deploy",
+    "deploy-main": "firebase apps:list && firebase use sanhei-bills && firebase deploy",
     "ng": "ng",
     "start": "ng serve --host sanhei-bills.localhost --open",
     "ci": "yarn run ci-before-build && yarn run build-prod",
