@@ -12,7 +12,7 @@ admin.initializeApp(functions.config().firebase)
  * However, if this happens, the user can manually change the bill id in the UI.
  */
 
-onValueCreated(
+export const updateBillIds = onValueCreated(
   {
     ref: 'billing/bills/{billId}',
     region: 'europe-west6',
