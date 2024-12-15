@@ -2,10 +2,11 @@ import { saveAs } from 'file-saver'
 import { paymentInfo } from './payment-info'
 import { BillView } from '../../bills/bill-view'
 import { toFilename } from '../../utils/string'
+import swissqrbill from 'swissqrbill/lib/browser'
 
 export async function generatePDFBill(bill: BillView): Promise<void> {
-  const swissqrbill = (await import('swissqrbill/lib/browser')).default
-
+  // lazy loading currently disabled, because it broke with Angular 19
+  // const swissqrbill = (await import('swissqrbill/lib/browser')).default
   const filename = toFilename(`Rechnung ${bill.uid}`)
 
   const stream = swissqrbill.BlobStream()
