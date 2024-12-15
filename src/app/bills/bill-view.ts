@@ -78,7 +78,7 @@ export class BillView {
   get addressView() {
     return new AddressView(this.bill.address)
   }
-  get articles() {
+  get articles(): ArticleView[] {
     return this.pBillArticleViews
   }
 

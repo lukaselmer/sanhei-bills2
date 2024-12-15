@@ -8,6 +8,7 @@
         *ngFor="let article of articlesForm.controls; let i = index"
         [formGroupName]="i"
         class="article"
+        [ngClass]="isGap(i) ? 'gap' : ''"
       >
         <div class="form-field-wrapper catalogId">
           <mat-form-field>

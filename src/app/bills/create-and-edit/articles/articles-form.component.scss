@@ -60,6 +60,37 @@ $breakpoint-lg: $breakpoint-md-to + 1px;
       'f';
   }
 
+  &.gap {
+    background: #bedfb3;
+    padding: 20px 0 0 0;
+    margin-bottom: 10px;
+
+    @media (min-width: $breakpoint-lg) {
+      grid-template-areas: 'a b b e e f';
+      grid-template-columns:
+        minmax(100px, 3fr) minmax(100px, 4fr) minmax(100px, 3fr) minmax(100px, 2fr)
+        minmax(100px, 2fr) 80px;
+    }
+
+    @media (min-width: $breakpoint-md-from) and (max-width: $breakpoint-md-to) {
+      grid-template-areas: 'b b b b e e f';
+    }
+
+    @media (max-width: $breakpoint-sm) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'b'
+        'e'
+        'f';
+    }
+
+    .form-field-wrapper.catalogId,
+    .form-field-wrapper.dimension,
+    .form-field-wrapper.price {
+      display: none;
+    }
+  }
+
   .form-field-wrapper.actions {
     margin-right: -10px;
     margin-bottom: 20px;

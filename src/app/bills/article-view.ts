@@ -1,3 +1,4 @@
+import { isGap } from 'app/bills/isGap'
 import { Article } from './article'
 
 export class ArticleView {
@@ -8,6 +9,14 @@ export class ArticleView {
   }
 
   get totalPrice(): number {
-    return this.article.price * this.article.amount
+    return this.isGap ? 0 : this.article.price * this.article.amount
+  }
+
+  get isGap(): boolean {
+    return isGap(this.article.description)
+  }
+
+  get gap(): number {
+    return this.isGap ? this.article.amount * 10 : 0
   }
 }

@@ -8,6 +8,7 @@ import { Article } from './../../article'
 import { ArticlesService } from './articles.service'
 import { AutocompleteArticle } from './autocomplete-article'
 import { FormArticle } from './form-article'
+import { isGap } from 'app/bills/isGap'
 
 @Component({
   selector: 'sb-articles-form',
@@ -30,6 +31,13 @@ export class ArticlesFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.articles) this.articlesChanged()
+  }
+
+  isGap(index: number) {
+    const article = this.formArticles?.[index]
+    const control = this.articlesForm.controls?.[index]
+    const description = control.get('description')?.value
+    return isGap(description || '')
   }
 
   private articlesChanged() {
