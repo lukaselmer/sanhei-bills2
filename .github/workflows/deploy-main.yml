@@ -18,14 +18,12 @@ jobs:
 
       - run: cd functions && yarn run ci-before-build && cd ..
       - run: yarn run ci-before-build
-      - run: |
-          cat << EOF > ./googleServiceAccountKey.json
-          ${{ secrets.FIREBASE_SERVICE_ACCOUNT_SANHEI_BILLS }}
-          EOF
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SANHEI_BILLS }}'
       - run: yarn run deploy-main
         # env:
-          # see https://github.com/FirebaseExtended/action-hosting-deploy/blob/main/docs/service-account.md
-          # the key is stored here: https://console.cloud.google.com/iam-admin/serviceaccounts?project=sanhei-bills&supportedpurview=project
-          # the service account token is stored here: FIREBASE_SERVICE_ACCOUNT_SANHEI_BILLS
-          # this was the old way: FIREBASE_TOKEN:  secrets.FIREBASE_SERVICE_ACCOUNT_SANHEI_BILLS }}
-      - run: rm ./googleServiceAccountKey.json
+        # see https://github.com/FirebaseExtended/action-hosting-deploy/blob/main/docs/service-account.md
+        # the key is stored here: https://console.cloud.google.com/iam-admin/serviceaccounts?project=sanhei-bills&supportedpurview=project
+        # the service account token is stored here: FIREBASE_SERVICE_ACCOUNT_SANHEI_BILLS
+        # this was the old way: FIREBASE_TOKEN:  secrets.FIREBASE_SERVICE_ACCOUNT_SANHEI_BILLS }}
