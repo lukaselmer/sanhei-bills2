@@ -34,7 +34,6 @@ export class ArticlesFormComponent implements OnChanges {
   }
 
   isGap(index: number) {
-    const article = this.formArticles?.[index]
     const control = this.articlesForm.controls?.[index]
     const description = control.get('description')?.value
     return isGap(description || '')
