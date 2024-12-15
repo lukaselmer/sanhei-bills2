@@ -10,7 +10,7 @@
     "serve": "yarn run build && firebase emulators:start --only functions",
     "shell": "yarn run build && firebase functions:shell",
     "start": "yarn run shell",
-    "deploy": "firebase deploy --project sanhei-bills --only functions",
+    "deploy": "firebase use main && firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "engines": {
