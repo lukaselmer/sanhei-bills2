@@ -81,12 +81,12 @@ export class ArticlesFormComponent implements OnChanges {
         dimension: a.dimension,
       }),
     )
-    this.keepAricleValidationsUpdated(articleFormGroups)
+    this.keepArticleValidationsUpdated(articleFormGroups)
     if (this.formGroup) this.formGroup.setControl('articles', this.fb.array(articleFormGroups))
     this.initArticlesAutocomplete()
   }
 
-  private keepAricleValidationsUpdated(articleFormGroups: FormGroup[]) {
+  private keepArticleValidationsUpdated(articleFormGroups: FormGroup[]) {
     // automaticValueChangeInProgress avoids recursive value changes
     let automaticValueChangeInProgress = false
     articleFormGroups.forEach((fg) => {
