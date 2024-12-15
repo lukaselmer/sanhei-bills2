@@ -21,4 +21,6 @@ jobs:
 
       - run: yarn run deploy-main
         env:
+          # run firebase login:ci to get a new token
+          # store it in https://github.com/lukaselmer/sanhei-bills2/settings/secrets/actions
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
