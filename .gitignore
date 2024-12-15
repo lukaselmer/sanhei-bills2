@@ -57,3 +57,4 @@ ssl/*.csr
 
 .firebase
 firebase-debug.log
+googleServiceAccountKey.json
