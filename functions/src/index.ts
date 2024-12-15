@@ -1,9 +1,8 @@
 import * as admin from 'firebase-admin'
-import * as functions from 'firebase-functions'
 import { dateForUID } from './date-helper'
 import { onValueCreated } from 'firebase-functions/database'
 
-admin.initializeApp(functions.config().firebase)
+admin.initializeApp({ credential: admin.credential.applicationDefault() })
 
 /**
  * There is a race condition in updateBillIds: it can happen that the same bill
@@ -12,10 +11,10 @@ admin.initializeApp(functions.config().firebase)
  * However, if this happens, the user can manually change the bill id in the UI.
  */
 
-export const updateBillIdsV2 = onValueCreated(
+export const updateBillIdsV3 = onValueCreated(
   {
     ref: 'billing/bills/{billId}',
-    region: 'europe-west6',
+    region: 'us-central1',
   },
   async (event) => {
     const data = event.data
