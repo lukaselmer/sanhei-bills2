@@ -8,8 +8,22 @@
     "public": "dist/browser",
     "predeploy": ["yarn install && yarn run update-browserlist && yarn run build-prod"],
     "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=63072000; includeSubDomains; preload"
+          }
+        ]
+      },
       { "source": "/service-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
-      { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
+      { "source": "/ngsw.json", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/ngsw-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/safety-worker.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/worker-basic.min.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] },
+      { "source": "/", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
     ],
     "rewrites": [{ "source": "**", "destination": "/index.html" }]
   },
