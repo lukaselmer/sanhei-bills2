@@ -58,3 +58,6 @@ ssl/*.csr
 .firebase
 firebase-debug.log
 googleServiceAccountKey.json
+
+# Yarn 4
+.yarn/
