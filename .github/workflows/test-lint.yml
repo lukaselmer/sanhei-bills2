@@ -5,14 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: yarn
-          cache-dependency-path: '**/yarn.lock'
+          node-version-file: .tool-versions
+      - run: npm install --global corepack@0.36.0 && corepack enable
 
-      - run: cd functions && yarn install && cd ..
-      - run: yarn install
+      - run: cd functions && yarn install --immutable && cd ..
+      - run: yarn install --immutable
 
       - run: cd functions && yarn run ci && cd ..
       - run: yarn run ci
