@@ -6,7 +6,7 @@
     "cleanUrls": true,
     "trailingSlash": false,
     "public": "dist/browser",
-    "predeploy": ["yarn install && yarn run update-browserlist && yarn run build-prod"],
+    "predeploy": ["yarn install && yarn run build-prod"],
     "headers": [
       {
         "source": "**",
