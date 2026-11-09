@@ -20,7 +20,7 @@
     "e2e": "ng e2e",
     "test": "ng test",
     "ci-test": "ng test --watch=false --progress false --code-coverage",
-    "update-browserlist": "browserslist --update-db"
+    "update-browserlist": "yarn up -R caniuse-lite"
   },
   "repository": "lukaselmer/sanhei-bills2",
   "dependencies": {
